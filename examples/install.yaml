@@ -1,6 +1,6 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: upjet-provider-template
+  name: provider-openstack
 spec:
-  package: upbound/upjet-provider-template:v0.1.0
+  package: martinnirtl/provider-openstack:v0.1.0

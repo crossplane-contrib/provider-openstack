@@ -5,14 +5,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: resources.null.template.upbound.io
+  name: resources.null.openstack.upbound.io
 spec:
-  group: null.template.upbound.io
+  group: null.openstack.upbound.io
   names:
     categories:
     - crossplane
     - managed
-    - template
+    - openstack
     kind: Resource
     listKind: ResourceList
     plural: resources

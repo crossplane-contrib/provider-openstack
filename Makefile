@@ -1,7 +1,7 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME ?= upjet-provider-template
+PROJECT_NAME ?= provider-openstack
 PROJECT_REPO ?= github.com/upbound/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.3.3
@@ -73,7 +73,7 @@ XPKGS = $(PROJECT_NAME)
 
 # NOTE(hasheddan): we force image building to happen prior to xpkg build so that
 # we ensure image is present in daemon.
-xpkg.build.upjet-provider-template: do.build.images
+xpkg.build.provider-openstack: do.build.images
 
 # NOTE(hasheddan): we ensure up is installed prior to running platform-specific
 # build steps in parallel to avoid encountering an installation race condition.

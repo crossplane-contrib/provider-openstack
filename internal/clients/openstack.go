@@ -15,7 +15,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/terraform"
 
-	"github.com/upbound/upjet-provider-template/apis/v1beta1"
+	"github.com/martinnirtl/provider-openstack/apis/v1beta1"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errUnmarshalCredentials = "cannot unmarshal openstack credentials as JSON"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which

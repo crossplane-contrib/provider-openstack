@@ -5,14 +5,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: providerconfigs.template.upbound.io
+  name: providerconfigs.openstack.upbound.io
 spec:
-  group: template.upbound.io
+  group: openstack.upbound.io
   names:
     categories:
     - crossplane
     - provider
-    - template
+    - openstack
     kind: ProviderConfig
     listKind: ProviderConfigList
     plural: providerconfigs
@@ -30,7 +30,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: A ProviderConfig configures a Template provider.
+        description: A ProviderConfig configures a OpenStack provider.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
