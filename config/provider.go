@@ -8,9 +8,8 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
+	"github.com/martinnirtl/provider-openstack/config/compute"
 	ujconfig "github.com/upbound/upjet/pkg/config"
-
-	"github.com/martinnirtl/provider-openstack/config/null"
 )
 
 const (
@@ -34,7 +33,7 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		compute.Configure,
 	} {
 		configure(pc)
 	}
