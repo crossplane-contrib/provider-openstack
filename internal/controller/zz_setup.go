@@ -9,7 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
-	resource "github.com/martinnirtl/provider-openstack/internal/controller/null/resource"
+	instancev2 "github.com/martinnirtl/provider-openstack/internal/controller/compute/instancev2"
 	providerconfig "github.com/martinnirtl/provider-openstack/internal/controller/providerconfig"
 )
 
@@ -17,7 +17,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
+		instancev2.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

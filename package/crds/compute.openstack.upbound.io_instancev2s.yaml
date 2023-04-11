@@ -1,0 +1,640 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: instancev2s.compute.openstack.upbound.io
+spec:
+  group: compute.openstack.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - openstack
+    kind: InstanceV2
+    listKind: InstanceV2List
+    plural: instancev2s
+    singular: instancev2
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: InstanceV2 is the Schema for the InstanceV2s API. Manages a V2
+          VM instance resource within OpenStack.
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InstanceV2Spec defines the desired state of InstanceV2
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accessIpV4:
+                    description: The first detected Fixed IPv4 address.
+                    type: string
+                  accessIpV6:
+                    description: The first detected Fixed IPv6 address.
+                    type: string
+                  adminPassSecretRef:
+                    description: The administrative password to assign to the server.
+                      Changing this changes the root password on the existing server.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  availabilityZone:
+                    description: The availability zone in which to create the server.
+                      Conflicts with availability_zone_hints. Changing this creates
+                      a new server.
+                    type: string
+                  availabilityZoneHints:
+                    description: The availability zone in which to create the server.
+                      This argument is preferred to availability_zone, when scheduling
+                      the server on a particular host or node. Conflicts with availability_zone.
+                      Changing this creates a new server.
+                    type: string
+                  blockDevice:
+                    description: Configuration of block devices. The block_device
+                      structure is documented below. Changing this creates a new server.
+                      You can specify multiple block devices which will create an
+                      instance with multiple disks. This configuration is very flexible,
+                      so please see the following reference for more information.
+                    items:
+                      properties:
+                        bootIndex:
+                          description: The boot index of the volume. It defaults to
+                            0. Changing this creates a new server.
+                          type: number
+                        deleteOnTermination:
+                          description: Delete the volume / block device upon termination
+                            of the instance. Defaults to false. Changing this creates
+                            a new server.
+                          type: boolean
+                        destinationType:
+                          description: The type that gets created. Possible values
+                            are "volume" and "local". Changing this creates a new
+                            server.
+                          type: string
+                        deviceType:
+                          description: The low-level device type that will be used.
+                            Most common thing is to leave this empty. Changing this
+                            creates a new server.
+                          type: string
+                        diskBus:
+                          description: The low-level disk bus that will be used. Most
+                            common thing is to leave this empty. Changing this creates
+                            a new server.
+                          type: string
+                        guestFormat:
+                          description: 'Specifies the guest server disk file system
+                            format, such as ext2, ext3, ext4, xfs or swap. Swap block
+                            device mappings have the following restrictions: source_type
+                            must be blank and destination_type must be local and only
+                            one swap disk per server and the size of the swap disk
+                            must be less than or equal to the swap size of the flavor.
+                            Changing this creates a new server.'
+                          type: string
+                        sourceType:
+                          description: The source type of the device. Must be one
+                            of "blank", "image", "volume", or "snapshot". Changing
+                            this creates a new server.
+                          type: string
+                        uuid:
+                          description: The UUID of the image, volume, or snapshot.
+                            Changing this creates a new server.
+                          type: string
+                        volumeSize:
+                          description: 'The size of the volume to create (in gigabytes).
+                            Required in the following combinations: source=image and
+                            destination=volume, source=blank and destination=local,
+                            and source=blank and destination=volume. Changing this
+                            creates a new server.'
+                          type: number
+                        volumeType:
+                          description: The volume type that will be used, for example
+                            SSD or HDD storage. The available options depend on how
+                            your specific OpenStack cloud is configured and what classes
+                            of storage are provided. Changing this creates a new server.
+                          type: string
+                      required:
+                      - sourceType
+                      type: object
+                    type: array
+                  configDrive:
+                    description: Whether to use the config_drive feature to configure
+                      the instance. Changing this creates a new server.
+                    type: boolean
+                  flavorId:
+                    description: The flavor ID of the desired flavor for the server.
+                      Changing this resizes the existing server.
+                    type: string
+                  flavorName:
+                    description: The name of the desired flavor for the server. Changing
+                      this resizes the existing server.
+                    type: string
+                  floatingIp:
+                    type: string
+                  forceDelete:
+                    description: Whether to force the OpenStack instance to be forcefully
+                      deleted. This is useful for environments that have reclaim /
+                      soft deletion enabled.
+                    type: boolean
+                  imageId:
+                    description: The image ID of the desired image for the server.
+                      Changing this rebuilds the existing server.
+                    type: string
+                  imageName:
+                    description: The name of the desired image for the server. Changing
+                      this rebuilds the existing server.
+                    type: string
+                  keyPair:
+                    description: The name of a key pair to put on the server. The
+                      key pair must already be created and associated with the tenant's
+                      account. Changing this creates a new server.
+                    type: string
+                  metadata:
+                    additionalProperties:
+                      type: string
+                    description: Metadata key/value pairs to make available from within
+                      the instance. Changing this updates the existing server metadata.
+                    type: object
+                  name:
+                    description: A unique name for the resource.
+                    type: string
+                  network:
+                    description: An array of one or more networks to attach to the
+                      instance. The network object structure is documented below.
+                      Changing this creates a new server.
+                    items:
+                      properties:
+                        accessNetwork:
+                          description: Specifies if this network should be used for
+                            provisioning access. Accepts true or false. Defaults to
+                            false.
+                          type: boolean
+                        fixedIpV4:
+                          description: Specifies a fixed IPv4 address to be used on
+                            this network. Changing this creates a new server.
+                          type: string
+                        fixedIpV6:
+                          type: string
+                        floatingIp:
+                          type: string
+                        name:
+                          description: The human-readable name of the network. Changing
+                            this creates a new server.
+                          type: string
+                        port:
+                          description: The port UUID of a network to attach to the
+                            server. Changing this creates a new server.
+                          type: string
+                        uuid:
+                          description: The network UUID to attach to the server. Changing
+                            this creates a new server.
+                          type: string
+                      type: object
+                    type: array
+                  networkMode:
+                    description: Special string for network option to create the server.
+                      network_mode can be "auto" or "none". Please see the following
+                      reference for more information. Conflicts with network.
+                    type: string
+                  personality:
+                    description: Customize the personality of an instance by defining
+                      one or more files and their contents. The personality structure
+                      is described below. Changing this rebuilds the existing server.
+                    items:
+                      properties:
+                        content:
+                          description: The contents of the file. Limited to 255 bytes.
+                          type: string
+                        file:
+                          description: The absolute path of the destination file.
+                          type: string
+                      required:
+                      - content
+                      - file
+                      type: object
+                    type: array
+                  powerState:
+                    description: 'Provide the VM state. Only ''active'' and ''shutoff''
+                      are supported values. Note: If the initial power_state is the
+                      shutoff the VM will be stopped immediately after build and the
+                      provisioners like remote-exec or files are not supported.'
+                    type: string
+                  region:
+                    description: The region in which to create the server instance.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new server.
+                    type: string
+                  schedulerHints:
+                    description: Provide the Nova scheduler with hints on how the
+                      instance should be launched. The available hints are described
+                      below.
+                    items:
+                      properties:
+                        additionalProperties:
+                          additionalProperties:
+                            type: string
+                          description: Arbitrary key/value pairs of additional properties
+                            to pass to the scheduler.
+                          type: object
+                        buildNearHostIp:
+                          description: An IP Address in CIDR form. The instance will
+                            be placed on a compute node that is in the same subnet.
+                          type: string
+                        differentCell:
+                          description: The names of cells where not to build the instance.
+                          items:
+                            type: string
+                          type: array
+                        differentHost:
+                          description: A list of instance UUIDs. The instance will
+                            be scheduled on a different host than all other instances.
+                          items:
+                            type: string
+                          type: array
+                        group:
+                          description: A UUID of a Server Group. The instance will
+                            be placed into that group.
+                          type: string
+                        query:
+                          description: 'A conditional query that a compute node must
+                            pass in order to host an instance. The query must use
+                            the JsonFilter syntax which is described here. At this
+                            time, only simple queries are supported. Compound queries
+                            using and, or, or not are not supported. An example of
+                            a simple query is:'
+                          items:
+                            type: string
+                          type: array
+                        sameHost:
+                          description: A list of instance UUIDs. The instance will
+                            be scheduled on the same host of those specified.
+                          items:
+                            type: string
+                          type: array
+                        targetCell:
+                          description: The name of a cell to host the instance.
+                          type: string
+                      type: object
+                    type: array
+                  securityGroups:
+                    description: 'An array of one or more security group names to
+                      associate with the server. Changing this results in adding/removing
+                      security groups from the existing server. Note: When attaching
+                      the instance to networks using Ports, place the security groups
+                      on the Port and not the instance. Note: Names should be used
+                      and not ids, as ids trigger unnecessary updates.'
+                    items:
+                      type: string
+                    type: array
+                  stopBeforeDestroy:
+                    description: Whether to try stop instance gracefully before destroying
+                      it, thus giving chance for guest OS daemons to stop correctly.
+                      If instance doesn't stop within timeout, it will be destroyed
+                      anyway.
+                    type: boolean
+                  tags:
+                    description: A set of string tags for the instance. Changing this
+                      updates the existing instance tags.
+                    items:
+                      type: string
+                    type: array
+                  userData:
+                    description: The user data to provide when launching the instance.
+                      Changing this creates a new server.
+                    type: string
+                  vendorOptions:
+                    description: Map of additional vendor-specific options. Supported
+                      options are described below.
+                    items:
+                      properties:
+                        detachPortsBeforeDestroy:
+                          description: Whether to try to detach all attached ports
+                            to the vm before destroying it to make sure the port state
+                            is correct after the vm destruction. This is helpful when
+                            the port is not deleted.
+                          type: boolean
+                        ignoreResizeConfirmation:
+                          description: Boolean to control whether to ignore manual
+                            confirmation of the instance resizing. This can be helpful
+                            to work with some OpenStack clouds which automatically
+                            confirm resizing of instances after some timeout.
+                          type: boolean
+                      type: object
+                    type: array
+                  volume:
+                    items:
+                      properties:
+                        device:
+                          type: string
+                        id:
+                          type: string
+                        volumeId:
+                          type: string
+                      required:
+                      - volumeId
+                      type: object
+                    type: array
+                required:
+                - name
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: InstanceV2Status defines the observed state of InstanceV2.
+            properties:
+              atProvider:
+                properties:
+                  allMetadata:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  allTags:
+                    description: The collection of tags assigned on the instance,
+                      which have been explicitly and implicitly added.
+                    items:
+                      type: string
+                    type: array
+                  created:
+                    description: The creation time of the instance.
+                    type: string
+                  id:
+                    type: string
+                  network:
+                    description: An array of one or more networks to attach to the
+                      instance. The network object structure is documented below.
+                      Changing this creates a new server.
+                    items:
+                      properties:
+                        mac:
+                          type: string
+                      type: object
+                    type: array
+                  updated:
+                    description: The time when the instance was last updated.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

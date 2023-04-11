@@ -1,0 +1,23 @@
+apiVersion: compute.openstack.upbound.io/v1alpha1
+kind: InstanceV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancev2
+  labels:
+    testing.upbound.io/example-name: basic
+  name: basic
+spec:
+  forProvider:
+    flavorId: "3"
+    imageId: ad091b52-742f-469e-8f3c-fd81cadf0743
+    keyPair: my_key_pair_name
+    metadata:
+      this: that
+    name: basic
+    network:
+    - name: my_network
+    securityGroups:
+    - default
+
+---
+
