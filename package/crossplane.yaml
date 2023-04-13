@@ -2,3 +2,13 @@ apiVersion: meta.pkg.crossplane.io/v1alpha1
 kind: Provider
 metadata:
   name: provider-openstack
+  annotations:
+    meta.crossplane.io/maintainer: Martin Nirtl <martin.nirtl@gmail.com>
+    meta.crossplane.io/source: github.com/martinnirtl/provider-openstack
+    meta.crossplane.io/description: |
+      Crossplane provider to manage OpenStack resources in Kubernetes.
+    meta.crossplane.io/readme: |
+      Provider OpenStack is a Crossplane provider for 
+      [OpenStack](https://openstack.org/).
+      If you encounter an issue please reach out via GitHub issues!
+    friendly-name.meta.crossplane.io: Provider OpenStack
