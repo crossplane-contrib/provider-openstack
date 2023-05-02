@@ -10,6 +10,7 @@ import (
 	"github.com/upbound/upjet/pkg/controller"
 
 	instancev2 "github.com/martinnirtl/provider-openstack/internal/controller/compute/instancev2"
+	keypairv2 "github.com/martinnirtl/provider-openstack/internal/controller/compute/keypairv2"
 	providerconfig "github.com/martinnirtl/provider-openstack/internal/controller/providerconfig"
 )
 
@@ -18,6 +19,7 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		instancev2.Setup,
+		keypairv2.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
