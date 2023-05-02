@@ -14,9 +14,8 @@ spec:
     - 10.0.0.1
     ttl: 3000
     type: A
-    zoneIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example_zone
+    zoneIdRef:
+      name: example-zone
 
 ---
 

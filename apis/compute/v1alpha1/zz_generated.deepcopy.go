@@ -291,6 +291,16 @@ func (in *InstanceV2Parameters) DeepCopyInto(out *InstanceV2Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KeyPairRef != nil {
+		in, out := &in.KeyPairRef, &out.KeyPairRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyPairSelector != nil {
+		in, out := &in.KeyPairSelector, &out.KeyPairSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Metadata != nil {
 		in, out := &in.Metadata, &out.Metadata
 		*out = make(map[string]*string, len(*in))

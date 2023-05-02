@@ -10,6 +10,9 @@ func Configure(p *config.Provider) {
 		// r.Name = "openstack_compute_instance_v2"
 		// r.ExternalName = config.ExternalName{}
 		// r.ShortGroup = "openstack"
-		// r.Version = "v1alpha1"
+		// r.Version = "v1alpha22"
+		r.References["key_pair"] = config.Reference{
+			Type: "KeypairV2",
+		}
 	})
 }

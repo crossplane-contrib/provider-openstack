@@ -178,8 +178,17 @@ type InstanceV2Parameters struct {
 	// The name of a key pair to put on the server. The key
 	// pair must already be created and associated with the tenant's account.
 	// Changing this creates a new server.
+	// +crossplane:generate:reference:type=KeypairV2
 	// +kubebuilder:validation:Optional
 	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
+
+	// Reference to a KeypairV2 to populate keyPair.
+	// +kubebuilder:validation:Optional
+	KeyPairRef *v1.Reference `json:"keyPairRef,omitempty" tf:"-"`
+
+	// Selector for a KeypairV2 to populate keyPair.
+	// +kubebuilder:validation:Optional
+	KeyPairSelector *v1.Selector `json:"keyPairSelector,omitempty" tf:"-"`
 
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
