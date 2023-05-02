@@ -14,6 +14,9 @@ import (
 	clustertemplatev1 "github.com/martinnirtl/provider-openstack/internal/controller/containerinfra/clustertemplatev1"
 	clusterv1 "github.com/martinnirtl/provider-openstack/internal/controller/containerinfra/clusterv1"
 	nodegroupv1 "github.com/martinnirtl/provider-openstack/internal/controller/containerinfra/nodegroupv1"
+	recordsetv2 "github.com/martinnirtl/provider-openstack/internal/controller/dns/recordsetv2"
+	zonev2 "github.com/martinnirtl/provider-openstack/internal/controller/dns/zonev2"
+	floatingipv2 "github.com/martinnirtl/provider-openstack/internal/controller/networking/floatingipv2"
 	networkv2 "github.com/martinnirtl/provider-openstack/internal/controller/networking/networkv2"
 	routerinterfacev2 "github.com/martinnirtl/provider-openstack/internal/controller/networking/routerinterfacev2"
 	routerv2 "github.com/martinnirtl/provider-openstack/internal/controller/networking/routerv2"
@@ -30,6 +33,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		clustertemplatev1.Setup,
 		clusterv1.Setup,
 		nodegroupv1.Setup,
+		recordsetv2.Setup,
+		zonev2.Setup,
+		floatingipv2.Setup,
 		networkv2.Setup,
 		routerinterfacev2.Setup,
 		routerv2.Setup,
