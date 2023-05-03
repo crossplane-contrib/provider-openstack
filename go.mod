@@ -1,4 +1,4 @@
-module github.com/martinnirtl/provider-openstack
+module github.com/schlakob/provider-openstack
 
 go 1.19
 

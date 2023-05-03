@@ -24,12 +24,12 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/martinnirtl/provider-openstack/apis"
-	"github.com/martinnirtl/provider-openstack/apis/v1alpha1"
-	"github.com/martinnirtl/provider-openstack/config"
-	"github.com/martinnirtl/provider-openstack/internal/clients"
-	"github.com/martinnirtl/provider-openstack/internal/controller"
-	"github.com/martinnirtl/provider-openstack/internal/features"
+	"github.com/schlakob/provider-openstack/apis"
+	"github.com/schlakob/provider-openstack/apis/v1alpha1"
+	"github.com/schlakob/provider-openstack/config"
+	"github.com/schlakob/provider-openstack/internal/clients"
+	"github.com/schlakob/provider-openstack/internal/controller"
+	"github.com/schlakob/provider-openstack/internal/features"
 )
 
 func main() {

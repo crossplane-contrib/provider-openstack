@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME ?= provider-openstack
-PROJECT_REPO ?= github.com/martinnirtl/$(PROJECT_NAME)
+PROJECT_REPO ?= github.com/schlakob/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION ?= 1.3.3
 
@@ -57,17 +57,17 @@ UPTEST_VERSION = v0.2.1
 # ====================================================================================
 # Setup Images
 
-REGISTRY_ORGS ?= xpkg.upbound.io/martinnirtl
+REGISTRY_ORGS ?= xpkg.upbound.io/schlakob
 IMAGES = $(PROJECT_NAME)
 -include build/makelib/imagelight.mk
 
 # ====================================================================================
 # Setup XPKG
 
-XPKG_REG_ORGS ?= xpkg.upbound.io/martinnirtl
+XPKG_REG_ORGS ?= xpkg.upbound.io/schlakob
 # NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
-XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/martinnirtl
+XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/schlakob
 XPKGS = $(PROJECT_NAME)
 -include build/makelib/xpkg.mk
 

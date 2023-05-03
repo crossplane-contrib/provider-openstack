@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-openstack
 spec:
-  package: martinnirtl/provider-openstack:v0.1.0
+  package: schlakob/provider-openstack:v0.1.0
