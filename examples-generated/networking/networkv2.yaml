@@ -1,0 +1,50 @@
+apiVersion: networking.openstack.upbound.io/v1alpha1
+kind: NetworkV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/networkv2
+  labels:
+    testing.upbound.io/example-name: network_1
+  name: network-1
+spec:
+  forProvider:
+    adminStateUp: "true"
+    name: network_1
+
+---
+
+apiVersion: compute.openstack.upbound.io/v1alpha1
+kind: InstanceV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/networkv2
+  labels:
+    testing.upbound.io/example-name: instance_1
+  name: instance-1
+spec:
+  forProvider:
+    name: instance_1
+    network:
+    - port: ${openstack_networking_port_v2.port_1.id}
+    securityGroups:
+    - ${openstack_compute_secgroup_v2.secgroup_1.name}
+
+---
+
+apiVersion: networking.openstack.upbound.io/v1alpha1
+kind: SubnetV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/networkv2
+  labels:
+    testing.upbound.io/example-name: subnet_1
+  name: subnet-1
+spec:
+  forProvider:
+    cidr: 192.168.199.0/24
+    ipVersion: 4
+    name: subnet_1
+    networkId: ${openstack_networking_network_v2.network_1.id}
+
+---
+
