@@ -1,0 +1,15 @@
+apiVersion: compute.openstack.upbound.io/v1alpha1
+kind: KeypairV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/keypairv2
+  labels:
+    testing.upbound.io/example-name: test-keypair
+  name: test-keypair
+spec:
+  forProvider:
+    name: testkey
+    publicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQPuRe1Z/WiG1399QQ0zePbpVo7INnH4C16mdjysABJ someexamplekey
+
+---
+

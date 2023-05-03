@@ -9,8 +9,10 @@ import (
 	_ "embed"
 
 	"github.com/schlakob/provider-openstack/config/compute/instancev2"
+	"github.com/schlakob/provider-openstack/config/compute/keypairv2"
 	"github.com/schlakob/provider-openstack/config/dns/recordsetv2"
 	"github.com/schlakob/provider-openstack/config/dns/zonev2"
+	"github.com/schlakob/provider-openstack/config/containerinfra/clusterv1"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
 
@@ -36,8 +38,10 @@ func GetProvider() *ujconfig.Provider {
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		instancev2.Configure,
+		keypairv2.Configure,
 		recordsetv2.Configure,
 		zonev2.Configure,
+		clusterv1.Configure,
 	} {
 		configure(pc)
 	}

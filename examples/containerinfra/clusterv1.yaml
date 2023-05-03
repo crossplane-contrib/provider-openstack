@@ -1,0 +1,21 @@
+apiVersion: containerinfra.openstack.upbound.io/v1alpha1
+kind: ClusterV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinfra/v1alpha1/clusterv1
+  labels:
+    testing.upbound.io/example-name: cluster_1
+  name: cluster-1
+spec:
+  forProvider:
+    name: "cluster1"
+    clusterTemplateId: "bff4ddfe-eb2d-41b7-8023-8dd25cfe5569"
+    masterCount: 1
+    nodeCount: 2
+    keypair: ""
+  writeConnectionSecretToRef:
+    name: kubeconfig-test
+    namespace: default
+
+
+---

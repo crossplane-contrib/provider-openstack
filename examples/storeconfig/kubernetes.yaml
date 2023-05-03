@@ -1,0 +1,7 @@
+apiVersion: openstack.upbound.io/v1alpha1
+kind: StoreConfig
+metadata:
+  name: kubernetes
+spec:
+  type: Kubernetes
+  defaultScope: default
