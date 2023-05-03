@@ -18,7 +18,7 @@ import (
 	"github.com/upbound/upjet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/martinnirtl/provider-openstack/apis/networking/v1alpha1"
+	v1alpha1 "github.com/schlakob/provider-openstack/apis/networking/v1alpha1"
 )
 
 // Setup adds a controller that reconciles SubnetV2 managed resources.

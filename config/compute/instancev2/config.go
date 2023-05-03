@@ -1,4 +1,4 @@
-package compute
+package instancev2
 
 import "github.com/upbound/upjet/pkg/config"
 
