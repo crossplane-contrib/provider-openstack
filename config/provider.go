@@ -10,9 +10,9 @@ import (
 
 	"github.com/schlakob/provider-openstack/config/compute/instancev2"
 	"github.com/schlakob/provider-openstack/config/compute/keypairv2"
+	"github.com/schlakob/provider-openstack/config/containerinfra/clusterv1"
 	"github.com/schlakob/provider-openstack/config/dns/recordsetv2"
 	"github.com/schlakob/provider-openstack/config/dns/zonev2"
-	"github.com/schlakob/provider-openstack/config/containerinfra/clusterv1"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
 
