@@ -8,17 +8,17 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	"github.com/schlakob/provider-openstack/config/compute/instancev2"
-	"github.com/schlakob/provider-openstack/config/compute/keypairv2"
-	"github.com/schlakob/provider-openstack/config/containerinfra/clusterv1"
-	"github.com/schlakob/provider-openstack/config/dns/recordsetv2"
-	"github.com/schlakob/provider-openstack/config/dns/zonev2"
+	"github.com/dusky-mate/provider-openstack/config/compute/instancev2"
+	"github.com/dusky-mate/provider-openstack/config/compute/keypairv2"
+	"github.com/dusky-mate/provider-openstack/config/containerinfra/clusterv1"
+	"github.com/dusky-mate/provider-openstack/config/dns/recordsetv2"
+	"github.com/dusky-mate/provider-openstack/config/dns/zonev2"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
 
 const (
 	resourcePrefix = "openstack"
-	modulePath     = "github.com/schlakob/provider-openstack"
+	modulePath     = "github.com/dusky-mate/provider-openstack"
 )
 
 //go:embed schema.json

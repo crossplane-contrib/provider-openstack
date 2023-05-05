@@ -10,12 +10,12 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/schlakob/provider-openstack/apis/compute/v1alpha1"
-	v1alpha1containerinfra "github.com/schlakob/provider-openstack/apis/containerinfra/v1alpha1"
-	v1alpha1dns "github.com/schlakob/provider-openstack/apis/dns/v1alpha1"
-	v1alpha1networking "github.com/schlakob/provider-openstack/apis/networking/v1alpha1"
-	v1alpha1apis "github.com/schlakob/provider-openstack/apis/v1alpha1"
-	v1beta1 "github.com/schlakob/provider-openstack/apis/v1beta1"
+	v1alpha1 "github.com/dusky-mate/provider-openstack/apis/compute/v1alpha1"
+	v1alpha1containerinfra "github.com/dusky-mate/provider-openstack/apis/containerinfra/v1alpha1"
+	v1alpha1dns "github.com/dusky-mate/provider-openstack/apis/dns/v1alpha1"
+	v1alpha1networking "github.com/dusky-mate/provider-openstack/apis/networking/v1alpha1"
+	v1alpha1apis "github.com/dusky-mate/provider-openstack/apis/v1alpha1"
+	v1beta1 "github.com/dusky-mate/provider-openstack/apis/v1beta1"
 )
 
 func init() {

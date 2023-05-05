@@ -9,19 +9,19 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
-	instancev2 "github.com/schlakob/provider-openstack/internal/controller/compute/instancev2"
-	keypairv2 "github.com/schlakob/provider-openstack/internal/controller/compute/keypairv2"
-	clustertemplatev1 "github.com/schlakob/provider-openstack/internal/controller/containerinfra/clustertemplatev1"
-	clusterv1 "github.com/schlakob/provider-openstack/internal/controller/containerinfra/clusterv1"
-	nodegroupv1 "github.com/schlakob/provider-openstack/internal/controller/containerinfra/nodegroupv1"
-	recordsetv2 "github.com/schlakob/provider-openstack/internal/controller/dns/recordsetv2"
-	zonev2 "github.com/schlakob/provider-openstack/internal/controller/dns/zonev2"
-	floatingipv2 "github.com/schlakob/provider-openstack/internal/controller/networking/floatingipv2"
-	networkv2 "github.com/schlakob/provider-openstack/internal/controller/networking/networkv2"
-	routerinterfacev2 "github.com/schlakob/provider-openstack/internal/controller/networking/routerinterfacev2"
-	routerv2 "github.com/schlakob/provider-openstack/internal/controller/networking/routerv2"
-	subnetv2 "github.com/schlakob/provider-openstack/internal/controller/networking/subnetv2"
-	providerconfig "github.com/schlakob/provider-openstack/internal/controller/providerconfig"
+	instancev2 "github.com/dusky-mate/provider-openstack/internal/controller/compute/instancev2"
+	keypairv2 "github.com/dusky-mate/provider-openstack/internal/controller/compute/keypairv2"
+	clustertemplatev1 "github.com/dusky-mate/provider-openstack/internal/controller/containerinfra/clustertemplatev1"
+	clusterv1 "github.com/dusky-mate/provider-openstack/internal/controller/containerinfra/clusterv1"
+	nodegroupv1 "github.com/dusky-mate/provider-openstack/internal/controller/containerinfra/nodegroupv1"
+	recordsetv2 "github.com/dusky-mate/provider-openstack/internal/controller/dns/recordsetv2"
+	zonev2 "github.com/dusky-mate/provider-openstack/internal/controller/dns/zonev2"
+	floatingipv2 "github.com/dusky-mate/provider-openstack/internal/controller/networking/floatingipv2"
+	networkv2 "github.com/dusky-mate/provider-openstack/internal/controller/networking/networkv2"
+	routerinterfacev2 "github.com/dusky-mate/provider-openstack/internal/controller/networking/routerinterfacev2"
+	routerv2 "github.com/dusky-mate/provider-openstack/internal/controller/networking/routerv2"
+	subnetv2 "github.com/dusky-mate/provider-openstack/internal/controller/networking/subnetv2"
+	providerconfig "github.com/dusky-mate/provider-openstack/internal/controller/providerconfig"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to

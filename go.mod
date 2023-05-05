@@ -1,4 +1,4 @@
-module github.com/schlakob/provider-openstack
+module github.com/dusky-mate/provider-openstack
 
 go 1.19
 

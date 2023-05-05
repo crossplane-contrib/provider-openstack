@@ -13,7 +13,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/upbound/upjet/pkg/controller"
 
-	"github.com/schlakob/provider-openstack/apis/v1beta1"
+	"github.com/dusky-mate/provider-openstack/apis/v1beta1"
 )
 
 // Setup adds a controller that reconciles ProviderConfigs by accounting for
