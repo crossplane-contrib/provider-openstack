@@ -10,6 +10,3 @@ spec:
   forProvider:
     name: testkey
     publicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHQPuRe1Z/WiG1399QQ0zePbpVo7INnH4C16mdjysABJ someexamplekey
-
----
-
