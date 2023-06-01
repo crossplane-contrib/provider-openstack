@@ -1,4 +1,4 @@
-package clusterv1
+package containerinfra
 
 import "github.com/upbound/upjet/pkg/config"
 

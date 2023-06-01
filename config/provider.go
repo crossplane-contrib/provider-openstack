@@ -8,11 +8,9 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	"github.com/dusky-mate/provider-openstack/config/compute/instancev2"
-	"github.com/dusky-mate/provider-openstack/config/compute/keypairv2"
-	"github.com/dusky-mate/provider-openstack/config/containerinfra/clusterv1"
-	"github.com/dusky-mate/provider-openstack/config/dns/recordsetv2"
-	"github.com/dusky-mate/provider-openstack/config/dns/zonev2"
+	"github.com/dusky-mate/provider-openstack/config/compute"
+	"github.com/dusky-mate/provider-openstack/config/containerinfra"
+	"github.com/dusky-mate/provider-openstack/config/dns"
 	"github.com/dusky-mate/provider-openstack/config/networking"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
@@ -38,11 +36,9 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		instancev2.Configure,
-		keypairv2.Configure,
-		recordsetv2.Configure,
-		zonev2.Configure,
-		clusterv1.Configure,
+		compute.Configure,
+		containerinfra.Configure,
+		dns.Configure,
 		networking.Configure,
 	} {
 		configure(pc)
