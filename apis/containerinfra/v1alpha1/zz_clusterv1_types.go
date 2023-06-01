@@ -58,11 +58,29 @@ type ClusterV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/dusky-mate/provider-openstack/apis/networking/v1alpha1.NetworkV2
 	// +kubebuilder:validation:Optional
 	FixedNetwork *string `json:"fixedNetwork,omitempty" tf:"fixed_network,omitempty"`
 
+	// Reference to a NetworkV2 in networking to populate fixedNetwork.
+	// +kubebuilder:validation:Optional
+	FixedNetworkRef *v1.Reference `json:"fixedNetworkRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate fixedNetwork.
+	// +kubebuilder:validation:Optional
+	FixedNetworkSelector *v1.Selector `json:"fixedNetworkSelector,omitempty" tf:"-"`
+
+	// +crossplane:generate:reference:type=github.com/dusky-mate/provider-openstack/apis/networking/v1alpha1.SubnetV2
 	// +kubebuilder:validation:Optional
 	FixedSubnet *string `json:"fixedSubnet,omitempty" tf:"fixed_subnet,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate fixedSubnet.
+	// +kubebuilder:validation:Optional
+	FixedSubnetRef *v1.Reference `json:"fixedSubnetRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate fixedSubnet.
+	// +kubebuilder:validation:Optional
+	FixedSubnetSelector *v1.Selector `json:"fixedSubnetSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`

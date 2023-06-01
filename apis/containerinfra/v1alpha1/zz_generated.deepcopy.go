@@ -10,6 +10,7 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -182,10 +183,30 @@ func (in *ClusterV1Parameters) DeepCopyInto(out *ClusterV1Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.FixedNetworkRef != nil {
+		in, out := &in.FixedNetworkRef, &out.FixedNetworkRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FixedNetworkSelector != nil {
+		in, out := &in.FixedNetworkSelector, &out.FixedNetworkSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.FixedSubnet != nil {
 		in, out := &in.FixedSubnet, &out.FixedSubnet
 		*out = new(string)
 		**out = **in
+	}
+	if in.FixedSubnetRef != nil {
+		in, out := &in.FixedSubnetRef, &out.FixedSubnetRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FixedSubnetSelector != nil {
+		in, out := &in.FixedSubnetSelector, &out.FixedSubnetSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Flavor != nil {
 		in, out := &in.Flavor, &out.Flavor
