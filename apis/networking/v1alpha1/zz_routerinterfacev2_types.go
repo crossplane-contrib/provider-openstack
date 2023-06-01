@@ -39,13 +39,31 @@ type RouterInterfaceV2Parameters struct {
 
 	// ID of the router this interface belongs to. Changing
 	// this creates a new router interface.
-	// +kubebuilder:validation:Required
-	RouterID *string `json:"routerId" tf:"router_id,omitempty"`
+	// +crossplane:generate:reference:type=RouterV2
+	// +kubebuilder:validation:Optional
+	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
+
+	// Reference to a RouterV2 to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouterV2 to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
 
 	// ID of the subnet this interface connects to. Changing
 	// this creates a new router interface.
+	// +crossplane:generate:reference:type=SubnetV2
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 // RouterInterfaceV2Spec defines the desired state of RouterInterfaceV2

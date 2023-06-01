@@ -8,8 +8,12 @@ metadata:
   name: router-interface-1
 spec:
   forProvider:
-    routerId: ${openstack_networking_router_v2.router_1.id}
-    subnetId: ${openstack_networking_subnet_v2.subnet_1.id}
+    routerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: router_1
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_1
 
 ---
 
@@ -55,7 +59,9 @@ spec:
   forProvider:
     cidr: 192.168.199.0/24
     ipVersion: 4
-    networkId: ${openstack_networking_network_v2.network_1.id}
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1
 
 ---
 

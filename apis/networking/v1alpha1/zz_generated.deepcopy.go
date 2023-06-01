@@ -10,6 +10,7 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -744,10 +745,30 @@ func (in *RouterInterfaceV2Parameters) DeepCopyInto(out *RouterInterfaceV2Parame
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouterIDRef != nil {
+		in, out := &in.RouterIDRef, &out.RouterIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouterIDSelector != nil {
+		in, out := &in.RouterIDSelector, &out.RouterIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1255,6 +1276,16 @@ func (in *SubnetV2Parameters) DeepCopyInto(out *SubnetV2Parameters) {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkIDRef != nil {
+		in, out := &in.NetworkIDRef, &out.NetworkIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkIDSelector != nil {
+		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NoGateway != nil {
 		in, out := &in.NoGateway, &out.NoGateway

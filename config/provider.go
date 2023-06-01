@@ -13,6 +13,7 @@ import (
 	"github.com/dusky-mate/provider-openstack/config/containerinfra/clusterv1"
 	"github.com/dusky-mate/provider-openstack/config/dns/recordsetv2"
 	"github.com/dusky-mate/provider-openstack/config/dns/zonev2"
+	"github.com/dusky-mate/provider-openstack/config/networking"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
 
@@ -42,6 +43,7 @@ func GetProvider() *ujconfig.Provider {
 		recordsetv2.Configure,
 		zonev2.Configure,
 		clusterv1.Configure,
+		networking.Configure,
 	} {
 		configure(pc)
 	}
