@@ -10,7 +10,7 @@ OpenStack API.
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/dusky-mate/provider-openstack):
 ```
-up ctp provider install dusky-mate/provider-openstack:v0.1.0
+up ctp provider install dusky-mate/provider-openstack:v0.1.3
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: provider-openstack
 spec:
-  package: dusky-mate/provider-openstack:v0.1.0
+  package: dusky-mate/provider-openstack:v0.1.3
 EOF
 ```
 
@@ -36,16 +36,16 @@ Run code-generation pipeline:
 go run cmd/generator/main.go "$PWD"
 ```
 
-Run against a Kubernetes cluster:
+Run against a Kubernetes cluster: (make sure to apply CRDs and providerConfig)
 
 ```console
 make run
 ```
 
-Build, push, and install:
+Run a testbuild with linting:
 
 ```console
-make all
+make reviewable
 ```
 
 Build binary:

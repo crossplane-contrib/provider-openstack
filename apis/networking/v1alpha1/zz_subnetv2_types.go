@@ -142,8 +142,17 @@ type SubnetV2Parameters struct {
 
 	// The UUID of the parent network. Changing this
 	// creates a new subnet.
-	// +kubebuilder:validation:Required
-	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
+	// +crossplane:generate:reference:type=NetworkV2
+	// +kubebuilder:validation:Optional
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a NetworkV2 to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// Do not set a gateway IP on this subnet. Changing
 	// this removes or adds a default gateway IP of the existing subnet.

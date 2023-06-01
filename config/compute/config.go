@@ -1,4 +1,4 @@
-package instancev2
+package compute
 
 import "github.com/upbound/upjet/pkg/config"
 
@@ -14,5 +14,15 @@ func Configure(p *config.Provider) {
 		r.References["key_pair"] = config.Reference{
 			Type: "KeypairV2",
 		}
+	})
+	p.AddResourceConfigurator("openstack_compute_keypair_v2", func(r *config.Resource) {
+
+		// example for connection secrets
+		// r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+		// 	a := map[string][]byte{
+		// 		"example secret": []byte("test"),
+		// 	}
+		// 	return a, nil
+		// }
 	})
 }

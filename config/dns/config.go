@@ -1,4 +1,4 @@
-package zonev2
+package dns
 
 import "github.com/upbound/upjet/pkg/config"
 
@@ -6,5 +6,10 @@ import "github.com/upbound/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("openstack_dns_zone_v2", func(r *config.Resource) {
 		// nothing here atm
+	})
+	p.AddResourceConfigurator("openstack_dns_recordset_v2", func(r *config.Resource) {
+		r.References["zone_id"] = config.Reference{
+			Type: "ZoneV2",
+		}
 	})
 }
