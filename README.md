@@ -31,25 +31,28 @@ You can see the API reference [here](https://doc.crds.dev/github.com/dusky-mate/
 
 ## Developing
 
-Run code-generation pipeline:
+Install the required submodules to build and run:
 ```console
-go run cmd/generator/main.go "$PWD"
+make submodules
+```
+
+Apply the Current CRDs and a providerConfig:
+```console
+kubectl apply -f package/crds
+kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
 Run against a Kubernetes cluster: (make sure to apply CRDs and providerConfig)
-
 ```console
 make run
 ```
 
 Run a testbuild with linting:
-
 ```console
 make reviewable
 ```
 
 Build binary:
-
 ```console
 make build
 ```
