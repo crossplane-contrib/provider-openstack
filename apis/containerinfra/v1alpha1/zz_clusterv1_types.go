@@ -58,7 +58,7 @@ type ClusterV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
 
-	// +crossplane:generate:reference:type=github.com/dusky-mate/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
 	// +kubebuilder:validation:Optional
 	FixedNetwork *string `json:"fixedNetwork,omitempty" tf:"fixed_network,omitempty"`
 
@@ -70,7 +70,7 @@ type ClusterV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	FixedNetworkSelector *v1.Selector `json:"fixedNetworkSelector,omitempty" tf:"-"`
 
-	// +crossplane:generate:reference:type=github.com/dusky-mate/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
 	// +kubebuilder:validation:Optional
 	FixedSubnet *string `json:"fixedSubnet,omitempty" tf:"fixed_subnet,omitempty"`
 

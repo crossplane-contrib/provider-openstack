@@ -24,12 +24,12 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/dusky-mate/provider-openstack/apis"
-	"github.com/dusky-mate/provider-openstack/apis/v1alpha1"
-	"github.com/dusky-mate/provider-openstack/config"
-	"github.com/dusky-mate/provider-openstack/internal/clients"
-	"github.com/dusky-mate/provider-openstack/internal/controller"
-	"github.com/dusky-mate/provider-openstack/internal/features"
+	"github.com/crossplane-contrib/provider-openstack/apis"
+	"github.com/crossplane-contrib/provider-openstack/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-openstack/config"
+	"github.com/crossplane-contrib/provider-openstack/internal/clients"
+	"github.com/crossplane-contrib/provider-openstack/internal/controller"
+	"github.com/crossplane-contrib/provider-openstack/internal/features"
 )
 
 func main() {

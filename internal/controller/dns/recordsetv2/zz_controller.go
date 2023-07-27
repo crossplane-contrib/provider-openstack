@@ -18,7 +18,7 @@ import (
 	"github.com/upbound/upjet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/dusky-mate/provider-openstack/apis/dns/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1"
 )
 
 // Setup adds a controller that reconciles RecordsetV2 managed resources.

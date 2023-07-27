@@ -60,4 +60,4 @@ make build
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/dusky-mate/provider-openstack/issues).
+open an [issue](https://github.com/crossplane-contrib/provider-openstack/issues).
