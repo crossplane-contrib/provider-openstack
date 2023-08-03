@@ -1,4 +1,4 @@
-module github.com/dusky-mate/provider-openstack
+module github.com/crossplane-contrib/provider-openstack
 
 go 1.19
 
