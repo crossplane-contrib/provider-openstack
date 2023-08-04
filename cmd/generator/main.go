@@ -11,7 +11,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/pipeline"
 
-	"github.com/dusky-mate/provider-openstack/config"
+	"github.com/crossplane-contrib/provider-openstack/config"
 )
 
 func main() {
