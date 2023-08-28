@@ -17,6 +17,11 @@ func (mg *EC2CredentialV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicies of this EC2CredentialV3.
+func (mg *EC2CredentialV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
 // GetProviderConfigReference of this EC2CredentialV3.
 func (mg *EC2CredentialV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *EC2CredentialV3) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this EC2CredentialV3.
 func (mg *EC2CredentialV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this EC2CredentialV3.
+func (mg *EC2CredentialV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this EC2CredentialV3.
@@ -83,6 +93,11 @@ func (mg *ProjectV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicies of this ProjectV3.
+func (mg *ProjectV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
 // GetProviderConfigReference of this ProjectV3.
 func (mg *ProjectV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -114,6 +129,11 @@ func (mg *ProjectV3) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this ProjectV3.
 func (mg *ProjectV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this ProjectV3.
+func (mg *ProjectV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ProjectV3.
@@ -149,6 +169,11 @@ func (mg *RoleAssignmentV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicies of this RoleAssignmentV3.
+func (mg *RoleAssignmentV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
 // GetProviderConfigReference of this RoleAssignmentV3.
 func (mg *RoleAssignmentV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -180,6 +205,11 @@ func (mg *RoleAssignmentV3) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this RoleAssignmentV3.
 func (mg *RoleAssignmentV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this RoleAssignmentV3.
+func (mg *RoleAssignmentV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoleAssignmentV3.
@@ -215,6 +245,11 @@ func (mg *RoleV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicies of this RoleV3.
+func (mg *RoleV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
 // GetProviderConfigReference of this RoleV3.
 func (mg *RoleV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -246,6 +281,11 @@ func (mg *RoleV3) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this RoleV3.
 func (mg *RoleV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this RoleV3.
+func (mg *RoleV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoleV3.
@@ -281,6 +321,11 @@ func (mg *UserV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicies of this UserV3.
+func (mg *UserV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
 // GetProviderConfigReference of this UserV3.
 func (mg *UserV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -312,6 +357,11 @@ func (mg *UserV3) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this UserV3.
 func (mg *UserV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this UserV3.
+func (mg *UserV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this UserV3.

@@ -17,6 +17,11 @@ func (mg *ContainerV1) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicies of this ContainerV1.
+func (mg *ContainerV1) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
 // GetProviderConfigReference of this ContainerV1.
 func (mg *ContainerV1) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *ContainerV1) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this ContainerV1.
 func (mg *ContainerV1) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this ContainerV1.
+func (mg *ContainerV1) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ContainerV1.
