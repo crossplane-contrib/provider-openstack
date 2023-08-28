@@ -1,0 +1,19 @@
+apiVersion: objectstorage.openstack.upbound.io/v1alpha1
+kind: ContainerV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/containerv1
+  labels:
+    testing.upbound.io/example-name: container_1
+  name: container-1
+spec:
+  forProvider:
+    contentType: application/json
+    metadata:
+      test: "true"
+    name: tf-test-container-1
+    region: RegionOne
+    versioning: true
+
+---
+

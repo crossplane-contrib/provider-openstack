@@ -29,7 +29,13 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"openstack_containerinfra_clustertemplate_v1": config.IdentifierFromProvider,
 	"openstack_containerinfra_nodegroup_v1":       config.IdentifierFromProvider,
 
-	"openstack_identity_project_v3": config.IdentifierFromProvider,
+	"openstack_identity_project_v3":         config.IdentifierFromProvider,
+	"openstack_identity_user_v3":            config.IdentifierFromProvider,
+	"openstack_identity_role_v3":            config.IdentifierFromProvider,
+	"openstack_identity_role_assignment_v3": config.IdentifierFromProvider,
+	"openstack_identity_ec2_credential_v3":  config.IdentifierFromProvider,
+
+	"openstack_objectstorage_container_v1": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

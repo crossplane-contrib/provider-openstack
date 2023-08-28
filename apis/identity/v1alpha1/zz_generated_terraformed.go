@@ -13,6 +13,80 @@ import (
 	"github.com/upbound/upjet/pkg/resource/json"
 )
 
+// GetTerraformResourceType returns Terraform resource type for this EC2CredentialV3
+func (mg *EC2CredentialV3) GetTerraformResourceType() string {
+	return "openstack_identity_ec2_credential_v3"
+}
+
+// GetConnectionDetailsMapping for this EC2CredentialV3
+func (tr *EC2CredentialV3) GetConnectionDetailsMapping() map[string]string {
+	return map[string]string{"secret": "status.atProvider.secret"}
+}
+
+// GetObservation of this EC2CredentialV3
+func (tr *EC2CredentialV3) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this EC2CredentialV3
+func (tr *EC2CredentialV3) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this EC2CredentialV3
+func (tr *EC2CredentialV3) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this EC2CredentialV3
+func (tr *EC2CredentialV3) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this EC2CredentialV3
+func (tr *EC2CredentialV3) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this EC2CredentialV3 using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *EC2CredentialV3) LateInitialize(attrs []byte) (bool, error) {
+	params := &EC2CredentialV3Parameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *EC2CredentialV3) GetTerraformSchemaVersion() int {
+	return 0
+}
+
 // GetTerraformResourceType returns Terraform resource type for this ProjectV3
 func (mg *ProjectV3) GetTerraformResourceType() string {
 	return "openstack_identity_project_v3"
@@ -84,5 +158,227 @@ func (tr *ProjectV3) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *ProjectV3) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this RoleAssignmentV3
+func (mg *RoleAssignmentV3) GetTerraformResourceType() string {
+	return "openstack_identity_role_assignment_v3"
+}
+
+// GetConnectionDetailsMapping for this RoleAssignmentV3
+func (tr *RoleAssignmentV3) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this RoleAssignmentV3
+func (tr *RoleAssignmentV3) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this RoleAssignmentV3
+func (tr *RoleAssignmentV3) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this RoleAssignmentV3
+func (tr *RoleAssignmentV3) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this RoleAssignmentV3
+func (tr *RoleAssignmentV3) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this RoleAssignmentV3
+func (tr *RoleAssignmentV3) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this RoleAssignmentV3 using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *RoleAssignmentV3) LateInitialize(attrs []byte) (bool, error) {
+	params := &RoleAssignmentV3Parameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *RoleAssignmentV3) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this RoleV3
+func (mg *RoleV3) GetTerraformResourceType() string {
+	return "openstack_identity_role_v3"
+}
+
+// GetConnectionDetailsMapping for this RoleV3
+func (tr *RoleV3) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this RoleV3
+func (tr *RoleV3) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this RoleV3
+func (tr *RoleV3) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this RoleV3
+func (tr *RoleV3) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this RoleV3
+func (tr *RoleV3) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this RoleV3
+func (tr *RoleV3) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this RoleV3 using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *RoleV3) LateInitialize(attrs []byte) (bool, error) {
+	params := &RoleV3Parameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *RoleV3) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this UserV3
+func (mg *UserV3) GetTerraformResourceType() string {
+	return "openstack_identity_user_v3"
+}
+
+// GetConnectionDetailsMapping for this UserV3
+func (tr *UserV3) GetConnectionDetailsMapping() map[string]string {
+	return map[string]string{"password": "spec.forProvider.passwordSecretRef"}
+}
+
+// GetObservation of this UserV3
+func (tr *UserV3) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this UserV3
+func (tr *UserV3) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this UserV3
+func (tr *UserV3) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this UserV3
+func (tr *UserV3) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this UserV3
+func (tr *UserV3) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this UserV3 using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *UserV3) LateInitialize(attrs []byte) (bool, error) {
+	params := &UserV3Parameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *UserV3) GetTerraformSchemaVersion() int {
 	return 0
 }

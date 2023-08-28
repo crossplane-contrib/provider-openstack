@@ -15,6 +15,7 @@ import (
 	v1alpha1dns "github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1"
 	v1alpha1identity "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
 	v1alpha1networking "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
+	v1alpha1objectstorage "github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1"
 	v1alpha1apis "github.com/crossplane-contrib/provider-openstack/apis/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-openstack/apis/v1beta1"
 )
@@ -27,6 +28,7 @@ func init() {
 		v1alpha1dns.SchemeBuilder.AddToScheme,
 		v1alpha1identity.SchemeBuilder.AddToScheme,
 		v1alpha1networking.SchemeBuilder.AddToScheme,
+		v1alpha1objectstorage.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 	)
