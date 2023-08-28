@@ -19,6 +19,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"openstack_networking_router_v2":           config.IdentifierFromProvider,
 	"openstack_networking_router_interface_v2": config.IdentifierFromProvider,
 	"openstack_networking_floatingip_v2":       config.IdentifierFromProvider,
+	"openstack_networking_addressscope_v2":     config.IdentifierFromProvider,
+	"openstack_networking_port_v2":             config.IdentifierFromProvider,
 
 	"openstack_dns_zone_v2":      config.IdentifierFromProvider,
 	"openstack_dns_recordset_v2": config.IdentifierFromProvider,
@@ -26,6 +28,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"openstack_containerinfra_cluster_v1":         config.IdentifierFromProvider,
 	"openstack_containerinfra_clustertemplate_v1": config.IdentifierFromProvider,
 	"openstack_containerinfra_nodegroup_v1":       config.IdentifierFromProvider,
+
+	"openstack_identity_project_v3": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

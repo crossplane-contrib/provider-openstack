@@ -1,0 +1,31 @@
+apiVersion: networking.openstack.upbound.io/v1alpha1
+kind: PortV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/portv2
+  labels:
+    testing.upbound.io/example-name: port_1
+  name: port-1
+spec:
+  forProvider:
+    adminStateUp: "true"
+    name: port_1
+    networkId: ${openstack_networking_network_v2.network_1.id}
+
+---
+
+apiVersion: networking.openstack.upbound.io/v1alpha1
+kind: NetworkV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/portv2
+  labels:
+    testing.upbound.io/example-name: network_1
+  name: network-1
+spec:
+  forProvider:
+    adminStateUp: "true"
+    name: network_1
+
+---
+

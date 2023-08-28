@@ -16,8 +16,11 @@ import (
 	nodegroupv1 "github.com/crossplane-contrib/provider-openstack/internal/controller/containerinfra/nodegroupv1"
 	recordsetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/dns/recordsetv2"
 	zonev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/dns/zonev2"
+	projectv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/projectv3"
+	addressscopev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/addressscopev2"
 	floatingipv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipv2"
 	networkv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/networkv2"
+	portv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/portv2"
 	routerinterfacev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerinterfacev2"
 	routerv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerv2"
 	subnetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/subnetv2"
@@ -35,8 +38,11 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		nodegroupv1.Setup,
 		recordsetv2.Setup,
 		zonev2.Setup,
+		projectv3.Setup,
+		addressscopev2.Setup,
 		floatingipv2.Setup,
 		networkv2.Setup,
+		portv2.Setup,
 		routerinterfacev2.Setup,
 		routerv2.Setup,
 		subnetv2.Setup,
