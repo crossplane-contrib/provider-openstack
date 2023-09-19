@@ -8,9 +8,9 @@ OpenStack API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/dusky-mate/provider-openstack):
+to the [latest release](https://marketplace.upbound.io/providers/crossplane-contrib/provider-openstack):
 ```
-up ctp provider install dusky-mate/provider-openstack:v0.1.3
+up ctp provider install crossplane-contrib/provider-openstack:vX.X.X
 ```
 
 Alternatively, you can use declarative installation:
@@ -21,13 +21,13 @@ kind: Provider
 metadata:
   name: provider-openstack
 spec:
-  package: dusky-mate/provider-openstack:v0.1.3
+  package: crossplane-contrib/provider-openstack:vX.X.X
 EOF
 ```
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
-You can see the API reference [here](https://doc.crds.dev/github.com/dusky-mate/provider-openstack).
+You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-openstack).
 
 ## Developing
 
