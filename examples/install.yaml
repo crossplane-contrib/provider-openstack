@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-openstack
 spec:
-  package: dusky-mate/provider-openstack:v0.1.0
+  package: crossplane-contrib/provider-openstack:vX.X.X # replace by current version
