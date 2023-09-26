@@ -43,8 +43,8 @@ type RecordsetV2Parameters struct {
 	// An array of DNS records. Note: if an IPv6 address
 	// contains brackets ([ ]), the brackets will be stripped and the modified
 	// address will be recorded in the state.
-	// +kubebuilder:validation:Optional
-	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
+	// +kubebuilder:validation:Required
+	Records []*string `json:"records" tf:"records,omitempty"`
 
 	// The region in which to obtain the V2 DNS client.
 	// If omitted, the region argument of the provider is used.

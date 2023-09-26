@@ -140,6 +140,8 @@ spec:
                             must be less than or equal to the swap size of the flavor.
                             Changing this creates a new server.'
                           type: string
+                        multiattach:
+                          type: boolean
                         sourceType:
                           description: The source type of the device. Must be one
                             of "blank", "image", "volume", or "snapshot". Changing

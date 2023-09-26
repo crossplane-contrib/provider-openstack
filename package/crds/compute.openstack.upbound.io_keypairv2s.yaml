@@ -275,9 +275,6 @@ spec:
                     type: string
                   id:
                     type: string
-                  privateKey:
-                    description: The generated private key when no public key is specified.
-                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

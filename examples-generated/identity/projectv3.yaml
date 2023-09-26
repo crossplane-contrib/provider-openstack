@@ -1,0 +1,15 @@
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/projectv3
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-cosmos-test
+spec:
+  forProvider:
+    description: A project
+    name: project_1
+
+---
+
