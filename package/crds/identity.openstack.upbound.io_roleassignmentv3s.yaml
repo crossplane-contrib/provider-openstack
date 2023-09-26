@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: keypairv2s.compute.openstack.upbound.io
+  name: roleassignmentv3s.identity.openstack.upbound.io
 spec:
-  group: compute.openstack.upbound.io
+  group: identity.openstack.upbound.io
   names:
     categories:
     - crossplane
     - managed
     - openstack
-    kind: KeypairV2
-    listKind: KeypairV2List
-    plural: keypairv2s
-    singular: keypairv2
+    kind: RoleAssignmentV3
+    listKind: RoleAssignmentV3List
+    plural: roleassignmentv3s
+    singular: roleassignmentv3
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KeypairV2 is the Schema for the KeypairV2s API. Manages a V2
-          keypair resource within OpenStack.
+        description: RoleAssignmentV3 is the Schema for the RoleAssignmentV3s API.
+          Manages a V3 Role assignment within OpenStack Keystone.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: KeypairV2Spec defines the desired state of KeypairV2
+            description: RoleAssignmentV3Spec defines the desired state of RoleAssignmentV3
             properties:
               deletionPolicy:
                 default: Delete
@@ -64,35 +64,98 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  name:
-                    description: A unique name for the keypair. Changing this creates
-                      a new keypair.
+                  domainId:
+                    description: The domain to assign the role in.
                     type: string
-                  publicKey:
-                    description: A pregenerated OpenSSH-formatted public key. Changing
-                      this creates a new keypair. If a public key is not specified,
-                      then a public/private key pair will be automatically generated.
-                      If a pair is created, then destroying this resource means you
-                      will lose access to that keypair forever.
+                  groupId:
+                    description: The group to assign the role to.
                     type: string
+                  projectId:
+                    description: The project to assign the role in.
+                    type: string
+                  projectIdRef:
+                    description: Reference to a ProjectV3 to populate projectId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  projectIdSelector:
+                    description: Selector for a ProjectV3 to populate projectId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   region:
-                    description: The region in which to obtain the V2 Compute client.
-                      Keypairs are associated with accounts, but a Compute client
-                      is needed to create one. If omitted, the region argument of
-                      the provider is used. Changing this creates a new keypair.
+                    type: string
+                  roleId:
+                    description: The role to assign.
                     type: string
                   userId:
-                    description: This allows administrative users to operate key-pairs
-                      of specified user ID. For this feature your need to have openstack
-                      microversion 2.10 (Liberty) or later.
+                    description: The user to assign the role to.
                     type: string
-                  valueSpecs:
-                    additionalProperties:
-                      type: string
-                    description: Map of additional options.
-                    type: object
                 required:
-                - name
+                - roleId
                 type: object
               providerConfigRef:
                 default:
@@ -266,17 +329,11 @@ spec:
             - forProvider
             type: object
           status:
-            description: KeypairV2Status defines the observed state of KeypairV2.
+            description: RoleAssignmentV3Status defines the observed state of RoleAssignmentV3.
             properties:
               atProvider:
                 properties:
-                  fingerprint:
-                    description: The fingerprint of the public key.
-                    type: string
                   id:
-                    type: string
-                  privateKey:
-                    description: The generated private key when no public key is specified.
                     type: string
                 type: object
               conditions:

@@ -53,9 +53,6 @@ type BlockDeviceParameters struct {
 	// +kubebuilder:validation:Optional
 	GuestFormat *string `json:"guestFormat,omitempty" tf:"guest_format,omitempty"`
 
-	// +kubebuilder:validation:Optional
-	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
-
 	// The source type of the device. Must be one of
 	// "blank", "image", "volume", or "snapshot". Changing this creates a new
 	// server.

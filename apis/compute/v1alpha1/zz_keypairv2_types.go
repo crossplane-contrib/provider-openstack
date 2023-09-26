@@ -19,6 +19,9 @@ type KeypairV2Observation struct {
 	Fingerprint *string `json:"fingerprint,omitempty" tf:"fingerprint,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The generated private key when no public key is specified.
+	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
 }
 
 type KeypairV2Parameters struct {

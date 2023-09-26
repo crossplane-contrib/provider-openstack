@@ -94,7 +94,7 @@ func (mg *KeypairV2) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this KeypairV2
 func (tr *KeypairV2) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"private_key": "status.atProvider.privateKey"}
+	return nil
 }
 
 // GetObservation of this KeypairV2

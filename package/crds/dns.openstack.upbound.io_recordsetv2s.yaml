@@ -186,7 +186,6 @@ spec:
                     type: object
                 required:
                 - name
-                - records
                 type: object
               providerConfigRef:
                 default:

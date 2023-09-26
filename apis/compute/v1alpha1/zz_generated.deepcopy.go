@@ -62,11 +62,6 @@ func (in *BlockDeviceParameters) DeepCopyInto(out *BlockDeviceParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.Multiattach != nil {
-		in, out := &in.Multiattach, &out.Multiattach
-		*out = new(bool)
-		**out = **in
-	}
 	if in.SourceType != nil {
 		in, out := &in.SourceType, &out.SourceType
 		*out = new(string)
@@ -523,6 +518,11 @@ func (in *KeypairV2Observation) DeepCopyInto(out *KeypairV2Observation) {
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.PrivateKey != nil {
+		in, out := &in.PrivateKey, &out.PrivateKey
 		*out = new(string)
 		**out = **in
 	}

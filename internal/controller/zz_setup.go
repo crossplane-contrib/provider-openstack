@@ -17,6 +17,7 @@ import (
 	recordsetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/dns/recordsetv2"
 	zonev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/dns/zonev2"
 	projectv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/projectv3"
+	roleassignmentv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/roleassignmentv3"
 	floatingipv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipv2"
 	networkv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/networkv2"
 	routerinterfacev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerinterfacev2"
@@ -37,6 +38,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		recordsetv2.Setup,
 		zonev2.Setup,
 		projectv3.Setup,
+		roleassignmentv3.Setup,
 		floatingipv2.Setup,
 		networkv2.Setup,
 		routerinterfacev2.Setup,
