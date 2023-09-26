@@ -1,4 +1,22 @@
 ---
+apiVersion: compute.openstack.upbound.io/v1alpha1
+kind: QuotasetV2
+metadata:
+  name: quotaset-1
+spec:
+  forProvider:
+    projectIdRef:
+      name: test-project
+    cores: 4
+    instances: 2
+    keyPairs: 10
+    ram: 4096
+    serverGroupMembers: 8
+    serverGroups: 10
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
 apiVersion: identity.openstack.upbound.io/v1alpha1
 kind: RoleAssignmentV3
 metadata:

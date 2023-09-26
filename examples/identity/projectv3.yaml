@@ -1,3 +1,4 @@
+---
 apiVersion: identity.openstack.upbound.io/v1alpha1
 kind: ProjectV3
 metadata:
@@ -12,5 +13,3 @@ spec:
     name: project_1
   providerConfigRef:
     name: openstack-admin-provider-config
-
----

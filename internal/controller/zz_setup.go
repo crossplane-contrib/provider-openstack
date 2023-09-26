@@ -11,6 +11,7 @@ import (
 
 	instancev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/instancev2"
 	keypairv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/keypairv2"
+	quotasetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/quotasetv2"
 	clustertemplatev1 "github.com/crossplane-contrib/provider-openstack/internal/controller/containerinfra/clustertemplatev1"
 	clusterv1 "github.com/crossplane-contrib/provider-openstack/internal/controller/containerinfra/clusterv1"
 	nodegroupv1 "github.com/crossplane-contrib/provider-openstack/internal/controller/containerinfra/nodegroupv1"
@@ -32,6 +33,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		instancev2.Setup,
 		keypairv2.Setup,
+		quotasetv2.Setup,
 		clustertemplatev1.Setup,
 		clusterv1.Setup,
 		nodegroupv1.Setup,

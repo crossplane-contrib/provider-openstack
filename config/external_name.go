@@ -13,6 +13,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 
 	"openstack_compute_instance_v2": config.IdentifierFromProvider,
 	"openstack_compute_keypair_v2":  config.IdentifierFromProvider,
+	"openstack_compute_quotaset_v2": config.IdentifierFromProvider,
 
 	"openstack_networking_network_v2":          config.IdentifierFromProvider,
 	"openstack_networking_subnet_v2":           config.IdentifierFromProvider,
