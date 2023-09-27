@@ -1,0 +1,32 @@
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: RoleAssignmentV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: role_assignment_1
+  name: role-assignment-1
+spec:
+  forProvider:
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
+    roleId: ${openstack_identity_role_v3.role_1.id}
+    userId: ${openstack_identity_user_v3.user_1.id}
+
+---
+
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-1
+spec:
+  forProvider:
+    name: project_1
+
+---
+

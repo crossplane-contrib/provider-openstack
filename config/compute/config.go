@@ -15,6 +15,11 @@ func Configure(p *config.Provider) {
 			Type: "KeypairV2",
 		}
 	})
+	p.AddResourceConfigurator("openstack_compute_quotaset_v2", func(r *config.Resource) {
+		r.References["project_id"] = config.Reference{
+			Type: "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3",
+		}
+	})
 	p.AddResourceConfigurator("openstack_compute_keypair_v2", func(r *config.Resource) {
 
 		// example for connection secrets
