@@ -1,0 +1,16 @@
+---
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: UserV3
+metadata:
+  name: first-user
+  namespace: default
+spec:
+  forProvider:
+    description: A user
+    name: user1
+    passwordSecretRef:
+      name: first-user-password
+      namespace: default
+      key: password
+  providerConfigRef:
+    name: default

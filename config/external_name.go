@@ -30,6 +30,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 
 	"openstack_identity_project_v3":         config.IdentifierFromProvider,
 	"openstack_identity_role_assignment_v3": config.IdentifierFromProvider,
+	"openstack_identity_user_v3":            config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
