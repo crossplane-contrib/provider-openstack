@@ -1,0 +1,25 @@
+---
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: RoleAssignmentV3
+metadata:
+  name: testproject-role-assignment
+spec:
+  forProvider:
+    projectIdRef:
+      name: test-project
+    roleId: 1232ff9ee4384b1894a45678d3e92bggg
+    groupId: tqs4f12c015d4sfdgbsge5e793d475896b3adff21c92f4856e02c7db218123
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: test-project
+spec:
+  forProvider:
+    name: testProject
+  providerConfigRef:
+    name: openstack-admin-provider-config
