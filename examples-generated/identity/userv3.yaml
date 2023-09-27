@@ -1,0 +1,44 @@
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: UserV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/userv3
+  labels:
+    testing.upbound.io/example-name: user_1
+  name: user-1
+spec:
+  forProvider:
+    defaultProjectId: ${openstack_identity_project_v3.project_1.id}
+    description: A user
+    extra:
+      email: user_1@foobar.com
+    ignoreChangePasswordUponFirstUse: true
+    multiFactorAuthEnabled: true
+    multiFactorAuthRule:
+    - rule:
+      - password
+      - totp
+    - rule:
+      - password
+    name: user_1
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+
+---
+
+apiVersion: identity.openstack.upbound.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/userv3
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-1
+spec:
+  forProvider:
+    name: project_1
+
+---
+
