@@ -11,6 +11,7 @@ import "github.com/upbound/upjet/pkg/config"
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
 
+	"openstack_compute_flavor_v2":   config.IdentifierFromProvider,
 	"openstack_compute_instance_v2": config.IdentifierFromProvider,
 	"openstack_compute_keypair_v2":  config.IdentifierFromProvider,
 	"openstack_compute_quotaset_v2": config.IdentifierFromProvider,

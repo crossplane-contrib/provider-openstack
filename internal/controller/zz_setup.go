@@ -10,6 +10,7 @@ import (
 	"github.com/upbound/upjet/pkg/controller"
 
 	quotasetv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/blockstorage/quotasetv3"
+	flavorv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/flavorv2"
 	instancev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/instancev2"
 	keypairv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/keypairv2"
 	quotasetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/quotasetv2"
@@ -37,6 +38,7 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		quotasetv3.Setup,
+		flavorv2.Setup,
 		instancev2.Setup,
 		keypairv2.Setup,
 		quotasetv2.Setup,
