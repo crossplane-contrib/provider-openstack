@@ -18,6 +18,7 @@ import (
 	nodegroupv1 "github.com/crossplane-contrib/provider-openstack/internal/controller/containerinfra/nodegroupv1"
 	recordsetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/dns/recordsetv2"
 	zonev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/dns/zonev2"
+	applicationcredentialv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/applicationcredentialv3"
 	projectv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/projectv3"
 	roleassignmentv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/roleassignmentv3"
 	userv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/userv3"
@@ -44,6 +45,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		nodegroupv1.Setup,
 		recordsetv2.Setup,
 		zonev2.Setup,
+		applicationcredentialv3.Setup,
 		projectv3.Setup,
 		roleassignmentv3.Setup,
 		userv3.Setup,

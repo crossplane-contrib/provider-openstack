@@ -13,6 +13,80 @@ import (
 	"github.com/upbound/upjet/pkg/resource/json"
 )
 
+// GetTerraformResourceType returns Terraform resource type for this ApplicationCredentialV3
+func (mg *ApplicationCredentialV3) GetTerraformResourceType() string {
+	return "openstack_identity_application_credential_v3"
+}
+
+// GetConnectionDetailsMapping for this ApplicationCredentialV3
+func (tr *ApplicationCredentialV3) GetConnectionDetailsMapping() map[string]string {
+	return map[string]string{"secret": "spec.forProvider.secretSecretRef"}
+}
+
+// GetObservation of this ApplicationCredentialV3
+func (tr *ApplicationCredentialV3) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this ApplicationCredentialV3
+func (tr *ApplicationCredentialV3) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this ApplicationCredentialV3
+func (tr *ApplicationCredentialV3) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this ApplicationCredentialV3
+func (tr *ApplicationCredentialV3) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this ApplicationCredentialV3
+func (tr *ApplicationCredentialV3) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this ApplicationCredentialV3 using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *ApplicationCredentialV3) LateInitialize(attrs []byte) (bool, error) {
+	params := &ApplicationCredentialV3Parameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *ApplicationCredentialV3) GetTerraformSchemaVersion() int {
+	return 0
+}
+
 // GetTerraformResourceType returns Terraform resource type for this ProjectV3
 func (mg *ProjectV3) GetTerraformResourceType() string {
 	return "openstack_identity_project_v3"
