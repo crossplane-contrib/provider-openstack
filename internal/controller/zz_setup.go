@@ -21,6 +21,7 @@ import (
 	projectv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/projectv3"
 	roleassignmentv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/roleassignmentv3"
 	userv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/identity/userv3"
+	quotav2 "github.com/crossplane-contrib/provider-openstack/internal/controller/lb/quotav2"
 	floatingipv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipv2"
 	networkv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/networkv2"
 	routerinterfacev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerinterfacev2"
@@ -45,6 +46,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		projectv3.Setup,
 		roleassignmentv3.Setup,
 		userv3.Setup,
+		quotav2.Setup,
 		floatingipv2.Setup,
 		networkv2.Setup,
 		routerinterfacev2.Setup,

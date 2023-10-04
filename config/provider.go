@@ -13,6 +13,7 @@ import (
 	"github.com/crossplane-contrib/provider-openstack/config/containerinfra"
 	"github.com/crossplane-contrib/provider-openstack/config/dns"
 	"github.com/crossplane-contrib/provider-openstack/config/identity"
+	"github.com/crossplane-contrib/provider-openstack/config/lb"
 	"github.com/crossplane-contrib/provider-openstack/config/networking"
 	ujconfig "github.com/upbound/upjet/pkg/config"
 )
@@ -43,6 +44,7 @@ func GetProvider() *ujconfig.Provider {
 		containerinfra.Configure,
 		dns.Configure,
 		identity.Configure,
+		lb.Configure,
 		networking.Configure,
 	} {
 		configure(pc)
