@@ -24,6 +24,7 @@ import (
 	quotav2 "github.com/crossplane-contrib/provider-openstack/internal/controller/lb/quotav2"
 	floatingipv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipv2"
 	networkv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/networkv2"
+	quotav2networking "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/quotav2"
 	routerinterfacev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerinterfacev2"
 	routerv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerv2"
 	subnetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/subnetv2"
@@ -49,6 +50,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		quotav2.Setup,
 		floatingipv2.Setup,
 		networkv2.Setup,
+		quotav2networking.Setup,
 		routerinterfacev2.Setup,
 		routerv2.Setup,
 		subnetv2.Setup,

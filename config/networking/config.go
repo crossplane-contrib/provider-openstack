@@ -25,4 +25,9 @@ func Configure(p *config.Provider) {
 			IgnoredFields: []string{"external_gateway"},
 		}
 	})
+	p.AddResourceConfigurator("openstack_networking_quota_v2", func(r *config.Resource) {
+		r.References["project_id"] = config.Reference{
+			Type: "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3",
+		}
+	})
 }

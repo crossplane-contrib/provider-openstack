@@ -20,6 +20,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"openstack_networking_router_v2":           config.IdentifierFromProvider,
 	"openstack_networking_router_interface_v2": config.IdentifierFromProvider,
 	"openstack_networking_floatingip_v2":       config.IdentifierFromProvider,
+	"openstack_networking_quota_v2":            config.IdentifierFromProvider,
 
 	"openstack_dns_zone_v2":      config.IdentifierFromProvider,
 	"openstack_dns_recordset_v2": config.IdentifierFromProvider,
