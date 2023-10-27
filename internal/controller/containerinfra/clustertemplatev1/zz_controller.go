@@ -29,19 +29,19 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	if o.SecretStoreConfigGVK != nil {
 		cps = append(cps, connection.NewDetailsManager(mgr.GetClient(), *o.SecretStoreConfigGVK))
 	}
-	r := managed.NewReconciler(mgr,
-		xpresource.ManagedKind(v1alpha1.ClustertemplateV1_GroupVersionKind),
-		managed.WithExternalConnecter(tjcontroller.NewConnector(mgr.GetClient(), o.WorkspaceStore, o.SetupFn, o.Provider.Resources["openstack_containerinfra_clustertemplate_v1"],
+	opts := []managed.ReconcilerOption{
+		managed.WithExternalConnecter(tjcontroller.NewConnector(mgr.GetClient(), o.WorkspaceStore, o.SetupFn, o.Provider.Resources["openstack_containerinfra_clustertemplate_v1"], tjcontroller.WithLogger(o.Logger),
 			tjcontroller.WithCallbackProvider(tjcontroller.NewAPICallbacks(mgr, xpresource.ManagedKind(v1alpha1.ClustertemplateV1_GroupVersionKind))),
 		)),
 		managed.WithLogger(o.Logger.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
 		managed.WithFinalizer(terraform.NewWorkspaceFinalizer(o.WorkspaceStore, xpresource.NewAPIFinalizer(mgr.GetClient(), managed.FinalizerName))),
-		managed.WithTimeout(3*time.Minute),
+		managed.WithTimeout(3 * time.Minute),
 		managed.WithInitializers(initializers),
 		managed.WithConnectionPublishers(cps...),
 		managed.WithPollInterval(o.PollInterval),
-	)
+	}
+	r := managed.NewReconciler(mgr, xpresource.ManagedKind(v1alpha1.ClustertemplateV1_GroupVersionKind), opts...)
 
 	return ctrl.NewControllerManagedBy(mgr).
 		Named(name).

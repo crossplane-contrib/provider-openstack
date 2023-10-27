@@ -20,16 +20,38 @@ type KeypairV2Observation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The generated private key when no public key is specified.
-	PrivateKey *string `json:"privateKey,omitempty" tf:"private_key,omitempty"`
+	// A unique name for the keypair. Changing this creates a new
+	// keypair.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// A pregenerated OpenSSH-formatted public key.
+	// Changing this creates a new keypair. If a public key is not specified, then
+	// a public/private key pair will be automatically generated. If a pair is
+	// created, then destroying this resource means you will lose access to that
+	// keypair forever.
+	PublicKey *string `json:"publicKey,omitempty" tf:"public_key,omitempty"`
+
+	// The region in which to obtain the V2 Compute client.
+	// Keypairs are associated with accounts, but a Compute client is needed to
+	// create one. If omitted, the region argument of the provider is used.
+	// Changing this creates a new keypair.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// This allows administrative users to operate key-pairs
+	// of specified user ID. For this feature your need to have openstack microversion
+	// 2.10 (Liberty) or later.
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Map of additional options.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
 type KeypairV2Parameters struct {
 
 	// A unique name for the keypair. Changing this creates a new
 	// keypair.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// A pregenerated OpenSSH-formatted public key.
 	// Changing this creates a new keypair. If a public key is not specified, then
@@ -81,8 +103,9 @@ type KeypairV2Status struct {
 type KeypairV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              KeypairV2Spec   `json:"spec"`
-	Status            KeypairV2Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	Spec   KeypairV2Spec   `json:"spec"`
+	Status KeypairV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

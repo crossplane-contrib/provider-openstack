@@ -14,7 +14,50 @@ import (
 )
 
 type QuotasetV3Observation struct {
+
+	// Quota value for backup gigabytes. Changing
+	// this updates the existing quotaset.
+	BackupGigabytes *float64 `json:"backupGigabytes,omitempty" tf:"backup_gigabytes,omitempty"`
+
+	// Quota value for backups. Changing this updates the
+	// existing quotaset.
+	Backups *float64 `json:"backups,omitempty" tf:"backups,omitempty"`
+
+	// Quota value for gigabytes. Changing this updates the
+	// existing quotaset.
+	Gigabytes *float64 `json:"gigabytes,omitempty" tf:"gigabytes,omitempty"`
+
+	// Quota value for groups. Changing this updates the
+	// existing quotaset.
+	Groups *float64 `json:"groups,omitempty" tf:"groups,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Quota value for gigabytes per volume .
+	// Changing this updates the existing quotaset.
+	PerVolumeGigabytes *float64 `json:"perVolumeGigabytes,omitempty" tf:"per_volume_gigabytes,omitempty"`
+
+	// ID of the project to manage quotas. Changing this
+	// creates a new quotaset.
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The region in which to create the volume. If
+	// omitted, the region argument of the provider is used. Changing this
+	// creates a new quotaset.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Quota value for snapshots. Changing this updates the
+	// existing quotaset.
+	Snapshots *float64 `json:"snapshots,omitempty" tf:"snapshots,omitempty"`
+
+	// Key/Value pairs for setting quota for
+	// volumes types. Possible keys are snapshots_<volume_type_name>,
+	// volumes_<volume_type_name> and gigabytes_<volume_type_name>.
+	VolumeTypeQuota map[string]*string `json:"volumeTypeQuota,omitempty" tf:"volume_type_quota,omitempty"`
+
+	// Quota value for volumes. Changing this updates the
+	// existing quotaset.
+	Volumes *float64 `json:"volumes,omitempty" tf:"volumes,omitempty"`
 }
 
 type QuotasetV3Parameters struct {

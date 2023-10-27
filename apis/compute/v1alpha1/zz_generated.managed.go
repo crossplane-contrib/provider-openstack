@@ -17,6 +17,11 @@ func (mg *FlavorV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this FlavorV2.
+func (mg *FlavorV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this FlavorV2.
 func (mg *FlavorV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *FlavorV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this FlavorV2.
 func (mg *FlavorV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this FlavorV2.
+func (mg *FlavorV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this FlavorV2.
@@ -83,6 +93,11 @@ func (mg *InstanceV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this InstanceV2.
+func (mg *InstanceV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this InstanceV2.
 func (mg *InstanceV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -114,6 +129,11 @@ func (mg *InstanceV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this InstanceV2.
 func (mg *InstanceV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this InstanceV2.
+func (mg *InstanceV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this InstanceV2.
@@ -149,6 +169,11 @@ func (mg *KeypairV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this KeypairV2.
+func (mg *KeypairV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this KeypairV2.
 func (mg *KeypairV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -180,6 +205,11 @@ func (mg *KeypairV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this KeypairV2.
 func (mg *KeypairV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this KeypairV2.
+func (mg *KeypairV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this KeypairV2.
@@ -215,6 +245,11 @@ func (mg *QuotasetV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this QuotasetV2.
+func (mg *QuotasetV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this QuotasetV2.
 func (mg *QuotasetV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -246,6 +281,11 @@ func (mg *QuotasetV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this QuotasetV2.
 func (mg *QuotasetV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this QuotasetV2.
+func (mg *QuotasetV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this QuotasetV2.

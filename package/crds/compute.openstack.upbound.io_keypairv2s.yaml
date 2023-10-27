@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: keypairv2s.compute.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -91,9 +95,22 @@ spec:
                       type: string
                     description: Map of additional options.
                     type: object
-                required:
-                - name
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -265,6 +282,9 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: name is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
           status:
             description: KeypairV2Status defines the observed state of KeypairV2.
             properties:
@@ -275,9 +295,33 @@ spec:
                     type: string
                   id:
                     type: string
-                  privateKey:
-                    description: The generated private key when no public key is specified.
+                  name:
+                    description: A unique name for the keypair. Changing this creates
+                      a new keypair.
                     type: string
+                  publicKey:
+                    description: A pregenerated OpenSSH-formatted public key. Changing
+                      this creates a new keypair. If a public key is not specified,
+                      then a public/private key pair will be automatically generated.
+                      If a pair is created, then destroying this resource means you
+                      will lose access to that keypair forever.
+                    type: string
+                  region:
+                    description: The region in which to obtain the V2 Compute client.
+                      Keypairs are associated with accounts, but a Compute client
+                      is needed to create one. If omitted, the region argument of
+                      the provider is used. Changing this creates a new keypair.
+                    type: string
+                  userId:
+                    description: This allows administrative users to operate key-pairs
+                      of specified user ID. For this feature your need to have openstack
+                      microversion 2.10 (Liberty) or later.
+                    type: string
+                  valueSpecs:
+                    additionalProperties:
+                      type: string
+                    description: Map of additional options.
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -320,9 +364,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

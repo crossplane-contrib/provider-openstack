@@ -14,7 +14,53 @@ import (
 )
 
 type ZoneV2Observation struct {
+
+	// Attributes for the DNS Service scheduler.
+	// Changing this creates a new zone.
+	Attributes map[string]*string `json:"attributes,omitempty" tf:"attributes,omitempty"`
+
+	// A description of the zone.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Disable wait for zone to reach ACTIVE
+	// status. The check is enabled by default. If this argument is true, zone
+	// will be considered as created/updated if OpenStack request returned success.
+	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
+
+	// The email contact for the zone record.
+	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// An array of master DNS servers. For when type is
+	// SECONDARY.
+	Masters []*string `json:"masters,omitempty" tf:"masters,omitempty"`
+
+	// The name of the zone. Note the . at the end of the name.
+	// Changing this creates a new DNS zone.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The ID of the project DNS zone is created
+	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
+	// user role in target project)
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The region in which to obtain the V2 Compute client.
+	// Keypairs are associated with accounts, but a Compute client is needed to
+	// create one. If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The time to live (TTL) of the zone.
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+
+	// The type of zone. Can either be PRIMARY or SECONDARY.
+	// Changing this creates a new zone.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Map of additional options. Changing this creates a
+	// new zone.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
 type ZoneV2Parameters struct {
@@ -45,8 +91,8 @@ type ZoneV2Parameters struct {
 
 	// The name of the zone. Note the . at the end of the name.
 	// Changing this creates a new DNS zone.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The ID of the project DNS zone is created
 	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
@@ -100,8 +146,9 @@ type ZoneV2Status struct {
 type ZoneV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ZoneV2Spec   `json:"spec"`
-	Status            ZoneV2Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	Spec   ZoneV2Spec   `json:"spec"`
+	Status ZoneV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

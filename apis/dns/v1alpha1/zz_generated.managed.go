@@ -17,6 +17,11 @@ func (mg *RecordsetV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this RecordsetV2.
+func (mg *RecordsetV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this RecordsetV2.
 func (mg *RecordsetV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *RecordsetV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this RecordsetV2.
 func (mg *RecordsetV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this RecordsetV2.
+func (mg *RecordsetV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this RecordsetV2.
@@ -83,6 +93,11 @@ func (mg *ZoneV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this ZoneV2.
+func (mg *ZoneV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this ZoneV2.
 func (mg *ZoneV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -114,6 +129,11 @@ func (mg *ZoneV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this ZoneV2.
 func (mg *ZoneV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this ZoneV2.
+func (mg *ZoneV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this ZoneV2.

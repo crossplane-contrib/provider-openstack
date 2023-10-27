@@ -14,19 +14,43 @@ import (
 )
 
 type NodegroupV1Observation struct {
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
+
+	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
+
+	MergeLabels *bool `json:"mergeLabels,omitempty" tf:"merge_labels,omitempty"`
+
+	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
+
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	NodeCount *float64 `json:"nodeCount,omitempty" tf:"node_count,omitempty"`
+
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 }
 
 type NodegroupV1Parameters struct {
 
-	// +kubebuilder:validation:Required
-	ClusterID *string `json:"clusterId" tf:"cluster_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
@@ -49,8 +73,8 @@ type NodegroupV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	NodeCount *float64 `json:"nodeCount,omitempty" tf:"node_count,omitempty"`
@@ -86,8 +110,10 @@ type NodegroupV1Status struct {
 type NodegroupV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              NodegroupV1Spec   `json:"spec"`
-	Status            NodegroupV1Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterId)",message="clusterId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	Spec   NodegroupV1Spec   `json:"spec"`
+	Status NodegroupV1Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

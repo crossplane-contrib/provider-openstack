@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: quotav2s.lb.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -178,6 +182,21 @@ spec:
                       a new quota. If ommited, the region of the credentials is used.
                     type: string
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -354,7 +373,45 @@ spec:
             properties:
               atProvider:
                 properties:
+                  healthMonitor:
+                    description: Quota value for health_monitors. Changing this updates
+                      the existing quota. Omitting it sets it to 0.
+                    type: number
                   id:
+                    type: string
+                  l7Policy:
+                    description: Quota value for l7_policies. Changing this updates
+                      the existing quota. Omitting it sets it to 0. Available in Octavia
+                      minor version 2.19.
+                    type: number
+                  l7Rule:
+                    description: Quota value for l7_rules. Changing this updates the
+                      existing quota. Omitting it sets it to 0. Available in Octavia
+                      minor version 2.19.
+                    type: number
+                  listener:
+                    description: Quota value for listeners. Changing this updates
+                      the existing quota. Omitting it sets it to 0.
+                    type: number
+                  loadbalancer:
+                    description: Quota value for loadbalancers. Changing this updates
+                      the existing quota. Omitting it sets it to 0.
+                    type: number
+                  member:
+                    description: Quota value for members. Changing this updates the
+                      existing quota. Omitting it sets it to 0.
+                    type: number
+                  pool:
+                    description: Quota value for pools. Changing this updates the
+                      the existing quota. Omitting it sets it to 0.
+                    type: number
+                  projectId:
+                    description: ID of the project to manage quotas. Changing this
+                      creates a new quota.
+                    type: string
+                  region:
+                    description: Region in which to manage quotas. Changing this creates
+                      a new quota. If ommited, the region of the credentials is used.
                     type: string
                 type: object
               conditions:
@@ -398,9 +455,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

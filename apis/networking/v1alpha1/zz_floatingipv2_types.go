@@ -15,11 +15,73 @@ import (
 
 type FloatingipV2Observation struct {
 
+	// The actual/specific floating IP to obtain. By default,
+	// non-admin users are not able to specify a floating IP, so you must either be
+	// an admin user or have had a custom policy or role applied to your OpenStack
+	// user or project.
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
 	// The collection of tags assigned on the floating IP, which have
 	// been explicitly and implicitly added.
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
+	// The floating IP DNS domain. Available, when Neutron
+	// DNS extension is enabled. The data in this attribute will be published in an
+	// external DNS service when Neutron is configured to integrate with such a
+	// service. Changing this creates a new floating IP.
+	DNSDomain *string `json:"dnsDomain,omitempty" tf:"dns_domain,omitempty"`
+
+	// The floating IP DNS name. Available, when Neutron DNS
+	// extension is enabled. The data in this attribute will be published in an
+	// external DNS service when Neutron is configured to integrate with such a
+	// service. Changing this creates a new floating IP.
+	DNSName *string `json:"dnsName,omitempty" tf:"dns_name,omitempty"`
+
+	// Human-readable description for the floating IP.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Fixed IP of the port to associate with this floating IP. Required if
+	// the port has multiple fixed IPs.
+	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The name of the pool from which to obtain the floating
+	// IP. Changing this creates a new floating IP.
+	Pool *string `json:"pool,omitempty" tf:"pool,omitempty"`
+
+	// ID of an existing port with at least one IP address to
+	// associate with this floating IP.
+	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// The region in which to obtain the V2 Networking client.
+	// A Networking client is needed to create a floating IP that can be used with
+	// another networking resource, such as a load balancer. If omitted, the
+	// region argument of the provider is used. Changing this creates a new
+	// floating IP (which may or may not have a different address).
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The subnet ID of the floating IP pool. Specify this if
+	// the floating IP network has multiple subnets.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// A list of external subnet IDs to try over each to
+	// allocate a floating IP address. If a subnet ID in a list has exhausted
+	// floating IP pool, the next subnet ID will be tried. This argument is used only
+	// during the resource creation. Conflicts with a subnet_id argument.
+	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+
+	// A set of string tags for the floating IP.
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// The target tenant ID in which to allocate the floating
+	// IP, if you specify this together with a port_id, make sure the target port
+	// belongs to the same tenant. Changing this creates a new floating IP (which
+	// may or may not have a different address)
+	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+
+	// Map of additional options.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
 type FloatingipV2Parameters struct {
@@ -56,8 +118,8 @@ type FloatingipV2Parameters struct {
 
 	// The name of the pool from which to obtain the floating
 	// IP. Changing this creates a new floating IP.
-	// +kubebuilder:validation:Required
-	Pool *string `json:"pool" tf:"pool,omitempty"`
+	// +kubebuilder:validation:Optional
+	Pool *string `json:"pool,omitempty" tf:"pool,omitempty"`
 
 	// ID of an existing port with at least one IP address to
 	// associate with this floating IP.
@@ -124,8 +186,9 @@ type FloatingipV2Status struct {
 type FloatingipV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              FloatingipV2Spec   `json:"spec"`
-	Status            FloatingipV2Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.pool)",message="pool is a required parameter"
+	Spec   FloatingipV2Spec   `json:"spec"`
+	Status FloatingipV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

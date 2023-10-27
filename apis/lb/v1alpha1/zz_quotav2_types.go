@@ -14,7 +14,46 @@ import (
 )
 
 type QuotaV2Observation struct {
+
+	// Quota value for health_monitors. Changing
+	// this updates the existing quota. Omitting it sets it to 0.
+	HealthMonitor *float64 `json:"healthMonitor,omitempty" tf:"health_monitor,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Quota value for l7_policies. Changing this
+	// updates the existing quota. Omitting it sets it to 0. Available in
+	// Octavia minor version 2.19.
+	L7Policy *float64 `json:"l7Policy,omitempty" tf:"l7_policy,omitempty"`
+
+	// Quota value for l7_rules. Changing this
+	// updates the existing quota. Omitting it sets it to 0. Available in
+	// Octavia minor version 2.19.
+	L7Rule *float64 `json:"l7Rule,omitempty" tf:"l7_rule,omitempty"`
+
+	// Quota value for listeners. Changing this updates
+	// the existing quota. Omitting it sets it to 0.
+	Listener *float64 `json:"listener,omitempty" tf:"listener,omitempty"`
+
+	// Quota value for loadbalancers. Changing this
+	// updates the existing quota. Omitting it sets it to 0.
+	Loadbalancer *float64 `json:"loadbalancer,omitempty" tf:"loadbalancer,omitempty"`
+
+	// Quota value for members. Changing this updates
+	// the existing quota. Omitting it sets it to 0.
+	Member *float64 `json:"member,omitempty" tf:"member,omitempty"`
+
+	// Quota value for pools. Changing this updates the
+	// the existing quota. Omitting it sets it to 0.
+	Pool *float64 `json:"pool,omitempty" tf:"pool,omitempty"`
+
+	// ID of the project to manage quotas. Changing this
+	// creates a new quota.
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Region in which to manage quotas. Changing this
+	// creates a new quota. If ommited, the region of the credentials is used.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
 type QuotaV2Parameters struct {

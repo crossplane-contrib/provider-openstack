@@ -14,7 +14,53 @@ import (
 )
 
 type QuotaV2Observation struct {
+
+	// Quota value for floating IPs. Changing this updates the
+	// existing quota.
+	Floatingip *float64 `json:"floatingip,omitempty" tf:"floatingip,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Quota value for networks. Changing this updates the
+	// existing quota.
+	Network *float64 `json:"network,omitempty" tf:"network,omitempty"`
+
+	// Quota value for ports. Changing this updates the
+	// existing quota.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// ID of the project to manage quota. Changing this
+	// creates new quota.
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Quota value for RBAC policies.
+	// Changing this updates the existing quota.
+	RbacPolicy *float64 `json:"rbacPolicy,omitempty" tf:"rbac_policy,omitempty"`
+
+	// The region in which to create the quota. If
+	// omitted, the region argument of the provider is used. Changing this
+	// creates new quota.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Quota value for routers. Changing this updates the
+	// existing quota.
+	Router *float64 `json:"router,omitempty" tf:"router,omitempty"`
+
+	// Quota value for security groups. Changing
+	// this updates the existing quota.
+	SecurityGroup *float64 `json:"securityGroup,omitempty" tf:"security_group,omitempty"`
+
+	// Quota value for security group rules.
+	// Changing this updates the existing quota.
+	SecurityGroupRule *float64 `json:"securityGroupRule,omitempty" tf:"security_group_rule,omitempty"`
+
+	// Quota value for subnets. Changing
+	// this updates the existing quota.
+	Subnet *float64 `json:"subnet,omitempty" tf:"subnet,omitempty"`
+
+	// Quota value for subnetpools.
+	// Changing this updates the existing quota.
+	Subnetpool *float64 `json:"subnetpool,omitempty" tf:"subnetpool,omitempty"`
 }
 
 type QuotaV2Parameters struct {

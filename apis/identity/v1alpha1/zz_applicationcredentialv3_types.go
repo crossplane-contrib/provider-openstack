@@ -18,6 +18,24 @@ type AccessRulesObservation struct {
 	// (Computed) The ID of the existing access rule. The access rule ID of
 	// another application credential can be provided.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The request method that the application credential is
+	// permitted to use for a given API endpoint. Allowed values: POST, GET,
+	// HEAD, PATCH, PUT and DELETE.
+	Method *string `json:"method,omitempty" tf:"method,omitempty"`
+
+	// The API path that the application credential is permitted
+	// to access. May use named wildcards such as {tag} or the unnamed wildcard
+	// * to match against any string in the path up to a /, or the recursive
+	// wildcard ** to include / in the matched path.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// The service type identifier for the service that the
+	// application credential is granted to access. Must be a service type that is
+	// listed in the service catalog and not a code name for a service. E.g.
+	// identity, compute, volumev3, image, network,
+	// object-store, sharev2, dns, key-manager, monitoring, etc.
+	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 }
 
 type AccessRulesParameters struct {
@@ -49,17 +67,47 @@ type ApplicationCredentialV3Observation struct {
 	// A collection of one or more access rules, which
 	// this application credential allows to follow. The structure is described
 	// below. Changing this creates a new application credential.
-	// +kubebuilder:validation:Optional
 	AccessRules []AccessRulesObservation `json:"accessRules,omitempty" tf:"access_rules,omitempty"`
+
+	// A description of the application credential.
+	// Changing this creates a new application credential.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The expiration time of the application credential
+	// in the RFC3339 timestamp format (e.g. 2019-03-09T12:58:49Z). If omitted,
+	// an application credential will never expire. Changing this creates a new
+	// application credential.
+	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
 	// (Computed) The ID of the existing access rule. The access rule ID of
 	// another application credential can be provided.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A name of the application credential. Changing this
+	// creates a new application credential.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// The ID of the project the application credential was created
 	// for and that authentication requests using this application credential will
 	// be scoped to.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new application credential.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// A collection of one or more role names, which this
+	// application credential has to be associated with its project. If omitted,
+	// all the current user's roles within the scoped project will be inherited by
+	// a new application credential. Changing this creates a new application
+	// credential.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+
+	// A flag indicating whether the application
+	// credential may be used for creation or destruction of other application
+	// credentials or trusts. Changing this creates a new application credential.
+	Unrestricted *bool `json:"unrestricted,omitempty" tf:"unrestricted,omitempty"`
 }
 
 type ApplicationCredentialV3Parameters struct {
@@ -84,8 +132,8 @@ type ApplicationCredentialV3Parameters struct {
 
 	// A name of the application credential. Changing this
 	// creates a new application credential.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The region in which to obtain the V3 Keystone client.
 	// If omitted, the region argument of the provider is used. Changing this
@@ -138,8 +186,9 @@ type ApplicationCredentialV3Status struct {
 type ApplicationCredentialV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ApplicationCredentialV3Spec   `json:"spec"`
-	Status            ApplicationCredentialV3Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	Spec   ApplicationCredentialV3Spec   `json:"spec"`
+	Status ApplicationCredentialV3Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

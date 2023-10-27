@@ -14,7 +14,48 @@ import (
 )
 
 type RecordsetV2Observation struct {
+
+	// A description of the  record set.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Disable wait for recordset to reach ACTIVE
+	// status. This argumen is disabled by default. If it is set to true, the recordset
+	// will be considered as created/updated/deleted if OpenStack request returned success.
+	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The name of the record set. Note the . at the end of the name.
+	// Changing this creates a new DNS  record set.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The ID of the project DNS zone is created
+	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
+	// user role in target project)
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// An array of DNS records.
+	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
+
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS  record set.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The time to live (TTL) of the record set.
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+
+	// The type of record set. Examples: "A", "MX".
+	// Changing this creates a new DNS  record set.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Map of additional options. Changing this creates a
+	// new record set.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
+
+	// The ID of the zone in which to create the record set.
+	// Changing this creates a new DNS  record set.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type RecordsetV2Parameters struct {
@@ -31,8 +72,8 @@ type RecordsetV2Parameters struct {
 
 	// The name of the record set. Note the . at the end of the name.
 	// Changing this creates a new DNS  record set.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The ID of the project DNS zone is created
 	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
@@ -40,9 +81,7 @@ type RecordsetV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// An array of DNS records. Note: if an IPv6 address
-	// contains brackets ([ ]), the brackets will be stripped and the modified
-	// address will be recorded in the state.
+	// An array of DNS records.
 	// +kubebuilder:validation:Optional
 	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
 
@@ -105,8 +144,10 @@ type RecordsetV2Status struct {
 type RecordsetV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              RecordsetV2Spec   `json:"spec"`
-	Status            RecordsetV2Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.records)",message="records is a required parameter"
+	Spec   RecordsetV2Spec   `json:"spec"`
+	Status RecordsetV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

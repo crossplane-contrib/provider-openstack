@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: clustertemplatev1s.containerinfra.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -208,11 +212,22 @@ spec:
                       of the cluster nodes. Changing this updates the volume driver
                       of the existing cluster template.
                     type: string
-                required:
-                - coe
-                - image
-                - name
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -384,21 +399,167 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: coe is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.coe)
+            - message: image is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.image)
+            - message: name is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
           status:
             description: ClustertemplateV1Status defines the observed state of ClustertemplateV1.
             properties:
               atProvider:
                 properties:
+                  apiserverPort:
+                    description: The API server port for the Container Orchestration
+                      Engine for this cluster template. Changing this updates the
+                      API server port of the existing cluster template.
+                    type: number
+                  clusterDistro:
+                    description: The distro for the cluster (fedora-atomic, coreos,
+                      etc.). Changing this updates the cluster distro of the existing
+                      cluster template.
+                    type: string
+                  coe:
+                    description: The Container Orchestration Engine for this cluster
+                      template. Changing this updates the engine of the existing cluster
+                      template.
+                    type: string
                   createdAt:
                     description: The time at which cluster template was created.
                     type: string
+                  dnsNameserver:
+                    description: Address of the DNS nameserver that is used in nodes
+                      of the cluster. Changing this updates the DNS nameserver of
+                      the existing cluster template.
+                    type: string
+                  dockerStorageDriver:
+                    description: Docker storage driver. Changing this updates the
+                      Docker storage driver of the existing cluster template.
+                    type: string
+                  dockerVolumeSize:
+                    description: The size (in GB) of the Docker volume. Changing this
+                      updates the Docker volume size of the existing cluster template.
+                    type: number
+                  externalNetworkId:
+                    description: The ID of the external network that will be used
+                      for the cluster. Changing this updates the external network
+                      ID of the existing cluster template.
+                    type: string
+                  fixedNetwork:
+                    description: The fixed network that will be attached to the cluster.
+                      Changing this updates the fixed network of the existing cluster
+                      template.
+                    type: string
+                  fixedSubnet:
+                    description: The fixed subnet that will be attached to the cluster.
+                      Changing this updates the fixed subnet of the existing cluster
+                      template.
+                    type: string
+                  flavor:
+                    description: The flavor for the nodes of the cluster. Can be set
+                      via the OS_MAGNUM_FLAVOR environment variable. Changing this
+                      updates the flavor of the existing cluster template.
+                    type: string
+                  floatingIpEnabled:
+                    description: Indicates whether created cluster should create floating
+                      IP for every node or not. Changing this updates the floating
+                      IP enabled attribute of the existing cluster template.
+                    type: boolean
+                  hidden:
+                    description: Indicates whether the ClusterTemplate is hidden or
+                      not. Changing this updates the hidden attribute of the existing
+                      cluster template.
+                    type: boolean
+                  httpProxy:
+                    description: The address of a proxy for receiving all HTTP requests
+                      and relay them. Changing this updates the HTTP proxy address
+                      of the existing cluster template.
+                    type: string
+                  httpsProxy:
+                    description: The address of a proxy for receiving all HTTPS requests
+                      and relay them. Changing this updates the HTTPS proxy address
+                      of the existing cluster template.
+                    type: string
                   id:
+                    type: string
+                  image:
+                    description: The reference to an image that is used for nodes
+                      of the cluster. Can be set via the OS_MAGNUM_IMAGE environment
+                      variable. Changing this updates the image attribute of the existing
+                      cluster template.
+                    type: string
+                  insecureRegistry:
+                    description: The insecure registry URL for the cluster template.
+                      Changing this updates the insecure registry attribute of the
+                      existing cluster template.
+                    type: string
+                  keypairId:
+                    description: The name of the Compute service SSH keypair. Changing
+                      this updates the keypair of the existing cluster template.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: The list of key value pairs representing additional
+                      properties of the cluster template. Changing this updates the
+                      labels of the existing cluster template.
+                    type: object
+                  masterFlavor:
+                    description: The flavor for the master nodes. Can be set via the
+                      OS_MAGNUM_MASTER_FLAVOR environment variable. Changing this
+                      updates the master flavor of the existing cluster template.
+                    type: string
+                  masterLbEnabled:
+                    description: Indicates whether created cluster should has a loadbalancer
+                      for master nodes or not. Changing this updates the attribute
+                      of the existing cluster template.
+                    type: boolean
+                  name:
+                    description: The name of the cluster template. Changing this updates
+                      the name of the existing cluster template.
+                    type: string
+                  networkDriver:
+                    description: The name of the driver for the container network.
+                      Changing this updates the network driver of the existing cluster
+                      template.
+                    type: string
+                  noProxy:
+                    description: A comma-separated list of IP addresses that shouldn't
+                      be used in the cluster. Changing this updates the no proxy list
+                      of the existing cluster template.
                     type: string
                   projectId:
                     description: The project of the cluster template. Required if
                       admin wants to create a cluster template in another project.
                       Changing this creates a new cluster template.
                     type: string
+                  public:
+                    description: Indicates whether cluster template should be public.
+                      Changing this updates the public attribute of the existing cluster
+                      template.
+                    type: boolean
+                  region:
+                    description: The region in which to obtain the V1 Container Infra
+                      client. A Container Infra client is needed to create a cluster
+                      template. If omitted,the region argument of the provider is
+                      used. Changing this creates a new cluster template.
+                    type: string
+                  registryEnabled:
+                    description: Indicates whether Docker registry is enabled in the
+                      cluster. Changing this updates the registry enabled attribute
+                      of the existing cluster template.
+                    type: boolean
+                  serverType:
+                    description: The server type for the cluster template. Changing
+                      this updates the server type of the existing cluster template.
+                    type: string
+                  tlsDisabled:
+                    description: Indicates whether the TLS should be disabled in the
+                      cluster. Changing this updates the attribute of the existing
+                      cluster.
+                    type: boolean
                   updatedAt:
                     description: The time at which cluster template was created.
                     type: string
@@ -406,6 +567,11 @@ spec:
                     description: The user of the cluster template. Required if admin
                       wants to create a cluster template for another user. Changing
                       this creates a new cluster template.
+                    type: string
+                  volumeDriver:
+                    description: The name of the driver that is used for the volumes
+                      of the cluster nodes. Changing this updates the volume driver
+                      of the existing cluster template.
                     type: string
                 type: object
               conditions:
@@ -449,9 +615,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

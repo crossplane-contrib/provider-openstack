@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: floatingipv2s.networking.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -136,9 +140,22 @@ spec:
                       type: string
                     description: Map of additional options.
                     type: object
-                required:
-                - pool
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -310,19 +327,94 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: pool is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.pool)
           status:
             description: FloatingipV2Status defines the observed state of FloatingipV2.
             properties:
               atProvider:
                 properties:
+                  address:
+                    description: The actual/specific floating IP to obtain. By default,
+                      non-admin users are not able to specify a floating IP, so you
+                      must either be an admin user or have had a custom policy or
+                      role applied to your OpenStack user or project.
+                    type: string
                   allTags:
                     description: The collection of tags assigned on the floating IP,
                       which have been explicitly and implicitly added.
                     items:
                       type: string
                     type: array
+                  description:
+                    description: Human-readable description for the floating IP.
+                    type: string
+                  dnsDomain:
+                    description: The floating IP DNS domain. Available, when Neutron
+                      DNS extension is enabled. The data in this attribute will be
+                      published in an external DNS service when Neutron is configured
+                      to integrate with such a service. Changing this creates a new
+                      floating IP.
+                    type: string
+                  dnsName:
+                    description: The floating IP DNS name. Available, when Neutron
+                      DNS extension is enabled. The data in this attribute will be
+                      published in an external DNS service when Neutron is configured
+                      to integrate with such a service. Changing this creates a new
+                      floating IP.
+                    type: string
+                  fixedIp:
+                    description: Fixed IP of the port to associate with this floating
+                      IP. Required if the port has multiple fixed IPs.
+                    type: string
                   id:
                     type: string
+                  pool:
+                    description: The name of the pool from which to obtain the floating
+                      IP. Changing this creates a new floating IP.
+                    type: string
+                  portId:
+                    description: ID of an existing port with at least one IP address
+                      to associate with this floating IP.
+                    type: string
+                  region:
+                    description: The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a floating IP that can
+                      be used with another networking resource, such as a load balancer.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new floating IP (which may or may not have a
+                      different address).
+                    type: string
+                  subnetId:
+                    description: The subnet ID of the floating IP pool. Specify this
+                      if the floating IP network has multiple subnets.
+                    type: string
+                  subnetIds:
+                    description: A list of external subnet IDs to try over each to
+                      allocate a floating IP address. If a subnet ID in a list has
+                      exhausted floating IP pool, the next subnet ID will be tried.
+                      This argument is used only during the resource creation. Conflicts
+                      with a subnet_id argument.
+                    items:
+                      type: string
+                    type: array
+                  tags:
+                    description: A set of string tags for the floating IP.
+                    items:
+                      type: string
+                    type: array
+                  tenantId:
+                    description: The target tenant ID in which to allocate the floating
+                      IP, if you specify this together with a port_id, make sure the
+                      target port belongs to the same tenant. Changing this creates
+                      a new floating IP (which may or may not have a different address)
+                    type: string
+                  valueSpecs:
+                    additionalProperties:
+                      type: string
+                    description: Map of additional options.
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -365,9 +457,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

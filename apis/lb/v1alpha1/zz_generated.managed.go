@@ -17,6 +17,11 @@ func (mg *QuotaV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this QuotaV2.
+func (mg *QuotaV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this QuotaV2.
 func (mg *QuotaV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *QuotaV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this QuotaV2.
 func (mg *QuotaV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this QuotaV2.
+func (mg *QuotaV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this QuotaV2.
