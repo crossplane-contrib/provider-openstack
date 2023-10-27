@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: quotasetv2s.compute.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -205,6 +209,21 @@ spec:
                       the existing quotaset.
                     type: number
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -381,8 +400,73 @@ spec:
             properties:
               atProvider:
                 properties:
+                  cores:
+                    description: Quota value for cores. Changing this updates the
+                      existing quotaset.
+                    type: number
+                  fixedIps:
+                    description: Quota value for fixed IPs. Changing this updates
+                      the existing quotaset.
+                    type: number
+                  floatingIps:
+                    description: Quota value for floating IPs. Changing this updates
+                      the existing quotaset.
+                    type: number
                   id:
                     type: string
+                  injectedFileContentBytes:
+                    description: Quota value for content bytes of injected files.
+                      Changing this updates the existing quotaset.
+                    type: number
+                  injectedFilePathBytes:
+                    description: Quota value for path bytes of injected files. Changing
+                      this updates the existing quotaset.
+                    type: number
+                  injectedFiles:
+                    description: Quota value for injected files. Changing this updates
+                      the existing quotaset.
+                    type: number
+                  instances:
+                    description: Quota value for instances. Changing this updates
+                      the existing quotaset.
+                    type: number
+                  keyPairs:
+                    description: Quota value for key pairs. Changing this updates
+                      the existing quotaset.
+                    type: number
+                  metadataItems:
+                    description: Quota value for metadata items. Changing this updates
+                      the existing quotaset.
+                    type: number
+                  projectId:
+                    description: ID of the project to manage quotas. Changing this
+                      creates a new quotaset.
+                    type: string
+                  ram:
+                    description: Quota value for RAM. Changing this updates the existing
+                      quotaset.
+                    type: number
+                  region:
+                    description: The region in which to create the volume. If omitted,
+                      the region argument of the provider is used. Changing this creates
+                      a new quotaset.
+                    type: string
+                  securityGroupRules:
+                    description: Quota value for security group rules. Changing this
+                      updates the existing quotaset.
+                    type: number
+                  securityGroups:
+                    description: Quota value for security groups. Changing this updates
+                      the existing quotaset.
+                    type: number
+                  serverGroupMembers:
+                    description: Quota value for server groups members. Changing this
+                      updates the existing quotaset.
+                    type: number
+                  serverGroups:
+                    description: Quota value for server groups. Changing this updates
+                      the existing quotaset.
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -425,9 +509,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

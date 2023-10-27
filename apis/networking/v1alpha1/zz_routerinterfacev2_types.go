@@ -14,7 +14,31 @@ import (
 )
 
 type RouterInterfaceV2Observation struct {
+
+	// A boolean indicating whether the routes from the
+	// corresponding router ID should be deleted so that the router interface can
+	// be destroyed without any errors. The default value is false.
+	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// ID of the port this interface connects to. Changing
+	// this creates a new router interface.
+	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// The region in which to obtain the V2 networking client.
+	// A networking client is needed to create a router. If omitted, the
+	// region argument of the provider is used. Changing this creates a new
+	// router interface.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// ID of the router this interface belongs to. Changing
+	// this creates a new router interface.
+	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
+
+	// ID of the subnet this interface connects to. Changing
+	// this creates a new router interface.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type RouterInterfaceV2Parameters struct {

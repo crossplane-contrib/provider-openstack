@@ -8,10 +8,11 @@ export TERRAFORM_VERSION ?= 1.3.3
 
 export TERRAFORM_PROVIDER_SOURCE ?= terraform-provider-openstack/openstack
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/terraform-provider-openstack/terraform-provider-openstack
-export TERRAFORM_PROVIDER_VERSION ?= 1.51.1
+export TERRAFORM_PROVIDER_VERSION ?= 1.53.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-openstack
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-openstack_v1.51.1
-export TERRAFORM_DOCS_PATH ?= website/docs/r
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-openstack_v1.53.0
+export TERRAFORM_DOCS_PATH ?= docs/resources
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -49,9 +50,9 @@ GO_SUBDIRS += cmd internal apis
 # Setup Kubernetes tools
 
 KIND_VERSION = v0.15.0
-UP_VERSION = v0.14.0
+UP_VERSION = v0.18.0
 UP_CHANNEL = stable
-UPTEST_VERSION = v0.2.1
+UPTEST_VERSION = v0.5.0
 -include build/makelib/k8s_tools.mk
 
 # ====================================================================================

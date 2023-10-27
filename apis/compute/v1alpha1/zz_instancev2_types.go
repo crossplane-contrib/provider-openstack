@@ -14,6 +14,60 @@ import (
 )
 
 type BlockDeviceObservation struct {
+
+	// The boot index of the volume. It defaults to 0.
+	// Changing this creates a new server.
+	BootIndex *float64 `json:"bootIndex,omitempty" tf:"boot_index,omitempty"`
+
+	// Delete the volume / block device upon
+	// termination of the instance. Defaults to false. Changing this creates a
+	// new server.
+	DeleteOnTermination *bool `json:"deleteOnTermination,omitempty" tf:"delete_on_termination,omitempty"`
+
+	// The type that gets created. Possible values
+	// are "volume" and "local". Changing this creates a new server.
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// The low-level device type that will be used. Most
+	// common thing is to leave this empty. Changing this creates a new server.
+	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
+
+	// The low-level disk bus that will be used. Most common
+	// thing is to leave this empty. Changing this creates a new server.
+	DiskBus *string `json:"diskBus,omitempty" tf:"disk_bus,omitempty"`
+
+	// Specifies the guest server disk file system format,
+	// such as ext2, ext3, ext4, xfs or swap. Swap block device mappings
+	// have the following restrictions: source_type must be blank and destination_type
+	// must be local and only one swap disk per server and the size of the swap disk
+	// must be less than or equal to the swap size of the flavor. Changing this
+	// creates a new server.
+	GuestFormat *string `json:"guestFormat,omitempty" tf:"guest_format,omitempty"`
+
+	// Enable the attachment of multiattach-capable
+	// volumes.
+	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
+
+	// The source type of the device. Must be one of
+	// "blank", "image", "volume", or "snapshot". Changing this creates a new
+	// server.
+	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
+
+	// The UUID of
+	// the image, volume, or snapshot. Changing this creates a new server.
+	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
+
+	// The size of the volume to create (in gigabytes). Required
+	// in the following combinations: source=image and destination=volume,
+	// source=blank and destination=local, and source=blank and destination=volume.
+	// Changing this creates a new server.
+	VolumeSize *float64 `json:"volumeSize,omitempty" tf:"volume_size,omitempty"`
+
+	// The volume type that will be used, for example SSD
+	// or HDD storage. The available options depend on how your specific OpenStack
+	// cloud is configured and what classes of storage are provided. Changing this
+	// creates a new server.
+	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }
 
 type BlockDeviceParameters struct {
@@ -53,6 +107,11 @@ type BlockDeviceParameters struct {
 	// +kubebuilder:validation:Optional
 	GuestFormat *string `json:"guestFormat,omitempty" tf:"guest_format,omitempty"`
 
+	// Enable the attachment of multiattach-capable
+	// volumes.
+	// +kubebuilder:validation:Optional
+	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
+
 	// The source type of the device. Must be one of
 	// "blank", "image", "volume", or "snapshot". Changing this creates a new
 	// server.
@@ -80,25 +139,145 @@ type BlockDeviceParameters struct {
 }
 
 type InstanceV2Observation struct {
+
+	// The first detected Fixed IPv4 address.
+	AccessIPV4 *string `json:"accessIpV4,omitempty" tf:"access_ip_v4,omitempty"`
+
+	// The first detected Fixed IPv6 address.
+	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
+
 	AllMetadata map[string]*string `json:"allMetadata,omitempty" tf:"all_metadata,omitempty"`
 
 	// The collection of tags assigned on the instance, which have
 	// been explicitly and implicitly added.
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
+	// The availability zone in which to create
+	// the server. Conflicts with availability_zone_hints. Changing this creates
+	// a new server.
+	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+	// The availability zone in which to
+	// create the server. This argument is preferred to availability_zone, when
+	// scheduling the server on a
+	// particular
+	// host or node. Conflicts with availability_zone. Changing this creates a
+	// new server.
+	AvailabilityZoneHints *string `json:"availabilityZoneHints,omitempty" tf:"availability_zone_hints,omitempty"`
+
+	// Configuration of block devices. The block_device
+	// structure is documented below. Changing this creates a new server.
+	// You can specify multiple block devices which will create an instance with
+	// multiple disks. This configuration is very flexible, so please see the
+	// following reference
+	// for more information.
+	BlockDevice []BlockDeviceObservation `json:"blockDevice,omitempty" tf:"block_device,omitempty"`
+
+	// Whether to use the config_drive feature to
+	// configure the instance. Changing this creates a new server.
+	ConfigDrive *bool `json:"configDrive,omitempty" tf:"config_drive,omitempty"`
+
 	// The creation time of the instance.
 	Created *string `json:"created,omitempty" tf:"created,omitempty"`
 
+	// The flavor ID of
+	// the desired flavor for the server. Changing this resizes the existing server.
+	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// The name of the
+	// desired flavor for the server. Changing this resizes the existing server.
+	FlavorName *string `json:"flavorName,omitempty" tf:"flavor_name,omitempty"`
+
+	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
+
+	// Whether to force the OpenStack instance to be
+	// forcefully deleted. This is useful for environments that have reclaim / soft
+	// deletion enabled.
+	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The image ID of
+	// the desired image for the server. Changing this rebuilds the existing
+	// server.
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// The name of the
+	// desired image for the server. Changing this rebuilds the existing server.
+	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
+
+	// The name of a key pair to put on the server. The key
+	// pair must already be created and associated with the tenant's account.
+	// Changing this creates a new server.
+	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
+
+	// Metadata key/value pairs to make available from
+	// within the instance. Changing this updates the existing server metadata.
+	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// A unique name for the resource.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// An array of one or more networks to attach to the
 	// instance. The network object structure is documented below. Changing this
 	// creates a new server.
-	// +kubebuilder:validation:Optional
 	Network []NetworkObservation `json:"network,omitempty" tf:"network,omitempty"`
+
+	// Special string for network option to create
+	// the server. network_mode can be "auto" or "none".
+	// Please see the following reference for more information. Conflicts with network.
+	NetworkMode *string `json:"networkMode,omitempty" tf:"network_mode,omitempty"`
+
+	// Customize the personality of an instance by
+	// defining one or more files and their contents. The personality structure
+	// is described below. Changing this rebuilds the existing server.
+	Personality []PersonalityObservation `json:"personality,omitempty" tf:"personality,omitempty"`
+
+	// Provide the VM state. Only 'active', 'shutoff'
+	// and 'shelved_offloaded' are supported values.
+	// Note: If the initial power_state is the shutoff
+	// the VM will be stopped immediately after build and the provisioners like
+	// remote-exec or files are not supported.
+	PowerState *string `json:"powerState,omitempty" tf:"power_state,omitempty"`
+
+	// The region in which to create the server instance. If
+	// omitted, the region argument of the provider is used. Changing this
+	// creates a new server.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Provide the Nova scheduler with hints on how
+	// the instance should be launched. The available hints are described below.
+	SchedulerHints []SchedulerHintsObservation `json:"schedulerHints,omitempty" tf:"scheduler_hints,omitempty"`
+
+	// An array of one or more security group names
+	// to associate with the server. Changing this results in adding/removing
+	// security groups from the existing server. Note: When attaching the
+	// instance to networks using Ports, place the security groups on the Port
+	// and not the instance. Note: Names should be used and not ids, as ids
+	// trigger unnecessary updates.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Whether to try stop instance gracefully
+	// before destroying it, thus giving chance for guest OS daemons to stop correctly.
+	// If instance doesn't stop within timeout, it will be destroyed anyway.
+	StopBeforeDestroy *bool `json:"stopBeforeDestroy,omitempty" tf:"stop_before_destroy,omitempty"`
+
+	// A set of string tags for the instance. Changing this
+	// updates the existing instance tags.
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The time when the instance was last updated.
 	Updated *string `json:"updated,omitempty" tf:"updated,omitempty"`
+
+	// The user data to provide when launching the instance.
+	// Changing this creates a new server.
+	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
+
+	// Map of additional vendor-specific options.
+	// Supported options are described below.
+	VendorOptions []VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+
+	Volume []VolumeObservation `json:"volume,omitempty" tf:"volume,omitempty"`
 }
 
 type InstanceV2Parameters struct {
@@ -196,8 +375,8 @@ type InstanceV2Parameters struct {
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// An array of one or more networks to attach to the
 	// instance. The network object structure is documented below. Changing this
@@ -217,8 +396,9 @@ type InstanceV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Personality []PersonalityParameters `json:"personality,omitempty" tf:"personality,omitempty"`
 
-	// Provide the VM state. Only 'active' and 'shutoff'
-	// are supported values. Note: If the initial power_state is the shutoff
+	// Provide the VM state. Only 'active', 'shutoff'
+	// and 'shelved_offloaded' are supported values.
+	// Note: If the initial power_state is the shutoff
 	// the VM will be stopped immediately after build and the provisioners like
 	// remote-exec or files are not supported.
 	// +kubebuilder:validation:Optional
@@ -270,7 +450,32 @@ type InstanceV2Parameters struct {
 }
 
 type NetworkObservation struct {
+
+	// Specifies if this network should be used for
+	// provisioning access. Accepts true or false. Defaults to false.
+	AccessNetwork *bool `json:"accessNetwork,omitempty" tf:"access_network,omitempty"`
+
+	// Specifies a fixed IPv4 address to be used on this
+	// network. Changing this creates a new server.
+	FixedIPV4 *string `json:"fixedIpV4,omitempty" tf:"fixed_ip_v4,omitempty"`
+
+	FixedIPV6 *string `json:"fixedIpV6,omitempty" tf:"fixed_ip_v6,omitempty"`
+
+	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
+
 	Mac *string `json:"mac,omitempty" tf:"mac,omitempty"`
+
+	// The human-readable
+	// name of the network. Changing this creates a new server.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The port UUID of a
+	// network to attach to the server. Changing this creates a new server.
+	Port *string `json:"port,omitempty" tf:"port,omitempty"`
+
+	// The network UUID to
+	// attach to the server. Changing this creates a new server.
+	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
 }
 
 type NetworkParameters struct {
@@ -308,6 +513,12 @@ type NetworkParameters struct {
 }
 
 type PersonalityObservation struct {
+
+	// The contents of the file. Limited to 255 bytes.
+	Content *string `json:"content,omitempty" tf:"content,omitempty"`
+
+	// The absolute path of the destination file.
+	File *string `json:"file,omitempty" tf:"file,omitempty"`
 }
 
 type PersonalityParameters struct {
@@ -322,6 +533,40 @@ type PersonalityParameters struct {
 }
 
 type SchedulerHintsObservation struct {
+
+	// Arbitrary key/value pairs of additional
+	// properties to pass to the scheduler.
+	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
+
+	// An IP Address in CIDR form. The instance
+	// will be placed on a compute node that is in the same subnet.
+	BuildNearHostIP *string `json:"buildNearHostIp,omitempty" tf:"build_near_host_ip,omitempty"`
+
+	// The names of cells where not to build the instance.
+	DifferentCell []*string `json:"differentCell,omitempty" tf:"different_cell,omitempty"`
+
+	// A list of instance UUIDs. The instance will
+	// be scheduled on a different host than all other instances.
+	DifferentHost []*string `json:"differentHost,omitempty" tf:"different_host,omitempty"`
+
+	// A UUID of a Server Group. The instance will be placed
+	// into that group.
+	Group *string `json:"group,omitempty" tf:"group,omitempty"`
+
+	// A conditional query that a compute node must pass in
+	// order to host an instance. The query must use the JsonFilter syntax
+	// which is described
+	// here.
+	// At this time, only simple queries are supported. Compound queries using
+	// and, or, or not are not supported. An example of a simple query is:
+	Query []*string `json:"query,omitempty" tf:"query,omitempty"`
+
+	// A list of instance UUIDs. The instance will be
+	// scheduled on the same host of those specified.
+	SameHost []*string `json:"sameHost,omitempty" tf:"same_host,omitempty"`
+
+	// The name of a cell to host the instance.
+	TargetCell *string `json:"targetCell,omitempty" tf:"target_cell,omitempty"`
 }
 
 type SchedulerHintsParameters struct {
@@ -370,6 +615,17 @@ type SchedulerHintsParameters struct {
 }
 
 type VendorOptionsObservation struct {
+
+	// Whether to try to detach all attached
+	// ports to the vm before destroying it to make sure the port state is correct
+	// after the vm destruction. This is helpful when the port is not deleted.
+	DetachPortsBeforeDestroy *bool `json:"detachPortsBeforeDestroy,omitempty" tf:"detach_ports_before_destroy,omitempty"`
+
+	// Boolean to control whether
+	// to ignore manual confirmation of the instance resizing. This can be helpful
+	// to work with some OpenStack clouds which automatically confirm resizing of
+	// instances after some timeout.
+	IgnoreResizeConfirmation *bool `json:"ignoreResizeConfirmation,omitempty" tf:"ignore_resize_confirmation,omitempty"`
 }
 
 type VendorOptionsParameters struct {
@@ -389,6 +645,11 @@ type VendorOptionsParameters struct {
 }
 
 type VolumeObservation struct {
+	Device *string `json:"device,omitempty" tf:"device,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
 }
 
 type VolumeParameters struct {
@@ -427,8 +688,9 @@ type InstanceV2Status struct {
 type InstanceV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              InstanceV2Spec   `json:"spec"`
-	Status            InstanceV2Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	Spec   InstanceV2Spec   `json:"spec"`
+	Status InstanceV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

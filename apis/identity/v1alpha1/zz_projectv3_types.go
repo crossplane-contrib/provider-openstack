@@ -14,7 +14,39 @@ import (
 )
 
 type ProjectV3Observation struct {
+
+	// A description of the project.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The domain this project belongs to.
+	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// Whether the project is enabled or disabled. Valid
+	// values are true and false. Default is true.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Whether this project is a domain. Valid values
+	// are true and false. Default is false. Changing this creates a new
+	// project/domain.
+	IsDomain *bool `json:"isDomain,omitempty" tf:"is_domain,omitempty"`
+
+	// The name of the project.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The parent of this project. Changing this creates
+	// a new project.
+	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new project.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Tags for the project. Changing this updates the existing
+	// project.
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type ProjectV3Parameters struct {

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: zonev2s.dns.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -116,9 +120,22 @@ spec:
                     description: Map of additional options. Changing this creates
                       a new zone.
                     type: object
-                required:
-                - name
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -290,13 +307,68 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: name is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
           status:
             description: ZoneV2Status defines the observed state of ZoneV2.
             properties:
               atProvider:
                 properties:
+                  attributes:
+                    additionalProperties:
+                      type: string
+                    description: Attributes for the DNS Service scheduler. Changing
+                      this creates a new zone.
+                    type: object
+                  description:
+                    description: A description of the zone.
+                    type: string
+                  disableStatusCheck:
+                    description: Disable wait for zone to reach ACTIVE status. The
+                      check is enabled by default. If this argument is true, zone
+                      will be considered as created/updated if OpenStack request returned
+                      success.
+                    type: boolean
+                  email:
+                    description: The email contact for the zone record.
+                    type: string
                   id:
                     type: string
+                  masters:
+                    description: An array of master DNS servers. For when type is
+                      SECONDARY.
+                    items:
+                      type: string
+                    type: array
+                  name:
+                    description: The name of the zone. Note the . at the end of the
+                      name. Changing this creates a new DNS zone.
+                    type: string
+                  projectId:
+                    description: The ID of the project DNS zone is created for, sets
+                      X-Auth-Sudo-Tenant-ID header (requires an assigned user role
+                      in target project)
+                    type: string
+                  region:
+                    description: The region in which to obtain the V2 Compute client.
+                      Keypairs are associated with accounts, but a Compute client
+                      is needed to create one. If omitted, the region argument of
+                      the provider is used. Changing this creates a new DNS zone.
+                    type: string
+                  ttl:
+                    description: The time to live (TTL) of the zone.
+                    type: number
+                  type:
+                    description: The type of zone. Can either be PRIMARY or SECONDARY.
+                      Changing this creates a new zone.
+                    type: string
+                  valueSpecs:
+                    additionalProperties:
+                      type: string
+                    description: Map of additional options. Changing this creates
+                      a new zone.
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -339,9 +411,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

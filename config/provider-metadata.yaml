@@ -1,7 +1,7 @@
 name: terraform-provider-openstack/openstack
 resources:
     openstack_blockstorage_qos_association_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Manages a V3 Qos association resource within OpenStack.
         name: openstack_blockstorage_qos_association_v3
         title: openstack_blockstorage_qos_association_v3
@@ -41,7 +41,7 @@ resources:
                 Changing this creates a new qos association.
         importStatements: []
     openstack_blockstorage_qos_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Manages a V3 Quality-Of-Servirce (qos) resource within OpenStack.
         name: openstack_blockstorage_qos_v3
         title: openstack_blockstorage_qos_v3
@@ -69,7 +69,7 @@ resources:
             specs: '- (Optional) Key/Value pairs of specs for the qos.'
         importStatements: []
     openstack_blockstorage_quotaset_v2:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V2 quotaset resource within OpenStack.
         name: openstack_blockstorage_quotaset_v2
         title: openstack_blockstorage_quotaset_v2
@@ -91,6 +91,8 @@ resources:
                   },
                   "volumes": 10
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -131,7 +133,7 @@ resources:
                 existing quotaset.
         importStatements: []
     openstack_blockstorage_quotaset_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Manages a V3 quotaset resource within OpenStack.
         name: openstack_blockstorage_quotaset_v3
         title: openstack_blockstorage_quotaset_v3
@@ -153,6 +155,8 @@ resources:
                   },
                   "volumes": 10
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -193,7 +197,7 @@ resources:
                 existing quotaset.
         importStatements: []
     openstack_blockstorage_volume_attach_v2:
-        subCategory: ""
+        subCategory: Deprecated
         description: Creates an attachment connection to a Block Storage volume
         name: openstack_blockstorage_volume_attach_v2
         title: openstack_blockstorage_volume_attach_v2
@@ -209,6 +213,8 @@ resources:
                   "platform": "x86_64",
                   "volume_id": "${openstack_blockstorage_volume_v2.volume_1.id}"
                 }
+              references:
+                volume_id: openstack_blockstorage_volume_v2.volume_1.id
               dependencies:
                 openstack_blockstorage_volume_v2.volume_1: |-
                     {
@@ -248,7 +254,7 @@ resources:
                 connections.
         importStatements: []
     openstack_blockstorage_volume_attach_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Creates an attachment connection to a Block Storage volume
         name: openstack_blockstorage_volume_attach_v3
         title: openstack_blockstorage_volume_attach_v3
@@ -264,6 +270,8 @@ resources:
                   "platform": "x86_64",
                   "volume_id": "${openstack_blockstorage_volume_v3.volume_1.id}"
                 }
+              references:
+                volume_id: openstack_blockstorage_volume_v3.volume_1.id
               dependencies:
                 openstack_blockstorage_volume_v3.volume_1: |-
                     {
@@ -303,7 +311,7 @@ resources:
                 connections.
         importStatements: []
     openstack_blockstorage_volume_type_access_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Manages a V3 volume type access resource within OpenStack.
         name: openstack_blockstorage_volume_type_access_v3
         title: openstack_blockstorage_volume_type_access_v3
@@ -314,6 +322,9 @@ resources:
                   "project_id": "${openstack_identity_project_v3.project_1.id}",
                   "volume_type_id": "${openstack_blockstorage_volume_type_v3.volume_type_1.id}"
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
+                volume_type_id: openstack_blockstorage_volume_type_v3.volume_type_1.id
               dependencies:
                 openstack_blockstorage_volume_type_v3.volume_type_1: |-
                     {
@@ -337,7 +348,7 @@ resources:
                 this creates a new resource.
         importStatements: []
     openstack_blockstorage_volume_type_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Manages a V3 volume type resource within OpenStack.
         name: openstack_blockstorage_volume_type_v3
         title: openstack_blockstorage_volume_type_v3
@@ -369,7 +380,7 @@ resources:
                 creates a new quotaset.
         importStatements: []
     openstack_blockstorage_volume_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V1 volume resource within OpenStack.
         name: openstack_blockstorage_volume_v1
         title: openstack_blockstorage_volume_v1
@@ -420,7 +431,7 @@ resources:
                 Changing this creates a new volume.
         importStatements: []
     openstack_blockstorage_volume_v2:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V2 volume resource within OpenStack.
         name: openstack_blockstorage_volume_v2
         title: openstack_blockstorage_volume_v2
@@ -497,7 +508,7 @@ resources:
                 Changing this creates a new volume.
         importStatements: []
     openstack_blockstorage_volume_v3:
-        subCategory: ""
+        subCategory: Block Storage / Cinder
         description: Manages a V3 volume resource within OpenStack.
         name: openstack_blockstorage_volume_v3
         title: openstack_blockstorage_volume_v3
@@ -577,7 +588,7 @@ resources:
                 Changing this creates a new volume.
         importStatements: []
     openstack_compute_aggregate_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a Host Aggregate within Openstack Nova
         name: openstack_compute_aggregate_v2
         title: openstack_compute_aggregate_v2
@@ -617,7 +628,7 @@ resources:
                 availability zone.
         importStatements: []
     openstack_compute_flavor_access_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a project access for flavor V2 resource within OpenStack.
         name: openstack_compute_flavor_access_v2
         title: openstack_compute_flavor_access_v2
@@ -628,6 +639,9 @@ resources:
                   "flavor_id": "${openstack_compute_flavor_v2.flavor_1.id}",
                   "tenant_id": "${openstack_identity_project_v3.project_1.id}"
                 }
+              references:
+                flavor_id: openstack_compute_flavor_v2.flavor_1.id
+                tenant_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_compute_flavor_v2.flavor_1: |-
                     {
@@ -652,7 +666,7 @@ resources:
                 Changing this creates a new flavor access.
         importStatements: []
     openstack_compute_flavor_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 flavor resource within OpenStack.
         name: openstack_compute_flavor_v2
         title: openstack_compute_flavor_v2
@@ -708,7 +722,7 @@ resources:
                 a new flavor.
         importStatements: []
     openstack_compute_floatingip_associate_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Associate a floating IP to an instance
         name: openstack_compute_floatingip_associate_v2
         title: openstack_compute_floatingip_associate_v2
@@ -719,6 +733,9 @@ resources:
                   "floating_ip": "${openstack_networking_floatingip_v2.fip_1.address}",
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}"
                 }
+              references:
+                floating_ip: openstack_networking_floatingip_v2.fip_1.address
+                instance_id: openstack_compute_instance_v2.instance_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -741,6 +758,10 @@ resources:
                   "floating_ip": "${openstack_networking_floatingip_v2.fip_1.address}",
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}"
                 }
+              references:
+                fixed_ip: openstack_compute_instance_v2.instance_1.network.1.fixed_ip_v4
+                floating_ip: openstack_networking_floatingip_v2.fip_1.address
+                instance_id: openstack_compute_instance_v2.instance_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -780,7 +801,7 @@ resources:
                 associated. Defaults to false.
         importStatements: []
     openstack_compute_floatingip_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 floating IP resource within OpenStack Nova (compute).
         name: openstack_compute_floatingip_v2
         title: openstack_compute_floatingip_v2
@@ -805,7 +826,7 @@ resources:
                 have a different address).
         importStatements: []
     openstack_compute_instance_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 VM instance resource within OpenStack.
         name: openstack_compute_instance_v2
         title: openstack_compute_instance_v2
@@ -846,7 +867,7 @@ resources:
                   ]
                 }
               dependencies:
-                openstack_blockstorage_volume_v2.myvol: |-
+                openstack_blockstorage_volume_v3.myvol: |-
                     {
                       "name": "myvol",
                       "size": 1
@@ -854,7 +875,7 @@ resources:
                 openstack_compute_volume_attach_v2.attached: |-
                     {
                       "instance_id": "${openstack_compute_instance_v2.myinstance.id}",
-                      "volume_id": "${openstack_blockstorage_volume_v2.myvol.id}"
+                      "volume_id": "${openstack_blockstorage_volume_v3.myvol.id}"
                     }
             - name: boot-from-volume
               manifest: |-
@@ -890,7 +911,7 @@ resources:
                       "delete_on_termination": true,
                       "destination_type": "volume",
                       "source_type": "volume",
-                      "uuid": "${openstack_blockstorage_volume_v1.myvol.id}"
+                      "uuid": "${openstack_blockstorage_volume_v3.myvol.id}"
                     }
                   ],
                   "flavor_id": "3",
@@ -905,8 +926,10 @@ resources:
                     "default"
                   ]
                 }
+              references:
+                block_device.uuid: openstack_blockstorage_volume_v3.myvol.id
               dependencies:
-                openstack_blockstorage_volume_v1.myvol: |-
+                openstack_blockstorage_volume_v3.myvol: |-
                     {
                       "image_id": "\u003cimage-id\u003e",
                       "name": "myvol",
@@ -955,7 +978,7 @@ resources:
                       "delete_on_termination": true,
                       "destination_type": "volume",
                       "source_type": "volume",
-                      "uuid": "${openstack_blockstorage_volume_v2.volume_1.id}"
+                      "uuid": "${openstack_blockstorage_volume_v3.volume_1.id}"
                     }
                   ],
                   "flavor_id": "3",
@@ -966,8 +989,10 @@ resources:
                     "default"
                   ]
                 }
+              references:
+                block_device.uuid: openstack_blockstorage_volume_v3.volume_1.id
               dependencies:
-                openstack_blockstorage_volume_v2.volume_1: |-
+                openstack_blockstorage_volume_v3.volume_1: |-
                     {
                       "name": "volume_1",
                       "size": 1
@@ -1086,6 +1111,8 @@ resources:
                     "default"
                   ]
                 }
+              references:
+                flavor_id: openstack_compute_flavor_v2.flavor-with-swap.id
               dependencies:
                 openstack_compute_flavor_v2.flavor-with-swap: |-
                     {
@@ -1182,6 +1209,9 @@ resources:
                     ]
                   }
                 }
+              references:
+                connection.host: openstack_networking_port_v2.port_1.fixed_ip.0.ip_address
+                network.port: openstack_networking_port_v2.port_1.id
               dependencies:
                 openstack_networking_port_v2.port_1: |-
                     {
@@ -1258,7 +1288,7 @@ resources:
                   ]
                 }
               dependencies:
-                openstack_blockstorage_volume_v2.volume_1: |-
+                openstack_blockstorage_volume_v3.volume_1: |-
                     {
                       "name": "\u003cvol_name\u003e",
                       "size": 1
@@ -1266,7 +1296,7 @@ resources:
                 openstack_compute_volume_attach_v2.va_1: |-
                     {
                       "instance_id": "${openstack_compute_instance_v2.instance_2.id}",
-                      "volume_id": "${openstack_blockstorage_volume_v2.volume_1.id}"
+                      "volume_id": "${openstack_blockstorage_volume_v3.volume_1.id}"
                     }
         argumentDocs:
             access_ip_v4: '- The first detected Fixed IPv4 address.'
@@ -1321,6 +1351,9 @@ resources:
                 must be local and only one swap disk per server and the size of the swap disk
                 must be less than or equal to the swap size of the flavor. Changing this
                 creates a new server.
+            block_device.multiattach: |-
+                - (Optional) Enable the attachment of multiattach-capable
+                volumes.
             block_device.source_type: |-
                 - (Required) The source type of the device. Must be one of
                 "blank", "image", "volume", or "snapshot". Changing this creates a new
@@ -1415,8 +1448,9 @@ resources:
             personality.content: '- (Required) The contents of the file. Limited to 255 bytes.'
             personality.file: '- (Required) The absolute path of the destination file.'
             power_state: |-
-                - (Optional) Provide the VM state. Only 'active' and 'shutoff'
-                are supported values. Note: If the initial power_state is the shutoff
+                - (Optional) Provide the VM state. Only 'active', 'shutoff'
+                and 'shelved_offloaded' are supported values.
+                Note: If the initial power_state is the shutoff
                 the VM will be stopped immediately after build and the provisioners like
                 remote-exec or files are not supported.
             region: |-
@@ -1482,7 +1516,7 @@ resources:
                 instances after some timeout.
         importStatements: []
     openstack_compute_interface_attach_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Attaches a Network Interface to an Instance.
         name: openstack_compute_interface_attach_v2
         title: openstack_compute_interface_attach_v2
@@ -1493,6 +1527,9 @@ resources:
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
                   "network_id": "${openstack_networking_port_v2.network_1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                network_id: openstack_networking_port_v2.network_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1513,6 +1550,9 @@ resources:
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
                   "network_id": "${openstack_networking_port_v2.network_1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                network_id: openstack_networking_port_v2.network_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1532,6 +1572,9 @@ resources:
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
                   "port_id": "${openstack_networking_port_v2.port_1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                port_id: openstack_networking_port_v2.port_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1556,8 +1599,10 @@ resources:
                 {
                   "count": 2,
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "port_id": "${openstack_networking_port_v2.ports.*.id[count.index]}"
+                  "port_id": "${openstack_networking_port_v2.ports[count.index].id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1582,8 +1627,11 @@ resources:
               manifest: |-
                 {
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "port_id": "${openstack_networking_port_v2.ports.*.id[0]}"
+                  "port_id": "${openstack_networking_port_v2.ports[0].id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                port_id: openstack_networking_port_v2.ports[0].id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1608,8 +1656,11 @@ resources:
               manifest: |-
                 {
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "port_id": "${openstack_networking_port_v2.ports.*.id[1]}"
+                  "port_id": "${openstack_networking_port_v2.ports[1].id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                port_id: openstack_networking_port_v2.ports[1].id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1647,7 +1698,7 @@ resources:
                 creates a new attachment.
         importStatements: []
     openstack_compute_keypair_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 keypair resource within OpenStack.
         name: openstack_compute_keypair_v2
         title: openstack_compute_keypair_v2
@@ -1687,7 +1738,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_compute_quotaset_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 compute quotaset resource within OpenStack.
         name: openstack_compute_quotaset_v2
         title: openstack_compute_quotaset_v2
@@ -1703,6 +1754,8 @@ resources:
                   "server_group_members": 8,
                   "server_groups": 4
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -1760,7 +1813,7 @@ resources:
                 Changing this updates the existing quotaset.
         importStatements: []
     openstack_compute_secgroup_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 security group resource within OpenStack.
         name: openstack_compute_secgroup_v2
         title: openstack_compute_secgroup_v2
@@ -1826,7 +1879,7 @@ resources:
                 range to open. Changing this creates a new security group rule.
         importStatements: []
     openstack_compute_servergroup_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Manages a V2 Server Group resource within OpenStack.
         name: openstack_compute_servergroup_v2
         title: openstack_compute_servergroup_v2
@@ -1887,7 +1940,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_compute_volume_attach_v2:
-        subCategory: ""
+        subCategory: Compute / Nova
         description: Attaches a Block Storage Volume to an Instance.
         name: openstack_compute_volume_attach_v2
         title: openstack_compute_volume_attach_v2
@@ -1896,10 +1949,13 @@ resources:
               manifest: |-
                 {
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "volume_id": "${openstack_blockstorage_volume_v2.volume_1.id}"
+                  "volume_id": "${openstack_blockstorage_volume_v3.volume_1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                volume_id: openstack_blockstorage_volume_v3.volume_1.id
               dependencies:
-                openstack_blockstorage_volume_v2.volume_1: |-
+                openstack_blockstorage_volume_v3.volume_1: |-
                     {
                       "name": "volume_1",
                       "size": 1
@@ -1916,10 +1972,12 @@ resources:
                 {
                   "count": 2,
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "volume_id": "${openstack_blockstorage_volume_v2.volumes.*.id[count.index]}"
+                  "volume_id": "${openstack_blockstorage_volume_v3.volumes[count.index].id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
               dependencies:
-                openstack_blockstorage_volume_v2.volumes: |-
+                openstack_blockstorage_volume_v3.volumes: |-
                     {
                       "count": 2,
                       "name": "${format(\"vol-%02d\", count.index + 1)}",
@@ -1936,10 +1994,13 @@ resources:
               manifest: |-
                 {
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "volume_id": "${openstack_blockstorage_volume_v2.volumes.0.id}"
+                  "volume_id": "${openstack_blockstorage_volume_v3.volumes.0.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                volume_id: openstack_blockstorage_volume_v3.volumes.0.id
               dependencies:
-                openstack_blockstorage_volume_v2.volumes: |-
+                openstack_blockstorage_volume_v3.volumes: |-
                     {
                       "count": 2,
                       "name": "${format(\"vol-%02d\", count.index + 1)}",
@@ -1959,10 +2020,13 @@ resources:
                     "openstack_compute_volume_attach_v2.attach_1"
                   ],
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "volume_id": "${openstack_blockstorage_volume_v2.volumes.1.id}"
+                  "volume_id": "${openstack_blockstorage_volume_v3.volumes.1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                volume_id: openstack_blockstorage_volume_v3.volumes.1.id
               dependencies:
-                openstack_blockstorage_volume_v2.volumes: |-
+                openstack_blockstorage_volume_v3.volumes: |-
                     {
                       "count": 2,
                       "name": "${format(\"vol-%02d\", count.index + 1)}",
@@ -1980,8 +2044,11 @@ resources:
                 {
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
                   "multiattach": true,
-                  "volume_id": "${openstack_blockstorage_volume_v2.volume_1.id}"
+                  "volume_id": "${openstack_blockstorage_volume_v3.volume_1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_1.id
+                volume_id: openstack_blockstorage_volume_v3.volume_1.id
               dependencies:
                 openstack_blockstorage_volume_v3.volume_1: |-
                     {
@@ -2011,8 +2078,11 @@ resources:
                   ],
                   "instance_id": "${openstack_compute_instance_v2.instance_2.id}",
                   "multiattach": true,
-                  "volume_id": "${openstack_blockstorage_volume_v2.volume_1.id}"
+                  "volume_id": "${openstack_blockstorage_volume_v3.volume_1.id}"
                 }
+              references:
+                instance_id: openstack_compute_instance_v2.instance_2.id
+                volume_id: openstack_blockstorage_volume_v3.volume_1.id
               dependencies:
                 openstack_blockstorage_volume_v3.volume_1: |-
                     {
@@ -2059,7 +2129,7 @@ resources:
             volume_id: '- (Required) The ID of the Volume to attach to an Instance.'
         importStatements: []
     openstack_containerinfra_cluster_v1:
-        subCategory: ""
+        subCategory: Container Infra / Magnum
         description: Manages a V1 Magnum node group resource within OpenStack.
         name: openstack_containerinfra_cluster_v1
         title: openstack_containerinfra_cluster_v1
@@ -2112,7 +2182,7 @@ resources:
             updated_at: '- The time at which node group was created.'
         importStatements: []
     openstack_containerinfra_clustertemplate_v1:
-        subCategory: ""
+        subCategory: Container Infra / Magnum
         description: Manages a V1 Magnum cluster template resource within OpenStack.
         name: openstack_containerinfra_clustertemplate_v1
         title: openstack_containerinfra_clustertemplate_v1
@@ -2266,7 +2336,7 @@ resources:
                 the existing cluster template.
         importStatements: []
     openstack_db_configuration_v1:
-        subCategory: ""
+        subCategory: Databases / Trove
         description: Manages a V1 DB configuration resource within OpenStack.
         name: openstack_db_configuration_v1
         title: openstack_db_configuration_v1
@@ -2311,7 +2381,7 @@ resources:
                 creates a new instance.
         importStatements: []
     openstack_db_database_v1:
-        subCategory: ""
+        subCategory: Databases / Trove
         description: Manages a V1 database resource within OpenStack.
         name: openstack_db_database_v1
         title: openstack_db_database_v1
@@ -2322,13 +2392,15 @@ resources:
                   "instance_id": "${openstack_db_instance_v1.basic.id}",
                   "name": "mydb"
                 }
+              references:
+                instance_id: openstack_db_instance_v1.basic.id
         argumentDocs:
             instance_id: '- (Required) The ID for the database instance.'
             name: '- (Required) A unique name for the resource.'
             region: '- Openstack region resource is created in.'
         importStatements: []
     openstack_db_instance_v1:
-        subCategory: ""
+        subCategory: Databases / Trove
         description: Manages a V1 DB instance resource within OpenStack.
         name: openstack_db_instance_v1
         title: openstack_db_instance_v1
@@ -2432,7 +2504,7 @@ resources:
             user/password: '- See Argument Reference above.'
         importStatements: []
     openstack_db_user_v1:
-        subCategory: ""
+        subCategory: Databases / Trove
         description: Manages a V1 database user resource within OpenStack.
         name: openstack_db_user_v1
         title: openstack_db_user_v1
@@ -2447,6 +2519,8 @@ resources:
                   "name": "basic",
                   "password": "password"
                 }
+              references:
+                instance_id: openstack_db_instance_v1.basic.id
         argumentDocs:
             databases: '- (Optional) A list of database user should have access to.'
             instance_id: '- (Required) The ID for the database instance.'
@@ -2455,7 +2529,7 @@ resources:
             region: '- Openstack region resource is created in.'
         importStatements: []
     openstack_dns_recordset_v2:
-        subCategory: ""
+        subCategory: DNS / Designate
         description: Manages a DNS record set in the OpenStack DNS Service
         name: openstack_dns_recordset_v2
         title: openstack_dns_recordset_v2
@@ -2472,6 +2546,8 @@ resources:
                   "type": "A",
                   "zone_id": "${openstack_dns_zone_v2.example_zone.id}"
                 }
+              references:
+                zone_id: openstack_dns_zone_v2.example_zone.id
               dependencies:
                 openstack_dns_zone_v2.example_zone: |-
                     {
@@ -2494,10 +2570,7 @@ resources:
                 - (Optional) The ID of the project DNS zone is created
                 for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
                 user role in target project)
-            records: |-
-                - (Optional) An array of DNS records. Note: if an IPv6 address
-                contains brackets ([ ]), the brackets will be stripped and the modified
-                address will be recorded in the state.
+            records: '- (Required) An array of DNS records.'
             region: |-
                 - (Optional) The region in which to obtain the V2 DNS client.
                 If omitted, the region argument of the provider is used.
@@ -2514,7 +2587,7 @@ resources:
                 Changing this creates a new DNS  record set.
         importStatements: []
     openstack_dns_transfer_accept_v2:
-        subCategory: ""
+        subCategory: DNS / Designate
         description: Manages a DNS zone Transfer accept in the OpenStack DNS Service
         name: openstack_dns_transfer_accept_v2
         title: openstack_dns_transfer_accept_v2
@@ -2525,6 +2598,9 @@ resources:
                   "key": "${openstack_dns_transfer_request_v2.request_1.key}",
                   "zone_transfer_request_id": "${openstack_dns_transfer_request_v2.request_1.id}"
                 }
+              references:
+                key: openstack_dns_transfer_request_v2.request_1.key
+                zone_transfer_request_id: openstack_dns_transfer_request_v2.request_1.id
               dependencies:
                 openstack_dns_transfer_request_v2.request_1: |-
                     {
@@ -2556,7 +2632,7 @@ resources:
             zone_transfer_request_id: '- (Required) The ID of the zone transfer request.'
         importStatements: []
     openstack_dns_transfer_request_v2:
-        subCategory: ""
+        subCategory: DNS / Designate
         description: Manages a DNS zone Transfer request in the OpenStack DNS Service
         name: openstack_dns_transfer_request_v2
         title: openstack_dns_transfer_request_v2
@@ -2567,6 +2643,8 @@ resources:
                   "description": "a transfer request",
                   "zone_id": "${openstack_dns_zone_v2.example_zone.id}"
                 }
+              references:
+                zone_id: openstack_dns_zone_v2.example_zone.id
               dependencies:
                 openstack_dns_zone_v2.example_zone: |-
                     {
@@ -2596,7 +2674,7 @@ resources:
                 request.
         importStatements: []
     openstack_dns_zone_v2:
-        subCategory: ""
+        subCategory: DNS / Designate
         description: Manages a DNS zone in the OpenStack DNS Service
         name: openstack_dns_zone_v2
         title: openstack_dns_zone_v2
@@ -2644,7 +2722,7 @@ resources:
                 new zone.
         importStatements: []
     openstack_fw_firewall_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a v1 firewall resource within OpenStack.
         name: openstack_fw_firewall_v1
         title: openstack_fw_firewall_v1
@@ -2655,6 +2733,8 @@ resources:
                   "name": "my-firewall",
                   "policy_id": "${openstack_fw_policy_v1.policy_1.id}"
                 }
+              references:
+                policy_id: openstack_fw_policy_v1.policy_1.id
               dependencies:
                 openstack_fw_policy_v1.policy_1: |-
                     {
@@ -2715,8 +2795,103 @@ resources:
                 firewall.
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
+    openstack_fw_group_v2:
+        subCategory: FWaaS / Neutron
+        description: Manages a v2 firewall group resource within OpenStack.
+        name: openstack_fw_group_v2
+        title: openstack_fw_group_v2
+        examples:
+            - name: group_1
+              manifest: |-
+                {
+                  "egress_firewall_policy_id": "${openstack_fw_policy_v2.policy_2.id}",
+                  "ingress_firewall_policy_id": "${openstack_fw_policy_v2.policy_1.id}",
+                  "name": "firewall_group"
+                }
+              references:
+                egress_firewall_policy_id: openstack_fw_policy_v2.policy_2.id
+                ingress_firewall_policy_id: openstack_fw_policy_v2.policy_1.id
+              dependencies:
+                openstack_fw_policy_v2.policy_1: |-
+                    {
+                      "name": "firewall_ingress_policy",
+                      "rules": [
+                        "${openstack_fw_rule_v2.rule_1.id}"
+                      ]
+                    }
+                openstack_fw_policy_v2.policy_2: |-
+                    {
+                      "name": "firewall_egress_policy",
+                      "rules": [
+                        "${openstack_fw_rule_v2.rule_2.id}"
+                      ]
+                    }
+                openstack_fw_rule_v2.rule_1: |-
+                    {
+                      "action": "deny",
+                      "description": "drop TELNET traffic",
+                      "destination_port": "23",
+                      "enabled": "true",
+                      "name": "firewall_rule_2",
+                      "protocol": "tcp"
+                    }
+                openstack_fw_rule_v2.rule_2: |-
+                    {
+                      "action": "deny",
+                      "description": "drop NTP traffic",
+                      "destination_port": "123",
+                      "enabled": "false",
+                      "name": "firewall_rule_1",
+                      "protocol": "udp"
+                    }
+        argumentDocs:
+            admin_state_up: |-
+                - (Optional) Administrative up/down status for the firewall
+                group (must be "true" or "false" if provided - defaults to "true").
+                Changing this updates the admin_state_up of an existing firewall group.
+            description: |-
+                - (Optional) A description for the firewall group. Changing this
+                updates the description of an existing firewall group.
+            egress_firewall_policy_id: |-
+                - (Optional) The egress firewall policy resource
+                id for the firewall group. Changing this updates the
+                egress_firewall_policy_id of an existing firewall group.
+            ingress_firewall_policy_id: |-
+                - (Optional) The ingress firewall policy resource
+                id for the firewall group. Changing this updates the
+                ingress_firewall_policy_id of an existing firewall group.
+            name: |-
+                - (Optional) A name for the firewall group. Changing this
+                updates the name of an existing firewall.
+            ports: |-
+                - (Optional) Port(s) to associate this firewall group
+                with. Must be a list of strings. Changing this updates the associated ports
+                of an existing firewall group.
+            project_id: |-
+                - (Optional) - This argument conflicts and  is interchangeable
+                with tenant_id. The owner of the firewall group. Required if admin wants
+                to create a firewall group for another project. Changing this creates a new
+                firewall group.
+            region: |-
+                - (Optional) The region in which to obtain the v2 networking client.
+                A networking client is needed to create a firewall group. If omitted, the
+                region argument of the provider is used. Changing this creates a new
+                firewall group.
+            shared: |-
+                - (Optional) Sharing status of the firewall group (must be "true"
+                or "false" if provided). If this is "true" the firewall group is visible to,
+                and can be used in, firewalls in other tenants. Changing this updates the
+                shared status of an existing firewall group. Only administrative users
+                can specify if the firewall group should be shared.
+            status: '- The status of the firewall group.'
+            tenant_id: |-
+                - (Optional) - This argument conflicts and is interchangeable with
+                project_id. The owner of the firewall group. Required if admin wants to
+                create a firewall group for another tenant. Changing this creates a new
+                firewall group.
+        importStatements: []
     openstack_fw_policy_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a v1 firewall policy resource within OpenStack.
         name: openstack_fw_policy_v1
         title: openstack_fw_policy_v1
@@ -2779,8 +2954,81 @@ resources:
                 can specify if the policy should be shared.
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
+    openstack_fw_policy_v2:
+        subCategory: FWaaS / Neutron
+        description: Manages a v2 firewall policy resource within OpenStack.
+        name: openstack_fw_policy_v2
+        title: openstack_fw_policy_v2
+        examples:
+            - name: policy_1
+              manifest: |-
+                {
+                  "name": "firewall_policy",
+                  "rules": [
+                    "${openstack_fw_rule_v2.rule_1.id}",
+                    "${openstack_fw_rule_v2.rule_2.id}"
+                  ]
+                }
+              dependencies:
+                openstack_fw_rule_v2.rule_1: |-
+                    {
+                      "action": "deny",
+                      "description": "drop TELNET traffic",
+                      "destination_port": "23",
+                      "enabled": "true",
+                      "name": "firewall_rule_1",
+                      "protocol": "tcp"
+                    }
+                openstack_fw_rule_v2.rule_2: |-
+                    {
+                      "action": "deny",
+                      "description": "drop NTP traffic",
+                      "destination_port": "123",
+                      "enabled": "false",
+                      "name": "firewall_rule_2",
+                      "protocol": "udp"
+                    }
+        argumentDocs:
+            audited: |-
+                - (Optional) Audit status of the firewall policy
+                (must be "true" or "false" if provided - defaults to "false").
+                This status is set to "false" whenever the firewall policy or any of its
+                rules are changed. Changing this updates the audited status of an existing
+                firewall policy.
+            description: |-
+                - (Optional) A description for the firewall policy. Changing
+                this updates the description of an existing firewall policy.
+            name: |-
+                - (Optional) A name for the firewall policy. Changing this
+                updates the name of an existing firewall policy.
+            project_id: |-
+                - (Optional) - This argument conflicts and is interchangeable
+                with tenant_id. The owner of the firewall policy. Required if admin wants
+                to create a firewall policy for another project. Changing this creates a new
+                firewall policy.
+            region: |-
+                - (Optional) The region in which to obtain the v2 networking client.
+                A networking client is needed to create a firewall policy. If omitted, the
+                region argument of the provider is used. Changing this creates a new
+                firewall policy.
+            rules: |-
+                - (Optional) An array of one or more firewall rules that comprise
+                the policy. Changing this results in adding/removing rules from the
+                existing firewall policy.
+            shared: |-
+                - (Optional) Sharing status of the firewall policy (must be "true"
+                or "false" if provided). If this is "true" the policy is visible to, and
+                can be used in, firewalls in other tenants. Changing this updates the
+                shared status of an existing firewall policy. Only administrative users
+                can specify if the policy should be shared.
+            tenant_id: |-
+                - (Optional) - This argument conflicts and is interchangeable
+                with project_id. The owner of the firewall policy. Required if admin wants
+                to create a firewall policy for another tenant. Changing this creates a new
+                firewall policy.
+        importStatements: []
     openstack_fw_rule_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a v1 firewall rule resource within OpenStack.
         name: openstack_fw_rule_v1
         title: openstack_fw_rule_v1
@@ -2844,8 +3092,84 @@ resources:
                 new firewall rule.
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
+    openstack_fw_rule_v2:
+        subCategory: FWaaS / Neutron
+        description: Manages a v2 firewall rule resource within OpenStack.
+        name: openstack_fw_rule_v2
+        title: openstack_fw_rule_v2
+        examples:
+            - name: rule_2
+              manifest: |-
+                {
+                  "action": "deny",
+                  "description": "drop TELNET traffic",
+                  "destination_port": "23",
+                  "enabled": "true",
+                  "name": "firewall_rule",
+                  "protocol": "tcp"
+                }
+        argumentDocs:
+            action: |-
+                - (Optional) Action to be taken (must be "allow", "deny" or "reject")
+                when the firewall rule matches. Changing this updates the action of an
+                existing firewall rule. Default is deny.
+            description: |-
+                - (Optional) A description for the firewall rule. Changing this
+                updates the description of an existing firewall rule.
+            destination_ip_address: |-
+                - (Optional) The destination IP address on which the
+                firewall rule operates. Changing this updates the destination_ip_address
+                of an existing firewall rule.
+            destination_port: |-
+                - (Optional) The destination port on which the firewall
+                rule operates. Changing this updates the destination_port of an existing
+                firewall rule. Require not any or empty protocol.
+            enabled: |-
+                - (Optional) Enabled status for the firewall rule (must be "true"
+                or "false" if provided - defaults to "true"). Changing this updates the
+                enabled status of an existing firewall rule.
+            ip_version: |-
+                - (Optional) IP version, either 4 or 6. Changing this
+                updates the ip_version of an existing firewall rule. Default is 4.
+            name: |-
+                - (Optional) A unique name for the firewall rule. Changing this
+                updates the name of an existing firewall rule.
+            project_id: |-
+                - (Optional) - This argument conflicts and is interchangeable
+                with tenant_id. The owner of the firewall rule. Required if admin wants
+                to create a firewall rule for another project. Changing this creates a new
+                firewall rule.
+            protocol: |-
+                - (Optional; Required if source_port or destination_port is not
+                empty) The protocol type on which the firewall rule operates.
+                Valid values are: tcp, udp, icmp, and any. Changing this updates the
+                protocol of an existing firewall rule. Default is any.
+            region: |-
+                - (Optional) The region in which to obtain the v2 networking client.
+                A networking client is needed to create a firewall rule. If omitted, the
+                region argument of the provider is used. Changing this creates a new
+                firewall rule.
+            shared: |-
+                - (Optional) Sharing status of the firewall rule (must be "true"
+                or "false" if provided). If this is "true" the policy is visible to, and
+                can be used in, firewalls in other tenants. Changing this updates the
+                shared status of an existing firewall policy. On
+            source_ip_address: |-
+                - (Optional) The source IP address on which the firewall
+                rule operates. Changing this updates the source_ip_address of an existing
+                firewall rule.
+            source_port: |-
+                - (Optional) The source port on which the firewall
+                rule operates. Changing this updates the source_port of an existing
+                firewall rule. Require not any or empty protocol.
+            tenant_id: |-
+                - (Optional) - This argument conflicts and is interchangeable
+                with project_id. The owner of the firewall rule. Required if admin wants
+                to create a firewall rule for another tenant. Changing this creates a new
+                firewall rule.
+        importStatements: []
     openstack_identity_application_credential_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 Application Credential resource within OpenStack Keystone.
         name: openstack_identity_application_credential_v3
         title: openstack_identity_application_credential_v3
@@ -2944,7 +3268,7 @@ resources:
                 credentials or trusts. Changing this creates a new application credential.
         importStatements: []
     openstack_identity_ec2_credential_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 EC2 Credential resource within OpenStack Keystone.
         name: openstack_identity_ec2_credential_v3
         title: openstack_identity_ec2_credential_v3
@@ -2975,7 +3299,7 @@ resources:
                 auth scope.
         importStatements: []
     openstack_identity_endpoint_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 Endpoint resource within OpenStack Keystone.
         name: openstack_identity_endpoint_v3
         title: openstack_identity_endpoint_v3
@@ -2988,6 +3312,9 @@ resources:
                   "service_id": "${openstack_identity_service_v3.service_1.id}",
                   "url": "http://my-endpoint"
                 }
+              references:
+                endpoint_region: openstack_identity_service_v3.service_1.region
+                service_id: openstack_identity_service_v3.service_1.id
               dependencies:
                 openstack_identity_service_v3.service_1: |-
                     {
@@ -3011,7 +3338,7 @@ resources:
             url: '- (Required) The endpoint url.'
         importStatements: []
     openstack_identity_group_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 group resource within OpenStack Keystone.
         name: openstack_identity_group_v3
         title: openstack_identity_group_v3
@@ -3031,8 +3358,44 @@ resources:
                 If omitted, the region argument of the provider is used. Changing this
                 creates a new group.
         importStatements: []
+    openstack_identity_inherit_role_assignment_v3:
+        subCategory: Identity / Keystone
+        description: Manages a V3 Inherit Role assignment within OpenStack Keystone.
+        name: openstack_identity_inherit_role_assignment_v3
+        title: openstack_identity_inherit_role_assignment_v3
+        examples:
+            - name: role_assignment_1
+              manifest: |-
+                {
+                  "domain_id": "default",
+                  "role_id": "${openstack_identity_role_v3.role_1.id}",
+                  "user_id": "${openstack_identity_user_v3.user_1.id}"
+                }
+              references:
+                role_id: openstack_identity_role_v3.role_1.id
+                user_id: openstack_identity_user_v3.user_1.id
+              dependencies:
+                openstack_identity_role_v3.role_1: |-
+                    {
+                      "domain_id": "default",
+                      "name": "role_1"
+                    }
+                openstack_identity_user_v3.user_1: |-
+                    {
+                      "domain_id": "default",
+                      "name": "user_1"
+                    }
+        argumentDocs:
+            domain_id: '- (Optional; Required if project_id is empty) The domain to assign the role in.'
+            group_id: '- (Optional; Required if user_id is empty) The group to assign the role to.'
+            project_id: |-
+                - (Optional; Required if domain_id is empty) The project to assign the role in.
+                The project should be able to containt child projects.
+            role_id: '- (Required) The role to assign.'
+            user_id: '- (Optional; Required if group_id is empty) The user to assign the role to.'
+        importStatements: []
     openstack_identity_project_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 Project resource within OpenStack Keystone.
         name: openstack_identity_project_v3
         title: openstack_identity_project_v3
@@ -3066,7 +3429,7 @@ resources:
                 project.
         importStatements: []
     openstack_identity_role_assignment_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 Role assignment within OpenStack Keystone.
         name: openstack_identity_role_assignment_v3
         title: openstack_identity_role_assignment_v3
@@ -3078,6 +3441,10 @@ resources:
                   "role_id": "${openstack_identity_role_v3.role_1.id}",
                   "user_id": "${openstack_identity_user_v3.user_1.id}"
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
+                role_id: openstack_identity_role_v3.role_1.id
+                user_id: openstack_identity_user_v3.user_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -3100,7 +3467,7 @@ resources:
             user_id: '- (Optional; Required if group_id is empty) The user to assign the role to.'
         importStatements: []
     openstack_identity_role_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 Role resource within OpenStack Keystone.
         name: openstack_identity_role_v3
         title: openstack_identity_role_v3
@@ -3119,7 +3486,7 @@ resources:
                 creates a new Role.
         importStatements: []
     openstack_identity_service_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 Service resource within OpenStack Keystone.
         name: openstack_identity_service_v3
         title: openstack_identity_service_v3
@@ -3140,7 +3507,7 @@ resources:
             type: '- (Required) The service type.'
         importStatements: []
     openstack_identity_user_membership_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a user membership to group V3 resource within OpenStack.
         name: openstack_identity_user_membership_v3
         title: openstack_identity_user_membership_v3
@@ -3151,6 +3518,9 @@ resources:
                   "group_id": "${openstack_identity_group_v3.group_1.id}",
                   "user_id": "${openstack_identity_user_v3.user_1.id}"
                 }
+              references:
+                group_id: openstack_identity_group_v3.group_1.id
+                user_id: openstack_identity_user_v3.user_1.id
               dependencies:
                 openstack_identity_group_v3.group_1: |-
                     {
@@ -3187,7 +3557,7 @@ resources:
             user_id: '- (Required) The UUID of user to use. Changing this creates a new user membership.'
         importStatements: []
     openstack_identity_user_v3:
-        subCategory: ""
+        subCategory: Identity / Keystone
         description: Manages a V3 User resource within OpenStack Keystone.
         name: openstack_identity_user_v3
         title: openstack_identity_user_v3
@@ -3218,6 +3588,8 @@ resources:
                   "name": "user_1",
                   "password": "password123"
                 }
+              references:
+                default_project_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -3259,7 +3631,7 @@ resources:
                 creates a new User.
         importStatements: []
     openstack_images_image_access_accept_v2:
-        subCategory: ""
+        subCategory: Images / Glance
         description: Manages a V2 Image membership proposal resource within OpenStack Glance.
         name: openstack_images_image_access_accept_v2
         title: openstack_images_image_access_accept_v2
@@ -3270,6 +3642,8 @@ resources:
                   "image_id": "${data.openstack_images_image_v2.rancheros.id}",
                   "status": "accepted"
                 }
+              references:
+                image_id: data.openstack_images_image_v2.rancheros.id
         argumentDocs:
             created_at: '- The date the image membership was created.'
             image_id: '- (Required) The proposed image ID.'
@@ -3288,7 +3662,7 @@ resources:
             updated_at: '- The date the image membership was last updated.'
         importStatements: []
     openstack_images_image_access_v2:
-        subCategory: ""
+        subCategory: Images / Glance
         description: Manages a V2 Image member resource within OpenStack Glance.
         name: openstack_images_image_access_v2
         title: openstack_images_image_access_v2
@@ -3299,6 +3673,8 @@ resources:
                   "image_id": "${openstack_images_image_v2.rancheros.id}",
                   "member_id": "bed6b6cbb86a4e2d8dc2735c2f1000e4"
                 }
+              references:
+                image_id: openstack_images_image_v2.rancheros.id
               dependencies:
                 openstack_images_image_v2.rancheros: |-
                     {
@@ -3318,6 +3694,8 @@ resources:
                   "member_id": "bed6b6cbb86a4e2d8dc2735c2f1000e4",
                   "status": "accepted"
                 }
+              references:
+                image_id: openstack_images_image_v2.rancheros.id
               dependencies:
                 openstack_images_image_v2.rancheros: |-
                     {
@@ -3346,7 +3724,7 @@ resources:
             updated_at: '- The date the image access was last updated.'
         importStatements: []
     openstack_images_image_v2:
-        subCategory: ""
+        subCategory: Images / Glance
         description: Manages a V2 Image resource within OpenStack Glance.
         name: openstack_images_image_v2
         title: openstack_images_image_v2
@@ -3371,7 +3749,7 @@ resources:
             decompress: |-
                 - (Optional) If true, this provider will decompress downloaded
                 image before uploading it to OpenStack. Decompression algorithm is chosen by
-                checking "Content-Type" header, supported algorithm are: gzip, bzip2.
+                checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
                 Defaults to false. Changing this creates a new Image.
             disk_format: |-
                 - (Required) The disk format. Must be one of
@@ -3452,7 +3830,7 @@ resources:
                 Conflicts with local_file_path. Defaults to false.
         importStatements: []
     openstack_keymanager_container_v1:
-        subCategory: ""
+        subCategory: Key Manager / Barbican
         description: Manages a V1 Barbican container resource within OpenStack.
         name: openstack_keymanager_container_v1
         title: openstack_keymanager_container_v1
@@ -3477,6 +3855,8 @@ resources:
                   ],
                   "type": "certificate"
                 }
+              references:
+                secret_refs.secret_ref: openstack_keymanager_secret_v1.intermediate_1.secret_ref
               dependencies:
                 openstack_keymanager_secret_v1.certificate_1: |-
                     {
@@ -3545,6 +3925,8 @@ resources:
                   ],
                   "type": "certificate"
                 }
+              references:
+                secret_refs.secret_ref: openstack_keymanager_secret_v1.intermediate_1.secret_ref
         argumentDocs:
             acl: |-
                 - (Optional) Allows to control an access to a container. Currently only
@@ -3582,7 +3964,7 @@ resources:
             updated_at: '- The date the container was last updated.'
         importStatements: []
     openstack_keymanager_order_v1:
-        subCategory: ""
+        subCategory: Key Manager / Barbican
         description: Manages a V1 Barbican order resource within OpenStack.
         name: openstack_keymanager_order_v1
         title: openstack_keymanager_order_v1
@@ -3637,7 +4019,7 @@ resources:
             updated: '- The date the order was last updated.'
         importStatements: []
     openstack_keymanager_secret_v1:
-        subCategory: ""
+        subCategory: Key Manager / Barbican
         description: Manages a V1 Barbican secret resource within OpenStack.
         name: openstack_keymanager_secret_v1
         title: openstack_keymanager_secret_v1
@@ -3743,7 +4125,7 @@ resources:
             updated_at: '- The date the secret was last updated.'
         importStatements: []
     openstack_lb_l7policy_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 L7 Policy resource within OpenStack.
         name: openstack_lb_l7policy_v2
         title: openstack_lb_l7policy_v2
@@ -3758,6 +4140,9 @@ resources:
                   "position": 1,
                   "redirect_pool_id": "${openstack_lb_pool_v2.pool_1.id}"
                 }
+              references:
+                listener_id: openstack_lb_listener_v2.listener_1.id
+                redirect_pool_id: openstack_lb_pool_v2.pool_1.id
               dependencies:
                 openstack_lb_listener_v2.listener_1: |-
                     {
@@ -3823,7 +4208,7 @@ resources:
                 other than their own. Changing this creates a new L7 Policy.
         importStatements: []
     openstack_lb_l7rule_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 l7rule resource within OpenStack.
         name: openstack_lb_l7rule_v2
         title: openstack_lb_l7rule_v2
@@ -3836,6 +4221,8 @@ resources:
                   "type": "PATH",
                   "value": "/api"
                 }
+              references:
+                l7policy_id: openstack_lb_l7policy_v2.l7policy_1.id
               dependencies:
                 openstack_lb_l7policy_v2.l7policy_1: |-
                     {
@@ -3913,7 +4300,7 @@ resources:
                 compare.
         importStatements: []
     openstack_lb_listener_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 listener resource within OpenStack.
         name: openstack_lb_listener_v2
         title: openstack_lb_listener_v2
@@ -3990,7 +4377,7 @@ resources:
                 TCP packets for content inspection.
         importStatements: []
     openstack_lb_loadbalancer_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 loadbalancer resource within OpenStack.
         name: openstack_lb_loadbalancer_v2
         title: openstack_lb_loadbalancer_v2
@@ -4054,7 +4441,7 @@ resources:
                 It is required to Neutron LBaaS but optional for Octavia.
         importStatements: []
     openstack_lb_member_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V1 load balancer member resource within OpenStack.
         name: openstack_lb_member_v1
         title: openstack_lb_member_v1
@@ -4093,7 +4480,7 @@ resources:
                 to be set through Terraform.
         importStatements: []
     openstack_lb_member_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 member resource within OpenStack.
         name: openstack_lb_member_v2
         title: openstack_lb_member_v2
@@ -4147,7 +4534,7 @@ resources:
                 as a member with a weight of 2. Defaults to 1.
         importStatements: []
     openstack_lb_members_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 members resource within OpenStack (batch members update).
         name: openstack_lb_members_v2
         title: openstack_lb_members_v2
@@ -4205,7 +4592,7 @@ resources:
                 members resource.
         importStatements: []
     openstack_lb_monitor_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V1 load balancer monitor resource within OpenStack.
         name: openstack_lb_monitor_v1
         title: openstack_lb_monitor_v1
@@ -4262,7 +4649,7 @@ resources:
                 url_path of the existing monitor.
         importStatements: []
     openstack_lb_monitor_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 monitor resource within OpenStack.
         name: openstack_lb_monitor_v2
         title: openstack_lb_monitor_v2
@@ -4276,6 +4663,8 @@ resources:
                   "timeout": 10,
                   "type": "PING"
                 }
+              references:
+                pool_id: openstack_lb_pool_v2.pool_1.id
         argumentDocs:
             admin_state_up: |-
                 - (Optional) The administrative state of the monitor.
@@ -4322,7 +4711,7 @@ resources:
                 accessed if monitor type is HTTP or HTTPS.
         importStatements: []
     openstack_lb_pool_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V1 load balancer pool resource within OpenStack.
         name: openstack_lb_pool_v1
         title: openstack_lb_pool_v1
@@ -4389,7 +4778,7 @@ resources:
                 create a pool member for another tenant. Changing this creates a new pool.
         importStatements: []
     openstack_lb_pool_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 pool resource within OpenStack.
         name: openstack_lb_pool_v2
         title: openstack_lb_pool_v2
@@ -4452,7 +4841,7 @@ resources:
                 supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
         importStatements: []
     openstack_lb_quota_v2:
-        subCategory: ""
+        subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 quota resource within OpenStack.
         name: openstack_lb_quota_v2
         title: openstack_lb_quota_v2
@@ -4469,6 +4858,8 @@ resources:
                   "pool": 9,
                   "project_id": "${openstack_identity_project_v3.project_1.id}"
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -4506,7 +4897,7 @@ resources:
                 creates a new quota. If ommited, the region of the credentials is used.
         importStatements: []
     openstack_lb_vip_v1:
-        subCategory: ""
+        subCategory: Deprecated
         description: Manages a V1 load balancer vip resource within OpenStack.
         name: openstack_lb_vip_v1
         title: openstack_lb_vip_v1
@@ -4576,7 +4967,7 @@ resources:
                 create a vip member for another tenant. Changing this creates a new vip.
         importStatements: []
     openstack_networking_addressscope_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron addressscope resource within OpenStack.
         name: openstack_networking_addressscope_v2
         title: openstack_networking_addressscope_v2
@@ -4625,7 +5016,7 @@ resources:
                 address-scope.
         importStatements: []
     openstack_networking_floatingip_associate_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Associates a Floating IP to a Port
         name: openstack_networking_floatingip_associate_v2
         title: openstack_networking_floatingip_associate_v2
@@ -4636,6 +5027,8 @@ resources:
                   "floating_ip": "1.2.3.4",
                   "port_id": "${openstack_networking_port_v2.port_1.id}"
                 }
+              references:
+                port_id: openstack_networking_port_v2.port_1.id
               dependencies:
                 openstack_networking_port_v2.port_1: |-
                     {
@@ -4654,7 +5047,7 @@ resources:
                 floating IP (which may or may not have a different address).
         importStatements: []
     openstack_networking_floatingip_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 floating IP resource within OpenStack Neutron (networking).
         name: openstack_networking_floatingip_v2
         title: openstack_networking_floatingip_v2
@@ -4725,7 +5118,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_networking_network_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron network resource within OpenStack.
         name: openstack_networking_network_v2
         title: openstack_networking_network_v2
@@ -4852,7 +5245,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_networking_port_secgroup_associate_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 port's security groups within OpenStack.
         name: openstack_networking_port_secgroup_associate_v2
         title: openstack_networking_port_secgroup_associate_v2
@@ -4865,6 +5258,8 @@ resources:
                     "${data.openstack_networking_secgroup_v2.secgroup.id}"
                   ]
                 }
+              references:
+                port_id: data.openstack_networking_port_v2.system_port.id
             - name: port_1
               manifest: |-
                 {
@@ -4874,6 +5269,8 @@ resources:
                     "${data.openstack_networking_secgroup_v2.secgroup.id}"
                   ]
                 }
+              references:
+                port_id: data.openstack_networking_port_v2.system_port.id
             - name: port_1
               manifest: |-
                 {
@@ -4881,6 +5278,8 @@ resources:
                   "port_id": "${data.openstack_networking_port_v2.system_port.id}",
                   "security_group_ids": []
                 }
+              references:
+                port_id: data.openstack_networking_port_v2.system_port.id
         argumentDocs:
             all_security_group_ids: |-
                 - The collection of Security Group IDs on the port
@@ -4900,7 +5299,7 @@ resources:
                 opposed to how they are configured with the Compute Instance).
         importStatements: []
     openstack_networking_port_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 port resource within OpenStack.
         name: openstack_networking_port_v2
         title: openstack_networking_port_v2
@@ -4912,6 +5311,8 @@ resources:
                   "name": "port_1",
                   "network_id": "${openstack_networking_network_v2.network_1.id}"
                 }
+              references:
+                network_id: openstack_networking_network_v2.network_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -4934,6 +5335,8 @@ resources:
                   "name": "port_1",
                   "network_id": "${openstack_networking_network_v2.network_1.id}"
                 }
+              references:
+                network_id: openstack_networking_network_v2.network_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -5051,7 +5454,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_networking_portforwarding_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 port forwarding resource within OpenStack.
         name: openstack_networking_portforwarding_v2
         title: openstack_networking_portforwarding_v2
@@ -5096,7 +5499,7 @@ resources:
                 to create a port forwarding for another tenant. Changing this creates a new port forwarding.
         importStatements: []
     openstack_networking_qos_bandwidth_limit_rule_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron QoS bandwidth limit rule resource within OpenStack.
         name: openstack_networking_qos_bandwidth_limit_rule_v2
         title: openstack_networking_qos_bandwidth_limit_rule_v2
@@ -5109,6 +5512,8 @@ resources:
                   "max_kbps": 3000,
                   "qos_policy_id": "${openstack_networking_qos_policy_v2.qos_policy_1.id}"
                 }
+              references:
+                qos_policy_id: openstack_networking_qos_policy_v2.qos_policy_1.id
               dependencies:
                 openstack_networking_qos_policy_v2.qos_policy_1: |-
                     {
@@ -5132,7 +5537,7 @@ resources:
                 region argument of the provider is used. Changing this creates a new QoS bandwidth limit rule.
         importStatements: []
     openstack_networking_qos_dscp_marking_rule_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron QoS DSCP marking rule resource within OpenStack.
         name: openstack_networking_qos_dscp_marking_rule_v2
         title: openstack_networking_qos_dscp_marking_rule_v2
@@ -5143,6 +5548,8 @@ resources:
                   "dscp_mark": 26,
                   "qos_policy_id": "${openstack_networking_qos_policy_v2.qos_policy_1.id}"
                 }
+              references:
+                qos_policy_id: openstack_networking_qos_policy_v2.qos_policy_1.id
               dependencies:
                 openstack_networking_qos_policy_v2.qos_policy_1: |-
                     {
@@ -5160,7 +5567,7 @@ resources:
                 region argument of the provider is used. Changing this creates a new QoS DSCP marking rule.
         importStatements: []
     openstack_networking_qos_minimum_bandwidth_rule_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron QoS minimum bandwidth rule resource within OpenStack.
         name: openstack_networking_qos_minimum_bandwidth_rule_v2
         title: openstack_networking_qos_minimum_bandwidth_rule_v2
@@ -5171,6 +5578,8 @@ resources:
                   "min_kbps": 200,
                   "qos_policy_id": "${openstack_networking_qos_policy_v2.qos_policy_1.id}"
                 }
+              references:
+                qos_policy_id: openstack_networking_qos_policy_v2.qos_policy_1.id
               dependencies:
                 openstack_networking_qos_policy_v2.qos_policy_1: |-
                     {
@@ -5191,7 +5600,7 @@ resources:
                 region argument of the provider is used. Changing this creates a new QoS minimum bandwidth rule.
         importStatements: []
     openstack_networking_qos_policy_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron QoS policy resource within OpenStack.
         name: openstack_networking_qos_policy_v2
         title: openstack_networking_qos_policy_v2
@@ -5235,7 +5644,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_networking_quota_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 networking quota resource within OpenStack.
         name: openstack_networking_quota_v2
         title: openstack_networking_quota_v2
@@ -5254,6 +5663,8 @@ resources:
                   "subnet": 8,
                   "subnetpool": 2
                 }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
               dependencies:
                 openstack_identity_project_v3.project_1: |-
                     {
@@ -5296,7 +5707,7 @@ resources:
                 Changing this updates the existing quota.
         importStatements: []
     openstack_networking_rbac_policy_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Creates an RBAC policy for an OpenStack V2 resource.
         name: openstack_networking_rbac_policy_v2
         title: openstack_networking_rbac_policy_v2
@@ -5309,6 +5720,8 @@ resources:
                   "object_type": "network",
                   "target_tenant": "20415a973c9e45d3917f078950644697"
                 }
+              references:
+                object_id: openstack_networking_network_v2.network_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -5338,7 +5751,7 @@ resources:
             tenant_id: '- The owner of the RBAC policy.'
         importStatements: []
     openstack_networking_router_interface_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 router interface resource within OpenStack.
         name: openstack_networking_router_interface_v2
         title: openstack_networking_router_interface_v2
@@ -5349,6 +5762,9 @@ resources:
                   "router_id": "${openstack_networking_router_v2.router_1.id}",
                   "subnet_id": "${openstack_networking_subnet_v2.subnet_1.id}"
                 }
+              references:
+                router_id: openstack_networking_router_v2.router_1.id
+                subnet_id: openstack_networking_subnet_v2.subnet_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -5387,7 +5803,7 @@ resources:
                 this creates a new router interface.
         importStatements: []
     openstack_networking_router_route_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Creates a routing entry on a OpenStack V2 router.
         name: openstack_networking_router_route_v2
         title: openstack_networking_router_route_v2
@@ -5402,6 +5818,8 @@ resources:
                   "next_hop": "192.168.199.254",
                   "router_id": "${openstack_networking_router_v2.router_1.id}"
                 }
+              references:
+                router_id: openstack_networking_router_v2.router_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -5441,7 +5859,7 @@ resources:
                 this creates a new routing entry.
         importStatements: []
     openstack_networking_router_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 router resource within OpenStack.
         name: openstack_networking_router_v2
         title: openstack_networking_router_v2
@@ -5523,7 +5941,7 @@ resources:
                 the Router gateway is assigned during creation or updated after creation.
         importStatements: []
     openstack_networking_secgroup_rule_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron security group rule resource within OpenStack.
         name: openstack_networking_secgroup_rule_v2
         title: openstack_networking_secgroup_rule_v2
@@ -5539,6 +5957,8 @@ resources:
                   "remote_ip_prefix": "0.0.0.0/0",
                   "security_group_id": "${openstack_networking_secgroup_v2.secgroup_1.id}"
                 }
+              references:
+                security_group_id: openstack_networking_secgroup_v2.secgroup_1.id
               dependencies:
                 openstack_networking_secgroup_v2.secgroup_1: |-
                     {
@@ -5584,7 +6004,7 @@ resources:
                 security group rule.
         importStatements: []
     openstack_networking_secgroup_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron security group resource within OpenStack.
         name: openstack_networking_secgroup_v2
         title: openstack_networking_secgroup_v2
@@ -5617,7 +6037,7 @@ resources:
                 security group.
         importStatements: []
     openstack_networking_subnet_route_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Creates a routing entry on a OpenStack V2 subnet.
         name: openstack_networking_subnet_route_v2
         title: openstack_networking_subnet_route_v2
@@ -5629,6 +6049,8 @@ resources:
                   "next_hop": "192.168.199.254",
                   "subnet_id": "${openstack_networking_subnet_v2.subnet_1.id}"
                 }
+              references:
+                subnet_id: openstack_networking_subnet_v2.subnet_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -5663,7 +6085,7 @@ resources:
                 this creates a new routing entry.
         importStatements: []
     openstack_networking_subnet_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron subnet resource within OpenStack.
         name: openstack_networking_subnet_v2
         title: openstack_networking_subnet_v2
@@ -5674,6 +6096,8 @@ resources:
                   "cidr": "192.168.199.0/24",
                   "network_id": "${openstack_networking_network_v2.network_1.id}"
                 }
+              references:
+                network_id: openstack_networking_network_v2.network_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -5767,7 +6191,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_networking_subnetpool_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a V2 Neutron subnetpool resource within OpenStack.
         name: openstack_networking_subnetpool_v2
         title: openstack_networking_subnetpool_v2
@@ -5865,7 +6289,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_networking_trunk_v2:
-        subCategory: ""
+        subCategory: Networking / Neutron
         description: Manages a networking V2 trunk resource within OpenStack.
         name: openstack_networking_trunk_v2
         title: openstack_networking_trunk_v2
@@ -5884,6 +6308,9 @@ resources:
                     }
                   ]
                 }
+              references:
+                port_id: openstack_networking_port_v2.parent_port_1.id
+                sub_port.port_id: openstack_networking_port_v2.subport_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -5964,7 +6391,7 @@ resources:
                 to create a trunk on behalf of another tenant. Changing this creates a new trunk.
         importStatements: []
     openstack_objectstorage_container_v1:
-        subCategory: ""
+        subCategory: Object Storage / Swift
         description: Manages a V1 container resource within OpenStack.
         name: openstack_objectstorage_container_v1
         title: openstack_objectstorage_container_v1
@@ -6062,7 +6489,7 @@ resources:
             versioning_legacy.type: '- (Required) Versioning type which can be versions or history according to Openstack documentation.'
         importStatements: []
     openstack_objectstorage_object_v1:
-        subCategory: ""
+        subCategory: Object Storage / Swift
         description: Manages a V1 container object resource within OpenStack.
         name: openstack_objectstorage_object_v1
         title: openstack_objectstorage_object_v1
@@ -6081,6 +6508,8 @@ resources:
                   "name": "test/default.json",
                   "region": "RegionOne"
                 }
+              references:
+                container_name: openstack_objectstorage_container_v1.container_1.name
               dependencies:
                 openstack_objectstorage_container_v1.container_1: |-
                     {
@@ -6107,6 +6536,8 @@ resources:
                   "region": "RegionOne",
                   "source": "./default.json"
                 }
+              references:
+                container_name: openstack_objectstorage_container_v1.container_1.name
               dependencies:
                 openstack_objectstorage_container_v1.container_1: |-
                     {
@@ -6190,7 +6621,7 @@ resources:
                 need this value if you report a problem.
         importStatements: []
     openstack_objectstorage_tempurl_v1:
-        subCategory: ""
+        subCategory: Object Storage / Swift
         description: Generate a TempURL for a Swift container and object.
         name: openstack_objectstorage_tempurl_v1
         title: openstack_objectstorage_tempurl_v1
@@ -6203,6 +6634,9 @@ resources:
                   "object": "${openstack_objectstorage_object_v1.object_1.name}",
                   "ttl": 20
                 }
+              references:
+                container: openstack_objectstorage_container_v1.container_1.name
+                object: openstack_objectstorage_object_v1.object_1.name
               dependencies:
                 openstack_objectstorage_container_v1.container_1: |-
                     {
@@ -6235,7 +6669,7 @@ resources:
             url: '- The URL'
         importStatements: []
     openstack_orchestration_stack_v1:
-        subCategory: ""
+        subCategory: Orchestration / Heat
         description: Manages a V1 stack resource within OpenStack.
         name: openstack_orchestration_stack_v1
         title: openstack_orchestration_stack_v1
@@ -6302,7 +6736,7 @@ resources:
                 is the time zone as an offset from UTC.
         importStatements: []
     openstack_sharedfilesystem_securityservice_v2:
-        subCategory: ""
+        subCategory: Shared Filesystem / Manila
         description: Configure a Shared File System security service.
         name: openstack_sharedfilesystem_securityservice_v2
         title: sharedfilesystem_securityservice_v2
@@ -6351,7 +6785,7 @@ resources:
                 tenant.
         importStatements: []
     openstack_sharedfilesystem_share_access_v2:
-        subCategory: ""
+        subCategory: Shared Filesystem / Manila
         description: Configure a Shared File System share access list.
         name: openstack_sharedfilesystem_share_access_v2
         title: sharedfilesystem_share_access_v2
@@ -6364,6 +6798,8 @@ resources:
                   "access_type": "ip",
                   "share_id": "${openstack_sharedfilesystem_share_v2.share_1.id}"
                 }
+              references:
+                share_id: openstack_sharedfilesystem_share_v2.share_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -6400,6 +6836,8 @@ resources:
                   "access_type": "user",
                   "share_id": "${openstack_sharedfilesystem_share_v2.share_1.id}"
                 }
+              references:
+                share_id: openstack_sharedfilesystem_share_v2.share_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -6450,6 +6888,8 @@ resources:
                   "access_type": "user",
                   "share_id": "${openstack_sharedfilesystem_share_v2.share_1.id}"
                 }
+              references:
+                share_id: openstack_sharedfilesystem_share_v2.share_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -6508,9 +6948,10 @@ resources:
                 A Shared File System client is needed to create a share access. Changing this
                 creates a new share access.
             share_id: '- (Required) The UUID of the share to which you are granted access.'
+            state: '- The share access state.'
         importStatements: []
     openstack_sharedfilesystem_share_v2:
-        subCategory: ""
+        subCategory: Shared Filesystem / Manila
         description: Configure a Shared File System share.
         name: openstack_sharedfilesystem_share_v2
         title: sharedfilesystem_share_v2
@@ -6524,6 +6965,8 @@ resources:
                   "share_proto": "NFS",
                   "size": 1
                 }
+              references:
+                share_network_id: openstack_sharedfilesystem_sharenetwork_v2.sharenetwork_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -6595,7 +7038,7 @@ resources:
                 a new share.
         importStatements: []
     openstack_sharedfilesystem_sharenetwork_v2:
-        subCategory: ""
+        subCategory: Shared Filesystem / Manila
         description: Configure a Shared File System share network.
         name: openstack_sharedfilesystem_sharenetwork_v2
         title: sharedfilesystem_sharenetwork_v2
@@ -6608,6 +7051,9 @@ resources:
                   "neutron_net_id": "${openstack_networking_network_v2.network_1.id}",
                   "neutron_subnet_id": "${openstack_networking_subnet_v2.subnet_1.id}"
                 }
+              references:
+                neutron_net_id: openstack_networking_network_v2.network_1.id
+                neutron_subnet_id: openstack_networking_subnet_v2.subnet_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -6632,6 +7078,9 @@ resources:
                     "${openstack_sharedfilesystem_securityservice_v2.securityservice_1.id}"
                   ]
                 }
+              references:
+                neutron_net_id: openstack_networking_network_v2.network_1.id
+                neutron_subnet_id: openstack_networking_subnet_v2.subnet_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {
@@ -6688,7 +7137,7 @@ resources:
             segmentation_id: '- The share network segmentation ID.'
         importStatements: []
     openstack_vpnaas_endpoint_group_v2:
-        subCategory: ""
+        subCategory: VPNaaS / Neutron
         description: Manages a V2 Neutron Endpoint Group resource within OpenStack.
         name: openstack_vpnaas_endpoint_group_v2
         title: openstack_vpnaas_endpoint_group_v2
@@ -6727,7 +7176,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_vpnaas_ike_policy_v2:
-        subCategory: ""
+        subCategory: VPNaaS / Neutron
         description: Manages a V2 Neutron IKE policy resource within OpenStack.
         name: openstack_vpnaas_ike_policy_v2
         title: openstack_vpnaas_ike_policy_v2
@@ -6779,7 +7228,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_vpnaas_ipsec_policy_v2:
-        subCategory: ""
+        subCategory: VPNaaS / Neutron
         description: Manages a V2 Neutron IPSec policy resource within OpenStack.
         name: openstack_vpnaas_ipsec_policy_v2
         title: openstack_vpnaas_ipsec_policy_v2
@@ -6807,8 +7256,8 @@ resources:
                 - (Optional) The name of the policy. Changing this updates the name of
                 the existing policy.
             pfs: |-
-                - (Optional) The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-                Changing this updates the existing policy.
+                - (Optional) The perfect forward secrecy mode. Valid values are group2, group5 and group14. Default
+                is group5. Changing this updates the existing policy.
             region: |-
                 - (Optional) The region in which to obtain the V2 Networking client.
                 A Networking client is needed to create an IPSec policy. If omitted, the
@@ -6818,7 +7267,7 @@ resources:
                 - (Optional) The owner of the policy. Required if admin wants to
                 create a policy for another project. Changing this creates a new policy.
             transform_protocol: |-
-                - (Optional) The transform protocol. Valid values are ESP, AH and AH-ESP.
+                - (Optional) The transform protocol. Valid values are esp, ah and ah-esp.
                 Changing this updates the existing policy. Default is ESP.
             unit: |-
                 - (Optional) The units for the lifetime of the security association. Can be either seconds or kilobytes.
@@ -6829,7 +7278,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_vpnaas_service_v2:
-        subCategory: ""
+        subCategory: VPNaaS / Neutron
         description: Manages a V2 Neutron VPN service resource within OpenStack.
         name: openstack_vpnaas_service_v2
         title: openstack_vpnaas_service_v2
@@ -6867,7 +7316,7 @@ resources:
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_vpnaas_site_connection_v2:
-        subCategory: ""
+        subCategory: VPNaaS / Neutron
         description: Manages a V2 Neutron IPSec site connection resource within OpenStack.
         name: openstack_vpnaas_site_connection_v2
         title: openstack_vpnaas_site_connection_v2
@@ -6891,6 +7340,12 @@ resources:
                   "psk": "secret",
                   "vpnservice_id": "${openstack_vpnaas_service_v2.service_1.id}"
                 }
+              references:
+                ikepolicy_id: openstack_vpnaas_ike_policy_v2.policy_2.id
+                ipsecpolicy_id: openstack_vpnaas_ipsec_policy_v2.policy_1.id
+                local_ep_group_id: openstack_vpnaas_endpoint_group_v2.group_2.id
+                peer_ep_group_id: openstack_vpnaas_endpoint_group_v2.group_1.id
+                vpnservice_id: openstack_vpnaas_service_v2.service_1.id
         argumentDocs:
             action: |-
                 - (Optional) The dead peer detection (DPD) action.

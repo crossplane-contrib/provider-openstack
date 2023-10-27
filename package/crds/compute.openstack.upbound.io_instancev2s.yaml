@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: instancev2s.compute.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -140,6 +144,10 @@ spec:
                             must be less than or equal to the swap size of the flavor.
                             Changing this creates a new server.'
                           type: string
+                        multiattach:
+                          description: Enable the attachment of multiattach-capable
+                            volumes.
+                          type: boolean
                         sourceType:
                           description: The source type of the device. Must be one
                             of "blank", "image", "volume", or "snapshot". Changing
@@ -336,10 +344,11 @@ spec:
                       type: object
                     type: array
                   powerState:
-                    description: 'Provide the VM state. Only ''active'' and ''shutoff''
-                      are supported values. Note: If the initial power_state is the
-                      shutoff the VM will be stopped immediately after build and the
-                      provisioners like remote-exec or files are not supported.'
+                    description: 'Provide the VM state. Only ''active'', ''shutoff''
+                      and ''shelved_offloaded'' are supported values. Note: If the
+                      initial power_state is the shutoff the VM will be stopped immediately
+                      after build and the provisioners like remote-exec or files are
+                      not supported.'
                     type: string
                   region:
                     description: The region in which to create the server instance.
@@ -456,9 +465,22 @@ spec:
                       - volumeId
                       type: object
                     type: array
-                required:
-                - name
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -630,11 +652,20 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: name is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
           status:
             description: InstanceV2Status defines the observed state of InstanceV2.
             properties:
               atProvider:
                 properties:
+                  accessIpV4:
+                    description: The first detected Fixed IPv4 address.
+                    type: string
+                  accessIpV6:
+                    description: The first detected Fixed IPv6 address.
+                    type: string
                   allMetadata:
                     additionalProperties:
                       type: string
@@ -645,10 +676,131 @@ spec:
                     items:
                       type: string
                     type: array
+                  availabilityZone:
+                    description: The availability zone in which to create the server.
+                      Conflicts with availability_zone_hints. Changing this creates
+                      a new server.
+                    type: string
+                  availabilityZoneHints:
+                    description: The availability zone in which to create the server.
+                      This argument is preferred to availability_zone, when scheduling
+                      the server on a particular host or node. Conflicts with availability_zone.
+                      Changing this creates a new server.
+                    type: string
+                  blockDevice:
+                    description: Configuration of block devices. The block_device
+                      structure is documented below. Changing this creates a new server.
+                      You can specify multiple block devices which will create an
+                      instance with multiple disks. This configuration is very flexible,
+                      so please see the following reference for more information.
+                    items:
+                      properties:
+                        bootIndex:
+                          description: The boot index of the volume. It defaults to
+                            0. Changing this creates a new server.
+                          type: number
+                        deleteOnTermination:
+                          description: Delete the volume / block device upon termination
+                            of the instance. Defaults to false. Changing this creates
+                            a new server.
+                          type: boolean
+                        destinationType:
+                          description: The type that gets created. Possible values
+                            are "volume" and "local". Changing this creates a new
+                            server.
+                          type: string
+                        deviceType:
+                          description: The low-level device type that will be used.
+                            Most common thing is to leave this empty. Changing this
+                            creates a new server.
+                          type: string
+                        diskBus:
+                          description: The low-level disk bus that will be used. Most
+                            common thing is to leave this empty. Changing this creates
+                            a new server.
+                          type: string
+                        guestFormat:
+                          description: 'Specifies the guest server disk file system
+                            format, such as ext2, ext3, ext4, xfs or swap. Swap block
+                            device mappings have the following restrictions: source_type
+                            must be blank and destination_type must be local and only
+                            one swap disk per server and the size of the swap disk
+                            must be less than or equal to the swap size of the flavor.
+                            Changing this creates a new server.'
+                          type: string
+                        multiattach:
+                          description: Enable the attachment of multiattach-capable
+                            volumes.
+                          type: boolean
+                        sourceType:
+                          description: The source type of the device. Must be one
+                            of "blank", "image", "volume", or "snapshot". Changing
+                            this creates a new server.
+                          type: string
+                        uuid:
+                          description: The UUID of the image, volume, or snapshot.
+                            Changing this creates a new server.
+                          type: string
+                        volumeSize:
+                          description: 'The size of the volume to create (in gigabytes).
+                            Required in the following combinations: source=image and
+                            destination=volume, source=blank and destination=local,
+                            and source=blank and destination=volume. Changing this
+                            creates a new server.'
+                          type: number
+                        volumeType:
+                          description: The volume type that will be used, for example
+                            SSD or HDD storage. The available options depend on how
+                            your specific OpenStack cloud is configured and what classes
+                            of storage are provided. Changing this creates a new server.
+                          type: string
+                      type: object
+                    type: array
+                  configDrive:
+                    description: Whether to use the config_drive feature to configure
+                      the instance. Changing this creates a new server.
+                    type: boolean
                   created:
                     description: The creation time of the instance.
                     type: string
+                  flavorId:
+                    description: The flavor ID of the desired flavor for the server.
+                      Changing this resizes the existing server.
+                    type: string
+                  flavorName:
+                    description: The name of the desired flavor for the server. Changing
+                      this resizes the existing server.
+                    type: string
+                  floatingIp:
+                    type: string
+                  forceDelete:
+                    description: Whether to force the OpenStack instance to be forcefully
+                      deleted. This is useful for environments that have reclaim /
+                      soft deletion enabled.
+                    type: boolean
                   id:
+                    type: string
+                  imageId:
+                    description: The image ID of the desired image for the server.
+                      Changing this rebuilds the existing server.
+                    type: string
+                  imageName:
+                    description: The name of the desired image for the server. Changing
+                      this rebuilds the existing server.
+                    type: string
+                  keyPair:
+                    description: The name of a key pair to put on the server. The
+                      key pair must already be created and associated with the tenant's
+                      account. Changing this creates a new server.
+                    type: string
+                  metadata:
+                    additionalProperties:
+                      type: string
+                    description: Metadata key/value pairs to make available from within
+                      the instance. Changing this updates the existing server metadata.
+                    type: object
+                  name:
+                    description: A unique name for the resource.
                     type: string
                   network:
                     description: An array of one or more networks to attach to the
@@ -656,13 +808,177 @@ spec:
                       Changing this creates a new server.
                     items:
                       properties:
+                        accessNetwork:
+                          description: Specifies if this network should be used for
+                            provisioning access. Accepts true or false. Defaults to
+                            false.
+                          type: boolean
+                        fixedIpV4:
+                          description: Specifies a fixed IPv4 address to be used on
+                            this network. Changing this creates a new server.
+                          type: string
+                        fixedIpV6:
+                          type: string
+                        floatingIp:
+                          type: string
                         mac:
                           type: string
+                        name:
+                          description: The human-readable name of the network. Changing
+                            this creates a new server.
+                          type: string
+                        port:
+                          description: The port UUID of a network to attach to the
+                            server. Changing this creates a new server.
+                          type: string
+                        uuid:
+                          description: The network UUID to attach to the server. Changing
+                            this creates a new server.
+                          type: string
                       type: object
+                    type: array
+                  networkMode:
+                    description: Special string for network option to create the server.
+                      network_mode can be "auto" or "none". Please see the following
+                      reference for more information. Conflicts with network.
+                    type: string
+                  personality:
+                    description: Customize the personality of an instance by defining
+                      one or more files and their contents. The personality structure
+                      is described below. Changing this rebuilds the existing server.
+                    items:
+                      properties:
+                        content:
+                          description: The contents of the file. Limited to 255 bytes.
+                          type: string
+                        file:
+                          description: The absolute path of the destination file.
+                          type: string
+                      type: object
+                    type: array
+                  powerState:
+                    description: 'Provide the VM state. Only ''active'', ''shutoff''
+                      and ''shelved_offloaded'' are supported values. Note: If the
+                      initial power_state is the shutoff the VM will be stopped immediately
+                      after build and the provisioners like remote-exec or files are
+                      not supported.'
+                    type: string
+                  region:
+                    description: The region in which to create the server instance.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new server.
+                    type: string
+                  schedulerHints:
+                    description: Provide the Nova scheduler with hints on how the
+                      instance should be launched. The available hints are described
+                      below.
+                    items:
+                      properties:
+                        additionalProperties:
+                          additionalProperties:
+                            type: string
+                          description: Arbitrary key/value pairs of additional properties
+                            to pass to the scheduler.
+                          type: object
+                        buildNearHostIp:
+                          description: An IP Address in CIDR form. The instance will
+                            be placed on a compute node that is in the same subnet.
+                          type: string
+                        differentCell:
+                          description: The names of cells where not to build the instance.
+                          items:
+                            type: string
+                          type: array
+                        differentHost:
+                          description: A list of instance UUIDs. The instance will
+                            be scheduled on a different host than all other instances.
+                          items:
+                            type: string
+                          type: array
+                        group:
+                          description: A UUID of a Server Group. The instance will
+                            be placed into that group.
+                          type: string
+                        query:
+                          description: 'A conditional query that a compute node must
+                            pass in order to host an instance. The query must use
+                            the JsonFilter syntax which is described here. At this
+                            time, only simple queries are supported. Compound queries
+                            using and, or, or not are not supported. An example of
+                            a simple query is:'
+                          items:
+                            type: string
+                          type: array
+                        sameHost:
+                          description: A list of instance UUIDs. The instance will
+                            be scheduled on the same host of those specified.
+                          items:
+                            type: string
+                          type: array
+                        targetCell:
+                          description: The name of a cell to host the instance.
+                          type: string
+                      type: object
+                    type: array
+                  securityGroups:
+                    description: 'An array of one or more security group names to
+                      associate with the server. Changing this results in adding/removing
+                      security groups from the existing server. Note: When attaching
+                      the instance to networks using Ports, place the security groups
+                      on the Port and not the instance. Note: Names should be used
+                      and not ids, as ids trigger unnecessary updates.'
+                    items:
+                      type: string
+                    type: array
+                  stopBeforeDestroy:
+                    description: Whether to try stop instance gracefully before destroying
+                      it, thus giving chance for guest OS daemons to stop correctly.
+                      If instance doesn't stop within timeout, it will be destroyed
+                      anyway.
+                    type: boolean
+                  tags:
+                    description: A set of string tags for the instance. Changing this
+                      updates the existing instance tags.
+                    items:
+                      type: string
                     type: array
                   updated:
                     description: The time when the instance was last updated.
                     type: string
+                  userData:
+                    description: The user data to provide when launching the instance.
+                      Changing this creates a new server.
+                    type: string
+                  vendorOptions:
+                    description: Map of additional vendor-specific options. Supported
+                      options are described below.
+                    items:
+                      properties:
+                        detachPortsBeforeDestroy:
+                          description: Whether to try to detach all attached ports
+                            to the vm before destroying it to make sure the port state
+                            is correct after the vm destruction. This is helpful when
+                            the port is not deleted.
+                          type: boolean
+                        ignoreResizeConfirmation:
+                          description: Boolean to control whether to ignore manual
+                            confirmation of the instance resizing. This can be helpful
+                            to work with some OpenStack clouds which automatically
+                            confirm resizing of instances after some timeout.
+                          type: boolean
+                      type: object
+                    type: array
+                  volume:
+                    items:
+                      properties:
+                        device:
+                          type: string
+                        id:
+                          type: string
+                        volumeId:
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -705,9 +1021,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

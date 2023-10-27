@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
+    controller-gen.kubebuilder.io/version: v0.11.3
   creationTimestamp: null
   name: userv3s.identity.openstack.upbound.io
 spec:
@@ -55,9 +55,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -140,6 +144,21 @@ spec:
                       this creates a new User.
                     type: string
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -316,7 +335,63 @@ spec:
             properties:
               atProvider:
                 properties:
+                  defaultProjectId:
+                    description: The default project this user belongs to.
+                    type: string
+                  description:
+                    description: A description of the user.
+                    type: string
+                  domainId:
+                    description: The domain this user belongs to.
+                    type: string
+                  enabled:
+                    description: Whether the user is enabled or disabled. Valid values
+                      are true and false.
+                    type: boolean
+                  extra:
+                    additionalProperties:
+                      type: string
+                    description: Free-form key/value pairs of extra information.
+                    type: object
                   id:
+                    type: string
+                  ignoreChangePasswordUponFirstUse:
+                    description: User will not have to change their password upon
+                      first use. Valid values are true and false.
+                    type: boolean
+                  ignoreLockoutFailureAttempts:
+                    description: User will not have a failure lockout placed on their
+                      account. Valid values are true and false.
+                    type: boolean
+                  ignorePasswordExpiry:
+                    description: User's password will not expire. Valid values are
+                      true and false.
+                    type: boolean
+                  multiFactorAuthEnabled:
+                    description: Whether to enable multi-factor authentication. Valid
+                      values are true and false.
+                    type: boolean
+                  multiFactorAuthRule:
+                    description: A multi-factor authentication rule. The structure
+                      is documented below. Please see the Ocata release notes for
+                      more information on how to use mulit-factor rules.
+                    items:
+                      properties:
+                        rule:
+                          description: A list of authentication plugins that the user
+                            must authenticate with.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  name:
+                    description: The name of the user.
+                    type: string
+                  region:
+                    description: The region in which to obtain the V3 Keystone client.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new User.
                     type: string
                 type: object
               conditions:
@@ -360,9 +435,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

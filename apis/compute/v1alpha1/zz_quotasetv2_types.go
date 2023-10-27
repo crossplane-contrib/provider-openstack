@@ -14,7 +14,73 @@ import (
 )
 
 type QuotasetV2Observation struct {
+
+	// Quota value for cores.
+	// Changing this updates the existing quotaset.
+	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
+
+	// Quota value for fixed IPs.
+	// Changing this updates the existing quotaset.
+	FixedIps *float64 `json:"fixedIps,omitempty" tf:"fixed_ips,omitempty"`
+
+	// Quota value for floating IPs.
+	// Changing this updates the existing quotaset.
+	FloatingIps *float64 `json:"floatingIps,omitempty" tf:"floating_ips,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Quota value for content bytes
+	// of injected files. Changing this updates the existing quotaset.
+	InjectedFileContentBytes *float64 `json:"injectedFileContentBytes,omitempty" tf:"injected_file_content_bytes,omitempty"`
+
+	// Quota value for path bytes of
+	// injected files. Changing this updates the existing quotaset.
+	InjectedFilePathBytes *float64 `json:"injectedFilePathBytes,omitempty" tf:"injected_file_path_bytes,omitempty"`
+
+	// Quota value for injected files.
+	// Changing this updates the existing quotaset.
+	InjectedFiles *float64 `json:"injectedFiles,omitempty" tf:"injected_files,omitempty"`
+
+	// Quota value for instances.
+	// Changing this updates the existing quotaset.
+	Instances *float64 `json:"instances,omitempty" tf:"instances,omitempty"`
+
+	// Quota value for key pairs.
+	// Changing this updates the existing quotaset.
+	KeyPairs *float64 `json:"keyPairs,omitempty" tf:"key_pairs,omitempty"`
+
+	// Quota value for metadata items.
+	// Changing this updates the existing quotaset.
+	MetadataItems *float64 `json:"metadataItems,omitempty" tf:"metadata_items,omitempty"`
+
+	// ID of the project to manage quotas.
+	// Changing this creates a new quotaset.
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Quota value for RAM.
+	// Changing this updates the existing quotaset.
+	RAM *float64 `json:"ram,omitempty" tf:"ram,omitempty"`
+
+	// The region in which to create the volume. If
+	// omitted, the region argument of the provider is used. Changing this
+	// creates a new quotaset.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Quota value for security group rules.
+	// Changing this updates the existing quotaset.
+	SecurityGroupRules *float64 `json:"securityGroupRules,omitempty" tf:"security_group_rules,omitempty"`
+
+	// Quota value for security groups.
+	// Changing this updates the existing quotaset.
+	SecurityGroups *float64 `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Quota value for server groups members.
+	// Changing this updates the existing quotaset.
+	ServerGroupMembers *float64 `json:"serverGroupMembers,omitempty" tf:"server_group_members,omitempty"`
+
+	// Quota value for server groups.
+	// Changing this updates the existing quotaset.
+	ServerGroups *float64 `json:"serverGroups,omitempty" tf:"server_groups,omitempty"`
 }
 
 type QuotasetV2Parameters struct {

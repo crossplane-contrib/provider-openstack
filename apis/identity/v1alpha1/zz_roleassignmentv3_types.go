@@ -14,7 +14,25 @@ import (
 )
 
 type RoleAssignmentV3Observation struct {
+
+	// The domain to assign the role in.
+	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// The group to assign the role to.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The project to assign the role in.
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The role to assign.
+	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
+
+	// The user to assign the role to.
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
 }
 
 type RoleAssignmentV3Parameters struct {
@@ -44,8 +62,8 @@ type RoleAssignmentV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
-	// +kubebuilder:validation:Required
-	RoleID *string `json:"roleId" tf:"role_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
 	// The user to assign the role to.
 	// +kubebuilder:validation:Optional
@@ -76,8 +94,9 @@ type RoleAssignmentV3Status struct {
 type RoleAssignmentV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              RoleAssignmentV3Spec   `json:"spec"`
-	Status            RoleAssignmentV3Status `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.roleId)",message="roleId is a required parameter"
+	Spec   RoleAssignmentV3Spec   `json:"spec"`
+	Status RoleAssignmentV3Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -17,6 +17,11 @@ func (mg *FloatingipV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this FloatingipV2.
+func (mg *FloatingipV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this FloatingipV2.
 func (mg *FloatingipV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *FloatingipV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this FloatingipV2.
 func (mg *FloatingipV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this FloatingipV2.
+func (mg *FloatingipV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this FloatingipV2.
@@ -83,6 +93,11 @@ func (mg *NetworkV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this NetworkV2.
+func (mg *NetworkV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this NetworkV2.
 func (mg *NetworkV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -114,6 +129,11 @@ func (mg *NetworkV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this NetworkV2.
 func (mg *NetworkV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this NetworkV2.
+func (mg *NetworkV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this NetworkV2.
@@ -149,6 +169,11 @@ func (mg *QuotaV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this QuotaV2.
+func (mg *QuotaV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this QuotaV2.
 func (mg *QuotaV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -180,6 +205,11 @@ func (mg *QuotaV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this QuotaV2.
 func (mg *QuotaV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this QuotaV2.
+func (mg *QuotaV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this QuotaV2.
@@ -215,6 +245,11 @@ func (mg *RouterInterfaceV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this RouterInterfaceV2.
+func (mg *RouterInterfaceV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this RouterInterfaceV2.
 func (mg *RouterInterfaceV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -246,6 +281,11 @@ func (mg *RouterInterfaceV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this RouterInterfaceV2.
 func (mg *RouterInterfaceV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this RouterInterfaceV2.
+func (mg *RouterInterfaceV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this RouterInterfaceV2.
@@ -281,6 +321,11 @@ func (mg *RouterV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this RouterV2.
+func (mg *RouterV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this RouterV2.
 func (mg *RouterV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -312,6 +357,11 @@ func (mg *RouterV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this RouterV2.
 func (mg *RouterV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this RouterV2.
+func (mg *RouterV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this RouterV2.
@@ -347,6 +397,11 @@ func (mg *SubnetV2) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this SubnetV2.
+func (mg *SubnetV2) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this SubnetV2.
 func (mg *SubnetV2) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -378,6 +433,11 @@ func (mg *SubnetV2) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this SubnetV2.
 func (mg *SubnetV2) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this SubnetV2.
+func (mg *SubnetV2) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this SubnetV2.
