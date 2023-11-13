@@ -21,7 +21,7 @@ kind: Provider
 metadata:
   name: provider-openstack
 spec:
-  package: crossplane-contrib/provider-openstack:vX.X.X
+  package: xpkg.upbound.io/crossplane-contrib/provider-openstack:vX.Y.Z
 EOF
 ```
 
