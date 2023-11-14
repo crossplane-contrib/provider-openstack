@@ -34,6 +34,15 @@ func (l *QuotaV2List) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this RbacPolicyV2List.
+func (l *RbacPolicyV2List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this RouterInterfaceV2List.
 func (l *RouterInterfaceV2List) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
