@@ -17,22 +17,14 @@ func (mg *ClusterV1) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ClusterV1.
-func (mg *ClusterV1) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ClusterV1.
+func (mg *ClusterV1) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ClusterV1.
 func (mg *ClusterV1) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ClusterV1.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ClusterV1) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ClusterV1.
@@ -55,22 +47,14 @@ func (mg *ClusterV1) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ClusterV1.
-func (mg *ClusterV1) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ClusterV1.
+func (mg *ClusterV1) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ClusterV1.
 func (mg *ClusterV1) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ClusterV1.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ClusterV1) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ClusterV1.
@@ -93,22 +77,14 @@ func (mg *ClustertemplateV1) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ClustertemplateV1.
-func (mg *ClustertemplateV1) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ClustertemplateV1.
+func (mg *ClustertemplateV1) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ClustertemplateV1.
 func (mg *ClustertemplateV1) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ClustertemplateV1.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ClustertemplateV1) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ClustertemplateV1.
@@ -131,22 +107,14 @@ func (mg *ClustertemplateV1) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ClustertemplateV1.
-func (mg *ClustertemplateV1) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ClustertemplateV1.
+func (mg *ClustertemplateV1) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ClustertemplateV1.
 func (mg *ClustertemplateV1) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ClustertemplateV1.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ClustertemplateV1) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ClustertemplateV1.
@@ -169,22 +137,14 @@ func (mg *NodegroupV1) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this NodegroupV1.
-func (mg *NodegroupV1) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this NodegroupV1.
+func (mg *NodegroupV1) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this NodegroupV1.
 func (mg *NodegroupV1) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this NodegroupV1.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *NodegroupV1) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this NodegroupV1.
@@ -207,22 +167,14 @@ func (mg *NodegroupV1) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this NodegroupV1.
-func (mg *NodegroupV1) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this NodegroupV1.
+func (mg *NodegroupV1) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this NodegroupV1.
 func (mg *NodegroupV1) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this NodegroupV1.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *NodegroupV1) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this NodegroupV1.

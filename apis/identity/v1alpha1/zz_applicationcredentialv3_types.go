@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,27 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type AccessRulesInitParameters struct {
+
+	// The request method that the application credential is
+	// permitted to use for a given API endpoint. Allowed values: POST, GET,
+	// HEAD, PATCH, PUT and DELETE.
+	Method *string `json:"method,omitempty" tf:"method,omitempty"`
+
+	// The API path that the application credential is permitted
+	// to access. May use named wildcards such as {tag} or the unnamed wildcard
+	// * to match against any string in the path up to a /, or the recursive
+	// wildcard ** to include / in the matched path.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// The service type identifier for the service that the
+	// application credential is granted to access. Must be a service type that is
+	// listed in the service catalog and not a code name for a service. E.g.
+	// identity, compute, volumev3, image, network,
+	// object-store, sharev2, dns, key-manager, monitoring, etc.
+	Service *string `json:"service,omitempty" tf:"service,omitempty"`
+}
 
 type AccessRulesObservation struct {
 
@@ -43,14 +68,14 @@ type AccessRulesParameters struct {
 	// The request method that the application credential is
 	// permitted to use for a given API endpoint. Allowed values: POST, GET,
 	// HEAD, PATCH, PUT and DELETE.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Method *string `json:"method" tf:"method,omitempty"`
 
 	// The API path that the application credential is permitted
 	// to access. May use named wildcards such as {tag} or the unnamed wildcard
 	// * to match against any string in the path up to a /, or the recursive
 	// wildcard ** to include / in the matched path.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Path *string `json:"path" tf:"path,omitempty"`
 
 	// The service type identifier for the service that the
@@ -58,8 +83,47 @@ type AccessRulesParameters struct {
 	// listed in the service catalog and not a code name for a service. E.g.
 	// identity, compute, volumev3, image, network,
 	// object-store, sharev2, dns, key-manager, monitoring, etc.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Service *string `json:"service" tf:"service,omitempty"`
+}
+
+type ApplicationCredentialV3InitParameters struct {
+
+	// A collection of one or more access rules, which
+	// this application credential allows to follow. The structure is described
+	// below. Changing this creates a new application credential.
+	AccessRules []AccessRulesInitParameters `json:"accessRules,omitempty" tf:"access_rules,omitempty"`
+
+	// A description of the application credential.
+	// Changing this creates a new application credential.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The expiration time of the application credential
+	// in the RFC3339 timestamp format (e.g. 2019-03-09T12:58:49Z). If omitted,
+	// an application credential will never expire. Changing this creates a new
+	// application credential.
+	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
+
+	// A name of the application credential. Changing this
+	// creates a new application credential.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new application credential.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// A collection of one or more role names, which this
+	// application credential has to be associated with its project. If omitted,
+	// all the current user's roles within the scoped project will be inherited by
+	// a new application credential. Changing this creates a new application
+	// credential.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+
+	// A flag indicating whether the application
+	// credential may be used for creation or destruction of other application
+	// credentials or trusts. Changing this creates a new application credential.
+	Unrestricted *bool `json:"unrestricted,omitempty" tf:"unrestricted,omitempty"`
 }
 
 type ApplicationCredentialV3Observation struct {
@@ -166,6 +230,17 @@ type ApplicationCredentialV3Parameters struct {
 type ApplicationCredentialV3Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ApplicationCredentialV3Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ApplicationCredentialV3InitParameters `json:"initProvider,omitempty"`
 }
 
 // ApplicationCredentialV3Status defines the observed state of ApplicationCredentialV3.
@@ -186,7 +261,7 @@ type ApplicationCredentialV3Status struct {
 type ApplicationCredentialV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   ApplicationCredentialV3Spec   `json:"spec"`
 	Status ApplicationCredentialV3Status `json:"status,omitempty"`
 }

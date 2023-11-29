@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,47 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type QuotasetV3InitParameters struct {
+
+	// Quota value for backup gigabytes. Changing
+	// this updates the existing quotaset.
+	BackupGigabytes *float64 `json:"backupGigabytes,omitempty" tf:"backup_gigabytes,omitempty"`
+
+	// Quota value for backups. Changing this updates the
+	// existing quotaset.
+	Backups *float64 `json:"backups,omitempty" tf:"backups,omitempty"`
+
+	// Quota value for gigabytes. Changing this updates the
+	// existing quotaset.
+	Gigabytes *float64 `json:"gigabytes,omitempty" tf:"gigabytes,omitempty"`
+
+	// Quota value for groups. Changing this updates the
+	// existing quotaset.
+	Groups *float64 `json:"groups,omitempty" tf:"groups,omitempty"`
+
+	// Quota value for gigabytes per volume .
+	// Changing this updates the existing quotaset.
+	PerVolumeGigabytes *float64 `json:"perVolumeGigabytes,omitempty" tf:"per_volume_gigabytes,omitempty"`
+
+	// The region in which to create the volume. If
+	// omitted, the region argument of the provider is used. Changing this
+	// creates a new quotaset.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Quota value for snapshots. Changing this updates the
+	// existing quotaset.
+	Snapshots *float64 `json:"snapshots,omitempty" tf:"snapshots,omitempty"`
+
+	// Key/Value pairs for setting quota for
+	// volumes types. Possible keys are snapshots_<volume_type_name>,
+	// volumes_<volume_type_name> and gigabytes_<volume_type_name>.
+	VolumeTypeQuota map[string]*string `json:"volumeTypeQuota,omitempty" tf:"volume_type_quota,omitempty"`
+
+	// Quota value for volumes. Changing this updates the
+	// existing quotaset.
+	Volumes *float64 `json:"volumes,omitempty" tf:"volumes,omitempty"`
+}
 
 type QuotasetV3Observation struct {
 
@@ -128,6 +173,17 @@ type QuotasetV3Parameters struct {
 type QuotasetV3Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     QuotasetV3Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider QuotasetV3InitParameters `json:"initProvider,omitempty"`
 }
 
 // QuotasetV3Status defines the observed state of QuotasetV3.

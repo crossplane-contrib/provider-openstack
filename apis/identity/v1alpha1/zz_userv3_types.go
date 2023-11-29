@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,6 +17,13 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type MultiFactorAuthRuleInitParameters struct {
+
+	// A list of authentication plugins that the user must
+	// authenticate with.
+	Rule []*string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
 type MultiFactorAuthRuleObservation struct {
 
 	// A list of authentication plugins that the user must
@@ -24,8 +35,57 @@ type MultiFactorAuthRuleParameters struct {
 
 	// A list of authentication plugins that the user must
 	// authenticate with.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Rule []*string `json:"rule" tf:"rule,omitempty"`
+}
+
+type UserV3InitParameters struct {
+
+	// The default project this user belongs to.
+	DefaultProjectID *string `json:"defaultProjectId,omitempty" tf:"default_project_id,omitempty"`
+
+	// A description of the user.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The domain this user belongs to.
+	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// Whether the user is enabled or disabled. Valid
+	// values are true and false.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Free-form key/value pairs of extra information.
+	Extra map[string]*string `json:"extra,omitempty" tf:"extra,omitempty"`
+
+	// User will not have to
+	// change their password upon first use. Valid values are true and false.
+	IgnoreChangePasswordUponFirstUse *bool `json:"ignoreChangePasswordUponFirstUse,omitempty" tf:"ignore_change_password_upon_first_use,omitempty"`
+
+	// User will not have a failure
+	// lockout placed on their account. Valid values are true and false.
+	IgnoreLockoutFailureAttempts *bool `json:"ignoreLockoutFailureAttempts,omitempty" tf:"ignore_lockout_failure_attempts,omitempty"`
+
+	// User's password will not expire.
+	// Valid values are true and false.
+	IgnorePasswordExpiry *bool `json:"ignorePasswordExpiry,omitempty" tf:"ignore_password_expiry,omitempty"`
+
+	// Whether to enable multi-factor
+	// authentication. Valid values are true and false.
+	MultiFactorAuthEnabled *bool `json:"multiFactorAuthEnabled,omitempty" tf:"multi_factor_auth_enabled,omitempty"`
+
+	// A multi-factor authentication rule.
+	// The structure is documented below. Please see the
+	// Ocata release notes
+	// for more information on how to use mulit-factor rules.
+	MultiFactorAuthRule []MultiFactorAuthRuleInitParameters `json:"multiFactorAuthRule,omitempty" tf:"multi_factor_auth_rule,omitempty"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new User.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
 type UserV3Observation struct {
@@ -148,6 +208,17 @@ type UserV3Parameters struct {
 type UserV3Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     UserV3Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider UserV3InitParameters `json:"initProvider,omitempty"`
 }
 
 // UserV3Status defines the observed state of UserV3.

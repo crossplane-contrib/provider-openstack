@@ -1,4 +1,4 @@
-apiVersion: lb.openstack.upbound.io/v1alpha1
+apiVersion: lb.openstack.crossplane.io/v1alpha1
 kind: QuotaV2
 metadata:
   annotations:
@@ -21,7 +21,7 @@ spec:
 
 ---
 
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: ProjectV3
 metadata:
   annotations:
@@ -32,6 +32,3 @@ metadata:
 spec:
   forProvider:
     name: project_1
-
----
-

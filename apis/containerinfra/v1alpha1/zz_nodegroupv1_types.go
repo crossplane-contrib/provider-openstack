@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,32 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type NodegroupV1InitParameters struct {
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
+
+	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
+
+	MergeLabels *bool `json:"mergeLabels,omitempty" tf:"merge_labels,omitempty"`
+
+	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
+
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	NodeCount *float64 `json:"nodeCount,omitempty" tf:"node_count,omitempty"`
+
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+}
 
 type NodegroupV1Observation struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -90,6 +120,17 @@ type NodegroupV1Parameters struct {
 type NodegroupV1Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     NodegroupV1Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider NodegroupV1InitParameters `json:"initProvider,omitempty"`
 }
 
 // NodegroupV1Status defines the observed state of NodegroupV1.
@@ -110,8 +151,8 @@ type NodegroupV1Status struct {
 type NodegroupV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterId)",message="clusterId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.clusterId) || (has(self.initProvider) && has(self.initProvider.clusterId))",message="spec.forProvider.clusterId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   NodegroupV1Spec   `json:"spec"`
 	Status NodegroupV1Status `json:"status,omitempty"`
 }

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,150 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type ClustertemplateV1InitParameters struct {
+
+	// The API server port for the Container
+	// Orchestration Engine for this cluster template. Changing this updates the
+	// API server port of the existing cluster template.
+	ApiserverPort *float64 `json:"apiserverPort,omitempty" tf:"apiserver_port,omitempty"`
+
+	// The distro for the cluster (fedora-atomic,
+	// coreos, etc.). Changing this updates the cluster distro of the existing
+	// cluster template.
+	ClusterDistro *string `json:"clusterDistro,omitempty" tf:"cluster_distro,omitempty"`
+
+	// The Container Orchestration Engine for this cluster
+	// template. Changing this updates the engine of the existing cluster
+	// template.
+	Coe *string `json:"coe,omitempty" tf:"coe,omitempty"`
+
+	// Address of the DNS nameserver that is used in
+	// nodes of the cluster. Changing this updates the DNS nameserver of the
+	// existing cluster template.
+	DNSNameserver *string `json:"dnsNameserver,omitempty" tf:"dns_nameserver,omitempty"`
+
+	// Docker storage driver. Changing this
+	// updates the Docker storage driver of the existing cluster template.
+	DockerStorageDriver *string `json:"dockerStorageDriver,omitempty" tf:"docker_storage_driver,omitempty"`
+
+	// The size (in GB) of the Docker volume.
+	// Changing this updates the Docker volume size of the existing cluster
+	// template.
+	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
+
+	// The ID of the external network that will
+	// be used for the cluster. Changing this updates the external network ID of
+	// the existing cluster template.
+	ExternalNetworkID *string `json:"externalNetworkId,omitempty" tf:"external_network_id,omitempty"`
+
+	// The fixed network that will be attached to the
+	// cluster. Changing this updates the fixed network of the existing cluster
+	// template.
+	FixedNetwork *string `json:"fixedNetwork,omitempty" tf:"fixed_network,omitempty"`
+
+	// The fixed subnet that will be attached to the
+	// cluster. Changing this updates the fixed subnet of the existing cluster
+	// template.
+	FixedSubnet *string `json:"fixedSubnet,omitempty" tf:"fixed_subnet,omitempty"`
+
+	// The flavor for the nodes of the cluster. Can be set via
+	// the OS_MAGNUM_FLAVOR environment variable. Changing this updates the
+	// flavor of the existing cluster template.
+	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`
+
+	// Indicates whether created cluster should
+	// create floating IP for every node or not. Changing this updates the
+	// floating IP enabled attribute of the existing cluster template.
+	FloatingIPEnabled *bool `json:"floatingIpEnabled,omitempty" tf:"floating_ip_enabled,omitempty"`
+
+	// The address of a proxy for receiving all HTTP
+	// requests and relay them. Changing this updates the HTTP proxy address of
+	// the existing cluster template.
+	HTTPProxy *string `json:"httpProxy,omitempty" tf:"http_proxy,omitempty"`
+
+	// The address of a proxy for receiving all HTTPS
+	// requests and relay them. Changing this updates the HTTPS proxy address of
+	// the existing cluster template.
+	HTTPSProxy *string `json:"httpsProxy,omitempty" tf:"https_proxy,omitempty"`
+
+	// Indicates whether the ClusterTemplate is hidden or not.
+	// Changing this updates the hidden attribute of the existing cluster
+	// template.
+	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
+
+	// The reference to an image that is used for nodes of the
+	// cluster. Can be set via the OS_MAGNUM_IMAGE environment variable.
+	// Changing this updates the image attribute of the existing cluster template.
+	Image *string `json:"image,omitempty" tf:"image,omitempty"`
+
+	// The insecure registry URL for the cluster
+	// template. Changing this updates the insecure registry attribute of the
+	// existing cluster template.
+	InsecureRegistry *string `json:"insecureRegistry,omitempty" tf:"insecure_registry,omitempty"`
+
+	// The name of the Compute service SSH keypair.
+	// Changing this updates the keypair of the existing cluster template.
+	KeypairID *string `json:"keypairId,omitempty" tf:"keypair_id,omitempty"`
+
+	// The list of key value pairs representing additional
+	// properties of the cluster template. Changing this updates the labels of the
+	// existing cluster template.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// The flavor for the master nodes. Can be set via
+	// the OS_MAGNUM_MASTER_FLAVOR environment variable. Changing this updates
+	// the master flavor of the existing cluster template.
+	MasterFlavor *string `json:"masterFlavor,omitempty" tf:"master_flavor,omitempty"`
+
+	// Indicates whether created cluster should
+	// has a loadbalancer for master nodes or not. Changing this updates the
+	// attribute of the existing cluster template.
+	MasterLBEnabled *bool `json:"masterLbEnabled,omitempty" tf:"master_lb_enabled,omitempty"`
+
+	// The name of the cluster template. Changing this updates
+	// the name of the existing cluster template.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The name of the driver for the container
+	// network. Changing this updates the network driver of the existing cluster
+	// template.
+	NetworkDriver *string `json:"networkDriver,omitempty" tf:"network_driver,omitempty"`
+
+	// A comma-separated list of IP addresses that shouldn't
+	// be used in the cluster. Changing this updates the no proxy list of the
+	// existing cluster template.
+	NoProxy *string `json:"noProxy,omitempty" tf:"no_proxy,omitempty"`
+
+	// Indicates whether cluster template should be public.
+	// Changing this updates the public attribute of the existing cluster
+	// template.
+	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
+
+	// The region in which to obtain the V1 Container Infra
+	// client. A Container Infra client is needed to create a cluster template. If
+	// omitted,the region argument of the provider is used. Changing this
+	// creates a new cluster template.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Indicates whether Docker registry is enabled
+	// in the cluster. Changing this updates the registry enabled attribute of the
+	// existing cluster template.
+	RegistryEnabled *bool `json:"registryEnabled,omitempty" tf:"registry_enabled,omitempty"`
+
+	// The server type for the cluster template. Changing
+	// this updates the server type of the existing cluster template.
+	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
+
+	// Indicates whether the TLS should be disabled in
+	// the cluster. Changing this updates the attribute of the existing cluster.
+	TLSDisabled *bool `json:"tlsDisabled,omitempty" tf:"tls_disabled,omitempty"`
+
+	// The name of the driver that is used for the
+	// volumes of the cluster nodes. Changing this updates the volume driver of
+	// the existing cluster template.
+	VolumeDriver *string `json:"volumeDriver,omitempty" tf:"volume_driver,omitempty"`
+}
 
 type ClustertemplateV1Observation struct {
 
@@ -352,6 +500,17 @@ type ClustertemplateV1Parameters struct {
 type ClustertemplateV1Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ClustertemplateV1Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ClustertemplateV1InitParameters `json:"initProvider,omitempty"`
 }
 
 // ClustertemplateV1Status defines the observed state of ClustertemplateV1.
@@ -372,9 +531,9 @@ type ClustertemplateV1Status struct {
 type ClustertemplateV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.coe)",message="coe is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.image)",message="image is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.coe) || (has(self.initProvider) && has(self.initProvider.coe))",message="spec.forProvider.coe is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.image) || (has(self.initProvider) && has(self.initProvider.image))",message="spec.forProvider.image is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   ClustertemplateV1Spec   `json:"spec"`
 	Status ClustertemplateV1Status `json:"status,omitempty"`
 }

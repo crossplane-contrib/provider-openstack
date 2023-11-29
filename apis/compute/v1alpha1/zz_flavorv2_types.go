@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,58 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type FlavorV2InitParameters struct {
+
+	// The description of the flavor. Changing this
+	// updates the description of the flavor. Requires microversion >= 2.55.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The amount of disk space in GiB to use for the root
+	// (/) partition. Changing this creates a new flavor.
+	Disk *float64 `json:"disk,omitempty" tf:"disk,omitempty"`
+
+	// The amount of ephemeral in GiB. If unspecified,
+	// the default is 0. Changing this creates a new flavor.
+	Ephemeral *float64 `json:"ephemeral,omitempty" tf:"ephemeral,omitempty"`
+
+	// Key/Value pairs of metadata for the flavor.
+	ExtraSpecs map[string]*string `json:"extraSpecs,omitempty" tf:"extra_specs,omitempty"`
+
+	// Unique ID (integer or UUID) of flavor to create. Changing
+	// this creates a new flavor.
+	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Whether the flavor is public. Changing this creates
+	// a new flavor.
+	IsPublic *bool `json:"isPublic,omitempty" tf:"is_public,omitempty"`
+
+	// A unique name for the flavor. Changing this creates a new
+	// flavor.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The amount of RAM to use, in megabytes. Changing this
+	// creates a new flavor.
+	RAM *float64 `json:"ram,omitempty" tf:"ram,omitempty"`
+
+	// The region in which to obtain the V2 Compute client.
+	// Flavors are associated with accounts, but a Compute client is needed to
+	// create one. If omitted, the region argument of the provider is used.
+	// Changing this creates a new flavor.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// RX/TX bandwith factor. The default is 1. Changing
+	// this creates a new flavor.
+	RxTxFactor *float64 `json:"rxTxFactor,omitempty" tf:"rx_tx_factor,omitempty"`
+
+	// The amount of disk space in megabytes to use. If
+	// unspecified, the default is 0. Changing this creates a new flavor.
+	Swap *float64 `json:"swap,omitempty" tf:"swap,omitempty"`
+
+	// The number of virtual CPUs to use. Changing this creates
+	// a new flavor.
+	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
+}
 
 type FlavorV2Observation struct {
 
@@ -135,6 +191,17 @@ type FlavorV2Parameters struct {
 type FlavorV2Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     FlavorV2Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider FlavorV2InitParameters `json:"initProvider,omitempty"`
 }
 
 // FlavorV2Status defines the observed state of FlavorV2.
@@ -155,10 +222,10 @@ type FlavorV2Status struct {
 type FlavorV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.disk)",message="disk is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.ram)",message="ram is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.vcpus)",message="vcpus is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.disk) || (has(self.initProvider) && has(self.initProvider.disk))",message="spec.forProvider.disk is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ram) || (has(self.initProvider) && has(self.initProvider.ram))",message="spec.forProvider.ram is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vcpus) || (has(self.initProvider) && has(self.initProvider.vcpus))",message="spec.forProvider.vcpus is a required parameter"
 	Spec   FlavorV2Spec   `json:"spec"`
 	Status FlavorV2Status `json:"status,omitempty"`
 }

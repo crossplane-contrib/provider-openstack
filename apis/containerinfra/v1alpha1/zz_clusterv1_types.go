@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,50 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type ClusterV1InitParameters struct {
+	ClusterTemplateID *string `json:"clusterTemplateId,omitempty" tf:"cluster_template_id,omitempty"`
+
+	CreateTimeout *float64 `json:"createTimeout,omitempty" tf:"create_timeout,omitempty"`
+
+	DiscoveryURL *string `json:"discoveryUrl,omitempty" tf:"discovery_url,omitempty"`
+
+	// The size (in GB) of the Docker volume.
+	// Changing this creates a new node group.
+	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
+
+	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`
+
+	FloatingIPEnabled *bool `json:"floatingIpEnabled,omitempty" tf:"floating_ip_enabled,omitempty"`
+
+	Keypair *string `json:"keypair,omitempty" tf:"keypair,omitempty"`
+
+	// The list of key value pairs representing additional
+	// properties of the node group. Changing this creates a new node group.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MasterCount *float64 `json:"masterCount,omitempty" tf:"master_count,omitempty"`
+
+	MasterFlavor *string `json:"masterFlavor,omitempty" tf:"master_flavor,omitempty"`
+
+	// Indicates whether the provided labels should be
+	// merged with cluster labels. Changing this creates a new nodegroup.
+	MergeLabels *bool `json:"mergeLabels,omitempty" tf:"merge_labels,omitempty"`
+
+	// The name of the node group. Changing this creates a new
+	// node group.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The number of nodes for the node group. Changing
+	// this update the number of nodes of the node group.
+	NodeCount *float64 `json:"nodeCount,omitempty" tf:"node_count,omitempty"`
+
+	// The region in which to obtain the V1 Container Infra
+	// client. A Container Infra client is needed to create a cluster. If omitted,
+	// the region argument of the provider is used. Changing this creates a new
+	// node group.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
 
 type ClusterV1Observation struct {
 	APIAddress *string `json:"apiAddress,omitempty" tf:"api_address,omitempty"`
@@ -175,6 +223,17 @@ type ClusterV1Parameters struct {
 type ClusterV1Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ClusterV1Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ClusterV1InitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterV1Status defines the observed state of ClusterV1.
@@ -195,7 +254,7 @@ type ClusterV1Status struct {
 type ClusterV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterTemplateId)",message="clusterTemplateId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.clusterTemplateId) || (has(self.initProvider) && has(self.initProvider.clusterTemplateId))",message="spec.forProvider.clusterTemplateId is a required parameter"
 	Spec   ClusterV1Spec   `json:"spec"`
 	Status ClusterV1Status `json:"status,omitempty"`
 }

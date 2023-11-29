@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,45 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type RecordsetV2InitParameters struct {
+
+	// A description of the  record set.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Disable wait for recordset to reach ACTIVE
+	// status. This argumen is disabled by default. If it is set to true, the recordset
+	// will be considered as created/updated/deleted if OpenStack request returned success.
+	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
+
+	// The name of the record set. Note the . at the end of the name.
+	// Changing this creates a new DNS  record set.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The ID of the project DNS zone is created
+	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
+	// user role in target project)
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// An array of DNS records.
+	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
+
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS  record set.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The time to live (TTL) of the record set.
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+
+	// The type of record set. Examples: "A", "MX".
+	// Changing this creates a new DNS  record set.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Map of additional options. Changing this creates a
+	// new record set.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
+}
 
 type RecordsetV2Observation struct {
 
@@ -124,6 +167,17 @@ type RecordsetV2Parameters struct {
 type RecordsetV2Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     RecordsetV2Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider RecordsetV2InitParameters `json:"initProvider,omitempty"`
 }
 
 // RecordsetV2Status defines the observed state of RecordsetV2.
@@ -144,8 +198,8 @@ type RecordsetV2Status struct {
 type RecordsetV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.records)",message="records is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.records) || (has(self.initProvider) && has(self.initProvider.records))",message="spec.forProvider.records is a required parameter"
 	Spec   RecordsetV2Spec   `json:"spec"`
 	Status RecordsetV2Status `json:"status,omitempty"`
 }

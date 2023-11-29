@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -13,6 +17,15 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AllocationPoolInitParameters struct {
+
+	// The ending address.
+	End *string `json:"end,omitempty" tf:"end,omitempty"`
+
+	// The starting address.
+	Start *string `json:"start,omitempty" tf:"start,omitempty"`
+}
+
 type AllocationPoolObservation struct {
 
 	// The ending address.
@@ -25,12 +38,21 @@ type AllocationPoolObservation struct {
 type AllocationPoolParameters struct {
 
 	// The ending address.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	End *string `json:"end" tf:"end,omitempty"`
 
 	// The starting address.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Start *string `json:"start" tf:"start,omitempty"`
+}
+
+type AllocationPoolsInitParameters struct {
+
+	// The ending address.
+	End *string `json:"end,omitempty" tf:"end,omitempty"`
+
+	// The starting address.
+	Start *string `json:"start,omitempty" tf:"start,omitempty"`
 }
 
 type AllocationPoolsObservation struct {
@@ -45,12 +67,21 @@ type AllocationPoolsObservation struct {
 type AllocationPoolsParameters struct {
 
 	// The ending address.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	End *string `json:"end" tf:"end,omitempty"`
 
 	// The starting address.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Start *string `json:"start" tf:"start,omitempty"`
+}
+
+type HostRoutesInitParameters struct {
+
+	// The destination CIDR.
+	DestinationCidr *string `json:"destinationCidr,omitempty" tf:"destination_cidr,omitempty"`
+
+	// The next hop in the route.
+	NextHop *string `json:"nextHop,omitempty" tf:"next_hop,omitempty"`
 }
 
 type HostRoutesObservation struct {
@@ -65,12 +96,110 @@ type HostRoutesObservation struct {
 type HostRoutesParameters struct {
 
 	// The destination CIDR.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DestinationCidr *string `json:"destinationCidr" tf:"destination_cidr,omitempty"`
 
 	// The next hop in the route.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	NextHop *string `json:"nextHop" tf:"next_hop,omitempty"`
+}
+
+type SubnetV2InitParameters struct {
+
+	// A block declaring the start and end range of
+	// the IP addresses available for use with DHCP in this subnet. Multiple
+	// allocation_pool blocks can be declared, providing the subnet with more
+	// than one range of IP addresses to use with DHCP. However, each IP range
+	// must be from the same CIDR that the subnet is part of.
+	// The allocation_pool block is documented below.
+	AllocationPool []AllocationPoolInitParameters `json:"allocationPool,omitempty" tf:"allocation_pool,omitempty"`
+
+	// (Deprecated - use allocation_pool instead)
+	// A block declaring the start and end range of the IP addresses available for
+	// use with DHCP in this subnet.
+	// The allocation_pools block is documented below.
+	AllocationPools []AllocationPoolsInitParameters `json:"allocationPools,omitempty" tf:"allocation_pools,omitempty"`
+
+	// CIDR representing IP range for this subnet, based on IP
+	// version. You can omit this option if you are creating a subnet from a
+	// subnet pool.
+	Cidr *string `json:"cidr,omitempty" tf:"cidr,omitempty"`
+
+	// An array of DNS name server names used by hosts
+	// in this subnet. Changing this updates the DNS name servers for the existing
+	// subnet.
+	DNSNameservers []*string `json:"dnsNameservers,omitempty" tf:"dns_nameservers,omitempty"`
+
+	// Human-readable description of the subnet. Changing this
+	// updates the name of the existing subnet.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The administrative state of the network.
+	// Acceptable values are "true" and "false". Changing this value enables or
+	// disables the DHCP capabilities of the existing subnet. Defaults to true.
+	EnableDHCP *bool `json:"enableDhcp,omitempty" tf:"enable_dhcp,omitempty"`
+
+	// Default gateway used by devices in this subnet.
+	// Leaving this blank and not setting no_gateway will cause a default
+	// gateway of .1 to be used. Changing this updates the gateway IP of the
+	// existing subnet.
+	GatewayIP *string `json:"gatewayIp,omitempty" tf:"gateway_ip,omitempty"`
+
+	// (Deprecated - use openstack_networking_subnet_route_v2
+	// instead) An array of routes that should be used by devices
+	// with IPs from this subnet (not including local subnet route). The host_route
+	// object structure is documented below. Changing this updates the host routes
+	// for the existing subnet.
+	HostRoutes []HostRoutesInitParameters `json:"hostRoutes,omitempty" tf:"host_routes,omitempty"`
+
+	// IP version, either 4 (default) or 6. Changing this creates a
+	// new subnet.
+	IPVersion *float64 `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
+
+	// The IPv6 address mode. Valid values are
+	// dhcpv6-stateful, dhcpv6-stateless, or slaac.
+	IPv6AddressMode *string `json:"ipv6AddressMode,omitempty" tf:"ipv6_address_mode,omitempty"`
+
+	// The IPv6 Router Advertisement mode. Valid values
+	// are dhcpv6-stateful, dhcpv6-stateless, or slaac.
+	IPv6RaMode *string `json:"ipv6RaMode,omitempty" tf:"ipv6_ra_mode,omitempty"`
+
+	// The name of the subnet. Changing this updates the name of
+	// the existing subnet.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Do not set a gateway IP on this subnet. Changing
+	// this removes or adds a default gateway IP of the existing subnet.
+	NoGateway *bool `json:"noGateway,omitempty" tf:"no_gateway,omitempty"`
+
+	// The prefix length to use when creating a subnet
+	// from a subnet pool. The default subnet pool prefix length that was defined
+	// when creating the subnet pool will be used if not provided. Changing this
+	// creates a new subnet.
+	PrefixLength *float64 `json:"prefixLength,omitempty" tf:"prefix_length,omitempty"`
+
+	// The region in which to obtain the V2 Networking client.
+	// A Networking client is needed to create a Neutron subnet. If omitted, the
+	// region argument of the provider is used. Changing this creates a new
+	// subnet.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// An array of service types used by the subnet.
+	// Changing this updates the service types for the existing subnet.
+	ServiceTypes []*string `json:"serviceTypes,omitempty" tf:"service_types,omitempty"`
+
+	// The ID of the subnetpool associated with the subnet.
+	SubnetpoolID *string `json:"subnetpoolId,omitempty" tf:"subnetpool_id,omitempty"`
+
+	// A set of string tags for the subnet.
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// The owner of the subnet. Required if admin wants to
+	// create a subnet for another tenant. Changing this creates a new subnet.
+	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+
+	// Map of additional options.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
 type SubnetV2Observation struct {
@@ -317,6 +446,17 @@ type SubnetV2Parameters struct {
 type SubnetV2Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     SubnetV2Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider SubnetV2InitParameters `json:"initProvider,omitempty"`
 }
 
 // SubnetV2Status defines the observed state of SubnetV2.

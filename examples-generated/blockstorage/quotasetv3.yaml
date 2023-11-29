@@ -1,4 +1,4 @@
-apiVersion: blockstorage.openstack.upbound.io/v1alpha1
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
 kind: QuotasetV3
 metadata:
   annotations:
@@ -25,7 +25,7 @@ spec:
 
 ---
 
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: ProjectV3
 metadata:
   annotations:
@@ -36,6 +36,3 @@ metadata:
 spec:
   forProvider:
     name: ${project_1}
-
----
-

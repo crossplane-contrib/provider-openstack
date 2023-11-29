@@ -1,4 +1,4 @@
-apiVersion: networking.openstack.upbound.io/v1alpha1
+apiVersion: networking.openstack.crossplane.io/v1alpha1
 kind: RouterInterfaceV2
 metadata:
   annotations:
@@ -17,7 +17,7 @@ spec:
 
 ---
 
-apiVersion: networking.openstack.upbound.io/v1alpha1
+apiVersion: networking.openstack.crossplane.io/v1alpha1
 kind: NetworkV2
 metadata:
   annotations:
@@ -32,7 +32,7 @@ spec:
 
 ---
 
-apiVersion: networking.openstack.upbound.io/v1alpha1
+apiVersion: networking.openstack.crossplane.io/v1alpha1
 kind: RouterV2
 metadata:
   annotations:
@@ -47,7 +47,7 @@ spec:
 
 ---
 
-apiVersion: networking.openstack.upbound.io/v1alpha1
+apiVersion: networking.openstack.crossplane.io/v1alpha1
 kind: SubnetV2
 metadata:
   annotations:
@@ -62,6 +62,3 @@ spec:
     networkIdSelector:
       matchLabels:
         testing.upbound.io/example-name: network_1
-
----
-

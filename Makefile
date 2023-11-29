@@ -4,7 +4,7 @@
 PROJECT_NAME ?= provider-openstack
 PROJECT_REPO ?= github.com/crossplane-contrib/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION ?= 1.3.3
+export TERRAFORM_VERSION ?= 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE ?= terraform-provider-openstack/openstack
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/terraform-provider-openstack/terraform-provider-openstack
@@ -13,6 +13,7 @@ export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-openstack
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-openstack_v1.53.0
 export TERRAFORM_DOCS_PATH ?= docs/resources
+
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -40,7 +41,7 @@ NPROCS ?= 1
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
 GO_REQUIRED_VERSION ?= 1.19
-GOLANGCILINT_VERSION ?= 1.53.3
+GOLANGCILINT_VERSION ?= 1.50.0
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
@@ -72,14 +73,6 @@ XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/crossplane-contrib
 XPKGS = $(PROJECT_NAME)
 -include build/makelib/xpkg.mk
 
-# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
-# we ensure image is present in daemon.
-xpkg.build.provider-openstack: do.build.images
-
-# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
-# build steps in parallel to avoid encountering an installation race condition.
-build.init: $(UP)
-
 # ====================================================================================
 # Fallthrough
 
@@ -93,6 +86,14 @@ build.init: $(UP)
 fallthrough: submodules
 	@echo Initial setup complete. Running make again . . .
 	@make
+
+# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
+# we ensure image is present in daemon.
+xpkg.build.provider-openstack: do.build.images
+
+# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
+# build steps in parallel to avoid encountering an installation race condition.
+build.init: $(UP)
 
 # ====================================================================================
 # Setup Terraform for fetching provider schema
@@ -165,9 +166,23 @@ CROSSPLANE_NAMESPACE = upbound-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
 
+# This target requires the following environment variables to be set:
+# - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
+#   To ensure the proper functioning of the end-to-end test resource pre-deletion hook, it is crucial to arrange your resources appropriately. 
+#   You can check the basic implementation here: https://github.com/upbound/uptest/blob/main/internal/openstacks/01-delete.yaml.tmpl.
+# - UPTEST_CLOUD_CREDENTIALS (optional), multiple sets of AWS IAM User credentials specified as key=value pairs.
+#   The support keys are currently `DEFAULT` and `PEER`. So, an example for the value of this env. variable is:
+#   DEFAULT='[default]
+#   aws_access_key_id = REDACTED
+#   aws_secret_access_key = REDACTED'
+#   PEER='[default]
+#   aws_access_key_id = REDACTED
+#   aws_secret_access_key = REDACTED'
+#   The associated `ProviderConfig`s will be named as `default` and `peer`.
+# - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
@@ -177,6 +192,33 @@ local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(OK) running locally built provider
 
 e2e: local-deploy uptest
+
+crddiff: $(UPTEST)
+	@$(INFO) Checking breaking CRD schema changes
+	@for crd in $${MODIFIED_CRD_LIST}; do \
+		if ! git cat-file -e "$${GITHUB_BASE_REF}:$${crd}" 2>/dev/null; then \
+			echo "CRD $${crd} does not exist in the $${GITHUB_BASE_REF} branch. Skipping..." ; \
+			continue ; \
+		fi ; \
+		echo "Checking $${crd} for breaking API changes..." ; \
+		changes_detected=$$($(UPTEST) crddiff revision <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
+		if [[ $$? != 0 ]] ; then \
+			printf "\033[31m"; echo "Breaking change detected!"; printf "\033[0m" ; \
+			echo "$${changes_detected}" ; \
+			echo ; \
+		fi ; \
+	done
+	@$(OK) Checking breaking CRD schema changes
+
+schema-version-diff:
+	@$(INFO) Checking for native state schema version changes
+	@export PREV_PROVIDER_VERSION=$$(git cat-file -p "${GITHUB_BASE_REF}:Makefile" | sed -nr 's/^export[[:space:]]*TERRAFORM_PROVIDER_VERSION[[:space:]]*:=[[:space:]]*(.+)/\1/p'); \
+	echo Detected previous Terraform provider version: $${PREV_PROVIDER_VERSION}; \
+	echo Current Terraform provider version: $${TERRAFORM_PROVIDER_VERSION}; \
+	mkdir -p $(WORK_DIR); \
+	git cat-file -p "$${GITHUB_BASE_REF}:config/schema.json" > "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}"; \
+	./scripts/version_diff.py config/generated.lst "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}" config/schema.json
+	@$(OK) Checking for native state schema version changes
 
 .PHONY: cobertura submodules fallthrough run crds.clean
 

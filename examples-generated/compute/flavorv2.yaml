@@ -1,4 +1,4 @@
-apiVersion: compute.openstack.upbound.io/v1alpha1
+apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: FlavorV2
 metadata:
   annotations:
@@ -15,6 +15,3 @@ spec:
     name: my-flavor
     ram: "8096"
     vcpus: "2"
-
----
-

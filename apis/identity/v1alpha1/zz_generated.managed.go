@@ -17,22 +17,14 @@ func (mg *ApplicationCredentialV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ApplicationCredentialV3.
-func (mg *ApplicationCredentialV3) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ApplicationCredentialV3.
+func (mg *ApplicationCredentialV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ApplicationCredentialV3.
 func (mg *ApplicationCredentialV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ApplicationCredentialV3.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ApplicationCredentialV3) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ApplicationCredentialV3.
@@ -55,22 +47,14 @@ func (mg *ApplicationCredentialV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ApplicationCredentialV3.
-func (mg *ApplicationCredentialV3) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ApplicationCredentialV3.
+func (mg *ApplicationCredentialV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ApplicationCredentialV3.
 func (mg *ApplicationCredentialV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ApplicationCredentialV3.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ApplicationCredentialV3) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ApplicationCredentialV3.
@@ -93,22 +77,14 @@ func (mg *ProjectV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ProjectV3.
-func (mg *ProjectV3) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ProjectV3.
+func (mg *ProjectV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ProjectV3.
 func (mg *ProjectV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ProjectV3.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ProjectV3) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ProjectV3.
@@ -131,22 +107,14 @@ func (mg *ProjectV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ProjectV3.
-func (mg *ProjectV3) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ProjectV3.
+func (mg *ProjectV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ProjectV3.
 func (mg *ProjectV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ProjectV3.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ProjectV3) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ProjectV3.
@@ -169,22 +137,14 @@ func (mg *RoleAssignmentV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this RoleAssignmentV3.
-func (mg *RoleAssignmentV3) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this RoleAssignmentV3.
+func (mg *RoleAssignmentV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoleAssignmentV3.
 func (mg *RoleAssignmentV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this RoleAssignmentV3.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *RoleAssignmentV3) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this RoleAssignmentV3.
@@ -207,22 +167,14 @@ func (mg *RoleAssignmentV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this RoleAssignmentV3.
-func (mg *RoleAssignmentV3) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this RoleAssignmentV3.
+func (mg *RoleAssignmentV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoleAssignmentV3.
 func (mg *RoleAssignmentV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this RoleAssignmentV3.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *RoleAssignmentV3) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this RoleAssignmentV3.
@@ -245,22 +197,14 @@ func (mg *UserV3) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this UserV3.
-func (mg *UserV3) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this UserV3.
+func (mg *UserV3) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this UserV3.
 func (mg *UserV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this UserV3.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *UserV3) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this UserV3.
@@ -283,22 +227,14 @@ func (mg *UserV3) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this UserV3.
-func (mg *UserV3) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this UserV3.
+func (mg *UserV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this UserV3.
 func (mg *UserV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this UserV3.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *UserV3) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this UserV3.

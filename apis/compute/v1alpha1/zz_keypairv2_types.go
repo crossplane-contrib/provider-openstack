@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,34 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type KeypairV2InitParameters struct {
+
+	// A unique name for the keypair. Changing this creates a new
+	// keypair.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// A pregenerated OpenSSH-formatted public key.
+	// Changing this creates a new keypair. If a public key is not specified, then
+	// a public/private key pair will be automatically generated. If a pair is
+	// created, then destroying this resource means you will lose access to that
+	// keypair forever.
+	PublicKey *string `json:"publicKey,omitempty" tf:"public_key,omitempty"`
+
+	// The region in which to obtain the V2 Compute client.
+	// Keypairs are associated with accounts, but a Compute client is needed to
+	// create one. If omitted, the region argument of the provider is used.
+	// Changing this creates a new keypair.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// This allows administrative users to operate key-pairs
+	// of specified user ID. For this feature your need to have openstack microversion
+	// 2.10 (Liberty) or later.
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Map of additional options.
+	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
+}
 
 type KeypairV2Observation struct {
 
@@ -83,6 +115,17 @@ type KeypairV2Parameters struct {
 type KeypairV2Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     KeypairV2Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider KeypairV2InitParameters `json:"initProvider,omitempty"`
 }
 
 // KeypairV2Status defines the observed state of KeypairV2.
@@ -103,7 +146,7 @@ type KeypairV2Status struct {
 type KeypairV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   KeypairV2Spec   `json:"spec"`
 	Status KeypairV2Status `json:"status,omitempty"`
 }

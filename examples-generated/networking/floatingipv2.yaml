@@ -1,4 +1,4 @@
-apiVersion: networking.openstack.upbound.io/v1alpha1
+apiVersion: networking.openstack.crossplane.io/v1alpha1
 kind: FloatingipV2
 metadata:
   annotations:
@@ -9,6 +9,3 @@ metadata:
 spec:
   forProvider:
     pool: public
-
----
-

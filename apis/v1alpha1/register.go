@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "openstack.upbound.io"
+	Group   = "openstack.crossplane.io"
 	Version = "v1alpha1"
 )
 

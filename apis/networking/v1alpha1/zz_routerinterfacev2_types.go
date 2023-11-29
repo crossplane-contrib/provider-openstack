@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -12,6 +16,24 @@ import (
 
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
+
+type RouterInterfaceV2InitParameters struct {
+
+	// A boolean indicating whether the routes from the
+	// corresponding router ID should be deleted so that the router interface can
+	// be destroyed without any errors. The default value is false.
+	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
+
+	// ID of the port this interface connects to. Changing
+	// this creates a new router interface.
+	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// The region in which to obtain the V2 networking client.
+	// A networking client is needed to create a router. If omitted, the
+	// region argument of the provider is used. Changing this creates a new
+	// router interface.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
 
 type RouterInterfaceV2Observation struct {
 
@@ -94,6 +116,17 @@ type RouterInterfaceV2Parameters struct {
 type RouterInterfaceV2Spec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     RouterInterfaceV2Parameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider RouterInterfaceV2InitParameters `json:"initProvider,omitempty"`
 }
 
 // RouterInterfaceV2Status defines the observed state of RouterInterfaceV2.
