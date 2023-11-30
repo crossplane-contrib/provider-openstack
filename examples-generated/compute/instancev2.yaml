@@ -1,4 +1,4 @@
-apiVersion: compute.openstack.upbound.io/v1alpha1
+apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: InstanceV2
 metadata:
   annotations:
@@ -20,6 +20,3 @@ spec:
     - name: my_network
     securityGroups:
     - default
-
----
-

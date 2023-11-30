@@ -1,4 +1,4 @@
-apiVersion: dns.openstack.upbound.io/v1alpha1
+apiVersion: dns.openstack.crossplane.io/v1alpha1
 kind: RecordsetV2
 metadata:
   annotations:
@@ -20,7 +20,7 @@ spec:
 
 ---
 
-apiVersion: dns.openstack.upbound.io/v1alpha1
+apiVersion: dns.openstack.crossplane.io/v1alpha1
 kind: ZoneV2
 metadata:
   annotations:
@@ -35,6 +35,3 @@ spec:
     name: example.com.
     ttl: 6000
     type: PRIMARY
-
----
-

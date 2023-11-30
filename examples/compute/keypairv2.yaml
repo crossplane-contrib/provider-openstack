@@ -1,4 +1,4 @@
-apiVersion: compute.openstack.upbound.io/v1alpha1
+apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: KeypairV2
 metadata:
   annotations:

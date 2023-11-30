@@ -15,7 +15,7 @@ import (
 	"github.com/crossplane-contrib/provider-openstack/config/identity"
 	"github.com/crossplane-contrib/provider-openstack/config/lb"
 	"github.com/crossplane-contrib/provider-openstack/config/networking"
-	ujconfig "github.com/upbound/upjet/pkg/config"
+	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
 
 const (
@@ -32,7 +32,9 @@ var providerMetadata string
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
+		ujconfig.WithRootGroup("openstack.crossplane.io"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 		))

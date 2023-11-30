@@ -1,4 +1,4 @@
-apiVersion: containerinfra.openstack.upbound.io/v1alpha1
+apiVersion: containerinfra.openstack.crossplane.io/v1alpha1
 kind: ClusterV1
 metadata:
   annotations:
@@ -16,4 +16,3 @@ spec:
   writeConnectionSecretToRef:
     name: kubeconfig-test
     namespace: default
-

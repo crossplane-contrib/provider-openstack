@@ -1,5 +1,5 @@
 ---
-apiVersion: compute.openstack.upbound.io/v1alpha1
+apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: QuotasetV2
 metadata:
   name: quotaset-1
@@ -17,7 +17,7 @@ spec:
     name: openstack-admin-provider-config
 
 ---
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: RoleAssignmentV3
 metadata:
   name: testproject-role-assignment
@@ -31,8 +31,7 @@ spec:
     name: openstack-admin-provider-config
 
 ---
-
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: ProjectV3
 metadata:
   name: test-project

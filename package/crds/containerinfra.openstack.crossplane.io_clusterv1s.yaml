@@ -3,20 +3,19 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.11.3
-  creationTimestamp: null
-  name: quotasetv2s.compute.openstack.upbound.io
+    controller-gen.kubebuilder.io/version: v0.13.0
+  name: clusterv1s.containerinfra.openstack.crossplane.io
 spec:
-  group: compute.openstack.upbound.io
+  group: containerinfra.openstack.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - openstack
-    kind: QuotasetV2
-    listKind: QuotasetV2List
-    plural: quotasetv2s
-    singular: quotasetv2
+    kind: ClusterV1
+    listKind: ClusterV1List
+    plural: clusterv1s
+    singular: clusterv1
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: QuotasetV2 is the Schema for the QuotasetV2s API. Manages a V2
-          compute quotaset resource within OpenStack.
+        description: ClusterV1 is the Schema for the ClusterV1s API. Manages a V1
+          Magnum node group resource within OpenStack.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,14 +50,14 @@ spec:
           metadata:
             type: object
           spec:
-            description: QuotasetV2Spec defines the desired state of QuotasetV2
+            description: ClusterV1Spec defines the desired state of ClusterV1
             properties:
               deletionPolicy:
                 default: Delete
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicy field in a future release. Currently,
+                  in favor of the ManagementPolicies field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -68,49 +67,21 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  cores:
-                    description: Quota value for cores. Changing this updates the
-                      existing quotaset.
-                    type: number
-                  fixedIps:
-                    description: Quota value for fixed IPs. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  floatingIps:
-                    description: Quota value for floating IPs. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  injectedFileContentBytes:
-                    description: Quota value for content bytes of injected files.
-                      Changing this updates the existing quotaset.
-                    type: number
-                  injectedFilePathBytes:
-                    description: Quota value for path bytes of injected files. Changing
-                      this updates the existing quotaset.
-                    type: number
-                  injectedFiles:
-                    description: Quota value for injected files. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  instances:
-                    description: Quota value for instances. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  keyPairs:
-                    description: Quota value for key pairs. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  metadataItems:
-                    description: Quota value for metadata items. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  projectId:
-                    description: ID of the project to manage quotas. Changing this
-                      creates a new quotaset.
+                  clusterTemplateId:
                     type: string
-                  projectIdRef:
-                    description: Reference to a ProjectV3 in identity to populate
-                      projectId.
+                  createTimeout:
+                    type: number
+                  discoveryUrl:
+                    type: string
+                  dockerVolumeSize:
+                    description: The size (in GB) of the Docker volume. Changing this
+                      creates a new node group.
+                    type: number
+                  fixedNetwork:
+                    type: string
+                  fixedNetworkRef:
+                    description: Reference to a NetworkV2 in networking to populate
+                      fixedNetwork.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -143,9 +114,9 @@ spec:
                     required:
                     - name
                     type: object
-                  projectIdSelector:
-                    description: Selector for a ProjectV3 in identity to populate
-                      projectId.
+                  fixedNetworkSelector:
+                    description: Selector for a NetworkV2 in networking to populate
+                      fixedNetwork.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -183,89 +154,208 @@ spec:
                             type: string
                         type: object
                     type: object
-                  ram:
-                    description: Quota value for RAM. Changing this updates the existing
-                      quotaset.
+                  fixedSubnet:
+                    type: string
+                  fixedSubnetRef:
+                    description: Reference to a SubnetV2 in networking to populate
+                      fixedSubnet.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  fixedSubnetSelector:
+                    description: Selector for a SubnetV2 in networking to populate
+                      fixedSubnet.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  flavor:
+                    type: string
+                  floatingIpEnabled:
+                    type: boolean
+                  keypair:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: The list of key value pairs representing additional
+                      properties of the node group. Changing this creates a new node
+                      group.
+                    type: object
+                  masterCount:
+                    type: number
+                  masterFlavor:
+                    type: string
+                  mergeLabels:
+                    description: Indicates whether the provided labels should be merged
+                      with cluster labels. Changing this creates a new nodegroup.
+                    type: boolean
+                  name:
+                    description: The name of the node group. Changing this creates
+                      a new node group.
+                    type: string
+                  nodeCount:
+                    description: The number of nodes for the node group. Changing
+                      this update the number of nodes of the node group.
                     type: number
                   region:
-                    description: The region in which to create the volume. If omitted,
-                      the region argument of the provider is used. Changing this creates
-                      a new quotaset.
+                    description: The region in which to obtain the V1 Container Infra
+                      client. A Container Infra client is needed to create a cluster.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new node group.
                     type: string
-                  securityGroupRules:
-                    description: Quota value for security group rules. Changing this
-                      updates the existing quotaset.
-                    type: number
-                  securityGroups:
-                    description: Quota value for security groups. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  serverGroupMembers:
-                    description: Quota value for server groups members. Changing this
-                      updates the existing quotaset.
-                    type: number
-                  serverGroups:
-                    description: Quota value for server groups. Changing this updates
-                      the existing quotaset.
-                    type: number
                 type: object
-              managementPolicy:
-                default: FullControl
-                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicy
-                  specifies the level of control Crossplane has over the managed external
-                  resource. This field is planned to replace the DeletionPolicy field
-                  in a future release. Currently, both could be set independently
-                  and non-default values would be honored if the feature flag is enabled.
-                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
-                enum:
-                - FullControl
-                - ObserveOnly
-                - OrphanOnDelete
-                type: string
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  clusterTemplateId:
+                    type: string
+                  createTimeout:
+                    type: number
+                  discoveryUrl:
+                    type: string
+                  dockerVolumeSize:
+                    description: The size (in GB) of the Docker volume. Changing this
+                      creates a new node group.
+                    type: number
+                  flavor:
+                    type: string
+                  floatingIpEnabled:
+                    type: boolean
+                  keypair:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: The list of key value pairs representing additional
+                      properties of the node group. Changing this creates a new node
+                      group.
+                    type: object
+                  masterCount:
+                    type: number
+                  masterFlavor:
+                    type: string
+                  mergeLabels:
+                    description: Indicates whether the provided labels should be merged
+                      with cluster labels. Changing this creates a new nodegroup.
+                    type: boolean
+                  name:
+                    description: The name of the node group. Changing this creates
+                      a new node group.
+                    type: string
+                  nodeCount:
+                    description: The number of nodes for the node group. Changing
+                      this update the number of nodes of the node group.
+                    type: number
+                  region:
+                    description: The region in which to obtain the V1 Container Infra
+                      client. A Container Infra client is needed to create a cluster.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new node group.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -395,78 +485,96 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.clusterTemplateId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterTemplateId)
+                || (has(self.initProvider) && has(self.initProvider.clusterTemplateId))'
           status:
-            description: QuotasetV2Status defines the observed state of QuotasetV2.
+            description: ClusterV1Status defines the observed state of ClusterV1.
             properties:
               atProvider:
                 properties:
-                  cores:
-                    description: Quota value for cores. Changing this updates the
-                      existing quotaset.
+                  apiAddress:
+                    type: string
+                  clusterTemplateId:
+                    type: string
+                  coeVersion:
+                    type: string
+                  containerVersion:
+                    type: string
+                  createTimeout:
                     type: number
-                  fixedIps:
-                    description: Quota value for fixed IPs. Changing this updates
-                      the existing quotaset.
+                  createdAt:
+                    description: The time at which node group was created.
+                    type: string
+                  discoveryUrl:
+                    type: string
+                  dockerVolumeSize:
+                    description: The size (in GB) of the Docker volume. Changing this
+                      creates a new node group.
                     type: number
-                  floatingIps:
-                    description: Quota value for floating IPs. Changing this updates
-                      the existing quotaset.
-                    type: number
+                  fixedNetwork:
+                    type: string
+                  fixedSubnet:
+                    type: string
+                  flavor:
+                    type: string
+                  floatingIpEnabled:
+                    type: boolean
                   id:
                     type: string
-                  injectedFileContentBytes:
-                    description: Quota value for content bytes of injected files.
-                      Changing this updates the existing quotaset.
+                  keypair:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: The list of key value pairs representing additional
+                      properties of the node group. Changing this creates a new node
+                      group.
+                    type: object
+                  masterAddresses:
+                    items:
+                      type: string
+                    type: array
+                  masterCount:
                     type: number
-                  injectedFilePathBytes:
-                    description: Quota value for path bytes of injected files. Changing
-                      this updates the existing quotaset.
-                    type: number
-                  injectedFiles:
-                    description: Quota value for injected files. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  instances:
-                    description: Quota value for instances. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  keyPairs:
-                    description: Quota value for key pairs. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  metadataItems:
-                    description: Quota value for metadata items. Changing this updates
-                      the existing quotaset.
+                  masterFlavor:
+                    type: string
+                  mergeLabels:
+                    description: Indicates whether the provided labels should be merged
+                      with cluster labels. Changing this creates a new nodegroup.
+                    type: boolean
+                  name:
+                    description: The name of the node group. Changing this creates
+                      a new node group.
+                    type: string
+                  nodeAddresses:
+                    items:
+                      type: string
+                    type: array
+                  nodeCount:
+                    description: The number of nodes for the node group. Changing
+                      this update the number of nodes of the node group.
                     type: number
                   projectId:
-                    description: ID of the project to manage quotas. Changing this
-                      creates a new quotaset.
+                    description: The project of the node group. Required if admin
+                      wants to create a cluster in another project. Changing this
+                      creates a new node group.
                     type: string
-                  ram:
-                    description: Quota value for RAM. Changing this updates the existing
-                      quotaset.
-                    type: number
                   region:
-                    description: The region in which to create the volume. If omitted,
-                      the region argument of the provider is used. Changing this creates
-                      a new quotaset.
+                    description: The region in which to obtain the V1 Container Infra
+                      client. A Container Infra client is needed to create a cluster.
+                      If omitted, the region argument of the provider is used. Changing
+                      this creates a new node group.
                     type: string
-                  securityGroupRules:
-                    description: Quota value for security group rules. Changing this
-                      updates the existing quotaset.
-                    type: number
-                  securityGroups:
-                    description: Quota value for security groups. Changing this updates
-                      the existing quotaset.
-                    type: number
-                  serverGroupMembers:
-                    description: Quota value for server groups members. Changing this
-                      updates the existing quotaset.
-                    type: number
-                  serverGroups:
-                    description: Quota value for server groups. Changing this updates
-                      the existing quotaset.
-                    type: number
+                  stackId:
+                    type: string
+                  updatedAt:
+                    description: The time at which node group was created.
+                    type: string
+                  userId:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -501,6 +609,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec

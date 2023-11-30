@@ -3,20 +3,19 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.11.3
-  creationTimestamp: null
-  name: quotav2s.networking.openstack.upbound.io
+    controller-gen.kubebuilder.io/version: v0.13.0
+  name: nodegroupv1s.containerinfra.openstack.crossplane.io
 spec:
-  group: networking.openstack.upbound.io
+  group: containerinfra.openstack.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - openstack
-    kind: QuotaV2
-    listKind: QuotaV2List
-    plural: quotav2s
-    singular: quotav2
+    kind: NodegroupV1
+    listKind: NodegroupV1List
+    plural: nodegroupv1s
+    singular: nodegroupv1
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: QuotaV2 is the Schema for the QuotaV2s API. Manages a V2 networking
-          quota resource within OpenStack.
+        description: NodegroupV1 is the Schema for the NodegroupV1s API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,14 +49,14 @@ spec:
           metadata:
             type: object
           spec:
-            description: QuotaV2Spec defines the desired state of QuotaV2
+            description: NodegroupV1Spec defines the desired state of NodegroupV1
             properties:
               deletionPolicy:
                 default: Delete
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicy field in a future release. Currently,
+                  in favor of the ManagementPolicies field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -68,184 +66,103 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  floatingip:
-                    description: Quota value for floating IPs. Changing this updates
-                      the existing quota.
-                    type: number
-                  network:
-                    description: Quota value for networks. Changing this updates the
-                      existing quota.
-                    type: number
-                  port:
-                    description: Quota value for ports. Changing this updates the
-                      existing quota.
-                    type: number
-                  projectId:
-                    description: ID of the project to manage quota. Changing this
-                      creates new quota.
+                  clusterId:
                     type: string
-                  projectIdRef:
-                    description: Reference to a ProjectV3 in identity to populate
-                      projectId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
+                  dockerVolumeSize:
+                    type: number
+                  flavorId:
+                    type: string
+                  imageId:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
                     type: object
-                  projectIdSelector:
-                    description: Selector for a ProjectV3 in identity to populate
-                      projectId.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  rbacPolicy:
-                    description: Quota value for RBAC policies. Changing this updates
-                      the existing quota.
+                  maxNodeCount:
+                    type: number
+                  mergeLabels:
+                    type: boolean
+                  minNodeCount:
+                    type: number
+                  name:
+                    type: string
+                  nodeCount:
                     type: number
                   region:
-                    description: The region in which to create the quota. If omitted,
-                      the region argument of the provider is used. Changing this creates
-                      new quota.
                     type: string
-                  router:
-                    description: Quota value for routers. Changing this updates the
-                      existing quota.
-                    type: number
-                  securityGroup:
-                    description: Quota value for security groups. Changing this updates
-                      the existing quota.
-                    type: number
-                  securityGroupRule:
-                    description: Quota value for security group rules. Changing this
-                      updates the existing quota.
-                    type: number
-                  subnet:
-                    description: Quota value for subnets. Changing this updates the
-                      existing quota.
-                    type: number
-                  subnetpool:
-                    description: Quota value for subnetpools. Changing this updates
-                      the existing quota.
-                    type: number
+                  role:
+                    type: string
                 type: object
-              managementPolicy:
-                default: FullControl
-                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicy
-                  specifies the level of control Crossplane has over the managed external
-                  resource. This field is planned to replace the DeletionPolicy field
-                  in a future release. Currently, both could be set independently
-                  and non-default values would be honored if the feature flag is enabled.
-                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
-                enum:
-                - FullControl
-                - ObserveOnly
-                - OrphanOnDelete
-                type: string
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  clusterId:
+                    type: string
+                  dockerVolumeSize:
+                    type: number
+                  flavorId:
+                    type: string
+                  imageId:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  maxNodeCount:
+                    type: number
+                  mergeLabels:
+                    type: boolean
+                  minNodeCount:
+                    type: number
+                  name:
+                    type: string
+                  nodeCount:
+                    type: number
+                  region:
+                    type: string
+                  role:
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
                 description: ProviderConfigReference specifies how the provider that
                   will be used to create, observe, update, and delete this managed
                   resource should be configured.
-                properties:
-                  name:
-                    description: Name of the referenced object.
-                    type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -375,58 +292,54 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.clusterId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterId)
+                || (has(self.initProvider) && has(self.initProvider.clusterId))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
           status:
-            description: QuotaV2Status defines the observed state of QuotaV2.
+            description: NodegroupV1Status defines the observed state of NodegroupV1.
             properties:
               atProvider:
                 properties:
-                  floatingip:
-                    description: Quota value for floating IPs. Changing this updates
-                      the existing quota.
+                  clusterId:
+                    type: string
+                  createdAt:
+                    type: string
+                  dockerVolumeSize:
                     type: number
+                  flavorId:
+                    type: string
                   id:
                     type: string
-                  network:
-                    description: Quota value for networks. Changing this updates the
-                      existing quota.
+                  imageId:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  maxNodeCount:
                     type: number
-                  port:
-                    description: Quota value for ports. Changing this updates the
-                      existing quota.
+                  mergeLabels:
+                    type: boolean
+                  minNodeCount:
+                    type: number
+                  name:
+                    type: string
+                  nodeCount:
                     type: number
                   projectId:
-                    description: ID of the project to manage quota. Changing this
-                      creates new quota.
                     type: string
-                  rbacPolicy:
-                    description: Quota value for RBAC policies. Changing this updates
-                      the existing quota.
-                    type: number
                   region:
-                    description: The region in which to create the quota. If omitted,
-                      the region argument of the provider is used. Changing this creates
-                      new quota.
                     type: string
-                  router:
-                    description: Quota value for routers. Changing this updates the
-                      existing quota.
-                    type: number
-                  securityGroup:
-                    description: Quota value for security groups. Changing this updates
-                      the existing quota.
-                    type: number
-                  securityGroupRule:
-                    description: Quota value for security group rules. Changing this
-                      updates the existing quota.
-                    type: number
-                  subnet:
-                    description: Quota value for subnets. Changing this updates the
-                      existing quota.
-                    type: number
-                  subnetpool:
-                    description: Quota value for subnetpools. Changing this updates
-                      the existing quota.
-                    type: number
+                  role:
+                    type: string
+                  updatedAt:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -461,6 +374,9 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
             type: object
         required:
         - spec

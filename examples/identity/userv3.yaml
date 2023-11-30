@@ -1,5 +1,5 @@
 ---
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: UserV3
 metadata:
   name: first-user

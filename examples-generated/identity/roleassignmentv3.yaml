@@ -1,4 +1,4 @@
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: RoleAssignmentV3
 metadata:
   annotations:
@@ -16,7 +16,7 @@ spec:
 
 ---
 
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: ProjectV3
 metadata:
   annotations:
@@ -30,7 +30,7 @@ spec:
 
 ---
 
-apiVersion: identity.openstack.upbound.io/v1alpha1
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: UserV3
 metadata:
   annotations:
@@ -42,6 +42,3 @@ spec:
   forProvider:
     defaultProjectId: ${openstack_identity_project_v3.project_1.id}
     name: user_1
-
----
-
