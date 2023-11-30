@@ -36,3 +36,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.x]
 
 See [Commitlog](https://github.com/crossplane-contrib/provider-openstack/commits/release-v0.1)
+
+# Migration
+
+## 0.2.x to 0.3.x
+
+- Change all apiversions from `*.openstack.upbound.io` to `*.openstack.crossplane.io`
