@@ -1,0 +1,32 @@
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: VolumeAttachV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachv3
+  labels:
+    testing.upbound.io/example-name: va_1
+  name: va-1
+spec:
+  forProvider:
+    device: auto
+    hostName: devstack
+    initiator: iqn.1993-08.org.debian:01:e9861fb1859
+    ipAddress: 192.168.255.10
+    osType: linux2
+    platform: x86_64
+    volumeId: ${openstack_blockstorage_volume_v3.volume_1.id}
+
+---
+
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: VolumeV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachv3
+  labels:
+    testing.upbound.io/example-name: volume_1
+  name: volume-1
+spec:
+  forProvider:
+    name: volume_1
+    size: 1

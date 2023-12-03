@@ -31,6 +31,20 @@ spec:
 ---
 
 apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: role_1
+  name: role-1
+spec:
+  forProvider:
+    name: role_1
+
+---
+
+apiVersion: identity.openstack.crossplane.io/v1alpha1
 kind: UserV3
 metadata:
   annotations:

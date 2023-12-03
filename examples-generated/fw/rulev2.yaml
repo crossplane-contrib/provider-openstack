@@ -1,0 +1,16 @@
+apiVersion: fw.openstack.crossplane.io/v1alpha1
+kind: RuleV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fw/v1alpha1/rulev2
+  labels:
+    testing.upbound.io/example-name: rule_2
+  name: rule-2
+spec:
+  forProvider:
+    action: deny
+    description: drop TELNET traffic
+    destinationPort: "23"
+    enabled: "true"
+    name: firewall_rule
+    protocol: tcp

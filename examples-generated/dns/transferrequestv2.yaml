@@ -1,0 +1,30 @@
+apiVersion: dns.openstack.crossplane.io/v1alpha1
+kind: TransferRequestV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/transferrequestv2
+  labels:
+    testing.upbound.io/example-name: request_1
+  name: request-1
+spec:
+  forProvider:
+    description: a transfer request
+    zoneId: ${openstack_dns_zone_v2.example_zone.id}
+
+---
+
+apiVersion: dns.openstack.crossplane.io/v1alpha1
+kind: ZoneV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/transferrequestv2
+  labels:
+    testing.upbound.io/example-name: example_zone
+  name: example-zone
+spec:
+  forProvider:
+    description: An example zone
+    email: jdoe@example.com
+    name: example.com.
+    ttl: 3000
+    type: PRIMARY

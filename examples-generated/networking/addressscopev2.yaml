@@ -1,0 +1,12 @@
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: AddressscopeV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/addressscopev2
+  labels:
+    testing.upbound.io/example-name: addressscope_1
+  name: addressscope-1
+spec:
+  forProvider:
+    ipVersion: 6
+    name: addressscope_1

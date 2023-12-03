@@ -17,6 +17,42 @@ func (l *ApplicationCredentialV3List) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this EC2CredentialV3List.
+func (l *EC2CredentialV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this EndpointV3List.
+func (l *EndpointV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this GroupV3List.
+func (l *GroupV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this InheritRoleAssignmentV3List.
+func (l *InheritRoleAssignmentV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this ProjectV3List.
 func (l *ProjectV3List) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -28,6 +64,33 @@ func (l *ProjectV3List) GetItems() []resource.Managed {
 
 // GetItems of this RoleAssignmentV3List.
 func (l *RoleAssignmentV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this RoleV3List.
+func (l *RoleV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ServiceV3List.
+func (l *ServiceV3List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this UserMembershipV3List.
+func (l *UserMembershipV3List) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

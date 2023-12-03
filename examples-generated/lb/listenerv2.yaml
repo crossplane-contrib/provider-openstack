@@ -1,0 +1,15 @@
+apiVersion: lb.openstack.crossplane.io/v1alpha1
+kind: ListenerV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lb/v1alpha1/listenerv2
+  labels:
+    testing.upbound.io/example-name: listener_1
+  name: listener-1
+spec:
+  forProvider:
+    insertHeaders:
+      X-Forwarded-For: "true"
+    loadbalancerId: d9415786-5f1a-428b-b35f-2f1523e146d2
+    protocol: HTTP
+    protocolPort: 8080
