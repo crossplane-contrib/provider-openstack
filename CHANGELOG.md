@@ -14,6 +14,7 @@ See Migration Guide
 ### Added
 
 - Support for Beta Management Policies (Granular Management Policies available since Crossplane 1.14) and initProvider
+- Added all reminaing resources provided by terraform-provider-openstack
 
 ### Changed
 
