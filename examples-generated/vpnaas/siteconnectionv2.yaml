@@ -1,0 +1,22 @@
+apiVersion: vpnaas.openstack.crossplane.io/v1alpha1
+kind: SiteConnectionV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpnaas/v1alpha1/siteconnectionv2
+  labels:
+    testing.upbound.io/example-name: conn_1
+  name: conn-1
+spec:
+  forProvider:
+    dpd:
+    - action: restart
+      interval: 21
+      timeout: 42
+    ikepolicyId: ${openstack_vpnaas_ike_policy_v2.policy_2.id}
+    ipsecpolicyId: ${openstack_vpnaas_ipsec_policy_v2.policy_1.id}
+    localEpGroupId: ${openstack_vpnaas_endpoint_group_v2.group_2.id}
+    name: connection_1
+    peerAddress: 192.168.10.1
+    peerEpGroupId: ${openstack_vpnaas_endpoint_group_v2.group_1.id}
+    psk: secret
+    vpnserviceId: ${openstack_vpnaas_service_v2.service_1.id}

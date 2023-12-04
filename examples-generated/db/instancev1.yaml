@@ -1,0 +1,19 @@
+apiVersion: db.openstack.crossplane.io/v1alpha1
+kind: InstanceV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: db/v1alpha1/instancev1
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    datastore:
+    - type: mysql
+      version: mysql-5.7
+    flavorId: 31792d21-c355-4587-9290-56c1ed0ca376
+    name: test
+    network:
+    - uuid: c0612505-caf2-4fb0-b7cb-56a0240a2b12
+    region: region-test
+    size: 8

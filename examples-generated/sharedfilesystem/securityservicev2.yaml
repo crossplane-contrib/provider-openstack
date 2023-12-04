@@ -1,0 +1,22 @@
+apiVersion: sharedfilesystem.openstack.crossplane.io/v1alpha1
+kind: SecurityserviceV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sharedfilesystem/v1alpha1/securityservicev2
+  labels:
+    testing.upbound.io/example-name: securityservice_1
+  name: securityservice-1
+spec:
+  forProvider:
+    description: created by terraform
+    dnsIp: 192.168.199.10
+    domain: example.com
+    name: security
+    ou: CN=Computers,DC=example,DC=com
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    server: 192.168.199.10
+    type: active_directory
+    user: joinDomainUser

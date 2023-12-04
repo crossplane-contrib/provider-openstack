@@ -17,6 +17,24 @@ func (l *RecordsetV2List) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this TransferAcceptV2List.
+func (l *TransferAcceptV2List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this TransferRequestV2List.
+func (l *TransferRequestV2List) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this ZoneV2List.
 func (l *ZoneV2List) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

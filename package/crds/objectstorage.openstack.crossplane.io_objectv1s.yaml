@@ -1,0 +1,556 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.13.0
+  name: objectv1s.objectstorage.openstack.crossplane.io
+spec:
+  group: objectstorage.openstack.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - openstack
+    kind: ObjectV1
+    listKind: ObjectV1List
+    plural: objectv1s
+    singular: objectv1
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ObjectV1 is the Schema for the ObjectV1s API. Manages a V1 container
+          object resource within OpenStack.
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ObjectV1Spec defines the desired state of ObjectV1
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: 'DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  containerName:
+                    description: A unique (within an account) name for the container.
+                      The container name must be from 1 to 256 characters long and
+                      can start with any character and contain any pattern. Character
+                      set must be UTF-8. The container name cannot contain a slash
+                      (/) character because this character delimits the container
+                      and object name. For example, the path /v1/account/www/pages
+                      specifies the www container, not the www/pages container.
+                    type: string
+                  content:
+                    description: A string representing the content of the object.
+                      Conflicts with source and copy_from.
+                    type: string
+                  contentDisposition:
+                    description: A string which specifies the override behavior for
+                      the browser. For example, this header might specify that the
+                      browser use a download program to save this file rather than
+                      show the file, which is the default.
+                    type: string
+                  contentEncoding:
+                    description: A string representing the value of the Content-Encoding
+                      metadata.
+                    type: string
+                  contentType:
+                    description: A string which sets the MIME type for the object.
+                    type: string
+                  copyFrom:
+                    description: A string representing the name of an object used
+                      to create the new object by copying the copy_from object. The
+                      value is in form {container}/{object}. You must UTF-8-encode
+                      and then URL-encode the names of the container and object before
+                      you include them in the header. Conflicts with source and content.
+                    type: string
+                  deleteAfter:
+                    description: An integer representing the number of seconds after
+                      which the system removes the object. Internally, the Object
+                      Storage system stores this value in the X-Delete-At metadata
+                      item.
+                    type: number
+                  deleteAt:
+                    description: An string representing the date when the system removes
+                      the object. For example, "2015-08-26" is equivalent to Mon,
+                      Wed, 26 Aug 2015 00:00:00 GMT.
+                    type: string
+                  detectContentType:
+                    description: If set to true, Object Storage guesses the content
+                      type based on the file extension and ignores the value sent
+                      in the Content-Type header, if present.
+                    type: boolean
+                  etag:
+                    description: Used to trigger updates. The only meaningful value
+                      is ${md5(file("path/to/file"))}.
+                    type: string
+                  metadata:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  name:
+                    description: A unique name for the object.
+                    type: string
+                  objectManifest:
+                    description: A string set to specify that this is a dynamic large
+                      object manifest object. The value is the container and object
+                      name prefix of the segment objects in the form container/prefix.
+                      You must UTF-8-encode and then URL-encode the names of the container
+                      and prefix before you include them in this header.
+                    type: string
+                  region:
+                    description: The region in which to create the container. If omitted,
+                      the region argument of the provider is used. Changing this creates
+                      a new container.
+                    type: string
+                  source:
+                    description: A string representing the local path of a file which
+                      will be used as the object's content. Conflicts with source
+                      and copy_from.
+                    type: string
+                type: object
+              initProvider:
+                description: THIS IS A BETA FIELD. It will be honored unless the Management
+                  Policies feature flag is disabled. InitProvider holds the same fields
+                  as ForProvider, with the exception of Identifier and other resource
+                  reference fields. The fields that are in InitProvider are merged
+                  into ForProvider when the resource is created. The same fields are
+                  also added to the terraform ignore_changes hook, to avoid updating
+                  them after creation. This is useful for fields that are required
+                  on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them,
+                  like an autoscaler.
+                properties:
+                  containerName:
+                    description: A unique (within an account) name for the container.
+                      The container name must be from 1 to 256 characters long and
+                      can start with any character and contain any pattern. Character
+                      set must be UTF-8. The container name cannot contain a slash
+                      (/) character because this character delimits the container
+                      and object name. For example, the path /v1/account/www/pages
+                      specifies the www container, not the www/pages container.
+                    type: string
+                  content:
+                    description: A string representing the content of the object.
+                      Conflicts with source and copy_from.
+                    type: string
+                  contentDisposition:
+                    description: A string which specifies the override behavior for
+                      the browser. For example, this header might specify that the
+                      browser use a download program to save this file rather than
+                      show the file, which is the default.
+                    type: string
+                  contentEncoding:
+                    description: A string representing the value of the Content-Encoding
+                      metadata.
+                    type: string
+                  contentType:
+                    description: A string which sets the MIME type for the object.
+                    type: string
+                  copyFrom:
+                    description: A string representing the name of an object used
+                      to create the new object by copying the copy_from object. The
+                      value is in form {container}/{object}. You must UTF-8-encode
+                      and then URL-encode the names of the container and object before
+                      you include them in the header. Conflicts with source and content.
+                    type: string
+                  deleteAfter:
+                    description: An integer representing the number of seconds after
+                      which the system removes the object. Internally, the Object
+                      Storage system stores this value in the X-Delete-At metadata
+                      item.
+                    type: number
+                  deleteAt:
+                    description: An string representing the date when the system removes
+                      the object. For example, "2015-08-26" is equivalent to Mon,
+                      Wed, 26 Aug 2015 00:00:00 GMT.
+                    type: string
+                  detectContentType:
+                    description: If set to true, Object Storage guesses the content
+                      type based on the file extension and ignores the value sent
+                      in the Content-Type header, if present.
+                    type: boolean
+                  etag:
+                    description: Used to trigger updates. The only meaningful value
+                      is ${md5(file("path/to/file"))}.
+                    type: string
+                  metadata:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  name:
+                    description: A unique name for the object.
+                    type: string
+                  objectManifest:
+                    description: A string set to specify that this is a dynamic large
+                      object manifest object. The value is the container and object
+                      name prefix of the segment objects in the form container/prefix.
+                      You must UTF-8-encode and then URL-encode the names of the container
+                      and prefix before you include them in this header.
+                    type: string
+                  region:
+                    description: The region in which to create the container. If omitted,
+                      the region argument of the provider is used. Changing this creates
+                      a new container.
+                    type: string
+                  source:
+                    description: A string representing the local path of a file which
+                      will be used as the object's content. Conflicts with source
+                      and copy_from.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS A BETA FIELD. It is on by default but can be
+                  opted out through a Crossplane feature flag. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.containerName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.containerName)
+                || (has(self.initProvider) && has(self.initProvider.containerName))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: ObjectV1Status defines the observed state of ObjectV1.
+            properties:
+              atProvider:
+                properties:
+                  containerName:
+                    description: A unique (within an account) name for the container.
+                      The container name must be from 1 to 256 characters long and
+                      can start with any character and contain any pattern. Character
+                      set must be UTF-8. The container name cannot contain a slash
+                      (/) character because this character delimits the container
+                      and object name. For example, the path /v1/account/www/pages
+                      specifies the www container, not the www/pages container.
+                    type: string
+                  content:
+                    description: A string representing the content of the object.
+                      Conflicts with source and copy_from.
+                    type: string
+                  contentDisposition:
+                    description: A string which specifies the override behavior for
+                      the browser. For example, this header might specify that the
+                      browser use a download program to save this file rather than
+                      show the file, which is the default.
+                    type: string
+                  contentEncoding:
+                    description: A string representing the value of the Content-Encoding
+                      metadata.
+                    type: string
+                  contentLength:
+                    description: If the operation succeeds, this value is zero (0)
+                      or the length of informational or error text in the response
+                      body.
+                    type: number
+                  contentType:
+                    description: A string which sets the MIME type for the object.
+                    type: string
+                  copyFrom:
+                    description: A string representing the name of an object used
+                      to create the new object by copying the copy_from object. The
+                      value is in form {container}/{object}. You must UTF-8-encode
+                      and then URL-encode the names of the container and object before
+                      you include them in the header. Conflicts with source and content.
+                    type: string
+                  date:
+                    description: The date and time the system responded to the request,
+                      using the preferred format of RFC 7231 as shown in this example
+                      Thu, 16 Jun 2016 15:10:38 GMT. The time is always in UTC.
+                    type: string
+                  deleteAfter:
+                    description: An integer representing the number of seconds after
+                      which the system removes the object. Internally, the Object
+                      Storage system stores this value in the X-Delete-At metadata
+                      item.
+                    type: number
+                  deleteAt:
+                    description: An string representing the date when the system removes
+                      the object. For example, "2015-08-26" is equivalent to Mon,
+                      Wed, 26 Aug 2015 00:00:00 GMT.
+                    type: string
+                  detectContentType:
+                    description: If set to true, Object Storage guesses the content
+                      type based on the file extension and ignores the value sent
+                      in the Content-Type header, if present.
+                    type: boolean
+                  etag:
+                    description: Used to trigger updates. The only meaningful value
+                      is ${md5(file("path/to/file"))}.
+                    type: string
+                  id:
+                    type: string
+                  lastModified:
+                    description: 'The date and time when the object was last modified.
+                      The date and time stamp format is ISO 8601: CCYY-MM-DDThh:mm:ss±hh:mm
+                      For example, 2015-08-27T09:49:58-05:00. The ±hh:mm value, if
+                      included, is the time zone as an offset from UTC. In the previous
+                      example, the offset value is -05:00.'
+                    type: string
+                  metadata:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  name:
+                    description: A unique name for the object.
+                    type: string
+                  objectManifest:
+                    description: A string set to specify that this is a dynamic large
+                      object manifest object. The value is the container and object
+                      name prefix of the segment objects in the form container/prefix.
+                      You must UTF-8-encode and then URL-encode the names of the container
+                      and prefix before you include them in this header.
+                    type: string
+                  region:
+                    description: The region in which to create the container. If omitted,
+                      the region argument of the provider is used. Changing this creates
+                      a new container.
+                    type: string
+                  source:
+                    description: A string representing the local path of a file which
+                      will be used as the object's content. Conflicts with source
+                      and copy_from.
+                    type: string
+                  transId:
+                    description: A unique transaction ID for this request. Your service
+                      provider might need this value if you report a problem.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

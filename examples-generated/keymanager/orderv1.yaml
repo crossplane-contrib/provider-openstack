@@ -1,0 +1,16 @@
+apiVersion: keymanager.openstack.crossplane.io/v1alpha1
+kind: OrderV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: keymanager/v1alpha1/orderv1
+  labels:
+    testing.upbound.io/example-name: order_1
+  name: order-1
+spec:
+  forProvider:
+    meta:
+    - algorithm: aes
+      bitLength: 256
+      mode: cbc
+      name: mysecret
+    type: key
