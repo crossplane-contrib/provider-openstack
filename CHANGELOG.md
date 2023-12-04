@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2023-12-04
+
+See Migration Guide
+
 ### Added
 
 - Support for Beta Management Policies (Granular Management Policies available since Crossplane 1.14) and initProvider
@@ -41,4 +45,4 @@ See [Commitlog](https://github.com/crossplane-contrib/provider-openstack/commits
 
 ## 0.2.x to 0.3.x
 
-- Change all apiversions from `*.openstack.upbound.io` to `*.openstack.crossplane.io`
+- Change all apiversions from `*.openstack.upbound.io` to `*.openstack.crossplane.io`. See https://docs.crossplane.io/knowledge-base/guides/import-existing-resources/.
