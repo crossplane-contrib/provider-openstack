@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Support setting a custom CA certificate for the OpenStack API
+
 ## [0.3.0] - 2023-12-04
 
 See Migration Guide
