@@ -2,11 +2,10 @@
 
 <div align="center">
 
+[![GitHub release](https://img.shields.io/github/release/crossplane-contrib/provider-openstack/all.svg)](https://github.com/crossplane-contrib/provider-openstack/releases)
 [![Upbound Marketplace](https://img.shields.io/badge/provider--openstack-xxx?label=upbound%20marketplace&color=blue)](https://marketplace.upbound.io/providers/crossplane-contrib/provider-openstack)
 
 </div>
-
-https://marketplace.upbound.io/providers/crossplane-contrib/provider-openstack/
 
 `provider-openstack` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Upjet](https://github.com/crossplane/upjet) code
