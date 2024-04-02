@@ -66,9 +66,13 @@ data:
   config: <see below>
 ```
 
-The secret key must contain a json dictionary that provides the authentication data
+The secret key must contain a json dictionary that provides the authentication data.
+You can create the secret via this command:
+
+`kubectl create secret generic provider-openstack-config --from-file=config=config.json --namespace crossplane`
 
 ```json
+// config.json
 {
   "auth_url": "https://auth.openstack.example/",
   "application_credential_id": "123456789",
