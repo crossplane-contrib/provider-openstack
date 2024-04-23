@@ -279,7 +279,7 @@ jobs:
           BUILD_ARGS: "--load"
 
       - name: Upload Artifacts to GitHub
-        uses: actions/upload-artifact@1746f4ab65b179e0ea60a494b83293b640dd5bba #v3
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 #v3
         with:
           name: output
           path: _output/**
