@@ -39,5 +39,5 @@ metadata:
 spec:
   forProvider:
     name: instance_1
-    securityGroups:
-    - default
+    securityGroupsRefs:
+    - name: example

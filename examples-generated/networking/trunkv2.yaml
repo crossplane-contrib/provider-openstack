@@ -31,8 +31,8 @@ spec:
     name: instance_1
     network:
     - port: ${openstack_networking_port_v2.parent_port_1.id}
-    securityGroups:
-    - default
+    securityGroupsRefs:
+    - name: example
 
 ---
 
