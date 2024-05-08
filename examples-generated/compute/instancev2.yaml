@@ -18,5 +18,5 @@ spec:
     name: basic
     network:
     - name: my_network
-    securityGroups:
-    - default
+    securityGroupsRefs:
+    - name: example

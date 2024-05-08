@@ -26,8 +26,8 @@ spec:
     name: instance_1
     network:
     - port: ${openstack_networking_port_v2.port_1.id}
-    securityGroups:
-    - ${openstack_compute_secgroup_v2.secgroup_1.name}
+    securityGroupsRefs:
+    - name: secgroup_1
 
 ---
 

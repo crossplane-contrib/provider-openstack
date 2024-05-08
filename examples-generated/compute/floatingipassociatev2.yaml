@@ -29,8 +29,8 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
     name: instance_1
-    securityGroups:
-    - default
+    securityGroupsRefs:
+    - name: example
 
 ---
 

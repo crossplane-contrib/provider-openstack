@@ -14,6 +14,9 @@ func Configure(p *config.Provider) {
 		r.References["key_pair"] = config.Reference{
 			Type: "KeypairV2",
 		}
+		r.References["security_groups"] = config.Reference{
+			Type: "SecgroupV2",
+		}
 	})
 	p.AddResourceConfigurator("openstack_compute_quotaset_v2", func(r *config.Resource) {
 		r.References["project_id"] = config.Reference{
