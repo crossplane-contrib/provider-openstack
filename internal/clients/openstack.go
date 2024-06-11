@@ -83,6 +83,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"domain_name":                   creds["domain_name"],
 			"default_domain":                creds["default_domain"],
 			"cacert_file":                   creds["cacert_file"],
+			"insecure":                      creds["insecure"],
 		}
 		return ps, nil
 	}
