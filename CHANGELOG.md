@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2024-06-11
+
 ### Added
 
 - Support setting a custom CA certificate for the OpenStack API
 - Add cross references for security groups on InstanceV2 resources (Thanks @etesami)
+- Option to specify "insecure" option (Thanks @FCosta999)
 
 ## [0.3.0] - 2023-12-04
 
