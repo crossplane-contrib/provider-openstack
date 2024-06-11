@@ -114,6 +114,12 @@ Build binary:
 make build
 ```
 
+## Release a new version (Maintainer)
+
+- Update Changelog (Add new Version & Date)
+- Create or merge to existing release branch (release-v(major).(minor))
+- Run Release pipeline on release branch, using specific version as parameter
+
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
