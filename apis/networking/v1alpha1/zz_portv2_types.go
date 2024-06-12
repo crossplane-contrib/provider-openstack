@@ -58,7 +58,7 @@ type BindingInitParameters struct {
 
 	// VNIC type for the port. Can either be direct,
 	// direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-	// Default value is normal.
+	// Default value is normal. It can be updated on unbound ports only.
 	VnicType *string `json:"vnicType,omitempty" tf:"vnic_type,omitempty"`
 }
 
@@ -80,7 +80,7 @@ type BindingObservation struct {
 
 	// VNIC type for the port. Can either be direct,
 	// direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-	// Default value is normal.
+	// Default value is normal. It can be updated on unbound ports only.
 	VnicType *string `json:"vnicType,omitempty" tf:"vnic_type,omitempty"`
 }
 
@@ -97,7 +97,7 @@ type BindingParameters struct {
 
 	// VNIC type for the port. Can either be direct,
 	// direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-	// Default value is normal.
+	// Default value is normal. It can be updated on unbound ports only.
 	// +kubebuilder:validation:Optional
 	VnicType *string `json:"vnicType,omitempty" tf:"vnic_type,omitempty"`
 }

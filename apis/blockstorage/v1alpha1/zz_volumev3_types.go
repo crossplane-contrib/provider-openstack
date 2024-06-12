@@ -124,6 +124,11 @@ type VolumeV3InitParameters struct {
 	// Changing this creates a new volume.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
+	// The backup ID from which to create the volume.
+	// Conflicts with snapshot_id, source_vol_id, image_id. Changing this
+	// creates a new volume. Requires microversion >= 3.47.
+	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
 	// The consistency group to place the volume
 	// in.
 	ConsistencyGroupID *string `json:"consistencyGroupId,omitempty" tf:"consistency_group_id,omitempty"`
@@ -138,14 +143,15 @@ type VolumeV3InitParameters struct {
 	EnableOnlineResize *bool `json:"enableOnlineResize,omitempty" tf:"enable_online_resize,omitempty"`
 
 	// The image ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with snapshot_id, source_vol_id, backup_id. Changing this
+	// creates a new volume.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
 	// Metadata key/value pairs to associate with the volume.
 	// Changing this updates the existing volume metadata.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Allow the volume to be attached to more than one Compute instance.
+	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
 	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
 
 	// A unique name for the volume. Changing this updates the
@@ -165,14 +171,16 @@ type VolumeV3InitParameters struct {
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// The snapshot ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with source_vol_id, image_id, backup_id. Changing this
+	// creates a new volume.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
 	// The volume ID to replicate with.
 	SourceReplica *string `json:"sourceReplica,omitempty" tf:"source_replica,omitempty"`
 
 	// The volume ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with snapshot_id, image_id, backup_id. Changing this
+	// creates a new volume.
 	SourceVolID *string `json:"sourceVolId,omitempty" tf:"source_vol_id,omitempty"`
 
 	// The type of volume to create.
@@ -191,6 +199,11 @@ type VolumeV3Observation struct {
 	// Changing this creates a new volume.
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
 
+	// The backup ID from which to create the volume.
+	// Conflicts with snapshot_id, source_vol_id, image_id. Changing this
+	// creates a new volume. Requires microversion >= 3.47.
+	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
 	// The consistency group to place the volume
 	// in.
 	ConsistencyGroupID *string `json:"consistencyGroupId,omitempty" tf:"consistency_group_id,omitempty"`
@@ -207,14 +220,15 @@ type VolumeV3Observation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The image ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with snapshot_id, source_vol_id, backup_id. Changing this
+	// creates a new volume.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
 	// Metadata key/value pairs to associate with the volume.
 	// Changing this updates the existing volume metadata.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Allow the volume to be attached to more than one Compute instance.
+	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
 	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
 
 	// A unique name for the volume. Changing this updates the
@@ -234,14 +248,16 @@ type VolumeV3Observation struct {
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// The snapshot ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with source_vol_id, image_id, backup_id. Changing this
+	// creates a new volume.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
 	// The volume ID to replicate with.
 	SourceReplica *string `json:"sourceReplica,omitempty" tf:"source_replica,omitempty"`
 
 	// The volume ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with snapshot_id, image_id, backup_id. Changing this
+	// creates a new volume.
 	SourceVolID *string `json:"sourceVolId,omitempty" tf:"source_vol_id,omitempty"`
 
 	// The type of volume to create.
@@ -255,6 +271,12 @@ type VolumeV3Parameters struct {
 	// Changing this creates a new volume.
 	// +kubebuilder:validation:Optional
 	AvailabilityZone *string `json:"availabilityZone,omitempty" tf:"availability_zone,omitempty"`
+
+	// The backup ID from which to create the volume.
+	// Conflicts with snapshot_id, source_vol_id, image_id. Changing this
+	// creates a new volume. Requires microversion >= 3.47.
+	// +kubebuilder:validation:Optional
+	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
 
 	// The consistency group to place the volume
 	// in.
@@ -273,7 +295,8 @@ type VolumeV3Parameters struct {
 	EnableOnlineResize *bool `json:"enableOnlineResize,omitempty" tf:"enable_online_resize,omitempty"`
 
 	// The image ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with snapshot_id, source_vol_id, backup_id. Changing this
+	// creates a new volume.
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
@@ -282,7 +305,7 @@ type VolumeV3Parameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Allow the volume to be attached to more than one Compute instance.
+	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
 	// +kubebuilder:validation:Optional
 	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
 
@@ -307,7 +330,8 @@ type VolumeV3Parameters struct {
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// The snapshot ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with source_vol_id, image_id, backup_id. Changing this
+	// creates a new volume.
 	// +kubebuilder:validation:Optional
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
@@ -316,7 +340,8 @@ type VolumeV3Parameters struct {
 	SourceReplica *string `json:"sourceReplica,omitempty" tf:"source_replica,omitempty"`
 
 	// The volume ID from which to create the volume.
-	// Changing this creates a new volume.
+	// Conflicts with snapshot_id, image_id, backup_id. Changing this
+	// creates a new volume.
 	// +kubebuilder:validation:Optional
 	SourceVolID *string `json:"sourceVolId,omitempty" tf:"source_vol_id,omitempty"`
 

@@ -529,6 +529,10 @@ resources:
             availability_zone: |-
                 - (Optional) The availability zone for the volume.
                 Changing this creates a new volume.
+            backup_id: |-
+                - (Optional) The backup ID from which to create the volume.
+                Conflicts with snapshot_id, source_vol_id, image_id. Changing this
+                creates a new volume. Requires microversion >= 3.47.
             consistency_group_id: |-
                 - (Optional) The consistency group to place the volume
                 in.
@@ -541,11 +545,12 @@ resources:
                 support for version 3.42 and a compatible storage driver.
             image_id: |-
                 - (Optional) The image ID from which to create the volume.
-                Changing this creates a new volume.
+                Conflicts with snapshot_id, source_vol_id, backup_id. Changing this
+                creates a new volume.
             metadata: |-
                 - (Optional) Metadata key/value pairs to associate with the volume.
                 Changing this updates the existing volume metadata.
-            multiattach: '- (Optional) Allow the volume to be attached to more than one Compute instance.'
+            multiattach: '- (Deprecated - use multiattach enabled volume types instead) (Optional) Allow the volume to be attached to more than one Compute instance.'
             name: |-
                 - (Optional) A unique name for the volume. Changing this updates the
                 volume's name.
@@ -578,11 +583,13 @@ resources:
             size: '- (Required) The size of the volume to create (in gigabytes).'
             snapshot_id: |-
                 - (Optional) The snapshot ID from which to create the volume.
-                Changing this creates a new volume.
+                Conflicts with source_vol_id, image_id, backup_id. Changing this
+                creates a new volume.
             source_replica: '- (Optional) The volume ID to replicate with.'
             source_vol_id: |-
                 - (Optional) The volume ID from which to create the volume.
-                Changing this creates a new volume.
+                Conflicts with snapshot_id, image_id, backup_id. Changing this
+                creates a new volume.
             volume_type: |-
                 - (Optional) The type of volume to create.
                 Changing this creates a new volume.
@@ -722,7 +729,7 @@ resources:
                 a new flavor.
         importStatements: []
     openstack_compute_floatingip_associate_v2:
-        subCategory: Compute / Nova
+        subCategory: Deprecated
         description: Associate a floating IP to an instance
         name: openstack_compute_floatingip_associate_v2
         title: openstack_compute_floatingip_associate_v2
@@ -801,7 +808,7 @@ resources:
                 associated. Defaults to false.
         importStatements: []
     openstack_compute_floatingip_v2:
-        subCategory: Compute / Nova
+        subCategory: Deprecated
         description: Manages a V2 floating IP resource within OpenStack Nova (compute).
         name: openstack_compute_floatingip_v2
         title: openstack_compute_floatingip_v2
@@ -1813,7 +1820,7 @@ resources:
                 Changing this updates the existing quotaset.
         importStatements: []
     openstack_compute_secgroup_v2:
-        subCategory: Compute / Nova
+        subCategory: Deprecated
         description: Manages a V2 security group resource within OpenStack.
         name: openstack_compute_secgroup_v2
         title: openstack_compute_secgroup_v2
@@ -5323,6 +5330,33 @@ resources:
               manifest: |-
                 {
                   "admin_state_up": "true",
+                  "fixed_ip": [
+                    {
+                      "subnet_id": "${openstack_networking_subnet_v2.subnet_1.id}"
+                    }
+                  ],
+                  "name": "port_1",
+                  "network_id": "${openstack_networking_network_v2.network_1.id}"
+                }
+              references:
+                fixed_ip.subnet_id: openstack_networking_subnet_v2.subnet_1.id
+                network_id: openstack_networking_network_v2.network_1.id
+              dependencies:
+                openstack_networking_network_v2.network_1: |-
+                    {
+                      "admin_state_up": "true",
+                      "name": "network_1"
+                    }
+                openstack_networking_subnet_v2.subnet_1: |-
+                    {
+                      "cidr": "192.168.199.0/24",
+                      "name": "subnet_1",
+                      "network_id": "${openstack_networking_network_v2.network_1.id}"
+                    }
+            - name: port_1
+              manifest: |-
+                {
+                  "admin_state_up": "true",
                   "binding": [
                     {
                       "host_id": "b080b9cf-46e0-4ce8-ad47-0fd4accc872b",
@@ -5377,7 +5411,7 @@ resources:
             binding.vnic_type: |-
                 - (Optional) VNIC type for the port. Can either be direct,
                 direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-                Default value is normal.
+                Default value is normal. It can be updated on unbound ports only.
             description: |-
                 - (Optional) Human-readable description of the port. Changing
                 this updates the description of an existing port.
