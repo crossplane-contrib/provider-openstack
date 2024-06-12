@@ -45,7 +45,7 @@ jobs:
 
       - name: Get modified CRDs
         id: modified-crds
-        uses: tj-actions/changed-files@v34
+        uses: tj-actions/changed-files@v44
         with:
           files: |
             package/crds/**
