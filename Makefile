@@ -4,14 +4,14 @@
 PROJECT_NAME ?= provider-openstack
 PROJECT_REPO ?= github.com/crossplane-contrib/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION ?= 1.5.5
+export TERRAFORM_VERSION ?= 1.5.7
 
 export TERRAFORM_PROVIDER_SOURCE ?= terraform-provider-openstack/openstack
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/terraform-provider-openstack/terraform-provider-openstack
-export TERRAFORM_PROVIDER_VERSION ?= 1.53.0
+export TERRAFORM_PROVIDER_VERSION ?= 1.54.1
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-openstack
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-openstack_v1.53.0
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-openstack_v1.54.1
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
 
