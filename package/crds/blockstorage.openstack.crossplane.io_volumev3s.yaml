@@ -71,6 +71,11 @@ spec:
                     description: The availability zone for the volume. Changing this
                       creates a new volume.
                     type: string
+                  backupId:
+                    description: The backup ID from which to create the volume. Conflicts
+                      with snapshot_id, source_vol_id, image_id. Changing this creates
+                      a new volume. Requires microversion >= 3.47.
+                    type: string
                   consistencyGroupId:
                     description: The consistency group to place the volume in.
                     type: string
@@ -84,8 +89,9 @@ spec:
                       Cinder support for version 3.42 and a compatible storage driver.'
                     type: boolean
                   imageId:
-                    description: The image ID from which to create the volume. Changing
-                      this creates a new volume.
+                    description: The image ID from which to create the volume. Conflicts
+                      with snapshot_id, source_vol_id, backup_id. Changing this creates
+                      a new volume.
                     type: string
                   metadata:
                     additionalProperties:
@@ -94,8 +100,9 @@ spec:
                       Changing this updates the existing volume metadata.
                     type: object
                   multiattach:
-                    description: Allow the volume to be attached to more than one
-                      Compute instance.
+                    description: (Deprecated - use multiattach enabled volume types
+                      instead)  Allow the volume to be attached to more than one Compute
+                      instance.
                     type: boolean
                   name:
                     description: A unique name for the volume. Changing this updates
@@ -150,14 +157,16 @@ spec:
                     type: number
                   snapshotId:
                     description: The snapshot ID from which to create the volume.
-                      Changing this creates a new volume.
+                      Conflicts with source_vol_id, image_id, backup_id. Changing
+                      this creates a new volume.
                     type: string
                   sourceReplica:
                     description: The volume ID to replicate with.
                     type: string
                   sourceVolId:
-                    description: The volume ID from which to create the volume. Changing
-                      this creates a new volume.
+                    description: The volume ID from which to create the volume. Conflicts
+                      with snapshot_id, image_id, backup_id. Changing this creates
+                      a new volume.
                     type: string
                   volumeType:
                     description: The type of volume to create. Changing this creates
@@ -180,6 +189,11 @@ spec:
                     description: The availability zone for the volume. Changing this
                       creates a new volume.
                     type: string
+                  backupId:
+                    description: The backup ID from which to create the volume. Conflicts
+                      with snapshot_id, source_vol_id, image_id. Changing this creates
+                      a new volume. Requires microversion >= 3.47.
+                    type: string
                   consistencyGroupId:
                     description: The consistency group to place the volume in.
                     type: string
@@ -193,8 +207,9 @@ spec:
                       Cinder support for version 3.42 and a compatible storage driver.'
                     type: boolean
                   imageId:
-                    description: The image ID from which to create the volume. Changing
-                      this creates a new volume.
+                    description: The image ID from which to create the volume. Conflicts
+                      with snapshot_id, source_vol_id, backup_id. Changing this creates
+                      a new volume.
                     type: string
                   metadata:
                     additionalProperties:
@@ -203,8 +218,9 @@ spec:
                       Changing this updates the existing volume metadata.
                     type: object
                   multiattach:
-                    description: Allow the volume to be attached to more than one
-                      Compute instance.
+                    description: (Deprecated - use multiattach enabled volume types
+                      instead)  Allow the volume to be attached to more than one Compute
+                      instance.
                     type: boolean
                   name:
                     description: A unique name for the volume. Changing this updates
@@ -259,14 +275,16 @@ spec:
                     type: number
                   snapshotId:
                     description: The snapshot ID from which to create the volume.
-                      Changing this creates a new volume.
+                      Conflicts with source_vol_id, image_id, backup_id. Changing
+                      this creates a new volume.
                     type: string
                   sourceReplica:
                     description: The volume ID to replicate with.
                     type: string
                   sourceVolId:
-                    description: The volume ID from which to create the volume. Changing
-                      this creates a new volume.
+                    description: The volume ID from which to create the volume. Conflicts
+                      with snapshot_id, image_id, backup_id. Changing this creates
+                      a new volume.
                     type: string
                   volumeType:
                     description: The type of volume to create. Changing this creates
@@ -461,6 +479,11 @@ spec:
                     description: The availability zone for the volume. Changing this
                       creates a new volume.
                     type: string
+                  backupId:
+                    description: The backup ID from which to create the volume. Conflicts
+                      with snapshot_id, source_vol_id, image_id. Changing this creates
+                      a new volume. Requires microversion >= 3.47.
+                    type: string
                   consistencyGroupId:
                     description: The consistency group to place the volume in.
                     type: string
@@ -476,8 +499,9 @@ spec:
                   id:
                     type: string
                   imageId:
-                    description: The image ID from which to create the volume. Changing
-                      this creates a new volume.
+                    description: The image ID from which to create the volume. Conflicts
+                      with snapshot_id, source_vol_id, backup_id. Changing this creates
+                      a new volume.
                     type: string
                   metadata:
                     additionalProperties:
@@ -486,8 +510,9 @@ spec:
                       Changing this updates the existing volume metadata.
                     type: object
                   multiattach:
-                    description: Allow the volume to be attached to more than one
-                      Compute instance.
+                    description: (Deprecated - use multiattach enabled volume types
+                      instead)  Allow the volume to be attached to more than one Compute
+                      instance.
                     type: boolean
                   name:
                     description: A unique name for the volume. Changing this updates
@@ -542,14 +567,16 @@ spec:
                     type: number
                   snapshotId:
                     description: The snapshot ID from which to create the volume.
-                      Changing this creates a new volume.
+                      Conflicts with source_vol_id, image_id, backup_id. Changing
+                      this creates a new volume.
                     type: string
                   sourceReplica:
                     description: The volume ID to replicate with.
                     type: string
                   sourceVolId:
-                    description: The volume ID from which to create the volume. Changing
-                      this creates a new volume.
+                    description: The volume ID from which to create the volume. Conflicts
+                      with snapshot_id, image_id, backup_id. Changing this creates
+                      a new volume.
                     type: string
                   volumeType:
                     description: The type of volume to create. Changing this creates

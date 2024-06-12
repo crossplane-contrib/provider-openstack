@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- All remaining config parameters that are supported via [terraform-provider-openstack](https://registry.terraform.io/providers/terraform-provider-openstack)
+
+### Changed
+
+- Update terraform-provider-openstack to `v1.54.1`
+- Update Terraform CLI to `v1.5.7`
+
 ## [0.4.0] - 2024-06-11
 
 ### Added

@@ -63,6 +63,10 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// Set credentials in Terraform provider configuration.
+		// Keep in sync with configuration options of Terraform OpenStack provider:
+		// https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs
+		// Exceptions:
+		// "cloud" is not used, because we dont support giving a clouds.yaml directly to the provider.
 		ps.Configuration = map[string]any{
 			"auth_url":                      creds["auth_url"],
 			"region":                        creds["region"],
@@ -82,8 +86,20 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"domain_id":                     creds["domain_id"],
 			"domain_name":                   creds["domain_name"],
 			"default_domain":                creds["default_domain"],
-			"cacert_file":                   creds["cacert_file"],
+			"system_scope":                  creds["system_scope"],
 			"insecure":                      creds["insecure"],
+			"cacert_file":                   creds["cacert_file"],
+			"cert":                          creds["cert"],
+			"key":                           creds["key"],
+			"endpoint_type":                 creds["endpoint_type"],
+			"endpoint_overrides":            creds["endpoint_overrides"],
+			"swauth":                        creds["swauth"],
+			"use_octavia":                   creds["use_octavia"],
+			"disable_no_cache_header":       creds["disable_no_cache_header"],
+			"delayed_auth":                  creds["delayed_auth"],
+			"allow_reauth":                  creds["allow_reauth"],
+			"max_retries":                   creds["max_retries"],
+			"enable_logging":                creds["enable_logging"],
 		}
 		return ps, nil
 	}

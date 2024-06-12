@@ -1849,6 +1849,11 @@ func (in *VolumeV3InitParameters) DeepCopyInto(out *VolumeV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.BackupID != nil {
+		in, out := &in.BackupID, &out.BackupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ConsistencyGroupID != nil {
 		in, out := &in.ConsistencyGroupID, &out.ConsistencyGroupID
 		*out = new(string)
@@ -1991,6 +1996,11 @@ func (in *VolumeV3Observation) DeepCopyInto(out *VolumeV3Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.BackupID != nil {
+		in, out := &in.BackupID, &out.BackupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ConsistencyGroupID != nil {
 		in, out := &in.ConsistencyGroupID, &out.ConsistencyGroupID
 		*out = new(string)
@@ -2096,6 +2106,11 @@ func (in *VolumeV3Parameters) DeepCopyInto(out *VolumeV3Parameters) {
 	*out = *in
 	if in.AvailabilityZone != nil {
 		in, out := &in.AvailabilityZone, &out.AvailabilityZone
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupID != nil {
+		in, out := &in.BackupID, &out.BackupID
 		*out = new(string)
 		**out = **in
 	}
