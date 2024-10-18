@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - All remaining config parameters that are supported via [terraform-provider-openstack](https://registry.terraform.io/providers/terraform-provider-openstack)
+- Made it easier to configure authentication by not requiring so many fields.
 
 ### Changed
 
