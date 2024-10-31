@@ -67,39 +67,18 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		// https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs
 		// Exceptions:
 		// "cloud" is not used, because we dont support giving a clouds.yaml directly to the provider.
-		ps.Configuration = map[string]any{
-			"auth_url":                      creds["auth_url"],
-			"region":                        creds["region"],
-			"user_name":                     creds["user_name"],
-			"user_id":                       creds["user_id"],
-			"application_credential_id":     creds["application_credential_id"],
-			"application_credential_name":   creds["application_credential_name"],
-			"application_credential_secret": creds["application_credential_secret"],
-			"tenant_id":                     creds["tenant_id"],
-			"tenant_name":                   creds["tenant_name"],
-			"password":                      creds["password"],
-			"token":                         creds["token"],
-			"user_domain_name":              creds["user_domain_name"],
-			"user_domain_id":                creds["user_domain_id"],
-			"project_domain_name":           creds["project_domain_name"],
-			"project_domain_id":             creds["project_domain_id"],
-			"domain_id":                     creds["domain_id"],
-			"domain_name":                   creds["domain_name"],
-			"default_domain":                creds["default_domain"],
-			"system_scope":                  creds["system_scope"],
-			"insecure":                      creds["insecure"],
-			"cacert_file":                   creds["cacert_file"],
-			"cert":                          creds["cert"],
-			"key":                           creds["key"],
-			"endpoint_type":                 creds["endpoint_type"],
-			"endpoint_overrides":            creds["endpoint_overrides"],
-			"swauth":                        creds["swauth"],
-			"use_octavia":                   creds["use_octavia"],
-			"disable_no_cache_header":       creds["disable_no_cache_header"],
-			"delayed_auth":                  creds["delayed_auth"],
-			"allow_reauth":                  creds["allow_reauth"],
-			"max_retries":                   creds["max_retries"],
-			"enable_logging":                creds["enable_logging"],
+		credFields := []string{"auth_url", "region", "user_name", "user_id", "application_credential_id", "application_credential_name", "application_credential_secret",
+			"tenant_id", "tenant_name", "password", "token", "user_domain_name", "user_domain_id", "project_domain_name", "project_domain_id", "domain_id", "domain_name",
+			"default_domain", "system_scope", "insecure", "cacert_file", "cert", "key", "endpoint_type", "endpoint_overrides", "swauth", "use_octavia", "disable_no_cache_header",
+			"delayed_auth", "allow_reauth", "max_retries", "enable_logging"}
+
+		ps.Configuration = map[string]any{}
+
+		// ensures only the provided fields are set in the config
+		for _, credField := range credFields {
+			if v, ok := creds[credField]; ok {
+				ps.Configuration[credField] = v
+			}
 		}
 		return ps, nil
 	}
