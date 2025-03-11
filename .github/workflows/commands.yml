@@ -1,7 +1,7 @@
-name: Comment Commands
+# name: Comment Commands
 
-on: issue_comment
+# on: issue_comment
 
-jobs:
-  comment-commands:
-    uses: upbound/official-providers-ci/.github/workflows/provider-commands.yml@standard-runners
+# jobs:
+#   comment-commands:
+#     uses: upbound/official-providers-ci/.github/workflows/provider-commands.yml@standard-runners
