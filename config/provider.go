@@ -8,6 +8,8 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
+	ujconfig "github.com/crossplane/upjet/pkg/config"
+
 	"github.com/crossplane-contrib/provider-openstack/config/blockstorage"
 	"github.com/crossplane-contrib/provider-openstack/config/compute"
 	"github.com/crossplane-contrib/provider-openstack/config/containerinfra"
@@ -15,7 +17,6 @@ import (
 	"github.com/crossplane-contrib/provider-openstack/config/identity"
 	"github.com/crossplane-contrib/provider-openstack/config/lb"
 	"github.com/crossplane-contrib/provider-openstack/config/networking"
-	ujconfig "github.com/crossplane/upjet/pkg/config"
 )
 
 const (
