@@ -8,8 +8,12 @@ metadata:
   name: va-1
 spec:
   forProvider:
-    instanceId: ${openstack_compute_instance_v2.instance_1.id}
-    volumeId: ${openstack_blockstorage_volume_v3.volume_1.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_1
+    volumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_1
 
 ---
 

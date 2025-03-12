@@ -80,7 +80,7 @@ type PoolV2InitParameters struct {
 	// Omit this field to prevent session persistence.  Indicates
 	// whether connections in the same session will be processed by the same Pool
 	// member or not. Changing this creates a new pool.
-	Persistence []PersistenceInitParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
+	Persistence *PersistenceInitParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
 	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
@@ -133,7 +133,7 @@ type PoolV2Observation struct {
 	// Omit this field to prevent session persistence.  Indicates
 	// whether connections in the same session will be processed by the same Pool
 	// member or not. Changing this creates a new pool.
-	Persistence []PersistenceObservation `json:"persistence,omitempty" tf:"persistence,omitempty"`
+	Persistence *PersistenceObservation `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
 	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
@@ -190,7 +190,7 @@ type PoolV2Parameters struct {
 	// whether connections in the same session will be processed by the same Pool
 	// member or not. Changing this creates a new pool.
 	// +kubebuilder:validation:Optional
-	Persistence []PersistenceParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
+	Persistence *PersistenceParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
 	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)

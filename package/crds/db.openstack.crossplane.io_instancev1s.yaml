@@ -104,20 +104,18 @@ spec:
                     description: |-
                       An array of database engine type and version. The datastore
                       object structure is documented below. Changing this creates a new instance.
-                    items:
-                      properties:
-                        type:
-                          description: |-
-                            Database engine type to be used in new instance. Changing this
-                            creates a new instance.
-                          type: string
-                        version:
-                          description: |-
-                            Version of database engine type to be used in new instance.
-                            Changing this creates a new instance.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      type:
+                        description: |-
+                          Database engine type to be used in new instance. Changing this
+                          creates a new instance.
+                        type: string
+                      version:
+                        description: |-
+                          Version of database engine type to be used in new instance.
+                          Changing this creates a new instance.
+                        type: string
+                    type: object
                   flavorId:
                     description: |-
                       The flavor ID of the desired flavor for the instance.
@@ -254,20 +252,18 @@ spec:
                     description: |-
                       An array of database engine type and version. The datastore
                       object structure is documented below. Changing this creates a new instance.
-                    items:
-                      properties:
-                        type:
-                          description: |-
-                            Database engine type to be used in new instance. Changing this
-                            creates a new instance.
-                          type: string
-                        version:
-                          description: |-
-                            Version of database engine type to be used in new instance.
-                            Changing this creates a new instance.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      type:
+                        description: |-
+                          Database engine type to be used in new instance. Changing this
+                          creates a new instance.
+                        type: string
+                      version:
+                        description: |-
+                          Version of database engine type to be used in new instance.
+                          Changing this creates a new instance.
+                        type: string
+                    type: object
                   flavorId:
                     description: |-
                       The flavor ID of the desired flavor for the instance.
@@ -581,20 +577,18 @@ spec:
                     description: |-
                       An array of database engine type and version. The datastore
                       object structure is documented below. Changing this creates a new instance.
-                    items:
-                      properties:
-                        type:
-                          description: |-
-                            Database engine type to be used in new instance. Changing this
-                            creates a new instance.
-                          type: string
-                        version:
-                          description: |-
-                            Version of database engine type to be used in new instance.
-                            Changing this creates a new instance.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      type:
+                        description: |-
+                          Database engine type to be used in new instance. Changing this
+                          creates a new instance.
+                        type: string
+                      version:
+                        description: |-
+                          Version of database engine type to be used in new instance.
+                          Changing this creates a new instance.
+                        type: string
+                    type: object
                   flavorId:
                     description: |-
                       The flavor ID of the desired flavor for the instance.

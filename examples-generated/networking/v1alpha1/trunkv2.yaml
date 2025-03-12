@@ -10,9 +10,13 @@ spec:
   forProvider:
     adminStateUp: "true"
     name: trunk_1
-    portId: ${openstack_networking_port_v2.parent_port_1.id}
+    portIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: parent_port_1
     subPort:
-    - portId: ${openstack_networking_port_v2.subport_1.id}
+    - portIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: subport_1
       segmentationId: 1
       segmentationType: vlan
 
@@ -30,7 +34,9 @@ spec:
   forProvider:
     name: instance_1
     network:
-    - port: ${openstack_networking_port_v2.parent_port_1.id}
+    - portSelector:
+        matchLabels:
+          testing.upbound.io/example-name: trunk_1
     securityGroupsRefs:
     - name: example
 
@@ -63,7 +69,9 @@ spec:
   forProvider:
     adminStateUp: "true"
     name: parent_port_1
-    networkId: ${openstack_networking_network_v2.network_1.id}
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1
 
 ---
 
@@ -79,7 +87,9 @@ spec:
   forProvider:
     adminStateUp: "true"
     name: subport_1
-    networkId: ${openstack_networking_network_v2.network_1.id}
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1
 
 ---
 

@@ -149,7 +149,17 @@ type FixedIPInitParameters struct {
 
 	// Subnet in which to allocate IP address for
 	// this port.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type FixedIPObservation struct {
@@ -178,8 +188,18 @@ type FixedIPParameters struct {
 
 	// Subnet in which to allocate IP address for
 	// this port.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PortV2InitParameters struct {
@@ -196,7 +216,7 @@ type PortV2InitParameters struct {
 
 	// The port binding allows to specify binding information
 	// for the port. The structure is described below.
-	Binding []BindingInitParameters `json:"binding,omitempty" tf:"binding,omitempty"`
+	Binding *BindingInitParameters `json:"binding,omitempty" tf:"binding,omitempty"`
 
 	// The port DNS name. Available, when Neutron DNS extension
 	// is enabled.
@@ -233,7 +253,17 @@ type PortV2InitParameters struct {
 
 	// The ID of the network to attach the port to. Changing
 	// this creates a new port.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// Create a port with no fixed
 	// IP address. This will also remove any fixed IPs previously set on a port. true
@@ -312,7 +342,7 @@ type PortV2Observation struct {
 
 	// The port binding allows to specify binding information
 	// for the port. The structure is described below.
-	Binding []BindingObservation `json:"binding,omitempty" tf:"binding,omitempty"`
+	Binding *BindingObservation `json:"binding,omitempty" tf:"binding,omitempty"`
 
 	// The list of maps representing port DNS assignments.
 	DNSAssignment []map[string]*string `json:"dnsAssignment,omitempty" tf:"dns_assignment,omitempty"`
@@ -422,7 +452,7 @@ type PortV2Parameters struct {
 	// The port binding allows to specify binding information
 	// for the port. The structure is described below.
 	// +kubebuilder:validation:Optional
-	Binding []BindingParameters `json:"binding,omitempty" tf:"binding,omitempty"`
+	Binding *BindingParameters `json:"binding,omitempty" tf:"binding,omitempty"`
 
 	// The port DNS name. Available, when Neutron DNS extension
 	// is enabled.
@@ -467,8 +497,18 @@ type PortV2Parameters struct {
 
 	// The ID of the network to attach the port to. Changing
 	// this creates a new port.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// Create a port with no fixed
 	// IP address. This will also remove any fixed IPs previously set on a port. true
@@ -564,9 +604,8 @@ type PortV2Status struct {
 type PortV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.networkId) || (has(self.initProvider) && has(self.initProvider.networkId))",message="spec.forProvider.networkId is a required parameter"
-	Spec   PortV2Spec   `json:"spec"`
-	Status PortV2Status `json:"status,omitempty"`
+	Spec              PortV2Spec   `json:"spec"`
+	Status            PortV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

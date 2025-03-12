@@ -10,7 +10,9 @@ spec:
   forProvider:
     description: test share description
     name: nfs_share
-    shareNetworkId: ${openstack_sharedfilesystem_sharenetwork_v2.sharenetwork_1.id}
+    shareNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: sharenetwork_1
     shareProto: NFS
     size: 1
 
@@ -62,5 +64,9 @@ spec:
   forProvider:
     description: test share network with security services
     name: test_sharenetwork
-    neutronNetId: ${openstack_networking_network_v2.network_1.id}
-    neutronSubnetId: ${openstack_networking_subnet_v2.subnet_1.id}
+    neutronNetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1
+    neutronSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_1

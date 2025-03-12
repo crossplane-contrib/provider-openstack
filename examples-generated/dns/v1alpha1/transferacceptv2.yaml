@@ -8,8 +8,12 @@ metadata:
   name: accept-1
 spec:
   forProvider:
-    key: ${openstack_dns_transfer_request_v2.request_1.key}
-    zoneTransferRequestId: ${openstack_dns_transfer_request_v2.request_1.id}
+    keySelector:
+      matchLabels:
+        testing.upbound.io/example-name: request_1
+    zoneTransferRequestIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: request_1
 
 ---
 
@@ -24,7 +28,9 @@ metadata:
 spec:
   forProvider:
     description: a transfer accept
-    zoneId: ${openstack_dns_zone_v2.example_zone.id}
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_zone
 
 ---
 

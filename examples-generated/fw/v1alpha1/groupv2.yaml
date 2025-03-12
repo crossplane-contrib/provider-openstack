@@ -8,8 +8,12 @@ metadata:
   name: group-1
 spec:
   forProvider:
-    egressFirewallPolicyId: ${openstack_fw_policy_v2.policy_2.id}
-    ingressFirewallPolicyId: ${openstack_fw_policy_v2.policy_1.id}
+    egressFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: policy_2
+    ingressFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: policy_1
     name: firewall_group
 
 ---

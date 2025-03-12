@@ -8,7 +8,9 @@ metadata:
   name: doc-1
 spec:
   forProvider:
-    containerName: tf-test-container-1
+    containerNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: container_1
     content: |2
                      {
                        "foo" : "bar"

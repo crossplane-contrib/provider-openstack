@@ -8,5 +8,7 @@ metadata:
   name: mydb
 spec:
   forProvider:
-    instanceId: ${openstack_db_instance_v1.basic.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: basic
     name: mydb

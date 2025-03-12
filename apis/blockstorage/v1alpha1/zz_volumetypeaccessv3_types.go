@@ -18,7 +18,17 @@ type VolumeTypeAccessV3InitParameters struct {
 
 	// ID of the project to give access to. Changing this
 	// creates a new resource.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate projectId.
+	// +kubebuilder:validation:Optional
+	ProjectIDRef *v1.Reference `json:"projectIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate projectId.
+	// +kubebuilder:validation:Optional
+	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
 
 	// The region in which to create the volume. If
 	// omitted, the region argument of the provider is used. Changing this
@@ -27,7 +37,17 @@ type VolumeTypeAccessV3InitParameters struct {
 
 	// ID of the volume type to give access to. Changing
 	// this creates a new resource.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeTypeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VolumeTypeID *string `json:"volumeTypeId,omitempty" tf:"volume_type_id,omitempty"`
+
+	// Reference to a VolumeTypeV3 in blockstorage to populate volumeTypeId.
+	// +kubebuilder:validation:Optional
+	VolumeTypeIDRef *v1.Reference `json:"volumeTypeIdRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeTypeV3 in blockstorage to populate volumeTypeId.
+	// +kubebuilder:validation:Optional
+	VolumeTypeIDSelector *v1.Selector `json:"volumeTypeIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeTypeAccessV3Observation struct {
@@ -51,8 +71,18 @@ type VolumeTypeAccessV3Parameters struct {
 
 	// ID of the project to give access to. Changing this
 	// creates a new resource.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate projectId.
+	// +kubebuilder:validation:Optional
+	ProjectIDRef *v1.Reference `json:"projectIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate projectId.
+	// +kubebuilder:validation:Optional
+	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
 
 	// The region in which to create the volume. If
 	// omitted, the region argument of the provider is used. Changing this
@@ -62,8 +92,18 @@ type VolumeTypeAccessV3Parameters struct {
 
 	// ID of the volume type to give access to. Changing
 	// this creates a new resource.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeTypeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VolumeTypeID *string `json:"volumeTypeId,omitempty" tf:"volume_type_id,omitempty"`
+
+	// Reference to a VolumeTypeV3 in blockstorage to populate volumeTypeId.
+	// +kubebuilder:validation:Optional
+	VolumeTypeIDRef *v1.Reference `json:"volumeTypeIdRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeTypeV3 in blockstorage to populate volumeTypeId.
+	// +kubebuilder:validation:Optional
+	VolumeTypeIDSelector *v1.Selector `json:"volumeTypeIdSelector,omitempty" tf:"-"`
 }
 
 // VolumeTypeAccessV3Spec defines the desired state of VolumeTypeAccessV3
@@ -102,10 +142,8 @@ type VolumeTypeAccessV3Status struct {
 type VolumeTypeAccessV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.projectId) || (has(self.initProvider) && has(self.initProvider.projectId))",message="spec.forProvider.projectId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.volumeTypeId) || (has(self.initProvider) && has(self.initProvider.volumeTypeId))",message="spec.forProvider.volumeTypeId is a required parameter"
-	Spec   VolumeTypeAccessV3Spec   `json:"spec"`
-	Status VolumeTypeAccessV3Status `json:"status,omitempty"`
+	Spec              VolumeTypeAccessV3Spec   `json:"spec"`
+	Status            VolumeTypeAccessV3Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -22,7 +22,17 @@ type FloatingipAssociateV2InitParameters struct {
 
 	// ID of an existing port with at least one IP address to
 	// associate with this floating IP.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create a floating IP that can be used with
@@ -63,8 +73,18 @@ type FloatingipAssociateV2Parameters struct {
 
 	// ID of an existing port with at least one IP address to
 	// associate with this floating IP.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create a floating IP that can be used with
@@ -112,7 +132,6 @@ type FloatingipAssociateV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.floatingIp) || (has(self.initProvider) && has(self.initProvider.floatingIp))",message="spec.forProvider.floatingIp is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.portId) || (has(self.initProvider) && has(self.initProvider.portId))",message="spec.forProvider.portId is a required parameter"
 	Spec   FloatingipAssociateV2Spec   `json:"spec"`
 	Status FloatingipAssociateV2Status `json:"status,omitempty"`
 }

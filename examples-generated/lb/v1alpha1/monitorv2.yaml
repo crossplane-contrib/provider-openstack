@@ -10,6 +10,8 @@ spec:
   forProvider:
     delay: 20
     maxRetries: 5
-    poolId: ${openstack_lb_pool_v2.pool_1.id}
+    poolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pool_1
     timeout: 10
     type: PING

@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     description: a transfer request
-    zoneId: ${openstack_dns_zone_v2.example_zone.id}
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_zone
 
 ---
 

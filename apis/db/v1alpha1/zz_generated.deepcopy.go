@@ -143,10 +143,8 @@ func (in *ConfigurationV1InitParameters) DeepCopyInto(out *ConfigurationV1InitPa
 	}
 	if in.Datastore != nil {
 		in, out := &in.Datastore, &out.Datastore
-		*out = make([]DatastoreInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(DatastoreInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
@@ -219,10 +217,8 @@ func (in *ConfigurationV1Observation) DeepCopyInto(out *ConfigurationV1Observati
 	}
 	if in.Datastore != nil {
 		in, out := &in.Datastore, &out.Datastore
-		*out = make([]DatastoreObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(DatastoreObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
@@ -268,10 +264,8 @@ func (in *ConfigurationV1Parameters) DeepCopyInto(out *ConfigurationV1Parameters
 	}
 	if in.Datastore != nil {
 		in, out := &in.Datastore, &out.Datastore
-		*out = make([]DatastoreParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(DatastoreParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
@@ -460,6 +454,16 @@ func (in *DatabaseV1InitParameters) DeepCopyInto(out *DatabaseV1InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -556,6 +560,16 @@ func (in *DatabaseV1Parameters) DeepCopyInto(out *DatabaseV1Parameters) {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
@@ -808,10 +822,8 @@ func (in *InstanceV1InitParameters) DeepCopyInto(out *InstanceV1InitParameters) 
 	}
 	if in.Datastore != nil {
 		in, out := &in.Datastore, &out.Datastore
-		*out = make([]InstanceV1DatastoreInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(InstanceV1DatastoreInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.FlavorID != nil {
 		in, out := &in.FlavorID, &out.FlavorID
@@ -919,10 +931,8 @@ func (in *InstanceV1Observation) DeepCopyInto(out *InstanceV1Observation) {
 	}
 	if in.Datastore != nil {
 		in, out := &in.Datastore, &out.Datastore
-		*out = make([]InstanceV1DatastoreObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(InstanceV1DatastoreObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.FlavorID != nil {
 		in, out := &in.FlavorID, &out.FlavorID
@@ -992,10 +1002,8 @@ func (in *InstanceV1Parameters) DeepCopyInto(out *InstanceV1Parameters) {
 	}
 	if in.Datastore != nil {
 		in, out := &in.Datastore, &out.Datastore
-		*out = make([]InstanceV1DatastoreParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(InstanceV1DatastoreParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.FlavorID != nil {
 		in, out := &in.FlavorID, &out.FlavorID
@@ -1352,6 +1360,16 @@ func (in *UserV1InitParameters) DeepCopyInto(out *UserV1InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1481,6 +1499,16 @@ func (in *UserV1Parameters) DeepCopyInto(out *UserV1Parameters) {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name

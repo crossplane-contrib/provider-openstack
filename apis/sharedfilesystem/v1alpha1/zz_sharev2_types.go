@@ -58,7 +58,17 @@ type ShareV2InitParameters struct {
 	// The UUID of a share network where the share server exists
 	// or will be created. If share_network_id is not set and you provide a snapshot_id,
 	// the share_network_id value from the snapshot is used. Changing this creates a new share.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SharenetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ShareNetworkID *string `json:"shareNetworkId,omitempty" tf:"share_network_id,omitempty"`
+
+	// Reference to a SharenetworkV2 in sharedfilesystem to populate shareNetworkId.
+	// +kubebuilder:validation:Optional
+	ShareNetworkIDRef *v1.Reference `json:"shareNetworkIdRef,omitempty" tf:"-"`
+
+	// Selector for a SharenetworkV2 in sharedfilesystem to populate shareNetworkId.
+	// +kubebuilder:validation:Optional
+	ShareNetworkIDSelector *v1.Selector `json:"shareNetworkIdSelector,omitempty" tf:"-"`
 
 	// The share protocol - can either be NFS, CIFS,
 	// CEPHFS, GLUSTERFS, HDFS or MAPRFS. Changing this creates a new share.
@@ -193,8 +203,18 @@ type ShareV2Parameters struct {
 	// The UUID of a share network where the share server exists
 	// or will be created. If share_network_id is not set and you provide a snapshot_id,
 	// the share_network_id value from the snapshot is used. Changing this creates a new share.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SharenetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ShareNetworkID *string `json:"shareNetworkId,omitempty" tf:"share_network_id,omitempty"`
+
+	// Reference to a SharenetworkV2 in sharedfilesystem to populate shareNetworkId.
+	// +kubebuilder:validation:Optional
+	ShareNetworkIDRef *v1.Reference `json:"shareNetworkIdRef,omitempty" tf:"-"`
+
+	// Selector for a SharenetworkV2 in sharedfilesystem to populate shareNetworkId.
+	// +kubebuilder:validation:Optional
+	ShareNetworkIDSelector *v1.Selector `json:"shareNetworkIdSelector,omitempty" tf:"-"`
 
 	// The share protocol - can either be NFS, CIFS,
 	// CEPHFS, GLUSTERFS, HDFS or MAPRFS. Changing this creates a new share.

@@ -8,9 +8,13 @@ metadata:
   name: obj-tempurl
 spec:
   forProvider:
-    container: tf-test-container-1
+    containerSelector:
+      matchLabels:
+        testing.upbound.io/example-name: container_1
     method: post
-    object: test/default.json
+    objectSelector:
+      matchLabels:
+        testing.upbound.io/example-name: object_1
     ttl: 20
 
 ---
@@ -41,6 +45,8 @@ metadata:
   name: object-1
 spec:
   forProvider:
-    containerName: test
+    containerNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     content: Hello, world!
     name: test

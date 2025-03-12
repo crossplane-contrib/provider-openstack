@@ -10,9 +10,168 @@ import (
 	"context"
 	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
+
+// ResolveReferences of this L7PolicyV2.
+func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ListenerID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.ListenerIDRef,
+		Selector:     mg.Spec.ForProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerV2List{},
+			Managed: &ListenerV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ListenerID")
+	}
+	mg.Spec.ForProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RedirectPoolID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.RedirectPoolIDRef,
+		Selector:     mg.Spec.ForProvider.RedirectPoolIDSelector,
+		To: reference.To{
+			List:    &PoolV2List{},
+			Managed: &PoolV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RedirectPoolID")
+	}
+	mg.Spec.ForProvider.RedirectPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RedirectPoolIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.ListenerIDRef,
+		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
+		To: reference.To{
+			List:    &ListenerV2List{},
+			Managed: &ListenerV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
+	}
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RedirectPoolID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.RedirectPoolIDRef,
+		Selector:     mg.Spec.InitProvider.RedirectPoolIDSelector,
+		To: reference.To{
+			List:    &PoolV2List{},
+			Managed: &PoolV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RedirectPoolID")
+	}
+	mg.Spec.InitProvider.RedirectPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RedirectPoolIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this L7RuleV2.
+func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.L7PolicyID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.L7PolicyIDRef,
+		Selector:     mg.Spec.ForProvider.L7PolicyIDSelector,
+		To: reference.To{
+			List:    &L7PolicyV2List{},
+			Managed: &L7PolicyV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.L7PolicyID")
+	}
+	mg.Spec.ForProvider.L7PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.L7PolicyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.L7PolicyID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.L7PolicyIDRef,
+		Selector:     mg.Spec.InitProvider.L7PolicyIDSelector,
+		To: reference.To{
+			List:    &L7PolicyV2List{},
+			Managed: &L7PolicyV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.L7PolicyID")
+	}
+	mg.Spec.InitProvider.L7PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.L7PolicyIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this MonitorV2.
+func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PoolID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.PoolIDRef,
+		Selector:     mg.Spec.ForProvider.PoolIDSelector,
+		To: reference.To{
+			List:    &PoolV2List{},
+			Managed: &PoolV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.PoolID")
+	}
+	mg.Spec.ForProvider.PoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PoolIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PoolID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.PoolIDRef,
+		Selector:     mg.Spec.InitProvider.PoolIDSelector,
+		To: reference.To{
+			List:    &PoolV2List{},
+			Managed: &PoolV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PoolID")
+	}
+	mg.Spec.InitProvider.PoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PoolIDRef = rsp.ResolvedReference
+
+	return nil
+}
 
 // ResolveReferences of this QuotaV2.
 func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error {

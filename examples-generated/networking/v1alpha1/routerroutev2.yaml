@@ -10,7 +10,9 @@ spec:
   forProvider:
     destinationCidr: 10.0.1.0/24
     nextHop: 192.168.199.254
-    routerId: ${openstack_networking_router_v2.router_1.id}
+    routerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: router_1
 
 ---
 

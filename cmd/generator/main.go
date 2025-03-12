@@ -1,11 +1,7 @@
-// SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 package main
 
 import (
-	// "context"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -33,7 +29,7 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", *repoRoot))
 	}
-	p := config.GetProvider()
+	p, err := config.GetProvider(context.Background(), true)
 	kingpin.FatalIfError(err, "Cannot initialize the provider configuration")
 	dumpGeneratedResourceList(p, generatedResourceList)
 	dumpSkippedResourcesCSV(p, skippedResourcesCSV)

@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     floatingIp: 1.2.3.4
-    portId: ${openstack_networking_port_v2.port_1.id}
+    portIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: port_1
 
 ---
 
@@ -23,4 +25,6 @@ metadata:
   name: port-1
 spec:
   forProvider:
-    networkId: a5bbd213-e1d3-49b6-aed1-9df60ea94b9a
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

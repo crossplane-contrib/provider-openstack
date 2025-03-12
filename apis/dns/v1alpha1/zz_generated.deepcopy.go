@@ -419,6 +419,16 @@ func (in *TransferAcceptV2InitParameters) DeepCopyInto(out *TransferAcceptV2Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.KeyRef != nil {
+		in, out := &in.KeyRef, &out.KeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeySelector != nil {
+		in, out := &in.KeySelector, &out.KeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -444,6 +454,16 @@ func (in *TransferAcceptV2InitParameters) DeepCopyInto(out *TransferAcceptV2Init
 		in, out := &in.ZoneTransferRequestID, &out.ZoneTransferRequestID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ZoneTransferRequestIDRef != nil {
+		in, out := &in.ZoneTransferRequestIDRef, &out.ZoneTransferRequestIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ZoneTransferRequestIDSelector != nil {
+		in, out := &in.ZoneTransferRequestIDSelector, &out.ZoneTransferRequestIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -558,6 +578,16 @@ func (in *TransferAcceptV2Parameters) DeepCopyInto(out *TransferAcceptV2Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.KeyRef != nil {
+		in, out := &in.KeyRef, &out.KeyRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeySelector != nil {
+		in, out := &in.KeySelector, &out.KeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -583,6 +613,16 @@ func (in *TransferAcceptV2Parameters) DeepCopyInto(out *TransferAcceptV2Paramete
 		in, out := &in.ZoneTransferRequestID, &out.ZoneTransferRequestID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ZoneTransferRequestIDRef != nil {
+		in, out := &in.ZoneTransferRequestIDRef, &out.ZoneTransferRequestIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ZoneTransferRequestIDSelector != nil {
+		in, out := &in.ZoneTransferRequestIDSelector, &out.ZoneTransferRequestIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -706,6 +746,16 @@ func (in *TransferRequestV2InitParameters) DeepCopyInto(out *TransferRequestV2In
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ZoneIDRef != nil {
+		in, out := &in.ZoneIDRef, &out.ZoneIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ZoneIDSelector != nil {
+		in, out := &in.ZoneIDSelector, &out.ZoneIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -865,6 +915,16 @@ func (in *TransferRequestV2Parameters) DeepCopyInto(out *TransferRequestV2Parame
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ZoneIDRef != nil {
+		in, out := &in.ZoneIDRef, &out.ZoneIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ZoneIDSelector != nil {
+		in, out := &in.ZoneIDSelector, &out.ZoneIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

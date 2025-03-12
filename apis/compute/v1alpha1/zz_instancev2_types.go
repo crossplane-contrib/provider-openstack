@@ -56,7 +56,17 @@ type BlockDeviceInitParameters struct {
 
 	// The UUID of
 	// the image, volume, or snapshot. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDRef *v1.Reference `json:"uuidRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDSelector *v1.Selector `json:"uuidSelector,omitempty" tf:"-"`
 
 	// The size of the volume to create (in gigabytes). Required
 	// in the following combinations: source=image and destination=volume,
@@ -178,8 +188,18 @@ type BlockDeviceParameters struct {
 
 	// The UUID of
 	// the image, volume, or snapshot. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDRef *v1.Reference `json:"uuidRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDSelector *v1.Selector `json:"uuidSelector,omitempty" tf:"-"`
 
 	// The size of the volume to create (in gigabytes). Required
 	// in the following combinations: source=image and destination=volume,
@@ -235,7 +255,17 @@ type InstanceV2InitParameters struct {
 
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Reference to a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDRef *v1.Reference `json:"flavorIdRef,omitempty" tf:"-"`
+
+	// Selector for a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDSelector *v1.Selector `json:"flavorIdSelector,omitempty" tf:"-"`
 
 	// The name of the
 	// desired flavor for the server. Changing this resizes the existing server.
@@ -344,7 +374,7 @@ type InstanceV2InitParameters struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	Volume []VolumeInitParameters `json:"volume,omitempty" tf:"volume,omitempty"`
 }
@@ -491,7 +521,7 @@ type InstanceV2Observation struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	Volume []VolumeObservation `json:"volume,omitempty" tf:"volume,omitempty"`
 }
@@ -542,8 +572,18 @@ type InstanceV2Parameters struct {
 
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Reference to a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDRef *v1.Reference `json:"flavorIdRef,omitempty" tf:"-"`
+
+	// Selector for a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDSelector *v1.Selector `json:"flavorIdSelector,omitempty" tf:"-"`
 
 	// The name of the
 	// desired flavor for the server. Changing this resizes the existing server.
@@ -671,7 +711,7 @@ type InstanceV2Parameters struct {
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	// +kubebuilder:validation:Optional
-	VendorOptions []VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Volume []VolumeParameters `json:"volume,omitempty" tf:"volume,omitempty"`
@@ -697,7 +737,17 @@ type NetworkInitParameters struct {
 
 	// The port UUID of a
 	// network to attach to the server. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	Port *string `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Reference to a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortRef *v1.Reference `json:"portRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortSelector *v1.Selector `json:"portSelector,omitempty" tf:"-"`
 
 	// The network UUID to
 	// attach to the server. Changing this creates a new server.
@@ -758,8 +808,18 @@ type NetworkParameters struct {
 
 	// The port UUID of a
 	// network to attach to the server. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	Port *string `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Reference to a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortRef *v1.Reference `json:"portRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortSelector *v1.Selector `json:"portSelector,omitempty" tf:"-"`
 
 	// The network UUID to
 	// attach to the server. Changing this creates a new server.

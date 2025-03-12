@@ -10,10 +10,14 @@ spec:
   forProvider:
     action: REDIRECT_TO_POOL
     description: test l7 policy
-    listenerId: ${openstack_lb_listener_v2.listener_1.id}
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: listener_1
     name: test
     position: 1
-    redirectPoolId: ${openstack_lb_pool_v2.pool_1.id}
+    redirectPoolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pool_1
 
 ---
 

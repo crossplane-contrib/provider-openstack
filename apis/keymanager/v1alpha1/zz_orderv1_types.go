@@ -86,7 +86,7 @@ type MetaParameters struct {
 type OrderV1InitParameters struct {
 
 	// Dictionary containing the order metadata used to generate the order. The structure is described below.
-	Meta []MetaInitParameters `json:"meta,omitempty" tf:"meta,omitempty"`
+	Meta *MetaInitParameters `json:"meta,omitempty" tf:"meta,omitempty"`
 
 	// The region in which to obtain the V1 KeyManager client.
 	// A KeyManager client is needed to create a order. If omitted, the
@@ -112,7 +112,7 @@ type OrderV1Observation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Dictionary containing the order metadata used to generate the order. The structure is described below.
-	Meta []MetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
+	Meta *MetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
 
 	// The order reference / where to find the order.
 	OrderRef *string `json:"orderRef,omitempty" tf:"order_ref,omitempty"`
@@ -146,7 +146,7 @@ type OrderV1Parameters struct {
 
 	// Dictionary containing the order metadata used to generate the order. The structure is described below.
 	// +kubebuilder:validation:Optional
-	Meta []MetaParameters `json:"meta,omitempty" tf:"meta,omitempty"`
+	Meta *MetaParameters `json:"meta,omitempty" tf:"meta,omitempty"`
 
 	// The region in which to obtain the V1 KeyManager client.
 	// A KeyManager client is needed to create a order. If omitted, the

@@ -42,7 +42,17 @@ type TransferRequestV2InitParameters struct {
 
 	// The ID of the zone for which to create the transfer
 	// request.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.ZoneV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type TransferRequestV2Observation struct {
@@ -112,8 +122,18 @@ type TransferRequestV2Parameters struct {
 
 	// The ID of the zone for which to create the transfer
 	// request.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.ZoneV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 // TransferRequestV2Spec defines the desired state of TransferRequestV2
@@ -152,9 +172,8 @@ type TransferRequestV2Status struct {
 type TransferRequestV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
-	Spec   TransferRequestV2Spec   `json:"spec"`
-	Status TransferRequestV2Status `json:"status,omitempty"`
+	Spec              TransferRequestV2Spec   `json:"spec"`
+	Status            TransferRequestV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

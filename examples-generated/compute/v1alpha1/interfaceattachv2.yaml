@@ -8,8 +8,12 @@ metadata:
   name: ai-1
 spec:
   forProvider:
-    instanceId: ${openstack_compute_instance_v2.instance_1.id}
-    networkId: ${openstack_networking_port_v2.network_1.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_1
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1
 
 ---
 

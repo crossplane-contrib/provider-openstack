@@ -46,7 +46,7 @@ type ServergroupV2InitParameters struct {
 
 	// The rules which are applied to specified policy. Currently,
 	// only the max_server_per_host rule is supported for the anti-affinity policy.
-	Rules []RulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
+	Rules *RulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
 
 	// Map of additional options.
 	// +mapType=granular
@@ -75,7 +75,7 @@ type ServergroupV2Observation struct {
 
 	// The rules which are applied to specified policy. Currently,
 	// only the max_server_per_host rule is supported for the anti-affinity policy.
-	Rules []RulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
+	Rules *RulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
 
 	// Map of additional options.
 	// +mapType=granular
@@ -104,7 +104,7 @@ type ServergroupV2Parameters struct {
 	// The rules which are applied to specified policy. Currently,
 	// only the max_server_per_host rule is supported for the anti-affinity policy.
 	// +kubebuilder:validation:Optional
-	Rules []RulesParameters `json:"rules,omitempty" tf:"rules,omitempty"`
+	Rules *RulesParameters `json:"rules,omitempty" tf:"rules,omitempty"`
 
 	// Map of additional options.
 	// +kubebuilder:validation:Optional

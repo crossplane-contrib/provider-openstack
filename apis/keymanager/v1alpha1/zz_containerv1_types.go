@@ -15,17 +15,17 @@ import (
 )
 
 type ACLInitParameters struct {
-	Read []ReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type ACLObservation struct {
-	Read []ReadObservation `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ReadObservation `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type ACLParameters struct {
 
 	// +kubebuilder:validation:Optional
-	Read []ReadParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ReadParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type ConsumersInitParameters struct {
@@ -48,7 +48,7 @@ type ContainerV1InitParameters struct {
 	// Allows to control an access to a container. Currently only
 	// the read operation is supported. If not specified, the container is
 	// accessible project wide. The read structure is described below.
-	ACL []ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Human-readable name for the Container. Does not have
 	// to be unique.
@@ -73,7 +73,7 @@ type ContainerV1Observation struct {
 	// Allows to control an access to a container. Currently only
 	// the read operation is supported. If not specified, the container is
 	// accessible project wide. The read structure is described below.
-	ACL []ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// The list of the container consumers. The structure is described below.
 	Consumers []ConsumersObservation `json:"consumers,omitempty" tf:"consumers,omitempty"`
@@ -119,7 +119,7 @@ type ContainerV1Parameters struct {
 	// the read operation is supported. If not specified, the container is
 	// accessible project wide. The read structure is described below.
 	// +kubebuilder:validation:Optional
-	ACL []ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Human-readable name for the Container. Does not have
 	// to be unique.
@@ -193,7 +193,17 @@ type SecretRefsInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The secret reference / where to find the secret, URL.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("secret_ref",true)
 	SecretRef *string `json:"secretRef,omitempty" tf:"secret_ref,omitempty"`
+
+	// Reference to a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefRef *v1.Reference `json:"secretRefRef,omitempty" tf:"-"`
+
+	// Selector for a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefSelector *v1.Selector `json:"secretRefSelector,omitempty" tf:"-"`
 }
 
 type SecretRefsObservation struct {
@@ -212,8 +222,18 @@ type SecretRefsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The secret reference / where to find the secret, URL.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("secret_ref",true)
 	// +kubebuilder:validation:Optional
-	SecretRef *string `json:"secretRef" tf:"secret_ref,omitempty"`
+	SecretRef *string `json:"secretRef,omitempty" tf:"secret_ref,omitempty"`
+
+	// Reference to a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefRef *v1.Reference `json:"secretRefRef,omitempty" tf:"-"`
+
+	// Selector for a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefSelector *v1.Selector `json:"secretRefSelector,omitempty" tf:"-"`
 }
 
 // ContainerV1Spec defines the desired state of ContainerV1

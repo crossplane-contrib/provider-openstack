@@ -98,24 +98,22 @@ spec:
                     description: |-
                       The port binding allows to specify binding information
                       for the port. The structure is described below.
-                    items:
-                      properties:
-                        hostId:
-                          description: The ID of the host to allocate port on.
-                          type: string
-                        profile:
-                          description: |-
-                            Custom data to be passed as binding:profile. Data
-                            must be passed as JSON.
-                          type: string
-                        vnicType:
-                          description: |-
-                            VNIC type for the port. Can either be direct,
-                            direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-                            Default value is normal. It can be updated on unbound ports only.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      hostId:
+                        description: The ID of the host to allocate port on.
+                        type: string
+                      profile:
+                        description: |-
+                          Custom data to be passed as binding:profile. Data
+                          must be passed as JSON.
+                        type: string
+                      vnicType:
+                        description: |-
+                          VNIC type for the port. Can either be direct,
+                          direct-physical, macvtap, normal, baremetal or virtio-forwarder.
+                          Default value is normal. It can be updated on unbound ports only.
+                        type: string
+                    type: object
                   description:
                     description: |-
                       Human-readable description of the port. Changing
@@ -173,6 +171,82 @@ spec:
                             Subnet in which to allocate IP address for
                             this port.
                           type: string
+                        subnetIdRef:
+                          description: Reference to a SubnetV2 in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a SubnetV2 in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                       type: object
                     type: array
                   macAddress:
@@ -190,6 +264,82 @@ spec:
                       The ID of the network to attach the port to. Changing
                       this creates a new port.
                     type: string
+                  networkIdRef:
+                    description: Reference to a NetworkV2 in networking to populate
+                      networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a NetworkV2 in networking to populate
+                      networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   noFixedIp:
                     description: |-
                       Create a port with no fixed
@@ -289,24 +439,22 @@ spec:
                     description: |-
                       The port binding allows to specify binding information
                       for the port. The structure is described below.
-                    items:
-                      properties:
-                        hostId:
-                          description: The ID of the host to allocate port on.
-                          type: string
-                        profile:
-                          description: |-
-                            Custom data to be passed as binding:profile. Data
-                            must be passed as JSON.
-                          type: string
-                        vnicType:
-                          description: |-
-                            VNIC type for the port. Can either be direct,
-                            direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-                            Default value is normal. It can be updated on unbound ports only.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      hostId:
+                        description: The ID of the host to allocate port on.
+                        type: string
+                      profile:
+                        description: |-
+                          Custom data to be passed as binding:profile. Data
+                          must be passed as JSON.
+                        type: string
+                      vnicType:
+                        description: |-
+                          VNIC type for the port. Can either be direct,
+                          direct-physical, macvtap, normal, baremetal or virtio-forwarder.
+                          Default value is normal. It can be updated on unbound ports only.
+                        type: string
+                    type: object
                   description:
                     description: |-
                       Human-readable description of the port. Changing
@@ -364,6 +512,82 @@ spec:
                             Subnet in which to allocate IP address for
                             this port.
                           type: string
+                        subnetIdRef:
+                          description: Reference to a SubnetV2 in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a SubnetV2 in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                       type: object
                     type: array
                   macAddress:
@@ -381,6 +605,82 @@ spec:
                       The ID of the network to attach the port to. Changing
                       this creates a new port.
                     type: string
+                  networkIdRef:
+                    description: Reference to a NetworkV2 in networking to populate
+                      networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a NetworkV2 in networking to populate
+                      networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   noFixedIp:
                     description: |-
                       Create a port with no fixed
@@ -609,11 +909,6 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.networkId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.networkId)
-                || (has(self.initProvider) && has(self.initProvider.networkId))'
           status:
             description: PortV2Status defines the observed state of PortV2.
             properties:
@@ -667,35 +962,33 @@ spec:
                     description: |-
                       The port binding allows to specify binding information
                       for the port. The structure is described below.
-                    items:
-                      properties:
-                        hostId:
-                          description: The ID of the host to allocate port on.
+                    properties:
+                      hostId:
+                        description: The ID of the host to allocate port on.
+                        type: string
+                      profile:
+                        description: |-
+                          Custom data to be passed as binding:profile. Data
+                          must be passed as JSON.
+                        type: string
+                      vifDetails:
+                        additionalProperties:
                           type: string
-                        profile:
-                          description: |-
-                            Custom data to be passed as binding:profile. Data
-                            must be passed as JSON.
-                          type: string
-                        vifDetails:
-                          additionalProperties:
-                            type: string
-                          description: |-
-                            (Computed) A map of JSON strings containing additional
-                            details for this specific binding.
-                          type: object
-                          x-kubernetes-map-type: granular
-                        vifType:
-                          description: (Computed) The VNIC type of the port binding.
-                          type: string
-                        vnicType:
-                          description: |-
-                            VNIC type for the port. Can either be direct,
-                            direct-physical, macvtap, normal, baremetal or virtio-forwarder.
-                            Default value is normal. It can be updated on unbound ports only.
-                          type: string
-                      type: object
-                    type: array
+                        description: |-
+                          (Computed) A map of JSON strings containing additional
+                          details for this specific binding.
+                        type: object
+                        x-kubernetes-map-type: granular
+                      vifType:
+                        description: (Computed) The VNIC type of the port binding.
+                        type: string
+                      vnicType:
+                        description: |-
+                          VNIC type for the port. Can either be direct,
+                          direct-physical, macvtap, normal, baremetal or virtio-forwarder.
+                          Default value is normal. It can be updated on unbound ports only.
+                        type: string
+                    type: object
                   description:
                     description: |-
                       Human-readable description of the port. Changing

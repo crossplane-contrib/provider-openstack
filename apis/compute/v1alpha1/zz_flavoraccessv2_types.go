@@ -17,7 +17,17 @@ import (
 type FlavorAccessV2InitParameters struct {
 
 	// The UUID of flavor to use. Changing this creates a new flavor access.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Reference to a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDRef *v1.Reference `json:"flavorIdRef,omitempty" tf:"-"`
+
+	// Selector for a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDSelector *v1.Selector `json:"flavorIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Compute client.
 	// If omitted, the region argument of the provider is used.
@@ -26,7 +36,17 @@ type FlavorAccessV2InitParameters struct {
 
 	// The UUID of tenant which is allowed to use the flavor.
 	// Changing this creates a new flavor access.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate tenantId.
+	// +kubebuilder:validation:Optional
+	TenantIDRef *v1.Reference `json:"tenantIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate tenantId.
+	// +kubebuilder:validation:Optional
+	TenantIDSelector *v1.Selector `json:"tenantIdSelector,omitempty" tf:"-"`
 }
 
 type FlavorAccessV2Observation struct {
@@ -49,8 +69,18 @@ type FlavorAccessV2Observation struct {
 type FlavorAccessV2Parameters struct {
 
 	// The UUID of flavor to use. Changing this creates a new flavor access.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Reference to a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDRef *v1.Reference `json:"flavorIdRef,omitempty" tf:"-"`
+
+	// Selector for a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDSelector *v1.Selector `json:"flavorIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Compute client.
 	// If omitted, the region argument of the provider is used.
@@ -60,8 +90,18 @@ type FlavorAccessV2Parameters struct {
 
 	// The UUID of tenant which is allowed to use the flavor.
 	// Changing this creates a new flavor access.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate tenantId.
+	// +kubebuilder:validation:Optional
+	TenantIDRef *v1.Reference `json:"tenantIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate tenantId.
+	// +kubebuilder:validation:Optional
+	TenantIDSelector *v1.Selector `json:"tenantIdSelector,omitempty" tf:"-"`
 }
 
 // FlavorAccessV2Spec defines the desired state of FlavorAccessV2
@@ -100,10 +140,8 @@ type FlavorAccessV2Status struct {
 type FlavorAccessV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.flavorId) || (has(self.initProvider) && has(self.initProvider.flavorId))",message="spec.forProvider.flavorId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.tenantId) || (has(self.initProvider) && has(self.initProvider.tenantId))",message="spec.forProvider.tenantId is a required parameter"
-	Spec   FlavorAccessV2Spec   `json:"spec"`
-	Status FlavorAccessV2Status `json:"status,omitempty"`
+	Spec              FlavorAccessV2Spec   `json:"spec"`
+	Status            FlavorAccessV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

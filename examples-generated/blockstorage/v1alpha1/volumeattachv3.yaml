@@ -14,7 +14,9 @@ spec:
     ipAddress: 192.168.255.10
     osType: linux2
     platform: x86_64
-    volumeId: ${openstack_blockstorage_volume_v3.volume_1.id}
+    volumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_1
 
 ---
 

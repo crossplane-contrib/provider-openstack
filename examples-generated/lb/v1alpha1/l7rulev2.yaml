@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     compareType: EQUAL_TO
-    l7policyId: ${openstack_lb_l7policy_v2.l7policy_1.id}
+    l7policyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: l7policy_1
     type: PATH
     value: /api
 
@@ -27,7 +29,9 @@ spec:
   forProvider:
     action: REDIRECT_TO_URL
     description: test description
-    listenerId: ${openstack_lb_listener_v2.listener_1.id}
+    listenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: listener_1
     name: test
     position: 1
     redirectUrl: http://www.example.com

@@ -32,7 +32,17 @@ type RouterRouteV2InitParameters struct {
 
 	// ID of the router this routing entry belongs to. Changing
 	// this creates a new routing entry.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.RouterV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
+
+	// Reference to a RouterV2 in networking to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouterV2 in networking to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
 }
 
 type RouterRouteV2Observation struct {
@@ -79,8 +89,18 @@ type RouterRouteV2Parameters struct {
 
 	// ID of the router this routing entry belongs to. Changing
 	// this creates a new routing entry.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.RouterV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
+
+	// Reference to a RouterV2 in networking to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouterV2 in networking to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
 }
 
 // RouterRouteV2Spec defines the desired state of RouterRouteV2
@@ -121,7 +141,6 @@ type RouterRouteV2 struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinationCidr) || (has(self.initProvider) && has(self.initProvider.destinationCidr))",message="spec.forProvider.destinationCidr is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nextHop) || (has(self.initProvider) && has(self.initProvider.nextHop))",message="spec.forProvider.nextHop is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.routerId) || (has(self.initProvider) && has(self.initProvider.routerId))",message="spec.forProvider.routerId is a required parameter"
 	Spec   RouterRouteV2Spec   `json:"spec"`
 	Status RouterRouteV2Status `json:"status,omitempty"`
 }

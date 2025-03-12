@@ -8,8 +8,12 @@ metadata:
   name: qos-association
 spec:
   forProvider:
-    qosId: ${openstack_blockstorage_qos_v3.qos.id}
-    volumeTypeId: ${openstack_blockstorage_volume_type_v3.volume_type.id}
+    qosIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: qos
+    volumeTypeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_type
 
 ---
 

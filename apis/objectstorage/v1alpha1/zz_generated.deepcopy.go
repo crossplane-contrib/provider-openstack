@@ -10,6 +10,7 @@ Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -111,10 +112,8 @@ func (in *ContainerV1InitParameters) DeepCopyInto(out *ContainerV1InitParameters
 	}
 	if in.VersioningLegacy != nil {
 		in, out := &in.VersioningLegacy, &out.VersioningLegacy
-		*out = make([]VersioningLegacyInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VersioningLegacyInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -236,10 +235,8 @@ func (in *ContainerV1Observation) DeepCopyInto(out *ContainerV1Observation) {
 	}
 	if in.VersioningLegacy != nil {
 		in, out := &in.VersioningLegacy, &out.VersioningLegacy
-		*out = make([]VersioningLegacyObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VersioningLegacyObservation)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -324,10 +321,8 @@ func (in *ContainerV1Parameters) DeepCopyInto(out *ContainerV1Parameters) {
 	}
 	if in.VersioningLegacy != nil {
 		in, out := &in.VersioningLegacy, &out.VersioningLegacy
-		*out = make([]VersioningLegacyParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VersioningLegacyParameters)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -410,6 +405,16 @@ func (in *ObjectV1InitParameters) DeepCopyInto(out *ObjectV1InitParameters) {
 		in, out := &in.ContainerName, &out.ContainerName
 		*out = new(string)
 		**out = **in
+	}
+	if in.ContainerNameRef != nil {
+		in, out := &in.ContainerNameRef, &out.ContainerNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ContainerNameSelector != nil {
+		in, out := &in.ContainerNameSelector, &out.ContainerNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Content != nil {
 		in, out := &in.Content, &out.Content
@@ -670,6 +675,16 @@ func (in *ObjectV1Parameters) DeepCopyInto(out *ObjectV1Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ContainerNameRef != nil {
+		in, out := &in.ContainerNameRef, &out.ContainerNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ContainerNameSelector != nil {
+		in, out := &in.ContainerNameSelector, &out.ContainerNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Content != nil {
 		in, out := &in.Content, &out.Content
 		*out = new(string)
@@ -833,6 +848,16 @@ func (in *TempurlV1InitParameters) DeepCopyInto(out *TempurlV1InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ContainerRef != nil {
+		in, out := &in.ContainerRef, &out.ContainerRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ContainerSelector != nil {
+		in, out := &in.ContainerSelector, &out.ContainerSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Method != nil {
 		in, out := &in.Method, &out.Method
 		*out = new(string)
@@ -842,6 +867,16 @@ func (in *TempurlV1InitParameters) DeepCopyInto(out *TempurlV1InitParameters) {
 		in, out := &in.Object, &out.Object
 		*out = new(string)
 		**out = **in
+	}
+	if in.ObjectRef != nil {
+		in, out := &in.ObjectRef, &out.ObjectRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ObjectSelector != nil {
+		in, out := &in.ObjectSelector, &out.ObjectSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Regenerate != nil {
 		in, out := &in.Regenerate, &out.Regenerate
@@ -970,6 +1005,16 @@ func (in *TempurlV1Parameters) DeepCopyInto(out *TempurlV1Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ContainerRef != nil {
+		in, out := &in.ContainerRef, &out.ContainerRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ContainerSelector != nil {
+		in, out := &in.ContainerSelector, &out.ContainerSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Method != nil {
 		in, out := &in.Method, &out.Method
 		*out = new(string)
@@ -979,6 +1024,16 @@ func (in *TempurlV1Parameters) DeepCopyInto(out *TempurlV1Parameters) {
 		in, out := &in.Object, &out.Object
 		*out = new(string)
 		**out = **in
+	}
+	if in.ObjectRef != nil {
+		in, out := &in.ObjectRef, &out.ObjectRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ObjectSelector != nil {
+		in, out := &in.ObjectSelector, &out.ObjectSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Regenerate != nil {
 		in, out := &in.Regenerate, &out.Regenerate

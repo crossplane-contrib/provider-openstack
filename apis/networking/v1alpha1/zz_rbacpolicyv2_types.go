@@ -23,7 +23,17 @@ type RbacPolicyV2InitParameters struct {
 	// The ID of the object_type resource. An
 	// object_type of network returns a network ID and an object_type of
 	// qos_policy returns a QoS ID.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate objectId.
+	// +kubebuilder:validation:Optional
+	ObjectIDRef *v1.Reference `json:"objectIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate objectId.
+	// +kubebuilder:validation:Optional
+	ObjectIDSelector *v1.Selector `json:"objectIdSelector,omitempty" tf:"-"`
 
 	// The type of the object that the RBAC policy
 	// affects. Can be one of the following: address_scope, address_group,
@@ -82,8 +92,18 @@ type RbacPolicyV2Parameters struct {
 	// The ID of the object_type resource. An
 	// object_type of network returns a network ID and an object_type of
 	// qos_policy returns a QoS ID.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate objectId.
+	// +kubebuilder:validation:Optional
+	ObjectIDRef *v1.Reference `json:"objectIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate objectId.
+	// +kubebuilder:validation:Optional
+	ObjectIDSelector *v1.Selector `json:"objectIdSelector,omitempty" tf:"-"`
 
 	// The type of the object that the RBAC policy
 	// affects. Can be one of the following: address_scope, address_group,
@@ -141,7 +161,6 @@ type RbacPolicyV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.action) || (has(self.initProvider) && has(self.initProvider.action))",message="spec.forProvider.action is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.objectId) || (has(self.initProvider) && has(self.initProvider.objectId))",message="spec.forProvider.objectId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.objectType) || (has(self.initProvider) && has(self.initProvider.objectType))",message="spec.forProvider.objectType is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.targetTenant) || (has(self.initProvider) && has(self.initProvider.targetTenant))",message="spec.forProvider.targetTenant is a required parameter"
 	Spec   RbacPolicyV2Spec   `json:"spec"`

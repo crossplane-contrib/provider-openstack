@@ -9,8 +9,12 @@ metadata:
 spec:
   forProvider:
     domainId: default
-    roleId: ${openstack_identity_role_v3.role_1.id}
-    userId: ${openstack_identity_user_v3.user_1.id}
+    roleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: role_1
+    userIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: user_1
 
 ---
 

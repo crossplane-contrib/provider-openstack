@@ -141,17 +141,15 @@ spec:
                   versioningLegacy:
                     description: (Deprecated) Enable legacy object versioning. The
                       structure is described below.
-                    items:
-                      properties:
-                        location:
-                          description: Container in which versions will be stored.
-                          type: string
-                        type:
-                          description: Versioning type which can be versions or history
-                            according to Openstack documentation.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      location:
+                        description: Container in which versions will be stored.
+                        type: string
+                      type:
+                        description: Versioning type which can be versions or history
+                          according to Openstack documentation.
+                        type: string
+                    type: object
                 type: object
               initProvider:
                 description: |-
@@ -234,17 +232,15 @@ spec:
                   versioningLegacy:
                     description: (Deprecated) Enable legacy object versioning. The
                       structure is described below.
-                    items:
-                      properties:
-                        location:
-                          description: Container in which versions will be stored.
-                          type: string
-                        type:
-                          description: Versioning type which can be versions or history
-                            according to Openstack documentation.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      location:
+                        description: Container in which versions will be stored.
+                        type: string
+                      type:
+                        description: Versioning type which can be versions or history
+                          according to Openstack documentation.
+                        type: string
+                    type: object
                 type: object
               managementPolicies:
                 default:
@@ -493,17 +489,15 @@ spec:
                   versioningLegacy:
                     description: (Deprecated) Enable legacy object versioning. The
                       structure is described below.
-                    items:
-                      properties:
-                        location:
-                          description: Container in which versions will be stored.
-                          type: string
-                        type:
-                          description: Versioning type which can be versions or history
-                            according to Openstack documentation.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      location:
+                        description: Container in which versions will be stored.
+                        type: string
+                      type:
+                        description: Versioning type which can be versions or history
+                          according to Openstack documentation.
+                        type: string
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.

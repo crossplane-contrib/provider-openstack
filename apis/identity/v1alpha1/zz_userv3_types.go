@@ -39,7 +39,17 @@ type MultiFactorAuthRuleParameters struct {
 type UserV3InitParameters struct {
 
 	// The default project this user belongs to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DefaultProjectID *string `json:"defaultProjectId,omitempty" tf:"default_project_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate defaultProjectId.
+	// +kubebuilder:validation:Optional
+	DefaultProjectIDRef *v1.Reference `json:"defaultProjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate defaultProjectId.
+	// +kubebuilder:validation:Optional
+	DefaultProjectIDSelector *v1.Selector `json:"defaultProjectIdSelector,omitempty" tf:"-"`
 
 	// A description of the user.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -144,8 +154,18 @@ type UserV3Observation struct {
 type UserV3Parameters struct {
 
 	// The default project this user belongs to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DefaultProjectID *string `json:"defaultProjectId,omitempty" tf:"default_project_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate defaultProjectId.
+	// +kubebuilder:validation:Optional
+	DefaultProjectIDRef *v1.Reference `json:"defaultProjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate defaultProjectId.
+	// +kubebuilder:validation:Optional
+	DefaultProjectIDSelector *v1.Selector `json:"defaultProjectIdSelector,omitempty" tf:"-"`
 
 	// A description of the user.
 	// +kubebuilder:validation:Optional

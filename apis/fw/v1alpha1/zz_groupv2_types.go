@@ -28,12 +28,32 @@ type GroupV2InitParameters struct {
 	// The egress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// egress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	EgressFirewallPolicyID *string `json:"egressFirewallPolicyId,omitempty" tf:"egress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDRef *v1.Reference `json:"egressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDSelector *v1.Selector `json:"egressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// The ingress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// ingress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IngressFirewallPolicyID *string `json:"ingressFirewallPolicyId,omitempty" tf:"ingress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDRef *v1.Reference `json:"ingressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDSelector *v1.Selector `json:"ingressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// A name for the firewall group. Changing this
 	// updates the name of an existing firewall.
@@ -149,14 +169,34 @@ type GroupV2Parameters struct {
 	// The egress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// egress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	EgressFirewallPolicyID *string `json:"egressFirewallPolicyId,omitempty" tf:"egress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDRef *v1.Reference `json:"egressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDSelector *v1.Selector `json:"egressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// The ingress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// ingress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IngressFirewallPolicyID *string `json:"ingressFirewallPolicyId,omitempty" tf:"ingress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDRef *v1.Reference `json:"ingressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDSelector *v1.Selector `json:"ingressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// A name for the firewall group. Changing this
 	// updates the name of an existing firewall.

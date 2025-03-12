@@ -106,7 +106,7 @@ type InstanceV1InitParameters struct {
 
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates a new instance.
-	Datastore []InstanceV1DatastoreInitParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *InstanceV1DatastoreInitParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// The flavor ID of the desired flavor for the instance.
 	// Changing this creates new instance.
@@ -147,7 +147,7 @@ type InstanceV1Observation struct {
 
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates a new instance.
-	Datastore []InstanceV1DatastoreObservation `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *InstanceV1DatastoreObservation `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// The flavor ID of the desired flavor for the instance.
 	// Changing this creates new instance.
@@ -190,7 +190,7 @@ type InstanceV1Parameters struct {
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates a new instance.
 	// +kubebuilder:validation:Optional
-	Datastore []InstanceV1DatastoreParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *InstanceV1DatastoreParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// The flavor ID of the desired flavor for the instance.
 	// Changing this creates new instance.

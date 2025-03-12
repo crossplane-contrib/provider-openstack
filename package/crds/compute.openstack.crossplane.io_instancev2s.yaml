@@ -174,6 +174,82 @@ spec:
                             The UUID of
                             the image, volume, or snapshot. Changing this creates a new server.
                           type: string
+                        uuidRef:
+                          description: Reference to a VolumeV3 in blockstorage to
+                            populate uuid.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        uuidSelector:
+                          description: Selector for a VolumeV3 in blockstorage to
+                            populate uuid.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         volumeSize:
                           description: |-
                             The size of the volume to create (in gigabytes). Required
@@ -200,6 +276,80 @@ spec:
                       The flavor ID of
                       the desired flavor for the server. Changing this resizes the existing server.
                     type: string
+                  flavorIdRef:
+                    description: Reference to a FlavorV2 in compute to populate flavorId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  flavorIdSelector:
+                    description: Selector for a FlavorV2 in compute to populate flavorId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   flavorName:
                     description: |-
                       The name of the
@@ -346,6 +496,82 @@ spec:
                             The port UUID of a
                             network to attach to the server. Changing this creates a new server.
                           type: string
+                        portRef:
+                          description: Reference to a PortV2 in networking to populate
+                            port.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        portSelector:
+                          description: Selector for a PortV2 in networking to populate
+                            port.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         uuid:
                           description: |-
                             The network UUID to
@@ -561,23 +787,21 @@ spec:
                     description: |-
                       Map of additional vendor-specific options.
                       Supported options are described below.
-                    items:
-                      properties:
-                        detachPortsBeforeDestroy:
-                          description: |-
-                            Whether to try to detach all attached
-                            ports to the vm before destroying it to make sure the port state is correct
-                            after the vm destruction. This is helpful when the port is not deleted.
-                          type: boolean
-                        ignoreResizeConfirmation:
-                          description: |-
-                            Boolean to control whether
-                            to ignore manual confirmation of the instance resizing. This can be helpful
-                            to work with some OpenStack clouds which automatically confirm resizing of
-                            instances after some timeout.
-                          type: boolean
-                      type: object
-                    type: array
+                    properties:
+                      detachPortsBeforeDestroy:
+                        description: |-
+                          Whether to try to detach all attached
+                          ports to the vm before destroying it to make sure the port state is correct
+                          after the vm destruction. This is helpful when the port is not deleted.
+                        type: boolean
+                      ignoreResizeConfirmation:
+                        description: |-
+                          Boolean to control whether
+                          to ignore manual confirmation of the instance resizing. This can be helpful
+                          to work with some OpenStack clouds which automatically confirm resizing of
+                          instances after some timeout.
+                        type: boolean
+                    type: object
                   volume:
                     items:
                       properties:
@@ -704,6 +928,82 @@ spec:
                             The UUID of
                             the image, volume, or snapshot. Changing this creates a new server.
                           type: string
+                        uuidRef:
+                          description: Reference to a VolumeV3 in blockstorage to
+                            populate uuid.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        uuidSelector:
+                          description: Selector for a VolumeV3 in blockstorage to
+                            populate uuid.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         volumeSize:
                           description: |-
                             The size of the volume to create (in gigabytes). Required
@@ -730,6 +1030,80 @@ spec:
                       The flavor ID of
                       the desired flavor for the server. Changing this resizes the existing server.
                     type: string
+                  flavorIdRef:
+                    description: Reference to a FlavorV2 in compute to populate flavorId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  flavorIdSelector:
+                    description: Selector for a FlavorV2 in compute to populate flavorId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   flavorName:
                     description: |-
                       The name of the
@@ -876,6 +1250,82 @@ spec:
                             The port UUID of a
                             network to attach to the server. Changing this creates a new server.
                           type: string
+                        portRef:
+                          description: Reference to a PortV2 in networking to populate
+                            port.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        portSelector:
+                          description: Selector for a PortV2 in networking to populate
+                            port.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         uuid:
                           description: |-
                             The network UUID to
@@ -1091,23 +1541,21 @@ spec:
                     description: |-
                       Map of additional vendor-specific options.
                       Supported options are described below.
-                    items:
-                      properties:
-                        detachPortsBeforeDestroy:
-                          description: |-
-                            Whether to try to detach all attached
-                            ports to the vm before destroying it to make sure the port state is correct
-                            after the vm destruction. This is helpful when the port is not deleted.
-                          type: boolean
-                        ignoreResizeConfirmation:
-                          description: |-
-                            Boolean to control whether
-                            to ignore manual confirmation of the instance resizing. This can be helpful
-                            to work with some OpenStack clouds which automatically confirm resizing of
-                            instances after some timeout.
-                          type: boolean
-                      type: object
-                    type: array
+                    properties:
+                      detachPortsBeforeDestroy:
+                        description: |-
+                          Whether to try to detach all attached
+                          ports to the vm before destroying it to make sure the port state is correct
+                          after the vm destruction. This is helpful when the port is not deleted.
+                        type: boolean
+                      ignoreResizeConfirmation:
+                        description: |-
+                          Boolean to control whether
+                          to ignore manual confirmation of the instance resizing. This can be helpful
+                          to work with some OpenStack clouds which automatically confirm resizing of
+                          instances after some timeout.
+                        type: boolean
+                    type: object
                   volume:
                     items:
                       properties:
@@ -1636,23 +2084,21 @@ spec:
                     description: |-
                       Map of additional vendor-specific options.
                       Supported options are described below.
-                    items:
-                      properties:
-                        detachPortsBeforeDestroy:
-                          description: |-
-                            Whether to try to detach all attached
-                            ports to the vm before destroying it to make sure the port state is correct
-                            after the vm destruction. This is helpful when the port is not deleted.
-                          type: boolean
-                        ignoreResizeConfirmation:
-                          description: |-
-                            Boolean to control whether
-                            to ignore manual confirmation of the instance resizing. This can be helpful
-                            to work with some OpenStack clouds which automatically confirm resizing of
-                            instances after some timeout.
-                          type: boolean
-                      type: object
-                    type: array
+                    properties:
+                      detachPortsBeforeDestroy:
+                        description: |-
+                          Whether to try to detach all attached
+                          ports to the vm before destroying it to make sure the port state is correct
+                          after the vm destruction. This is helpful when the port is not deleted.
+                        type: boolean
+                      ignoreResizeConfirmation:
+                        description: |-
+                          Boolean to control whether
+                          to ignore manual confirmation of the instance resizing. This can be helpful
+                          to work with some OpenStack clouds which automatically confirm resizing of
+                          instances after some timeout.
+                        type: boolean
+                    type: object
                   volume:
                     items:
                       properties:

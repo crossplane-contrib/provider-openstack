@@ -8,7 +8,9 @@ metadata:
   name: basic
 spec:
   forProvider:
-    flavorId: "3"
+    flavorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     imageId: ad091b52-742f-469e-8f3c-fd81cadf0743
     keyPairSelector:
       matchLabels:

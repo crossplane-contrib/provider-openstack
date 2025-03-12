@@ -98,18 +98,16 @@ spec:
                     description: |-
                       An array of database engine type and version. The datastore
                       object structure is documented below. Changing this creates resource.
-                    items:
-                      properties:
-                        type:
-                          description: Database engine type to be used with this configuration.
-                            Changing this creates a new resource.
-                          type: string
-                        version:
-                          description: Version of database engine type to be used
-                            with this configuration. Changing this creates a new resource.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      type:
+                        description: Database engine type to be used with this configuration.
+                          Changing this creates a new resource.
+                        type: string
+                      version:
+                        description: Version of database engine type to be used with
+                          this configuration. Changing this creates a new resource.
+                        type: string
+                    type: object
                   description:
                     description: Description of the resource.
                     type: string
@@ -160,18 +158,16 @@ spec:
                     description: |-
                       An array of database engine type and version. The datastore
                       object structure is documented below. Changing this creates resource.
-                    items:
-                      properties:
-                        type:
-                          description: Database engine type to be used with this configuration.
-                            Changing this creates a new resource.
-                          type: string
-                        version:
-                          description: Version of database engine type to be used
-                            with this configuration. Changing this creates a new resource.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      type:
+                        description: Database engine type to be used with this configuration.
+                          Changing this creates a new resource.
+                        type: string
+                      version:
+                        description: Version of database engine type to be used with
+                          this configuration. Changing this creates a new resource.
+                        type: string
+                    type: object
                   description:
                     description: Description of the resource.
                     type: string
@@ -394,18 +390,16 @@ spec:
                     description: |-
                       An array of database engine type and version. The datastore
                       object structure is documented below. Changing this creates resource.
-                    items:
-                      properties:
-                        type:
-                          description: Database engine type to be used with this configuration.
-                            Changing this creates a new resource.
-                          type: string
-                        version:
-                          description: Version of database engine type to be used
-                            with this configuration. Changing this creates a new resource.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      type:
+                        description: Database engine type to be used with this configuration.
+                          Changing this creates a new resource.
+                        type: string
+                      version:
+                        description: Version of database engine type to be used with
+                          this configuration. Changing this creates a new resource.
+                        type: string
+                    type: object
                   description:
                     description: Description of the resource.
                     type: string

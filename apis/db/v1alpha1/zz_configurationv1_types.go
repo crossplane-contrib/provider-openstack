@@ -60,7 +60,7 @@ type ConfigurationV1InitParameters struct {
 
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates resource.
-	Datastore []DatastoreInitParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *DatastoreInitParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// Description of the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -80,7 +80,7 @@ type ConfigurationV1Observation struct {
 
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates resource.
-	Datastore []DatastoreObservation `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *DatastoreObservation `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// Description of the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -104,7 +104,7 @@ type ConfigurationV1Parameters struct {
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates resource.
 	// +kubebuilder:validation:Optional
-	Datastore []DatastoreParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *DatastoreParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// Description of the resource.
 	// +kubebuilder:validation:Optional

@@ -11,11 +11,17 @@ spec:
     name: tls
     secretRefs:
     - name: certificate
-      secretRef: ${openstack_keymanager_secret_v1.certificate_1.secret_ref}
+      secretRefSelector:
+        matchLabels:
+          testing.upbound.io/example-name: certificate_1
     - name: private_key
-      secretRef: ${openstack_keymanager_secret_v1.private_key_1.secret_ref}
+      secretRefSelector:
+        matchLabels:
+          testing.upbound.io/example-name: private_key_1
     - name: intermediates
-      secretRef: ${openstack_keymanager_secret_v1.intermediate_1.secret_ref}
+      secretRefSelector:
+        matchLabels:
+          testing.upbound.io/example-name: intermediate_1
     type: certificate
 
 ---

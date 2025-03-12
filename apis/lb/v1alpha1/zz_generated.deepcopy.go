@@ -64,6 +64,16 @@ func (in *L7PolicyV2InitParameters) DeepCopyInto(out *L7PolicyV2InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.ListenerIDRef != nil {
+		in, out := &in.ListenerIDRef, &out.ListenerIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ListenerIDSelector != nil {
+		in, out := &in.ListenerIDSelector, &out.ListenerIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -78,6 +88,16 @@ func (in *L7PolicyV2InitParameters) DeepCopyInto(out *L7PolicyV2InitParameters) 
 		in, out := &in.RedirectPoolID, &out.RedirectPoolID
 		*out = new(string)
 		**out = **in
+	}
+	if in.RedirectPoolIDRef != nil {
+		in, out := &in.RedirectPoolIDRef, &out.RedirectPoolIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RedirectPoolIDSelector != nil {
+		in, out := &in.RedirectPoolIDSelector, &out.RedirectPoolIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.RedirectURL != nil {
 		in, out := &in.RedirectURL, &out.RedirectURL
@@ -231,6 +251,16 @@ func (in *L7PolicyV2Parameters) DeepCopyInto(out *L7PolicyV2Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ListenerIDRef != nil {
+		in, out := &in.ListenerIDRef, &out.ListenerIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ListenerIDSelector != nil {
+		in, out := &in.ListenerIDSelector, &out.ListenerIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -245,6 +275,16 @@ func (in *L7PolicyV2Parameters) DeepCopyInto(out *L7PolicyV2Parameters) {
 		in, out := &in.RedirectPoolID, &out.RedirectPoolID
 		*out = new(string)
 		**out = **in
+	}
+	if in.RedirectPoolIDRef != nil {
+		in, out := &in.RedirectPoolIDRef, &out.RedirectPoolIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RedirectPoolIDSelector != nil {
+		in, out := &in.RedirectPoolIDSelector, &out.RedirectPoolIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.RedirectURL != nil {
 		in, out := &in.RedirectURL, &out.RedirectURL
@@ -362,6 +402,16 @@ func (in *L7RuleV2InitParameters) DeepCopyInto(out *L7RuleV2InitParameters) {
 		in, out := &in.L7PolicyID, &out.L7PolicyID
 		*out = new(string)
 		**out = **in
+	}
+	if in.L7PolicyIDRef != nil {
+		in, out := &in.L7PolicyIDRef, &out.L7PolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.L7PolicyIDSelector != nil {
+		in, out := &in.L7PolicyIDSelector, &out.L7PolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -524,6 +574,16 @@ func (in *L7RuleV2Parameters) DeepCopyInto(out *L7RuleV2Parameters) {
 		in, out := &in.L7PolicyID, &out.L7PolicyID
 		*out = new(string)
 		**out = **in
+	}
+	if in.L7PolicyIDRef != nil {
+		in, out := &in.L7PolicyIDRef, &out.L7PolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.L7PolicyIDSelector != nil {
+		in, out := &in.L7PolicyIDSelector, &out.L7PolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -2272,6 +2332,16 @@ func (in *MonitorV2InitParameters) DeepCopyInto(out *MonitorV2InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PoolIDRef != nil {
+		in, out := &in.PoolIDRef, &out.PoolIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PoolIDSelector != nil {
+		in, out := &in.PoolIDSelector, &out.PoolIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -2468,6 +2538,16 @@ func (in *MonitorV2Parameters) DeepCopyInto(out *MonitorV2Parameters) {
 		in, out := &in.PoolID, &out.PoolID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PoolIDRef != nil {
+		in, out := &in.PoolIDRef, &out.PoolIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PoolIDSelector != nil {
+		in, out := &in.PoolIDSelector, &out.PoolIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -2678,10 +2758,8 @@ func (in *PoolV2InitParameters) DeepCopyInto(out *PoolV2InitParameters) {
 	}
 	if in.Persistence != nil {
 		in, out := &in.Persistence, &out.Persistence
-		*out = make([]PersistenceInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(PersistenceInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol
@@ -2782,10 +2860,8 @@ func (in *PoolV2Observation) DeepCopyInto(out *PoolV2Observation) {
 	}
 	if in.Persistence != nil {
 		in, out := &in.Persistence, &out.Persistence
-		*out = make([]PersistenceObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(PersistenceObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol
@@ -2849,10 +2925,8 @@ func (in *PoolV2Parameters) DeepCopyInto(out *PoolV2Parameters) {
 	}
 	if in.Persistence != nil {
 		in, out := &in.Persistence, &out.Persistence
-		*out = make([]PersistenceParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(PersistenceParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol

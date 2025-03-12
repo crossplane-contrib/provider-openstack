@@ -8,9 +8,13 @@ metadata:
   name: endpoint-1
 spec:
   forProvider:
-    endpointRegion: ${openstack_identity_service_v3.service_1.region}
+    endpointRegionSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service_1
     name: my-endpoint
-    serviceId: ${openstack_identity_service_v3.service_1.id}
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service_1
     url: http://my-endpoint
 
 ---

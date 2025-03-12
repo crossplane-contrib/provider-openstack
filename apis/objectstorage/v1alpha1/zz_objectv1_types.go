@@ -22,7 +22,17 @@ type ObjectV1InitParameters struct {
 	// The container name cannot contain a slash (/) character because this
 	// character delimits the container and object name. For example, the path
 	// /v1/account/www/pages specifies the www container, not the www/pages container.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	ContainerName *string `json:"containerName,omitempty" tf:"container_name,omitempty"`
+
+	// Reference to a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameRef *v1.Reference `json:"containerNameRef,omitempty" tf:"-"`
+
+	// Selector for a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameSelector *v1.Selector `json:"containerNameSelector,omitempty" tf:"-"`
 
 	// A string representing the content of the object. Conflicts with
 	// source and copy_from.
@@ -191,8 +201,18 @@ type ObjectV1Parameters struct {
 	// The container name cannot contain a slash (/) character because this
 	// character delimits the container and object name. For example, the path
 	// /v1/account/www/pages specifies the www container, not the www/pages container.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	ContainerName *string `json:"containerName,omitempty" tf:"container_name,omitempty"`
+
+	// Reference to a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameRef *v1.Reference `json:"containerNameRef,omitempty" tf:"-"`
+
+	// Selector for a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameSelector *v1.Selector `json:"containerNameSelector,omitempty" tf:"-"`
 
 	// A string representing the content of the object. Conflicts with
 	// source and copy_from.
@@ -307,7 +327,6 @@ type ObjectV1Status struct {
 type ObjectV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.containerName) || (has(self.initProvider) && has(self.initProvider.containerName))",message="spec.forProvider.containerName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   ObjectV1Spec   `json:"spec"`
 	Status ObjectV1Status `json:"status,omitempty"`

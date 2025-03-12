@@ -59,17 +59,17 @@ type ACLReadParameters struct {
 }
 
 type SecretV1ACLInitParameters struct {
-	Read []ACLReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ACLReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type SecretV1ACLObservation struct {
-	Read []ACLReadObservation `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ACLReadObservation `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type SecretV1ACLParameters struct {
 
 	// +kubebuilder:validation:Optional
-	Read []ACLReadParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ACLReadParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type SecretV1InitParameters struct {
@@ -77,7 +77,7 @@ type SecretV1InitParameters struct {
 	// Allows to control an access to a secret. Currently only the
 	// read operation is supported. If not specified, the secret is accessible
 	// project wide.
-	ACL []SecretV1ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *SecretV1ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
@@ -123,7 +123,7 @@ type SecretV1Observation struct {
 	// Allows to control an access to a secret. Currently only the
 	// read operation is supported. If not specified, the secret is accessible
 	// project wide.
-	ACL []SecretV1ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *SecretV1ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
@@ -193,7 +193,7 @@ type SecretV1Parameters struct {
 	// read operation is supported. If not specified, the secret is accessible
 	// project wide.
 	// +kubebuilder:validation:Optional
-	ACL []SecretV1ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *SecretV1ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	// +kubebuilder:validation:Optional

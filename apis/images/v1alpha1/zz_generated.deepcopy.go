@@ -268,6 +268,16 @@ func (in *ImageAccessV2InitParameters) DeepCopyInto(out *ImageAccessV2InitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageIDRef != nil {
+		in, out := &in.ImageIDRef, &out.ImageIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ImageIDSelector != nil {
+		in, out := &in.ImageIDSelector, &out.ImageIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.MemberID != nil {
 		in, out := &in.MemberID, &out.MemberID
 		*out = new(string)
@@ -389,6 +399,16 @@ func (in *ImageAccessV2Parameters) DeepCopyInto(out *ImageAccessV2Parameters) {
 		in, out := &in.ImageID, &out.ImageID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ImageIDRef != nil {
+		in, out := &in.ImageIDRef, &out.ImageIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ImageIDSelector != nil {
+		in, out := &in.ImageIDSelector, &out.ImageIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.MemberID != nil {
 		in, out := &in.MemberID, &out.MemberID

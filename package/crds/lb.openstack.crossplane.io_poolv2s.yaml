@@ -108,20 +108,18 @@ spec:
                       Omit this field to prevent session persistence.  Indicates
                       whether connections in the same session will be processed by the same Pool
                       member or not. Changing this creates a new pool.
-                    items:
-                      properties:
-                        cookieName:
-                          description: |-
-                            The name of the cookie if persistence mode is set
-                            appropriately. Required if type = APP_COOKIE.
-                          type: string
-                        type:
-                          description: |-
-                            The type of persistence mode. The current specification
-                            supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      cookieName:
+                        description: |-
+                          The name of the cookie if persistence mode is set
+                          appropriately. Required if type = APP_COOKIE.
+                        type: string
+                      type:
+                        description: |-
+                          The type of persistence mode. The current specification
+                          supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
+                        type: string
+                    type: object
                   protocol:
                     description: |-
                       The protocol - can either be TCP, HTTP, HTTPS, PROXY,
@@ -190,20 +188,18 @@ spec:
                       Omit this field to prevent session persistence.  Indicates
                       whether connections in the same session will be processed by the same Pool
                       member or not. Changing this creates a new pool.
-                    items:
-                      properties:
-                        cookieName:
-                          description: |-
-                            The name of the cookie if persistence mode is set
-                            appropriately. Required if type = APP_COOKIE.
-                          type: string
-                        type:
-                          description: |-
-                            The type of persistence mode. The current specification
-                            supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      cookieName:
+                        description: |-
+                          The name of the cookie if persistence mode is set
+                          appropriately. Required if type = APP_COOKIE.
+                        type: string
+                      type:
+                        description: |-
+                          The type of persistence mode. The current specification
+                          supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
+                        type: string
+                    type: object
                   protocol:
                     description: |-
                       The protocol - can either be TCP, HTTP, HTTPS, PROXY,
@@ -443,20 +439,18 @@ spec:
                       Omit this field to prevent session persistence.  Indicates
                       whether connections in the same session will be processed by the same Pool
                       member or not. Changing this creates a new pool.
-                    items:
-                      properties:
-                        cookieName:
-                          description: |-
-                            The name of the cookie if persistence mode is set
-                            appropriately. Required if type = APP_COOKIE.
-                          type: string
-                        type:
-                          description: |-
-                            The type of persistence mode. The current specification
-                            supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      cookieName:
+                        description: |-
+                          The name of the cookie if persistence mode is set
+                          appropriately. Required if type = APP_COOKIE.
+                        type: string
+                      type:
+                        description: |-
+                          The type of persistence mode. The current specification
+                          supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
+                        type: string
+                    type: object
                   protocol:
                     description: |-
                       The protocol - can either be TCP, HTTP, HTTPS, PROXY,

@@ -8,8 +8,12 @@ metadata:
   name: access-1
 spec:
   forProvider:
-    flavorId: ${openstack_compute_flavor_v2.flavor_1.id}
-    tenantId: ${openstack_identity_project_v3.project_1.id}
+    flavorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: flavor_1
+    tenantIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
 
 ---
 

@@ -68,7 +68,7 @@ type ContainerV1InitParameters struct {
 	Versioning *bool `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
 	// (Deprecated) Enable legacy object versioning. The structure is described below.
-	VersioningLegacy []VersioningLegacyInitParameters `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
+	VersioningLegacy *VersioningLegacyInitParameters `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
 }
 
 type ContainerV1Observation struct {
@@ -127,7 +127,7 @@ type ContainerV1Observation struct {
 	Versioning *bool `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
 	// (Deprecated) Enable legacy object versioning. The structure is described below.
-	VersioningLegacy []VersioningLegacyObservation `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
+	VersioningLegacy *VersioningLegacyObservation `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
 }
 
 type ContainerV1Parameters struct {
@@ -196,7 +196,7 @@ type ContainerV1Parameters struct {
 
 	// (Deprecated) Enable legacy object versioning. The structure is described below.
 	// +kubebuilder:validation:Optional
-	VersioningLegacy []VersioningLegacyParameters `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
+	VersioningLegacy *VersioningLegacyParameters `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
 }
 
 type VersioningLegacyInitParameters struct {

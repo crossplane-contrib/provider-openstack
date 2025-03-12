@@ -8,8 +8,12 @@ metadata:
   name: fip-1
 spec:
   forProvider:
-    floatingIp: ${openstack_networking_floatingip_v2.fip_1.address}
-    instanceId: ${openstack_compute_instance_v2.instance_1.id}
+    floatingIpSelector:
+      matchLabels:
+        testing.upbound.io/example-name: fip_1
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_1
 
 ---
 
@@ -23,7 +27,9 @@ metadata:
   name: instance-1
 spec:
   forProvider:
-    flavorId: 3
+    flavorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     imageId: ad091b52-742f-469e-8f3c-fd81cadf0743
     keyPairSelector:
       matchLabels:

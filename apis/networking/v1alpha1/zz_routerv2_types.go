@@ -121,7 +121,7 @@ type RouterV2InitParameters struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 }
 
 type RouterV2Observation struct {
@@ -210,7 +210,7 @@ type RouterV2Observation struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 }
 
 type RouterV2Parameters struct {
@@ -306,7 +306,7 @@ type RouterV2Parameters struct {
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	// +kubebuilder:validation:Optional
-	VendorOptions []VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 }
 
 type VendorOptionsInitParameters struct {

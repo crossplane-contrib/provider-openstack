@@ -27,12 +27,32 @@ type SharenetworkV2InitParameters struct {
 	// The UUID of a neutron network when setting up or updating
 	// a share network. Changing this updates the existing share network if it's not used by
 	// shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NeutronNetID *string `json:"neutronNetId,omitempty" tf:"neutron_net_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDRef *v1.Reference `json:"neutronNetIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDSelector *v1.Selector `json:"neutronNetIdSelector,omitempty" tf:"-"`
 
 	// The UUID of the neutron subnet when setting up or
 	// updating a share network. Changing this updates the existing share network if it's
 	// not used by shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NeutronSubnetID *string `json:"neutronSubnetId,omitempty" tf:"neutron_subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDRef *v1.Reference `json:"neutronSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDSelector *v1.Selector `json:"neutronSubnetIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Shared File System client.
 	// A Shared File System client is needed to create a share network. If omitted, the
@@ -111,14 +131,34 @@ type SharenetworkV2Parameters struct {
 	// The UUID of a neutron network when setting up or updating
 	// a share network. Changing this updates the existing share network if it's not used by
 	// shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NeutronNetID *string `json:"neutronNetId,omitempty" tf:"neutron_net_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDRef *v1.Reference `json:"neutronNetIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDSelector *v1.Selector `json:"neutronNetIdSelector,omitempty" tf:"-"`
 
 	// The UUID of the neutron subnet when setting up or
 	// updating a share network. Changing this updates the existing share network if it's
 	// not used by shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NeutronSubnetID *string `json:"neutronSubnetId,omitempty" tf:"neutron_subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDRef *v1.Reference `json:"neutronSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDSelector *v1.Selector `json:"neutronSubnetIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Shared File System client.
 	// A Shared File System client is needed to create a share network. If omitted, the
@@ -170,10 +210,8 @@ type SharenetworkV2Status struct {
 type SharenetworkV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.neutronNetId) || (has(self.initProvider) && has(self.initProvider.neutronNetId))",message="spec.forProvider.neutronNetId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.neutronSubnetId) || (has(self.initProvider) && has(self.initProvider.neutronSubnetId))",message="spec.forProvider.neutronSubnetId is a required parameter"
-	Spec   SharenetworkV2Spec   `json:"spec"`
-	Status SharenetworkV2Status `json:"status,omitempty"`
+	Spec              SharenetworkV2Spec   `json:"spec"`
+	Status            SharenetworkV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

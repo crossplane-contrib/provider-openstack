@@ -179,15 +179,13 @@ spec:
                     description: |-
                       Map of additional vendor-specific options.
                       Supported options are described below.
-                    items:
-                      properties:
-                        setRouterGatewayAfterCreate:
-                          description: |-
-                            Boolean to control whether
-                            the Router gateway is assigned during creation or updated after creation.
-                          type: boolean
-                      type: object
-                    type: array
+                    properties:
+                      setRouterGatewayAfterCreate:
+                        description: |-
+                          Boolean to control whether
+                          the Router gateway is assigned during creation or updated after creation.
+                        type: boolean
+                    type: object
                 type: object
               initProvider:
                 description: |-
@@ -308,15 +306,13 @@ spec:
                     description: |-
                       Map of additional vendor-specific options.
                       Supported options are described below.
-                    items:
-                      properties:
-                        setRouterGatewayAfterCreate:
-                          description: |-
-                            Boolean to control whether
-                            the Router gateway is assigned during creation or updated after creation.
-                          type: boolean
-                      type: object
-                    type: array
+                    properties:
+                      setRouterGatewayAfterCreate:
+                        description: |-
+                          Boolean to control whether
+                          the Router gateway is assigned during creation or updated after creation.
+                        type: boolean
+                    type: object
                 type: object
               managementPolicies:
                 default:
@@ -607,15 +603,13 @@ spec:
                     description: |-
                       Map of additional vendor-specific options.
                       Supported options are described below.
-                    items:
-                      properties:
-                        setRouterGatewayAfterCreate:
-                          description: |-
-                            Boolean to control whether
-                            the Router gateway is assigned during creation or updated after creation.
-                          type: boolean
-                      type: object
-                    type: array
+                    properties:
+                      setRouterGatewayAfterCreate:
+                        description: |-
+                          Boolean to control whether
+                          the Router gateway is assigned during creation or updated after creation.
+                        type: boolean
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.

@@ -37,10 +37,30 @@ type RoleAssignmentV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.RoleV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
+	// Reference to a RoleV3 in identity to populate roleId.
+	// +kubebuilder:validation:Optional
+	RoleIDRef *v1.Reference `json:"roleIdRef,omitempty" tf:"-"`
+
+	// Selector for a RoleV3 in identity to populate roleId.
+	// +kubebuilder:validation:Optional
+	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
+
 	// The user to assign the role to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.UserV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Reference to a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDRef *v1.Reference `json:"userIdRef,omitempty" tf:"-"`
+
+	// Selector for a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
 }
 
 type RoleAssignmentV3Observation struct {
@@ -92,12 +112,32 @@ type RoleAssignmentV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.RoleV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
+	// Reference to a RoleV3 in identity to populate roleId.
+	// +kubebuilder:validation:Optional
+	RoleIDRef *v1.Reference `json:"roleIdRef,omitempty" tf:"-"`
+
+	// Selector for a RoleV3 in identity to populate roleId.
+	// +kubebuilder:validation:Optional
+	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
+
 	// The user to assign the role to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.UserV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Reference to a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDRef *v1.Reference `json:"userIdRef,omitempty" tf:"-"`
+
+	// Selector for a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
 }
 
 // RoleAssignmentV3Spec defines the desired state of RoleAssignmentV3
@@ -136,9 +176,8 @@ type RoleAssignmentV3Status struct {
 type RoleAssignmentV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.roleId) || (has(self.initProvider) && has(self.initProvider.roleId))",message="spec.forProvider.roleId is a required parameter"
-	Spec   RoleAssignmentV3Spec   `json:"spec"`
-	Status RoleAssignmentV3Status `json:"status,omitempty"`
+	Spec              RoleAssignmentV3Spec   `json:"spec"`
+	Status            RoleAssignmentV3Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -29,7 +29,17 @@ type L7PolicyV2InitParameters struct {
 
 	// The Listener on which the L7 Policy will be associated with.
 	// Changing this creates a new L7 Policy.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.ListenerV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Reference to a ListenerV2 in lb to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDRef *v1.Reference `json:"listenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ListenerV2 in lb to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
 
 	// Human-readable name for the L7 Policy. Does not have
 	// to be unique.
@@ -40,7 +50,17 @@ type L7PolicyV2InitParameters struct {
 
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RedirectPoolID *string `json:"redirectPoolId,omitempty" tf:"redirect_pool_id,omitempty"`
+
+	// Reference to a PoolV2 in lb to populate redirectPoolId.
+	// +kubebuilder:validation:Optional
+	RedirectPoolIDRef *v1.Reference `json:"redirectPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a PoolV2 in lb to populate redirectPoolId.
+	// +kubebuilder:validation:Optional
+	RedirectPoolIDSelector *v1.Selector `json:"redirectPoolIdSelector,omitempty" tf:"-"`
 
 	// Requests matching this policy will be redirected to this URL.
 	// Only valid if action is REDIRECT_TO_URL.
@@ -123,8 +143,18 @@ type L7PolicyV2Parameters struct {
 
 	// The Listener on which the L7 Policy will be associated with.
 	// Changing this creates a new L7 Policy.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.ListenerV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
+
+	// Reference to a ListenerV2 in lb to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDRef *v1.Reference `json:"listenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ListenerV2 in lb to populate listenerId.
+	// +kubebuilder:validation:Optional
+	ListenerIDSelector *v1.Selector `json:"listenerIdSelector,omitempty" tf:"-"`
 
 	// Human-readable name for the L7 Policy. Does not have
 	// to be unique.
@@ -137,8 +167,18 @@ type L7PolicyV2Parameters struct {
 
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RedirectPoolID *string `json:"redirectPoolId,omitempty" tf:"redirect_pool_id,omitempty"`
+
+	// Reference to a PoolV2 in lb to populate redirectPoolId.
+	// +kubebuilder:validation:Optional
+	RedirectPoolIDRef *v1.Reference `json:"redirectPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a PoolV2 in lb to populate redirectPoolId.
+	// +kubebuilder:validation:Optional
+	RedirectPoolIDSelector *v1.Selector `json:"redirectPoolIdSelector,omitempty" tf:"-"`
 
 	// Requests matching this policy will be redirected to this URL.
 	// Only valid if action is REDIRECT_TO_URL.
@@ -196,7 +236,6 @@ type L7PolicyV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.action) || (has(self.initProvider) && has(self.initProvider.action))",message="spec.forProvider.action is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.listenerId) || (has(self.initProvider) && has(self.initProvider.listenerId))",message="spec.forProvider.listenerId is a required parameter"
 	Spec   L7PolicyV2Spec   `json:"spec"`
 	Status L7PolicyV2Status `json:"status,omitempty"`
 }

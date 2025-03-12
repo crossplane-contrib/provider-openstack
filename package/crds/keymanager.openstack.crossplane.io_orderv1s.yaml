@@ -76,32 +76,29 @@ spec:
                   meta:
                     description: Dictionary containing the order metadata used to
                       generate the order. The structure is described below.
-                    items:
-                      properties:
-                        algorithm:
-                          description: Algorithm to use for key generation.
-                          type: string
-                        bitLength:
-                          description: '- Bit lenght of key to be generated.'
-                          type: number
-                        expiration:
-                          description: This is a UTC timestamp in ISO 8601 format
-                            YYYY-MM-DDTHH:MM:SSZ. If set, the secret will not be available
-                            after this time.
-                          type: string
-                        mode:
-                          description: The mode to use for key generation.
-                          type: string
-                        name:
-                          description: The name of the secret set by the user.
-                          type: string
-                        payloadContentType:
-                          description: The media type for the content of the secrets
-                            payload. Must be one of text/plain, text/plain;charset=utf-8,
-                            text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      algorithm:
+                        description: Algorithm to use for key generation.
+                        type: string
+                      bitLength:
+                        description: '- Bit lenght of key to be generated.'
+                        type: number
+                      expiration:
+                        description: This is a UTC timestamp in ISO 8601 format YYYY-MM-DDTHH:MM:SSZ.
+                          If set, the secret will not be available after this time.
+                        type: string
+                      mode:
+                        description: The mode to use for key generation.
+                        type: string
+                      name:
+                        description: The name of the secret set by the user.
+                        type: string
+                      payloadContentType:
+                        description: The media type for the content of the secrets
+                          payload. Must be one of text/plain, text/plain;charset=utf-8,
+                          text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
+                        type: string
+                    type: object
                   region:
                     description: |-
                       The region in which to obtain the V1 KeyManager client.
@@ -130,32 +127,29 @@ spec:
                   meta:
                     description: Dictionary containing the order metadata used to
                       generate the order. The structure is described below.
-                    items:
-                      properties:
-                        algorithm:
-                          description: Algorithm to use for key generation.
-                          type: string
-                        bitLength:
-                          description: '- Bit lenght of key to be generated.'
-                          type: number
-                        expiration:
-                          description: This is a UTC timestamp in ISO 8601 format
-                            YYYY-MM-DDTHH:MM:SSZ. If set, the secret will not be available
-                            after this time.
-                          type: string
-                        mode:
-                          description: The mode to use for key generation.
-                          type: string
-                        name:
-                          description: The name of the secret set by the user.
-                          type: string
-                        payloadContentType:
-                          description: The media type for the content of the secrets
-                            payload. Must be one of text/plain, text/plain;charset=utf-8,
-                            text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      algorithm:
+                        description: Algorithm to use for key generation.
+                        type: string
+                      bitLength:
+                        description: '- Bit lenght of key to be generated.'
+                        type: number
+                      expiration:
+                        description: This is a UTC timestamp in ISO 8601 format YYYY-MM-DDTHH:MM:SSZ.
+                          If set, the secret will not be available after this time.
+                        type: string
+                      mode:
+                        description: The mode to use for key generation.
+                        type: string
+                      name:
+                        description: The name of the secret set by the user.
+                        type: string
+                      payloadContentType:
+                        description: The media type for the content of the secrets
+                          payload. Must be one of text/plain, text/plain;charset=utf-8,
+                          text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
+                        type: string
+                    type: object
                   region:
                     description: |-
                       The region in which to obtain the V1 KeyManager client.
@@ -363,32 +357,29 @@ spec:
                   meta:
                     description: Dictionary containing the order metadata used to
                       generate the order. The structure is described below.
-                    items:
-                      properties:
-                        algorithm:
-                          description: Algorithm to use for key generation.
-                          type: string
-                        bitLength:
-                          description: '- Bit lenght of key to be generated.'
-                          type: number
-                        expiration:
-                          description: This is a UTC timestamp in ISO 8601 format
-                            YYYY-MM-DDTHH:MM:SSZ. If set, the secret will not be available
-                            after this time.
-                          type: string
-                        mode:
-                          description: The mode to use for key generation.
-                          type: string
-                        name:
-                          description: The name of the secret set by the user.
-                          type: string
-                        payloadContentType:
-                          description: The media type for the content of the secrets
-                            payload. Must be one of text/plain, text/plain;charset=utf-8,
-                            text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
-                          type: string
-                      type: object
-                    type: array
+                    properties:
+                      algorithm:
+                        description: Algorithm to use for key generation.
+                        type: string
+                      bitLength:
+                        description: '- Bit lenght of key to be generated.'
+                        type: number
+                      expiration:
+                        description: This is a UTC timestamp in ISO 8601 format YYYY-MM-DDTHH:MM:SSZ.
+                          If set, the secret will not be available after this time.
+                        type: string
+                      mode:
+                        description: The mode to use for key generation.
+                        type: string
+                      name:
+                        description: The name of the secret set by the user.
+                        type: string
+                      payloadContentType:
+                        description: The media type for the content of the secrets
+                          payload. Must be one of text/plain, text/plain;charset=utf-8,
+                          text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
+                        type: string
+                    type: object
                   orderRef:
                     description: The order reference / where to find the order.
                     type: string
