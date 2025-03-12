@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: routerinterfacev2s.networking.openstack.crossplane.io
 spec:
   group: networking.openstack.crossplane.io
@@ -97,7 +97,8 @@ spec:
                       this creates a new router interface.
                     type: string
                   routerIdRef:
-                    description: Reference to a RouterV2 to populate routerId.
+                    description: Reference to a RouterV2 in networking to populate
+                      routerId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -131,7 +132,8 @@ spec:
                     - name
                     type: object
                   routerIdSelector:
-                    description: Selector for a RouterV2 to populate routerId.
+                    description: Selector for a RouterV2 in networking to populate
+                      routerId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -176,7 +178,8 @@ spec:
                       this creates a new router interface.
                     type: string
                   subnetIdRef:
-                    description: Reference to a SubnetV2 to populate subnetId.
+                    description: Reference to a SubnetV2 in networking to populate
+                      subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -210,7 +213,8 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: Selector for a SubnetV2 to populate subnetId.
+                    description: Selector for a SubnetV2 in networking to populate
+                      subnetId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -287,7 +291,8 @@ spec:
                       this creates a new router interface.
                     type: string
                   routerIdRef:
-                    description: Reference to a RouterV2 to populate routerId.
+                    description: Reference to a RouterV2 in networking to populate
+                      routerId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -321,7 +326,8 @@ spec:
                     - name
                     type: object
                   routerIdSelector:
-                    description: Selector for a RouterV2 to populate routerId.
+                    description: Selector for a RouterV2 in networking to populate
+                      routerId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -366,7 +372,8 @@ spec:
                       this creates a new router interface.
                     type: string
                   subnetIdRef:
-                    description: Reference to a SubnetV2 to populate subnetId.
+                    description: Reference to a SubnetV2 in networking to populate
+                      subnetId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -400,7 +407,8 @@ spec:
                     - name
                     type: object
                   subnetIdSelector:
-                    description: Selector for a SubnetV2 to populate subnetId.
+                    description: Selector for a SubnetV2 in networking to populate
+                      subnetId.
                     properties:
                       matchControllerRef:
                         description: |-

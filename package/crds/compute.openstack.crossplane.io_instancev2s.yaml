@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: instancev2s.compute.openstack.crossplane.io
 spec:
   group: compute.openstack.crossplane.io
@@ -231,7 +231,7 @@ spec:
                       Changing this creates a new server.
                     type: string
                   keyPairRef:
-                    description: Reference to a KeypairV2 to populate keyPair.
+                    description: Reference to a KeypairV2 in compute to populate keyPair.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -265,7 +265,7 @@ spec:
                     - name
                     type: object
                   keyPairSelector:
-                    description: Selector for a KeypairV2 to populate keyPair.
+                    description: Selector for a KeypairV2 in compute to populate keyPair.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -460,7 +460,8 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   securityGroupsRefs:
-                    description: References to SecgroupV2 to populate securityGroups.
+                    description: References to SecgroupV2 in networking to populate
+                      securityGroups.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -497,7 +498,8 @@ spec:
                       type: object
                     type: array
                   securityGroupsSelector:
-                    description: Selector for a list of SecgroupV2 to populate securityGroups.
+                    description: Selector for a list of SecgroupV2 in networking to
+                      populate securityGroups.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -759,7 +761,7 @@ spec:
                       Changing this creates a new server.
                     type: string
                   keyPairRef:
-                    description: Reference to a KeypairV2 to populate keyPair.
+                    description: Reference to a KeypairV2 in compute to populate keyPair.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -793,7 +795,7 @@ spec:
                     - name
                     type: object
                   keyPairSelector:
-                    description: Selector for a KeypairV2 to populate keyPair.
+                    description: Selector for a KeypairV2 in compute to populate keyPair.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -988,7 +990,8 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   securityGroupsRefs:
-                    description: References to SecgroupV2 to populate securityGroups.
+                    description: References to SecgroupV2 in networking to populate
+                      securityGroups.
                     items:
                       description: A Reference to a named object.
                       properties:
@@ -1025,7 +1028,8 @@ spec:
                       type: object
                     type: array
                   securityGroupsSelector:
-                    description: Selector for a list of SecgroupV2 to populate securityGroups.
+                    description: Selector for a list of SecgroupV2 in networking to
+                      populate securityGroups.
                     properties:
                       matchControllerRef:
                         description: |-

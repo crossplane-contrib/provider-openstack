@@ -8,7 +8,8 @@ package v1alpha1
 
 import (
 	"context"
-	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
+	v1alpha11 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -44,8 +45,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 		References:    mg.Spec.ForProvider.SecurityGroupsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupsSelector,
 		To: reference.To{
-			List:    &SecgroupV2List{},
-			Managed: &SecgroupV2{},
+			List:    &v1alpha1.SecgroupV2List{},
+			Managed: &v1alpha1.SecgroupV2{},
 		},
 	})
 	if err != nil {
@@ -76,8 +77,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 		References:    mg.Spec.InitProvider.SecurityGroupsRefs,
 		Selector:      mg.Spec.InitProvider.SecurityGroupsSelector,
 		To: reference.To{
-			List:    &SecgroupV2List{},
-			Managed: &SecgroupV2{},
+			List:    &v1alpha1.SecgroupV2List{},
+			Managed: &v1alpha1.SecgroupV2{},
 		},
 	})
 	if err != nil {
@@ -102,8 +103,8 @@ func (mg *QuotasetV2) ResolveReferences(ctx context.Context, c client.Reader) er
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.ProjectV3List{},
-			Managed: &v1alpha1.ProjectV3{},
+			List:    &v1alpha11.ProjectV3List{},
+			Managed: &v1alpha11.ProjectV3{},
 		},
 	})
 	if err != nil {
@@ -118,8 +119,8 @@ func (mg *QuotasetV2) ResolveReferences(ctx context.Context, c client.Reader) er
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.ProjectV3List{},
-			Managed: &v1alpha1.ProjectV3{},
+			List:    &v1alpha11.ProjectV3List{},
+			Managed: &v1alpha11.ProjectV3{},
 		},
 	})
 	if err != nil {

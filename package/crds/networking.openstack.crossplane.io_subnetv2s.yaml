@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: subnetv2s.networking.openstack.crossplane.io
 spec:
   group: networking.openstack.crossplane.io
@@ -182,7 +182,8 @@ spec:
                       creates a new subnet.
                     type: string
                   networkIdRef:
-                    description: Reference to a NetworkV2 to populate networkId.
+                    description: Reference to a SubnetV2 in networking to populate
+                      networkId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -216,7 +217,8 @@ spec:
                     - name
                     type: object
                   networkIdSelector:
-                    description: Selector for a NetworkV2 to populate networkId.
+                    description: Selector for a SubnetV2 in networking to populate
+                      networkId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -424,7 +426,8 @@ spec:
                       creates a new subnet.
                     type: string
                   networkIdRef:
-                    description: Reference to a NetworkV2 to populate networkId.
+                    description: Reference to a SubnetV2 in networking to populate
+                      networkId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -458,7 +461,8 @@ spec:
                     - name
                     type: object
                   networkIdSelector:
-                    description: Selector for a NetworkV2 to populate networkId.
+                    description: Selector for a SubnetV2 in networking to populate
+                      networkId.
                     properties:
                       matchControllerRef:
                         description: |-

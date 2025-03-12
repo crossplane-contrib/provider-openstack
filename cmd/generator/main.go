@@ -15,7 +15,7 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/pipeline"
-	"github.com/alecthomas/kingpin/v2"
+	"gopkg.in/alecthomas/kingpin.v2"
 
 	"github.com/crossplane-contrib/provider-openstack/config"
 )

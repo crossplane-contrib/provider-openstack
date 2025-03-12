@@ -143,8 +143,8 @@ func (mg *SubnetV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &NetworkV2List{},
-			Managed: &NetworkV2{},
+			List:    &SubnetV2List{},
+			Managed: &SubnetV2{},
 		},
 	})
 	if err != nil {
@@ -159,8 +159,8 @@ func (mg *SubnetV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 		Reference:    mg.Spec.InitProvider.NetworkIDRef,
 		Selector:     mg.Spec.InitProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &NetworkV2List{},
-			Managed: &NetworkV2{},
+			List:    &SubnetV2List{},
+			Managed: &SubnetV2{},
 		},
 	})
 	if err != nil {

@@ -1185,8 +1185,6 @@ resources:
                     "${openstack_networking_secgroup_v2.sg_1.name}"
                   ]
                 }
-              references:
-                security_groups: openstack_networking_secgroup_v2.sg_1.name
               dependencies:
                 openstack_networking_secgroup_v2.sg_1: |-
                     {
@@ -2914,8 +2912,6 @@ resources:
                     "${openstack_fw_rule_v1.rule_2.id}"
                   ]
                 }
-              references:
-                rules: openstack_fw_rule_v1.rule_1.id
               dependencies:
                 openstack_fw_rule_v1.rule_1: |-
                     {
@@ -2980,8 +2976,6 @@ resources:
                     "${openstack_fw_rule_v2.rule_2.id}"
                   ]
                 }
-              references:
-                rules: openstack_fw_rule_v2.rule_1.id
               dependencies:
                 openstack_fw_rule_v2.rule_1: |-
                     {
@@ -4076,8 +4070,6 @@ resources:
                   "payload_content_type": "text/plain",
                   "secret_type": "certificate"
                 }
-              references:
-                lifecycle.ignore_changes: expiration
             - name: secret_1
               manifest: |-
                 {
@@ -5275,7 +5267,6 @@ resources:
                 }
               references:
                 port_id: data.openstack_networking_port_v2.system_port.id
-                security_group_ids: data.openstack_networking_secgroup_v2.secgroup.id
             - name: port_1
               manifest: |-
                 {
@@ -5287,7 +5278,6 @@ resources:
                 }
               references:
                 port_id: data.openstack_networking_port_v2.system_port.id
-                security_group_ids: data.openstack_networking_secgroup_v2.secgroup.id
             - name: port_1
               manifest: |-
                 {
@@ -7125,7 +7115,6 @@ resources:
               references:
                 neutron_net_id: openstack_networking_network_v2.network_1.id
                 neutron_subnet_id: openstack_networking_subnet_v2.subnet_1.id
-                security_service_ids: openstack_sharedfilesystem_securityservice_v2.securityservice_1.id
               dependencies:
                 openstack_networking_network_v2.network_1: |-
                     {

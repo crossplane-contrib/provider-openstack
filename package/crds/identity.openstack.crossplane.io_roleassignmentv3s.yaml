@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: roleassignmentv3s.identity.openstack.crossplane.io
 spec:
   group: identity.openstack.crossplane.io
@@ -83,7 +83,8 @@ spec:
                     description: The project to assign the role in.
                     type: string
                   projectIdRef:
-                    description: Reference to a ProjectV3 to populate projectId.
+                    description: Reference to a ProjectV3 in identity to populate
+                      projectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -117,7 +118,8 @@ spec:
                     - name
                     type: object
                   projectIdSelector:
-                    description: Selector for a ProjectV3 to populate projectId.
+                    description: Selector for a ProjectV3 in identity to populate
+                      projectId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -188,7 +190,8 @@ spec:
                     description: The project to assign the role in.
                     type: string
                   projectIdRef:
-                    description: Reference to a ProjectV3 to populate projectId.
+                    description: Reference to a ProjectV3 in identity to populate
+                      projectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -222,7 +225,8 @@ spec:
                     - name
                     type: object
                   projectIdSelector:
-                    description: Selector for a ProjectV3 to populate projectId.
+                    description: Selector for a ProjectV3 in identity to populate
+                      projectId.
                     properties:
                       matchControllerRef:
                         description: |-

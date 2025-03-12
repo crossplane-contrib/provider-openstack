@@ -33,27 +33,27 @@ type RouterInterfaceV2InitParameters struct {
 
 	// ID of the router this interface belongs to. Changing
 	// this creates a new router interface.
-	// +crossplane:generate:reference:type=RouterV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.RouterV2
 	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
 
-	// Reference to a RouterV2 to populate routerId.
+	// Reference to a RouterV2 in networking to populate routerId.
 	// +kubebuilder:validation:Optional
 	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
 
-	// Selector for a RouterV2 to populate routerId.
+	// Selector for a RouterV2 in networking to populate routerId.
 	// +kubebuilder:validation:Optional
 	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
 
 	// ID of the subnet this interface connects to. Changing
 	// this creates a new router interface.
-	// +crossplane:generate:reference:type=SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// Reference to a SubnetV2 to populate subnetId.
+	// Reference to a SubnetV2 in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
-	// Selector for a SubnetV2 to populate subnetId.
+	// Selector for a SubnetV2 in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
@@ -108,29 +108,29 @@ type RouterInterfaceV2Parameters struct {
 
 	// ID of the router this interface belongs to. Changing
 	// this creates a new router interface.
-	// +crossplane:generate:reference:type=RouterV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.RouterV2
 	// +kubebuilder:validation:Optional
 	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
 
-	// Reference to a RouterV2 to populate routerId.
+	// Reference to a RouterV2 in networking to populate routerId.
 	// +kubebuilder:validation:Optional
 	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
 
-	// Selector for a RouterV2 to populate routerId.
+	// Selector for a RouterV2 in networking to populate routerId.
 	// +kubebuilder:validation:Optional
 	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
 
 	// ID of the subnet this interface connects to. Changing
 	// this creates a new router interface.
-	// +crossplane:generate:reference:type=SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// Reference to a SubnetV2 to populate subnetId.
+	// Reference to a SubnetV2 in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
-	// Selector for a SubnetV2 to populate subnetId.
+	// Selector for a SubnetV2 in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }

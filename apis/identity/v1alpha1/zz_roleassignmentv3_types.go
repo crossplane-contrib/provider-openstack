@@ -23,14 +23,14 @@ type RoleAssignmentV3InitParameters struct {
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
 
 	// The project to assign the role in.
-	// +crossplane:generate:reference:type=ProjectV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// Reference to a ProjectV3 to populate projectId.
+	// Reference to a ProjectV3 in identity to populate projectId.
 	// +kubebuilder:validation:Optional
 	ProjectIDRef *v1.Reference `json:"projectIdRef,omitempty" tf:"-"`
 
-	// Selector for a ProjectV3 to populate projectId.
+	// Selector for a ProjectV3 in identity to populate projectId.
 	// +kubebuilder:validation:Optional
 	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
 
@@ -76,15 +76,15 @@ type RoleAssignmentV3Parameters struct {
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
 
 	// The project to assign the role in.
-	// +crossplane:generate:reference:type=ProjectV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
 	// +kubebuilder:validation:Optional
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// Reference to a ProjectV3 to populate projectId.
+	// Reference to a ProjectV3 in identity to populate projectId.
 	// +kubebuilder:validation:Optional
 	ProjectIDRef *v1.Reference `json:"projectIdRef,omitempty" tf:"-"`
 
-	// Selector for a ProjectV3 to populate projectId.
+	// Selector for a ProjectV3 in identity to populate projectId.
 	// +kubebuilder:validation:Optional
 	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
 
