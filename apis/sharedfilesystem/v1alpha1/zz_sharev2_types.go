@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -47,6 +43,7 @@ type ShareV2InitParameters struct {
 
 	// One or more metadata key and value pairs as a dictionary of
 	// strings.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// The name of the share. Changing this updates the name
@@ -84,6 +81,7 @@ type ShareV2Observation struct {
 
 	// The map of metadata, assigned on the share, which has been
 	// explicitly and implicitly added.
+	// +mapType=granular
 	AllMetadata map[string]*string `json:"allMetadata,omitempty" tf:"all_metadata,omitempty"`
 
 	// The share availability zone. Changing this creates a
@@ -114,6 +112,7 @@ type ShareV2Observation struct {
 
 	// One or more metadata key and value pairs as a dictionary of
 	// strings.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// The name of the share. Changing this updates the name
@@ -177,6 +176,7 @@ type ShareV2Parameters struct {
 	// One or more metadata key and value pairs as a dictionary of
 	// strings.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// The name of the share. Changing this updates the name
@@ -241,13 +241,14 @@ type ShareV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ShareV2 is the Schema for the ShareV2s API. Configure a Shared File System share.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ShareV2 struct {
 	metav1.TypeMeta   `json:",inline"`

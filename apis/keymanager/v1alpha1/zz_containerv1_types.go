@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -155,6 +151,7 @@ type ReadInitParameters struct {
 
 	// The list of user IDs, which are allowed to access the
 	// container, when project_access is set to false.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -172,6 +169,7 @@ type ReadObservation struct {
 
 	// The list of user IDs, which are allowed to access the
 	// container, when project_access is set to false.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -185,6 +183,7 @@ type ReadParameters struct {
 	// The list of user IDs, which are allowed to access the
 	// container, when project_access is set to false.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -241,13 +240,14 @@ type ContainerV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ContainerV1 is the Schema for the ContainerV1s API. Manages a V1 Barbican container resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ContainerV1 struct {
 	metav1.TypeMeta   `json:",inline"`

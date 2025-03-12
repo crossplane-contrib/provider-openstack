@@ -53,5 +53,37 @@ func (mg *ClusterV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.FixedSubnet = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.FixedSubnetRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FixedNetwork),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.FixedNetworkRef,
+		Selector:     mg.Spec.InitProvider.FixedNetworkSelector,
+		To: reference.To{
+			List:    &v1alpha1.NetworkV2List{},
+			Managed: &v1alpha1.NetworkV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.FixedNetwork")
+	}
+	mg.Spec.InitProvider.FixedNetwork = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.FixedNetworkRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FixedSubnet),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.FixedSubnetRef,
+		Selector:     mg.Spec.InitProvider.FixedSubnetSelector,
+		To: reference.To{
+			List:    &v1alpha1.SubnetV2List{},
+			Managed: &v1alpha1.SubnetV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.FixedSubnet")
+	}
+	mg.Spec.InitProvider.FixedSubnet = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.FixedSubnetRef = rsp.ResolvedReference
+
 	return nil
 }

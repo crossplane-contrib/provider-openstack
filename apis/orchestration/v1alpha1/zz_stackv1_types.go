@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -74,6 +70,7 @@ type StackV1InitParameters struct {
 	// the stack which contains details for the environment of the stack.
 	// Allowed keys: Bin, URL, Files. Changing this updates the existing stack
 	// Environment Opts.
+	// +mapType=granular
 	EnvironmentOpts map[string]*string `json:"environmentOpts,omitempty" tf:"environment_opts,omitempty"`
 
 	// A unique name for the stack. It must start with an
@@ -88,6 +85,7 @@ type StackV1InitParameters struct {
 
 	// User-defined key/value pairs as parameters to pass
 	// to the template. Changing this updates the existing stack parameters.
+	// +mapType=granular
 	Parameters map[string]*string `json:"parameters,omitempty" tf:"parameters,omitempty"`
 
 	// The region in which to create the stack. If
@@ -111,6 +109,7 @@ type StackV1InitParameters struct {
 	// stack which contains either the template file or url.
 	// Allowed keys: Bin, URL, Files. Changing this updates the existing stack
 	// Template Opts.
+	// +mapType=granular
 	TemplateOpts map[string]*string `json:"templateOpts,omitempty" tf:"template_opts,omitempty"`
 
 	// The timeout for stack action in minutes.
@@ -146,6 +145,7 @@ type StackV1Observation struct {
 	// the stack which contains details for the environment of the stack.
 	// Allowed keys: Bin, URL, Files. Changing this updates the existing stack
 	// Environment Opts.
+	// +mapType=granular
 	EnvironmentOpts map[string]*string `json:"environmentOpts,omitempty" tf:"environment_opts,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -162,6 +162,7 @@ type StackV1Observation struct {
 
 	// User-defined key/value pairs as parameters to pass
 	// to the template. Changing this updates the existing stack parameters.
+	// +mapType=granular
 	Parameters map[string]*string `json:"parameters,omitempty" tf:"parameters,omitempty"`
 
 	// The region in which to create the stack. If
@@ -185,6 +186,7 @@ type StackV1Observation struct {
 	// stack which contains either the template file or url.
 	// Allowed keys: Bin, URL, Files. Changing this updates the existing stack
 	// Template Opts.
+	// +mapType=granular
 	TemplateOpts map[string]*string `json:"templateOpts,omitempty" tf:"template_opts,omitempty"`
 
 	// The timeout for stack action in minutes.
@@ -225,6 +227,7 @@ type StackV1Parameters struct {
 	// Allowed keys: Bin, URL, Files. Changing this updates the existing stack
 	// Environment Opts.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	EnvironmentOpts map[string]*string `json:"environmentOpts,omitempty" tf:"environment_opts,omitempty"`
 
 	// A unique name for the stack. It must start with an
@@ -243,6 +246,7 @@ type StackV1Parameters struct {
 	// User-defined key/value pairs as parameters to pass
 	// to the template. Changing this updates the existing stack parameters.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Parameters map[string]*string `json:"parameters,omitempty" tf:"parameters,omitempty"`
 
 	// The region in which to create the stack. If
@@ -272,6 +276,7 @@ type StackV1Parameters struct {
 	// Allowed keys: Bin, URL, Files. Changing this updates the existing stack
 	// Template Opts.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	TemplateOpts map[string]*string `json:"templateOpts,omitempty" tf:"template_opts,omitempty"`
 
 	// The timeout for stack action in minutes.
@@ -310,13 +315,14 @@ type StackV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // StackV1 is the Schema for the StackV1s API. Manages a V1 stack resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type StackV1 struct {
 	metav1.TypeMeta   `json:",inline"`

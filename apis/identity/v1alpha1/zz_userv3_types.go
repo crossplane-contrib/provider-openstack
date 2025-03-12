@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -56,6 +52,7 @@ type UserV3InitParameters struct {
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// Free-form key/value pairs of extra information.
+	// +mapType=granular
 	Extra map[string]*string `json:"extra,omitempty" tf:"extra,omitempty"`
 
 	// User will not have to
@@ -83,6 +80,9 @@ type UserV3InitParameters struct {
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The password for the user.
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
 	// The region in which to obtain the V3 Keystone client.
 	// If omitted, the region argument of the provider is used. Changing this
 	// creates a new User.
@@ -105,6 +105,7 @@ type UserV3Observation struct {
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// Free-form key/value pairs of extra information.
+	// +mapType=granular
 	Extra map[string]*string `json:"extra,omitempty" tf:"extra,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -161,6 +162,7 @@ type UserV3Parameters struct {
 
 	// Free-form key/value pairs of extra information.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Extra map[string]*string `json:"extra,omitempty" tf:"extra,omitempty"`
 
 	// User will not have to
@@ -229,13 +231,14 @@ type UserV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // UserV3 is the Schema for the UserV3s API. Manages a V3 User resource within OpenStack Keystone.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type UserV3 struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -5,7 +5,7 @@
 package main
 
 import (
-	"context"
+	// "context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -15,7 +15,7 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/pipeline"
-	"gopkg.in/alecthomas/kingpin.v2"
+	"github.com/alecthomas/kingpin/v2"
 
 	"github.com/crossplane-contrib/provider-openstack/config"
 )
@@ -33,7 +33,7 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", *repoRoot))
 	}
-	p, err := config.GetProvider(context.Background(), true)
+	p := config.GetProvider()
 	kingpin.FatalIfError(err, "Cannot initialize the provider configuration")
 	dumpGeneratedResourceList(p, generatedResourceList)
 	dumpSkippedResourcesCSV(p, skippedResourcesCSV)

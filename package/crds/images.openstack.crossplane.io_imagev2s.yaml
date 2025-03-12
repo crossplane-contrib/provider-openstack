@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: imagev2s.images.openstack.crossplane.io
 spec:
   group: images.openstack.crossplane.io
@@ -19,11 +19,11 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=='Ready')].status
-      name: READY
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Synced')].status
       name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
       type: string
     - jsonPath: .metadata.annotations.crossplane\.io/external-name
       name: EXTERNAL-NAME
@@ -38,14 +38,19 @@ spec:
           resource within OpenStack Glance.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,31 +74,36 @@ spec:
               forProvider:
                 properties:
                   containerFormat:
-                    description: The container format. Must be one of "ami", "ari",
-                      "aki", "bare", "ovf".
+                    description: |-
+                      The container format. Must be one of
+                      "ami", "ari", "aki", "bare", "ovf".
                     type: string
                   decompress:
-                    description: 'If true, this provider will decompress downloaded
-                      image before uploading it to OpenStack. Decompression algorithm
-                      is chosen by checking "Content-Type" header, supported algorithm
-                      are: gzip, bzip2 and xz. Defaults to false. Changing this creates
-                      a new Image.'
+                    description: |-
+                      If true, this provider will decompress downloaded
+                      image before uploading it to OpenStack. Decompression algorithm is chosen by
+                      checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+                      Defaults to false. Changing this creates a new Image.
                     type: boolean
                   diskFormat:
-                    description: The disk format. Must be one of "ami", "ari", "aki",
-                      "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+                    description: |-
+                      The disk format. Must be one of
+                      "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
                     type: string
                   hidden:
-                    description: If true, image will be hidden from public list. Defaults
-                      to false.
+                    description: |-
+                      If true, image will be hidden from public list.
+                      Defaults to false.
                     type: boolean
                   imageCachePath:
-                    description: This is the directory where the images will be downloaded.
-                      Images will be stored with a filename corresponding to the url's
-                      md5 hash. Defaults to "$HOME/
+                    description: |-
+                      This is the directory where the images will
+                      be downloaded. Images will be stored with a filename corresponding to
+                      the url's md5 hash. Defaults to "$HOME/
                     type: string
                   imageId:
-                    description: Unique ID (valid UUID) of image to create. Changing
+                    description: |-
+                      Unique ID (valid UUID) of image to create. Changing
                       this creates a new image.
                     type: string
                   imageSourcePasswordSecretRef:
@@ -113,24 +124,30 @@ spec:
                     - namespace
                     type: object
                   imageSourceUrl:
-                    description: This is the url of the raw image. If web_download
-                      is not used, then the image will be downloaded in the image_cache_path
-                      before being uploaded to Glance. Conflicts with local_file_path.
+                    description: |-
+                      This is the url of the raw image. If web_download
+                      is not used, then the image will be downloaded in the image_cache_path before
+                      being uploaded to Glance.
+                      Conflicts with local_file_path.
                     type: string
                   imageSourceUsername:
                     description: The username of basic auth to download image_source_url.
                     type: string
                   localFilePath:
-                    description: This is the filepath of the raw image file that will
-                      be uploaded to Glance. Conflicts with image_source_url and web_download.
+                    description: |-
+                      This is the filepath of the raw image file
+                      that will be uploaded to Glance. Conflicts with image_source_url and
+                      web_download.
                     type: string
                   minDiskGb:
-                    description: Amount of disk space (in GB) required to boot image.
+                    description: |-
+                      Amount of disk space (in GB) required to boot image.
                       Defaults to 0.
                     type: number
                   minRamMb:
-                    description: Amount of ram (in MB) required to boot image. Defauts
-                      to 0.
+                    description: |-
+                      Amount of ram (in MB) required to boot image.
+                      Defauts to 0.
                     type: number
                   name:
                     description: The name of the image.
@@ -138,101 +155,139 @@ spec:
                   properties:
                     additionalProperties:
                       type: string
-                    description: A map of key/value pairs to set freeform information
-                      about an image. See the "Notes" section for further information
-                      about properties.
+                    description: |-
+                      A map of key/value pairs to set freeform
+                      information about an image. See the "Notes" section for further
+                      information about properties.
                     type: object
+                    x-kubernetes-map-type: granular
                   protected:
-                    description: If true, image will not be deletable. Defaults to
-                      false.
+                    description: |-
+                      If true, image will not be deletable.
+                      Defaults to false.
                     type: boolean
                   region:
-                    description: The region in which to obtain the V2 Glance client.
-                      A Glance client is needed to create an Image that can be used
-                      with a compute instance. If omitted, the region argument of
-                      the provider is used. Changing this creates a new Image.
+                    description: |-
+                      The region in which to obtain the V2 Glance client.
+                      A Glance client is needed to create an Image that can be used with
+                      a compute instance. If omitted, the region argument of the provider
+                      is used. Changing this creates a new Image.
                     type: string
                   tags:
-                    description: The tags of the image. It must be a list of strings.
+                    description: |-
+                      The tags of the image. It must be a list of strings.
                       At this time, it is not possible to delete all tags of an image.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   verifyChecksum:
-                    description: If false, the checksum will not be verified once
-                      the image is finished uploading. Conflicts with web_download.
+                    description: |-
+                      If false, the checksum will not be verified
+                      once the image is finished uploading. Conflicts with web_download.
                       Defaults to true when not using web_download.
                     type: boolean
                   visibility:
-                    description: The visibility of the image. Must be one of "public",
-                      "private", "community", or "shared". The ability to set the
+                    description: |-
+                      The visibility of the image. Must be one of
+                      "public", "private", "community", or "shared". The ability to set the
                       visibility depends upon the configuration of the OpenStack cloud.
                     type: string
                   webDownload:
-                    description: If true, the "web-download" import method will be
-                      used to let Openstack download the image directly from the remote
-                      source. Conflicts with local_file_path. Defaults to false.
+                    description: |-
+                      If true, the "web-download" import method will
+                      be used to let Openstack download the image directly from the remote source.
+                      Conflicts with local_file_path. Defaults to false.
                     type: boolean
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   containerFormat:
-                    description: The container format. Must be one of "ami", "ari",
-                      "aki", "bare", "ovf".
+                    description: |-
+                      The container format. Must be one of
+                      "ami", "ari", "aki", "bare", "ovf".
                     type: string
                   decompress:
-                    description: 'If true, this provider will decompress downloaded
-                      image before uploading it to OpenStack. Decompression algorithm
-                      is chosen by checking "Content-Type" header, supported algorithm
-                      are: gzip, bzip2 and xz. Defaults to false. Changing this creates
-                      a new Image.'
+                    description: |-
+                      If true, this provider will decompress downloaded
+                      image before uploading it to OpenStack. Decompression algorithm is chosen by
+                      checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+                      Defaults to false. Changing this creates a new Image.
                     type: boolean
                   diskFormat:
-                    description: The disk format. Must be one of "ami", "ari", "aki",
-                      "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+                    description: |-
+                      The disk format. Must be one of
+                      "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
                     type: string
                   hidden:
-                    description: If true, image will be hidden from public list. Defaults
-                      to false.
+                    description: |-
+                      If true, image will be hidden from public list.
+                      Defaults to false.
                     type: boolean
                   imageCachePath:
-                    description: This is the directory where the images will be downloaded.
-                      Images will be stored with a filename corresponding to the url's
-                      md5 hash. Defaults to "$HOME/
+                    description: |-
+                      This is the directory where the images will
+                      be downloaded. Images will be stored with a filename corresponding to
+                      the url's md5 hash. Defaults to "$HOME/
                     type: string
                   imageId:
-                    description: Unique ID (valid UUID) of image to create. Changing
+                    description: |-
+                      Unique ID (valid UUID) of image to create. Changing
                       this creates a new image.
                     type: string
+                  imageSourcePasswordSecretRef:
+                    description: The password of basic auth to download image_source_url.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   imageSourceUrl:
-                    description: This is the url of the raw image. If web_download
-                      is not used, then the image will be downloaded in the image_cache_path
-                      before being uploaded to Glance. Conflicts with local_file_path.
+                    description: |-
+                      This is the url of the raw image. If web_download
+                      is not used, then the image will be downloaded in the image_cache_path before
+                      being uploaded to Glance.
+                      Conflicts with local_file_path.
                     type: string
                   imageSourceUsername:
                     description: The username of basic auth to download image_source_url.
                     type: string
                   localFilePath:
-                    description: This is the filepath of the raw image file that will
-                      be uploaded to Glance. Conflicts with image_source_url and web_download.
+                    description: |-
+                      This is the filepath of the raw image file
+                      that will be uploaded to Glance. Conflicts with image_source_url and
+                      web_download.
                     type: string
                   minDiskGb:
-                    description: Amount of disk space (in GB) required to boot image.
+                    description: |-
+                      Amount of disk space (in GB) required to boot image.
                       Defaults to 0.
                     type: number
                   minRamMb:
-                    description: Amount of ram (in MB) required to boot image. Defauts
-                      to 0.
+                    description: |-
+                      Amount of ram (in MB) required to boot image.
+                      Defauts to 0.
                     type: number
                   name:
                     description: The name of the image.
@@ -240,58 +295,69 @@ spec:
                   properties:
                     additionalProperties:
                       type: string
-                    description: A map of key/value pairs to set freeform information
-                      about an image. See the "Notes" section for further information
-                      about properties.
+                    description: |-
+                      A map of key/value pairs to set freeform
+                      information about an image. See the "Notes" section for further
+                      information about properties.
                     type: object
+                    x-kubernetes-map-type: granular
                   protected:
-                    description: If true, image will not be deletable. Defaults to
-                      false.
+                    description: |-
+                      If true, image will not be deletable.
+                      Defaults to false.
                     type: boolean
                   region:
-                    description: The region in which to obtain the V2 Glance client.
-                      A Glance client is needed to create an Image that can be used
-                      with a compute instance. If omitted, the region argument of
-                      the provider is used. Changing this creates a new Image.
+                    description: |-
+                      The region in which to obtain the V2 Glance client.
+                      A Glance client is needed to create an Image that can be used with
+                      a compute instance. If omitted, the region argument of the provider
+                      is used. Changing this creates a new Image.
                     type: string
                   tags:
-                    description: The tags of the image. It must be a list of strings.
+                    description: |-
+                      The tags of the image. It must be a list of strings.
                       At this time, it is not possible to delete all tags of an image.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   verifyChecksum:
-                    description: If false, the checksum will not be verified once
-                      the image is finished uploading. Conflicts with web_download.
+                    description: |-
+                      If false, the checksum will not be verified
+                      once the image is finished uploading. Conflicts with web_download.
                       Defaults to true when not using web_download.
                     type: boolean
                   visibility:
-                    description: The visibility of the image. Must be one of "public",
-                      "private", "community", or "shared". The ability to set the
+                    description: |-
+                      The visibility of the image. Must be one of
+                      "public", "private", "community", or "shared". The ability to set the
                       visibility depends upon the configuration of the OpenStack cloud.
                     type: string
                   webDownload:
-                    description: If true, the "web-download" import method will be
-                      used to let Openstack download the image directly from the remote
-                      source. Conflicts with local_file_path. Defaults to false.
+                    description: |-
+                      If true, the "web-download" import method will
+                      be used to let Openstack download the image directly from the remote source.
+                      Conflicts with local_file_path. Defaults to false.
                     type: boolean
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -304,9 +370,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -316,21 +383,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -340,17 +407,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -360,21 +429,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -389,21 +458,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -414,14 +484,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -458,70 +529,84 @@ spec:
                     description: The checksum of the data associated with the image.
                     type: string
                   containerFormat:
-                    description: The container format. Must be one of "ami", "ari",
-                      "aki", "bare", "ovf".
+                    description: |-
+                      The container format. Must be one of
+                      "ami", "ari", "aki", "bare", "ovf".
                     type: string
                   createdAt:
                     description: The date the image was created.
                     type: string
                   decompress:
-                    description: 'If true, this provider will decompress downloaded
-                      image before uploading it to OpenStack. Decompression algorithm
-                      is chosen by checking "Content-Type" header, supported algorithm
-                      are: gzip, bzip2 and xz. Defaults to false. Changing this creates
-                      a new Image.'
+                    description: |-
+                      If true, this provider will decompress downloaded
+                      image before uploading it to OpenStack. Decompression algorithm is chosen by
+                      checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+                      Defaults to false. Changing this creates a new Image.
                     type: boolean
                   diskFormat:
-                    description: The disk format. Must be one of "ami", "ari", "aki",
-                      "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+                    description: |-
+                      The disk format. Must be one of
+                      "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
                     type: string
                   file:
-                    description: the trailing path after the glance endpoint that
-                      represent the location of the image or the path to retrieve
-                      it.
+                    description: |-
+                      the trailing path after the glance
+                      endpoint that represent the location of the image
+                      or the path to retrieve it.
                     type: string
                   hidden:
-                    description: If true, image will be hidden from public list. Defaults
-                      to false.
+                    description: |-
+                      If true, image will be hidden from public list.
+                      Defaults to false.
                     type: boolean
                   id:
                     description: A unique ID assigned by Glance.
                     type: string
                   imageCachePath:
-                    description: This is the directory where the images will be downloaded.
-                      Images will be stored with a filename corresponding to the url's
-                      md5 hash. Defaults to "$HOME/
+                    description: |-
+                      This is the directory where the images will
+                      be downloaded. Images will be stored with a filename corresponding to
+                      the url's md5 hash. Defaults to "$HOME/
                     type: string
                   imageId:
-                    description: Unique ID (valid UUID) of image to create. Changing
+                    description: |-
+                      Unique ID (valid UUID) of image to create. Changing
                       this creates a new image.
                     type: string
                   imageSourceUrl:
-                    description: This is the url of the raw image. If web_download
-                      is not used, then the image will be downloaded in the image_cache_path
-                      before being uploaded to Glance. Conflicts with local_file_path.
+                    description: |-
+                      This is the url of the raw image. If web_download
+                      is not used, then the image will be downloaded in the image_cache_path before
+                      being uploaded to Glance.
+                      Conflicts with local_file_path.
                     type: string
                   imageSourceUsername:
                     description: The username of basic auth to download image_source_url.
                     type: string
                   localFilePath:
-                    description: This is the filepath of the raw image file that will
-                      be uploaded to Glance. Conflicts with image_source_url and web_download.
+                    description: |-
+                      This is the filepath of the raw image file
+                      that will be uploaded to Glance. Conflicts with image_source_url and
+                      web_download.
                     type: string
                   metadata:
                     additionalProperties:
                       type: string
-                    description: The metadata associated with the image. Image metadata
-                      allow for meaningfully define the image properties and tags.
-                      See https://docs.openstack.org/glance/latest/user/metadefs-concepts.html.
+                    description: |-
+                      The metadata associated with the image.
+                      Image metadata allow for meaningfully define the image properties
+                      and tags. See https://docs.openstack.org/glance/latest/user/metadefs-concepts.html.
                     type: object
+                    x-kubernetes-map-type: granular
                   minDiskGb:
-                    description: Amount of disk space (in GB) required to boot image.
+                    description: |-
+                      Amount of disk space (in GB) required to boot image.
                       Defaults to 0.
                     type: number
                   minRamMb:
-                    description: Amount of ram (in MB) required to boot image. Defauts
-                      to 0.
+                    description: |-
+                      Amount of ram (in MB) required to boot image.
+                      Defauts to 0.
                     type: number
                   name:
                     description: The name of the image.
@@ -532,38 +617,46 @@ spec:
                   properties:
                     additionalProperties:
                       type: string
-                    description: A map of key/value pairs to set freeform information
-                      about an image. See the "Notes" section for further information
-                      about properties.
+                    description: |-
+                      A map of key/value pairs to set freeform
+                      information about an image. See the "Notes" section for further
+                      information about properties.
                     type: object
+                    x-kubernetes-map-type: granular
                   protected:
-                    description: If true, image will not be deletable. Defaults to
-                      false.
+                    description: |-
+                      If true, image will not be deletable.
+                      Defaults to false.
                     type: boolean
                   region:
-                    description: The region in which to obtain the V2 Glance client.
-                      A Glance client is needed to create an Image that can be used
-                      with a compute instance. If omitted, the region argument of
-                      the provider is used. Changing this creates a new Image.
+                    description: |-
+                      The region in which to obtain the V2 Glance client.
+                      A Glance client is needed to create an Image that can be used with
+                      a compute instance. If omitted, the region argument of the provider
+                      is used. Changing this creates a new Image.
                     type: string
                   schema:
-                    description: The path to the JSON-schema that represent the image
-                      or image
+                    description: |-
+                      The path to the JSON-schema that represent
+                      the image or image
                     type: string
                   sizeBytes:
                     description: The size in bytes of the data associated with the
                       image.
                     type: number
                   status:
-                    description: The status of the image. It can be "queued", "active"
+                    description: |-
+                      The status of the image. It can be "queued", "active"
                       or "saving".
                     type: string
                   tags:
-                    description: The tags of the image. It must be a list of strings.
+                    description: |-
+                      The tags of the image. It must be a list of strings.
                       At this time, it is not possible to delete all tags of an image.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   updateAt:
                     description: (Deprecated - use updated_at instead)
                     type: string
@@ -571,19 +664,22 @@ spec:
                     description: The date the image was last updated.
                     type: string
                   verifyChecksum:
-                    description: If false, the checksum will not be verified once
-                      the image is finished uploading. Conflicts with web_download.
+                    description: |-
+                      If false, the checksum will not be verified
+                      once the image is finished uploading. Conflicts with web_download.
                       Defaults to true when not using web_download.
                     type: boolean
                   visibility:
-                    description: The visibility of the image. Must be one of "public",
-                      "private", "community", or "shared". The ability to set the
+                    description: |-
+                      The visibility of the image. Must be one of
+                      "public", "private", "community", or "shared". The ability to set the
                       visibility depends upon the configuration of the OpenStack cloud.
                     type: string
                   webDownload:
-                    description: If true, the "web-download" import method will be
-                      used to let Openstack download the image directly from the remote
-                      source. Conflicts with local_file_path. Defaults to false.
+                    description: |-
+                      If true, the "web-download" import method will
+                      be used to let Openstack download the image directly from the remote source.
+                      Conflicts with local_file_path. Defaults to false.
                     type: boolean
                 type: object
               conditions:
@@ -592,14 +688,23 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
                     reason:
                       description: A Reason for this condition's last transition from
                         one status to another.
@@ -609,8 +714,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime
@@ -622,6 +728,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
             type: object
         required:
         - spec

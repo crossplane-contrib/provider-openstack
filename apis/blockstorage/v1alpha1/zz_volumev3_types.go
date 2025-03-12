@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -36,6 +32,7 @@ type SchedulerHintsInitParameters struct {
 
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// The volume should be scheduled on a
@@ -63,6 +60,7 @@ type SchedulerHintsObservation struct {
 
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// The volume should be scheduled on a
@@ -91,6 +89,7 @@ type SchedulerHintsParameters struct {
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// The volume should be scheduled on a
@@ -149,6 +148,7 @@ type VolumeV3InitParameters struct {
 
 	// Metadata key/value pairs to associate with the volume.
 	// Changing this updates the existing volume metadata.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
@@ -226,6 +226,7 @@ type VolumeV3Observation struct {
 
 	// Metadata key/value pairs to associate with the volume.
 	// Changing this updates the existing volume metadata.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
@@ -303,6 +304,7 @@ type VolumeV3Parameters struct {
 	// Metadata key/value pairs to associate with the volume.
 	// Changing this updates the existing volume metadata.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
@@ -375,13 +377,14 @@ type VolumeV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VolumeV3 is the Schema for the VolumeV3s API. Manages a V3 volume resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type VolumeV3 struct {
 	metav1.TypeMeta   `json:",inline"`

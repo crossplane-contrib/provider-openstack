@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -29,6 +25,28 @@ type ClusterV1InitParameters struct {
 	// Changing this creates a new node group.
 	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	FixedNetwork *string `json:"fixedNetwork,omitempty" tf:"fixed_network,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate fixedNetwork.
+	// +kubebuilder:validation:Optional
+	FixedNetworkRef *v1.Reference `json:"fixedNetworkRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate fixedNetwork.
+	// +kubebuilder:validation:Optional
+	FixedNetworkSelector *v1.Selector `json:"fixedNetworkSelector,omitempty" tf:"-"`
+
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	FixedSubnet *string `json:"fixedSubnet,omitempty" tf:"fixed_subnet,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate fixedSubnet.
+	// +kubebuilder:validation:Optional
+	FixedSubnetRef *v1.Reference `json:"fixedSubnetRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate fixedSubnet.
+	// +kubebuilder:validation:Optional
+	FixedSubnetSelector *v1.Selector `json:"fixedSubnetSelector,omitempty" tf:"-"`
+
 	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`
 
 	FloatingIPEnabled *bool `json:"floatingIpEnabled,omitempty" tf:"floating_ip_enabled,omitempty"`
@@ -37,6 +55,7 @@ type ClusterV1InitParameters struct {
 
 	// The list of key value pairs representing additional
 	// properties of the node group. Changing this creates a new node group.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	MasterCount *float64 `json:"masterCount,omitempty" tf:"master_count,omitempty"`
@@ -96,6 +115,7 @@ type ClusterV1Observation struct {
 
 	// The list of key value pairs representing additional
 	// properties of the node group. Changing this creates a new node group.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	MasterAddresses []*string `json:"masterAddresses,omitempty" tf:"master_addresses,omitempty"`
@@ -189,6 +209,7 @@ type ClusterV1Parameters struct {
 	// The list of key value pairs representing additional
 	// properties of the node group. Changing this creates a new node group.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -244,13 +265,14 @@ type ClusterV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClusterV1 is the Schema for the ClusterV1s API. Manages a V1 Magnum node group resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ClusterV1 struct {
 	metav1.TypeMeta   `json:",inline"`

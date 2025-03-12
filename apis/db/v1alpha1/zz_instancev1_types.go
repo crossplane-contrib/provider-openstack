@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -291,6 +287,7 @@ type UserInitParameters struct {
 
 	// A list of databases that user will have access to. If not specified,
 	// user has access to all databases on th einstance. Changing this creates a new instance.
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// An ip address or % sign indicating what ip addresses can connect with
@@ -300,12 +297,17 @@ type UserInitParameters struct {
 	// Username to be created on new instance. Changing this creates a
 	// new instance.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// User's password. Changing this creates a
+	// new instance.
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 }
 
 type UserObservation struct {
 
 	// A list of databases that user will have access to. If not specified,
 	// user has access to all databases on th einstance. Changing this creates a new instance.
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// An ip address or % sign indicating what ip addresses can connect with
@@ -322,6 +324,7 @@ type UserParameters struct {
 	// A list of databases that user will have access to. If not specified,
 	// user has access to all databases on th einstance. Changing this creates a new instance.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// An ip address or % sign indicating what ip addresses can connect with
@@ -364,13 +367,14 @@ type InstanceV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // InstanceV1 is the Schema for the InstanceV1s API. Manages a V1 DB instance resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type InstanceV1 struct {
 	metav1.TypeMeta   `json:",inline"`

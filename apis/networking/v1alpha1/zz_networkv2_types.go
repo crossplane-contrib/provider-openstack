@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -29,6 +25,7 @@ type NetworkV2InitParameters struct {
 	// network resources highly available. Used for resources with high availability
 	// so that they are scheduled on different availability zones. Changing this
 	// creates a new network.
+	// +listType=set
 	AvailabilityZoneHints []*string `json:"availabilityZoneHints,omitempty" tf:"availability_zone_hints,omitempty"`
 
 	// The network DNS domain. Available, when Neutron DNS
@@ -83,6 +80,7 @@ type NetworkV2InitParameters struct {
 	Shared *bool `json:"shared,omitempty" tf:"shared,omitempty"`
 
 	// A set of string tags for the network.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the network. Required if admin wants to
@@ -96,6 +94,7 @@ type NetworkV2InitParameters struct {
 	TransparentVlan *bool `json:"transparentVlan,omitempty" tf:"transparent_vlan,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -108,12 +107,14 @@ type NetworkV2Observation struct {
 
 	// The collection of tags assigned on the network, which have been
 	// explicitly and implicitly added.
+	// +listType=set
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
 	// An availability zone is used to make
 	// network resources highly available. Used for resources with high availability
 	// so that they are scheduled on different availability zones. Changing this
 	// creates a new network.
+	// +listType=set
 	AvailabilityZoneHints []*string `json:"availabilityZoneHints,omitempty" tf:"availability_zone_hints,omitempty"`
 
 	// The network DNS domain. Available, when Neutron DNS
@@ -170,6 +171,7 @@ type NetworkV2Observation struct {
 	Shared *bool `json:"shared,omitempty" tf:"shared,omitempty"`
 
 	// A set of string tags for the network.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the network. Required if admin wants to
@@ -183,6 +185,7 @@ type NetworkV2Observation struct {
 	TransparentVlan *bool `json:"transparentVlan,omitempty" tf:"transparent_vlan,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -199,6 +202,7 @@ type NetworkV2Parameters struct {
 	// so that they are scheduled on different availability zones. Changing this
 	// creates a new network.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AvailabilityZoneHints []*string `json:"availabilityZoneHints,omitempty" tf:"availability_zone_hints,omitempty"`
 
 	// The network DNS domain. Available, when Neutron DNS
@@ -264,6 +268,7 @@ type NetworkV2Parameters struct {
 
 	// A set of string tags for the network.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the network. Required if admin wants to
@@ -280,6 +285,7 @@ type NetworkV2Parameters struct {
 
 	// Map of additional options.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -346,13 +352,14 @@ type NetworkV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // NetworkV2 is the Schema for the NetworkV2s API. Manages a V2 Neutron network resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type NetworkV2 struct {
 	metav1.TypeMeta   `json:",inline"`

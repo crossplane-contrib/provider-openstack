@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -106,6 +102,7 @@ type ClustertemplateV1InitParameters struct {
 	// The list of key value pairs representing additional
 	// properties of the cluster template. Changing this updates the labels of the
 	// existing cluster template.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The flavor for the master nodes. Can be set via
@@ -255,6 +252,7 @@ type ClustertemplateV1Observation struct {
 	// The list of key value pairs representing additional
 	// properties of the cluster template. Changing this updates the labels of the
 	// existing cluster template.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The flavor for the master nodes. Can be set via
@@ -430,6 +428,7 @@ type ClustertemplateV1Parameters struct {
 	// properties of the cluster template. Changing this updates the labels of the
 	// existing cluster template.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The flavor for the master nodes. Can be set via
@@ -521,13 +520,14 @@ type ClustertemplateV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClustertemplateV1 is the Schema for the ClustertemplateV1s API. Manages a V1 Magnum cluster template resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ClustertemplateV1 struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1488,6 +1488,11 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.AdminPassSecretRef != nil {
+		in, out := &in.AdminPassSecretRef, &out.AdminPassSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.AvailabilityZone != nil {
 		in, out := &in.AvailabilityZone, &out.AvailabilityZone
 		*out = new(string)
@@ -1539,6 +1544,21 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 		in, out := &in.ImageName, &out.ImageName
 		*out = new(string)
 		**out = **in
+	}
+	if in.KeyPair != nil {
+		in, out := &in.KeyPair, &out.KeyPair
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeyPairRef != nil {
+		in, out := &in.KeyPairRef, &out.KeyPairRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyPairSelector != nil {
+		in, out := &in.KeyPairSelector, &out.KeyPairSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Metadata != nil {
 		in, out := &in.Metadata, &out.Metadata
@@ -1596,6 +1616,29 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.SecurityGroups != nil {
+		in, out := &in.SecurityGroups, &out.SecurityGroups
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.SecurityGroupsRefs != nil {
+		in, out := &in.SecurityGroupsRefs, &out.SecurityGroupsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SecurityGroupsSelector != nil {
+		in, out := &in.SecurityGroupsSelector, &out.SecurityGroupsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StopBeforeDestroy != nil {
 		in, out := &in.StopBeforeDestroy, &out.StopBeforeDestroy
@@ -2930,6 +2973,21 @@ func (in *QuotasetV2InitParameters) DeepCopyInto(out *QuotasetV2InitParameters) 
 		in, out := &in.MetadataItems, &out.MetadataItems
 		*out = new(float64)
 		**out = **in
+	}
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ProjectIDRef != nil {
+		in, out := &in.ProjectIDRef, &out.ProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectIDSelector != nil {
+		in, out := &in.ProjectIDSelector, &out.ProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.RAM != nil {
 		in, out := &in.RAM, &out.RAM

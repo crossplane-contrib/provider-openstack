@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -46,6 +42,7 @@ type SharenetworkV2InitParameters struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
+	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
 }
 
@@ -92,6 +89,7 @@ type SharenetworkV2Observation struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
+	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
 
 	// The share network segmentation ID.
@@ -132,6 +130,7 @@ type SharenetworkV2Parameters struct {
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
 }
 
@@ -159,13 +158,14 @@ type SharenetworkV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SharenetworkV2 is the Schema for the SharenetworkV2s API. Configure a Shared File System share network.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type SharenetworkV2 struct {
 	metav1.TypeMeta   `json:",inline"`

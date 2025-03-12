@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -38,6 +34,7 @@ type RecordsetV2InitParameters struct {
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
 	// An array of DNS records.
+	// +listType=set
 	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
 
 	// The region in which to obtain the V2 DNS client.
@@ -54,7 +51,21 @@ type RecordsetV2InitParameters struct {
 
 	// Map of additional options. Changing this creates a
 	// new record set.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
+
+	// The ID of the zone in which to create the record set.
+	// Changing this creates a new DNS  record set.
+	// +crossplane:generate:reference:type=ZoneV2
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a ZoneV2 to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a ZoneV2 to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type RecordsetV2Observation struct {
@@ -79,6 +90,7 @@ type RecordsetV2Observation struct {
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
 	// An array of DNS records.
+	// +listType=set
 	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
 
 	// The region in which to obtain the V2 DNS client.
@@ -95,6 +107,7 @@ type RecordsetV2Observation struct {
 
 	// Map of additional options. Changing this creates a
 	// new record set.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone in which to create the record set.
@@ -127,6 +140,7 @@ type RecordsetV2Parameters struct {
 
 	// An array of DNS records.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Records []*string `json:"records,omitempty" tf:"records,omitempty"`
 
 	// The region in which to obtain the V2 DNS client.
@@ -147,6 +161,7 @@ type RecordsetV2Parameters struct {
 	// Map of additional options. Changing this creates a
 	// new record set.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone in which to create the record set.
@@ -188,13 +203,14 @@ type RecordsetV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // RecordsetV2 is the Schema for the RecordsetV2s API. Manages a DNS record set in the OpenStack DNS Service
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type RecordsetV2 struct {
 	metav1.TypeMeta   `json:",inline"`

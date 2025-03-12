@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -21,6 +17,7 @@ import (
 type UserV1InitParameters struct {
 
 	// A list of database user should have access to.
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
@@ -31,6 +28,9 @@ type UserV1InitParameters struct {
 	// A unique name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// User's password.
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+
 	// Openstack region resource is created in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
@@ -38,6 +38,7 @@ type UserV1InitParameters struct {
 type UserV1Observation struct {
 
 	// A list of database user should have access to.
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
@@ -58,6 +59,7 @@ type UserV1Parameters struct {
 
 	// A list of database user should have access to.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -104,13 +106,14 @@ type UserV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // UserV1 is the Schema for the UserV1s API. Manages a V1 database user resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type UserV1 struct {
 	metav1.TypeMeta   `json:",inline"`

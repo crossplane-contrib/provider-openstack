@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -47,6 +43,9 @@ type ImageV2InitParameters struct {
 	// this creates a new image.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// The password of basic auth to download image_source_url.
+	ImageSourcePasswordSecretRef *v1.SecretKeySelector `json:"imageSourcePasswordSecretRef,omitempty" tf:"-"`
+
 	// This is the url of the raw image. If web_download
 	// is not used, then the image will be downloaded in the image_cache_path before
 	// being uploaded to Glance.
@@ -75,6 +74,7 @@ type ImageV2InitParameters struct {
 	// A map of key/value pairs to set freeform
 	// information about an image. See the "Notes" section for further
 	// information about properties.
+	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
 	// If true, image will not be deletable.
@@ -89,6 +89,7 @@ type ImageV2InitParameters struct {
 
 	// The tags of the image. It must be a list of strings.
 	// At this time, it is not possible to delete all tags of an image.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// If false, the checksum will not be verified
@@ -167,6 +168,7 @@ type ImageV2Observation struct {
 	// The metadata associated with the image.
 	// Image metadata allow for meaningfully define the image properties
 	// and tags. See https://docs.openstack.org/glance/latest/user/metadefs-concepts.html.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Amount of disk space (in GB) required to boot image.
@@ -186,6 +188,7 @@ type ImageV2Observation struct {
 	// A map of key/value pairs to set freeform
 	// information about an image. See the "Notes" section for further
 	// information about properties.
+	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
 	// If true, image will not be deletable.
@@ -211,6 +214,7 @@ type ImageV2Observation struct {
 
 	// The tags of the image. It must be a list of strings.
 	// At this time, it is not possible to delete all tags of an image.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// (Deprecated - use updated_at instead)
@@ -309,6 +313,7 @@ type ImageV2Parameters struct {
 	// information about an image. See the "Notes" section for further
 	// information about properties.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
 	// If true, image will not be deletable.
@@ -326,6 +331,7 @@ type ImageV2Parameters struct {
 	// The tags of the image. It must be a list of strings.
 	// At this time, it is not possible to delete all tags of an image.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// If false, the checksum will not be verified
@@ -371,13 +377,14 @@ type ImageV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ImageV2 is the Schema for the ImageV2s API. Manages a V2 Image resource within OpenStack Glance.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ImageV2 struct {
 	metav1.TypeMeta   `json:",inline"`

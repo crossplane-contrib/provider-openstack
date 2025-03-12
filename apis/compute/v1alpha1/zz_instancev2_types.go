@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -208,6 +204,10 @@ type InstanceV2InitParameters struct {
 	// The first detected Fixed IPv6 address.
 	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
 
+	// The administrative password to assign to the server.
+	// Changing this changes the root password on the existing server.
+	AdminPassSecretRef *v1.SecretKeySelector `json:"adminPassSecretRef,omitempty" tf:"-"`
+
 	// The availability zone in which to create
 	// the server. Conflicts with availability_zone_hints. Changing this creates
 	// a new server.
@@ -257,8 +257,23 @@ type InstanceV2InitParameters struct {
 	// desired image for the server. Changing this rebuilds the existing server.
 	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
 
+	// The name of a key pair to put on the server. The key
+	// pair must already be created and associated with the tenant's account.
+	// Changing this creates a new server.
+	// +crossplane:generate:reference:type=KeypairV2
+	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
+
+	// Reference to a KeypairV2 to populate keyPair.
+	// +kubebuilder:validation:Optional
+	KeyPairRef *v1.Reference `json:"keyPairRef,omitempty" tf:"-"`
+
+	// Selector for a KeypairV2 to populate keyPair.
+	// +kubebuilder:validation:Optional
+	KeyPairSelector *v1.Selector `json:"keyPairSelector,omitempty" tf:"-"`
+
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
@@ -295,6 +310,24 @@ type InstanceV2InitParameters struct {
 	// the instance should be launched. The available hints are described below.
 	SchedulerHints []SchedulerHintsInitParameters `json:"schedulerHints,omitempty" tf:"scheduler_hints,omitempty"`
 
+	// An array of one or more security group names
+	// to associate with the server. Changing this results in adding/removing
+	// security groups from the existing server. Note: When attaching the
+	// instance to networks using Ports, place the security groups on the Port
+	// and not the instance. Note: Names should be used and not ids, as ids
+	// trigger unnecessary updates.
+	// +crossplane:generate:reference:type=SecgroupV2
+	// +listType=set
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// References to SecgroupV2 to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecgroupV2 to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
 	// Whether to try stop instance gracefully
 	// before destroying it, thus giving chance for guest OS daemons to stop correctly.
 	// If instance doesn't stop within timeout, it will be destroyed anyway.
@@ -302,6 +335,7 @@ type InstanceV2InitParameters struct {
 
 	// A set of string tags for the instance. Changing this
 	// updates the existing instance tags.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The user data to provide when launching the instance.
@@ -323,10 +357,12 @@ type InstanceV2Observation struct {
 	// The first detected Fixed IPv6 address.
 	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
 
+	// +mapType=granular
 	AllMetadata map[string]*string `json:"allMetadata,omitempty" tf:"all_metadata,omitempty"`
 
 	// The collection of tags assigned on the instance, which have
 	// been explicitly and implicitly added.
+	// +listType=set
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
 	// The availability zone in which to create
@@ -390,6 +426,7 @@ type InstanceV2Observation struct {
 
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
@@ -432,6 +469,7 @@ type InstanceV2Observation struct {
 	// instance to networks using Ports, place the security groups on the Port
 	// and not the instance. Note: Names should be used and not ids, as ids
 	// trigger unnecessary updates.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Whether to try stop instance gracefully
@@ -441,6 +479,7 @@ type InstanceV2Observation struct {
 
 	// A set of string tags for the instance. Changing this
 	// updates the existing instance tags.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The time when the instance was last updated.
@@ -549,6 +588,7 @@ type InstanceV2Parameters struct {
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
@@ -600,6 +640,7 @@ type InstanceV2Parameters struct {
 	// trigger unnecessary updates.
 	// +crossplane:generate:reference:type=SecgroupV2
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecgroupV2 to populate securityGroups.
@@ -619,6 +660,7 @@ type InstanceV2Parameters struct {
 	// A set of string tags for the instance. Changing this
 	// updates the existing instance tags.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The user data to provide when launching the instance.
@@ -758,6 +800,7 @@ type SchedulerHintsInitParameters struct {
 
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// An IP Address in CIDR form. The instance
@@ -795,6 +838,7 @@ type SchedulerHintsObservation struct {
 
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// An IP Address in CIDR form. The instance
@@ -833,6 +877,7 @@ type SchedulerHintsParameters struct {
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// An IP Address in CIDR form. The instance
@@ -969,13 +1014,14 @@ type InstanceV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // InstanceV2 is the Schema for the InstanceV2s API. Manages a V2 VM instance resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type InstanceV2 struct {
 	metav1.TypeMeta   `json:",inline"`

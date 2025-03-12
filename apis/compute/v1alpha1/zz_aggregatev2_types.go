@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -23,9 +19,11 @@ type AggregateV2InitParameters struct {
 	// The list of hosts contained in the Host Aggregate. The hosts must be added
 	// to Openstack and visible in the web interface, or the provider will fail to add them to the host
 	// aggregate.
+	// +listType=set
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
 	// The metadata of the Host Aggregate. Can be useful to indicate scheduler hints.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// The name of the Host Aggregate
@@ -46,11 +44,13 @@ type AggregateV2Observation struct {
 	// The list of hosts contained in the Host Aggregate. The hosts must be added
 	// to Openstack and visible in the web interface, or the provider will fail to add them to the host
 	// aggregate.
+	// +listType=set
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The metadata of the Host Aggregate. Can be useful to indicate scheduler hints.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// The name of the Host Aggregate
@@ -72,10 +72,12 @@ type AggregateV2Parameters struct {
 	// to Openstack and visible in the web interface, or the provider will fail to add them to the host
 	// aggregate.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
 	// The metadata of the Host Aggregate. Can be useful to indicate scheduler hints.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// The name of the Host Aggregate
@@ -118,13 +120,14 @@ type AggregateV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // AggregateV2 is the Schema for the AggregateV2s API. Manages a Host Aggregate within Openstack Nova
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type AggregateV2 struct {
 	metav1.TypeMeta   `json:",inline"`

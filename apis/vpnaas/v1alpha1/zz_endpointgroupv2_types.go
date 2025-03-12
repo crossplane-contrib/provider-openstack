@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -26,6 +22,7 @@ type EndpointGroupV2InitParameters struct {
 
 	// List of endpoints of the same type, for the endpoint group. The values will depend on the type.
 	// Changing this creates a new group.
+	// +listType=set
 	Endpoints []*string `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
 
 	// The name of the group. Changing this updates the name of
@@ -47,6 +44,7 @@ type EndpointGroupV2InitParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -58,6 +56,7 @@ type EndpointGroupV2Observation struct {
 
 	// List of endpoints of the same type, for the endpoint group. The values will depend on the type.
 	// Changing this creates a new group.
+	// +listType=set
 	Endpoints []*string `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -81,6 +80,7 @@ type EndpointGroupV2Observation struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -94,6 +94,7 @@ type EndpointGroupV2Parameters struct {
 	// List of endpoints of the same type, for the endpoint group. The values will depend on the type.
 	// Changing this creates a new group.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Endpoints []*string `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
 
 	// The name of the group. Changing this updates the name of
@@ -120,6 +121,7 @@ type EndpointGroupV2Parameters struct {
 
 	// Map of additional options.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -147,13 +149,14 @@ type EndpointGroupV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // EndpointGroupV2 is the Schema for the EndpointGroupV2s API. Manages a V2 Neutron Endpoint Group resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type EndpointGroupV2 struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -64,6 +64,36 @@ func (in *ClusterV1InitParameters) DeepCopyInto(out *ClusterV1InitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.FixedNetwork != nil {
+		in, out := &in.FixedNetwork, &out.FixedNetwork
+		*out = new(string)
+		**out = **in
+	}
+	if in.FixedNetworkRef != nil {
+		in, out := &in.FixedNetworkRef, &out.FixedNetworkRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FixedNetworkSelector != nil {
+		in, out := &in.FixedNetworkSelector, &out.FixedNetworkSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FixedSubnet != nil {
+		in, out := &in.FixedSubnet, &out.FixedSubnet
+		*out = new(string)
+		**out = **in
+	}
+	if in.FixedSubnetRef != nil {
+		in, out := &in.FixedSubnetRef, &out.FixedSubnetRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FixedSubnetSelector != nil {
+		in, out := &in.FixedSubnetSelector, &out.FixedSubnetSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Flavor != nil {
 		in, out := &in.Flavor, &out.Flavor
 		*out = new(string)

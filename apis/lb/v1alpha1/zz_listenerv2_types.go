@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -49,6 +45,7 @@ type ListenerV2InitParameters struct {
 	// The list of key value pairs representing headers to insert
 	// into the request before it is sent to the backend members. Changing this updates the headers of the
 	// existing listener.
+	// +mapType=granular
 	InsertHeaders map[string]*string `json:"insertHeaders,omitempty" tf:"insert_headers,omitempty"`
 
 	// The load balancer on which to provision this
@@ -81,6 +78,7 @@ type ListenerV2InitParameters struct {
 	// for more information.
 	SniContainerRefs []*string `json:"sniContainerRefs,omitempty" tf:"sni_container_refs,omitempty"`
 
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
@@ -136,6 +134,7 @@ type ListenerV2Observation struct {
 	// The list of key value pairs representing headers to insert
 	// into the request before it is sent to the backend members. Changing this updates the headers of the
 	// existing listener.
+	// +mapType=granular
 	InsertHeaders map[string]*string `json:"insertHeaders,omitempty" tf:"insert_headers,omitempty"`
 
 	// The load balancer on which to provision this
@@ -168,6 +167,7 @@ type ListenerV2Observation struct {
 	// for more information.
 	SniContainerRefs []*string `json:"sniContainerRefs,omitempty" tf:"sni_container_refs,omitempty"`
 
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
@@ -227,6 +227,7 @@ type ListenerV2Parameters struct {
 	// into the request before it is sent to the backend members. Changing this updates the headers of the
 	// existing listener.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	InsertHeaders map[string]*string `json:"insertHeaders,omitempty" tf:"insert_headers,omitempty"`
 
 	// The load balancer on which to provision this
@@ -266,6 +267,7 @@ type ListenerV2Parameters struct {
 	SniContainerRefs []*string `json:"sniContainerRefs,omitempty" tf:"sni_container_refs,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
@@ -316,13 +318,14 @@ type ListenerV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ListenerV2 is the Schema for the ListenerV2s API. Manages a V2 listener resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ListenerV2 struct {
 	metav1.TypeMeta   `json:",inline"`

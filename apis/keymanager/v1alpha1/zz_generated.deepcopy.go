@@ -1208,6 +1208,11 @@ func (in *SecretV1InitParameters) DeepCopyInto(out *SecretV1InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PayloadSecretRef != nil {
+		in, out := &in.PayloadSecretRef, &out.PayloadSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)

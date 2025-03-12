@@ -512,6 +512,11 @@ func (in *ImageV2InitParameters) DeepCopyInto(out *ImageV2InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageSourcePasswordSecretRef != nil {
+		in, out := &in.ImageSourcePasswordSecretRef, &out.ImageSourcePasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.ImageSourceURL != nil {
 		in, out := &in.ImageSourceURL, &out.ImageSourceURL
 		*out = new(string)
