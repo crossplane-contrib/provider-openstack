@@ -1,14 +1,11 @@
-
 package clients
 
 import (
 	"context"
 	"encoding/json"
 
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	tfsdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/upjet/pkg/terraform"
