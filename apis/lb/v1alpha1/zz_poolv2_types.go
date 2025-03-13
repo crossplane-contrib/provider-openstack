@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -84,7 +80,7 @@ type PoolV2InitParameters struct {
 	// Omit this field to prevent session persistence.  Indicates
 	// whether connections in the same session will be processed by the same Pool
 	// member or not. Changing this creates a new pool.
-	Persistence []PersistenceInitParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
+	Persistence *PersistenceInitParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
 	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
@@ -137,7 +133,7 @@ type PoolV2Observation struct {
 	// Omit this field to prevent session persistence.  Indicates
 	// whether connections in the same session will be processed by the same Pool
 	// member or not. Changing this creates a new pool.
-	Persistence []PersistenceObservation `json:"persistence,omitempty" tf:"persistence,omitempty"`
+	Persistence *PersistenceObservation `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
 	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
@@ -194,7 +190,7 @@ type PoolV2Parameters struct {
 	// whether connections in the same session will be processed by the same Pool
 	// member or not. Changing this creates a new pool.
 	// +kubebuilder:validation:Optional
-	Persistence []PersistenceParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
+	Persistence *PersistenceParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
 	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
@@ -240,13 +236,14 @@ type PoolV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // PoolV2 is the Schema for the PoolV2s API. Manages a V2 pool resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type PoolV2 struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -26,7 +22,17 @@ type VolumeAttachV2InitParameters struct {
 	Device *string `json:"device,omitempty" tf:"device,omitempty"`
 
 	// The ID of the Instance to attach the Volume to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.InstanceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// Enable attachment of multiattach-capable volumes.
 	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
@@ -39,10 +45,20 @@ type VolumeAttachV2InitParameters struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VolumeAttachV2VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VolumeAttachV2VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	// The ID of the Volume to attach to an Instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDRef *v1.Reference `json:"volumeIdRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDSelector *v1.Selector `json:"volumeIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeAttachV2Observation struct {
@@ -68,7 +84,7 @@ type VolumeAttachV2Observation struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VolumeAttachV2VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VolumeAttachV2VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	// The ID of the Volume to attach to an Instance.
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
@@ -83,8 +99,18 @@ type VolumeAttachV2Parameters struct {
 	Device *string `json:"device,omitempty" tf:"device,omitempty"`
 
 	// The ID of the Instance to attach the Volume to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.InstanceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// Enable attachment of multiattach-capable volumes.
 	// +kubebuilder:validation:Optional
@@ -100,11 +126,21 @@ type VolumeAttachV2Parameters struct {
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	// +kubebuilder:validation:Optional
-	VendorOptions []VolumeAttachV2VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VolumeAttachV2VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	// The ID of the Volume to attach to an Instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDRef *v1.Reference `json:"volumeIdRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDSelector *v1.Selector `json:"volumeIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeAttachV2VendorOptionsInitParameters struct {
@@ -156,21 +192,20 @@ type VolumeAttachV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VolumeAttachV2 is the Schema for the VolumeAttachV2s API. Attaches a Block Storage Volume to an Instance.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type VolumeAttachV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.volumeId) || (has(self.initProvider) && has(self.initProvider.volumeId))",message="spec.forProvider.volumeId is a required parameter"
-	Spec   VolumeAttachV2Spec   `json:"spec"`
-	Status VolumeAttachV2Status `json:"status,omitempty"`
+	Spec              VolumeAttachV2Spec   `json:"spec"`
+	Status            VolumeAttachV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

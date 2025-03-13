@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -21,7 +17,17 @@ import (
 type ImageAccessV2InitParameters struct {
 
 	// The image ID.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/images/v1alpha1.ImageV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// Reference to a ImageV2 in images to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDRef *v1.Reference `json:"imageIdRef,omitempty" tf:"-"`
+
+	// Selector for a ImageV2 in images to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDSelector *v1.Selector `json:"imageIdSelector,omitempty" tf:"-"`
 
 	// The member ID, e.g. the target project ID.
 	MemberID *string `json:"memberId,omitempty" tf:"member_id,omitempty"`
@@ -70,8 +76,18 @@ type ImageAccessV2Observation struct {
 type ImageAccessV2Parameters struct {
 
 	// The image ID.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/images/v1alpha1.ImageV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// Reference to a ImageV2 in images to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDRef *v1.Reference `json:"imageIdRef,omitempty" tf:"-"`
+
+	// Selector for a ImageV2 in images to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDSelector *v1.Selector `json:"imageIdSelector,omitempty" tf:"-"`
 
 	// The member ID, e.g. the target project ID.
 	// +kubebuilder:validation:Optional
@@ -114,18 +130,18 @@ type ImageAccessV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ImageAccessV2 is the Schema for the ImageAccessV2s API. Manages a V2 Image member resource within OpenStack Glance.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ImageAccessV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.imageId) || (has(self.initProvider) && has(self.initProvider.imageId))",message="spec.forProvider.imageId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.memberId) || (has(self.initProvider) && has(self.initProvider.memberId))",message="spec.forProvider.memberId is a required parameter"
 	Spec   ImageAccessV2Spec   `json:"spec"`
 	Status ImageAccessV2Status `json:"status,omitempty"`

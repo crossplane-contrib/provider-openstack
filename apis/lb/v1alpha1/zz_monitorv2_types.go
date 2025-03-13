@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -51,7 +47,17 @@ type MonitorV2InitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The id of the pool that this monitor will be assigned to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`
+
+	// Reference to a PoolV2 in lb to populate poolId.
+	// +kubebuilder:validation:Optional
+	PoolIDRef *v1.Reference `json:"poolIdRef,omitempty" tf:"-"`
+
+	// Selector for a PoolV2 in lb to populate poolId.
+	// +kubebuilder:validation:Optional
+	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create an . If omitted, the
@@ -183,8 +189,18 @@ type MonitorV2Parameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The id of the pool that this monitor will be assigned to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`
+
+	// Reference to a PoolV2 in lb to populate poolId.
+	// +kubebuilder:validation:Optional
+	PoolIDRef *v1.Reference `json:"poolIdRef,omitempty" tf:"-"`
+
+	// Selector for a PoolV2 in lb to populate poolId.
+	// +kubebuilder:validation:Optional
+	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create an . If omitted, the
@@ -241,20 +257,20 @@ type MonitorV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // MonitorV2 is the Schema for the MonitorV2s API. Manages a V2 monitor resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type MonitorV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.delay) || (has(self.initProvider) && has(self.initProvider.delay))",message="spec.forProvider.delay is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.maxRetries) || (has(self.initProvider) && has(self.initProvider.maxRetries))",message="spec.forProvider.maxRetries is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.poolId) || (has(self.initProvider) && has(self.initProvider.poolId))",message="spec.forProvider.poolId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.timeout) || (has(self.initProvider) && has(self.initProvider.timeout))",message="spec.forProvider.timeout is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   MonitorV2Spec   `json:"spec"`

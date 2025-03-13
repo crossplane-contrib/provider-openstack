@@ -12,15 +12,15 @@ func Configure(p *config.Provider) {
 		// r.ShortGroup = "openstack"
 		// r.Version = "v1alpha22"
 		r.References["key_pair"] = config.Reference{
-			Type: "KeypairV2",
+			TerraformName: "openstack_compute_keypair_v2",
 		}
 		r.References["security_groups"] = config.Reference{
-			Type: "SecgroupV2",
+			TerraformName: "openstack_networking_secgroup_v2",
 		}
 	})
 	p.AddResourceConfigurator("openstack_compute_quotaset_v2", func(r *config.Resource) {
 		r.References["project_id"] = config.Reference{
-			Type: "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3",
+			TerraformName: "openstack_identity_project_v3",
 		}
 	})
 	p.AddResourceConfigurator("openstack_compute_keypair_v2", func(r *config.Resource) {

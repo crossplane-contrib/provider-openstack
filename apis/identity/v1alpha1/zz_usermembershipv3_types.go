@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -22,7 +18,17 @@ type UserMembershipV3InitParameters struct {
 
 	// The UUID of group to which the user will be added.
 	// Changing this creates a new user membership.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.GroupV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Reference to a GroupV3 in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+
+	// Selector for a GroupV3 in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V3 Identity client.
 	// If omitted, the region argument of the provider is used.
@@ -30,7 +36,17 @@ type UserMembershipV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of user to use. Changing this creates a new user membership.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.UserV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Reference to a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDRef *v1.Reference `json:"userIdRef,omitempty" tf:"-"`
+
+	// Selector for a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
 }
 
 type UserMembershipV3Observation struct {
@@ -54,8 +70,18 @@ type UserMembershipV3Parameters struct {
 
 	// The UUID of group to which the user will be added.
 	// Changing this creates a new user membership.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.GroupV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Reference to a GroupV3 in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+
+	// Selector for a GroupV3 in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V3 Identity client.
 	// If omitted, the region argument of the provider is used.
@@ -64,8 +90,18 @@ type UserMembershipV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of user to use. Changing this creates a new user membership.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.UserV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Reference to a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDRef *v1.Reference `json:"userIdRef,omitempty" tf:"-"`
+
+	// Selector for a UserV3 in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
 }
 
 // UserMembershipV3Spec defines the desired state of UserMembershipV3
@@ -92,21 +128,20 @@ type UserMembershipV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // UserMembershipV3 is the Schema for the UserMembershipV3s API. Manages a user membership to group V3 resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type UserMembershipV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.groupId) || (has(self.initProvider) && has(self.initProvider.groupId))",message="spec.forProvider.groupId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userId) || (has(self.initProvider) && has(self.initProvider.userId))",message="spec.forProvider.userId is a required parameter"
-	Spec   UserMembershipV3Spec   `json:"spec"`
-	Status UserMembershipV3Status `json:"status,omitempty"`
+	Spec              UserMembershipV3Spec   `json:"spec"`
+	Status            UserMembershipV3Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -332,6 +332,16 @@ func (in *BlockDeviceInitParameters) DeepCopyInto(out *BlockDeviceInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.UUIDRef != nil {
+		in, out := &in.UUIDRef, &out.UUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UUIDSelector != nil {
+		in, out := &in.UUIDSelector, &out.UUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.VolumeSize != nil {
 		in, out := &in.VolumeSize, &out.VolumeSize
 		*out = new(float64)
@@ -472,6 +482,16 @@ func (in *BlockDeviceParameters) DeepCopyInto(out *BlockDeviceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.UUIDRef != nil {
+		in, out := &in.UUIDRef, &out.UUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UUIDSelector != nil {
+		in, out := &in.UUIDSelector, &out.UUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.VolumeSize != nil {
 		in, out := &in.VolumeSize, &out.VolumeSize
 		*out = new(float64)
@@ -529,6 +549,16 @@ func (in *FlavorAccessV2InitParameters) DeepCopyInto(out *FlavorAccessV2InitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.FlavorIDRef != nil {
+		in, out := &in.FlavorIDRef, &out.FlavorIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FlavorIDSelector != nil {
+		in, out := &in.FlavorIDSelector, &out.FlavorIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -538,6 +568,16 @@ func (in *FlavorAccessV2InitParameters) DeepCopyInto(out *FlavorAccessV2InitPara
 		in, out := &in.TenantID, &out.TenantID
 		*out = new(string)
 		**out = **in
+	}
+	if in.TenantIDRef != nil {
+		in, out := &in.TenantIDRef, &out.TenantIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TenantIDSelector != nil {
+		in, out := &in.TenantIDSelector, &out.TenantIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -626,6 +666,16 @@ func (in *FlavorAccessV2Parameters) DeepCopyInto(out *FlavorAccessV2Parameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.FlavorIDRef != nil {
+		in, out := &in.FlavorIDRef, &out.FlavorIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FlavorIDSelector != nil {
+		in, out := &in.FlavorIDSelector, &out.FlavorIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -635,6 +685,16 @@ func (in *FlavorAccessV2Parameters) DeepCopyInto(out *FlavorAccessV2Parameters) 
 		in, out := &in.TenantID, &out.TenantID
 		*out = new(string)
 		**out = **in
+	}
+	if in.TenantIDRef != nil {
+		in, out := &in.TenantIDRef, &out.TenantIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TenantIDSelector != nil {
+		in, out := &in.TenantIDSelector, &out.TenantIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1080,10 +1140,30 @@ func (in *FloatingipAssociateV2InitParameters) DeepCopyInto(out *FloatingipAssoc
 		*out = new(string)
 		**out = **in
 	}
+	if in.FloatingIPRef != nil {
+		in, out := &in.FloatingIPRef, &out.FloatingIPRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FloatingIPSelector != nil {
+		in, out := &in.FloatingIPSelector, &out.FloatingIPSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.InstanceID != nil {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -1197,10 +1277,30 @@ func (in *FloatingipAssociateV2Parameters) DeepCopyInto(out *FloatingipAssociate
 		*out = new(string)
 		**out = **in
 	}
+	if in.FloatingIPRef != nil {
+		in, out := &in.FloatingIPRef, &out.FloatingIPRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FloatingIPSelector != nil {
+		in, out := &in.FloatingIPSelector, &out.FloatingIPSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.InstanceID != nil {
 		in, out := &in.InstanceID, &out.InstanceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -1488,6 +1588,11 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.AdminPassSecretRef != nil {
+		in, out := &in.AdminPassSecretRef, &out.AdminPassSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.AvailabilityZone != nil {
 		in, out := &in.AvailabilityZone, &out.AvailabilityZone
 		*out = new(string)
@@ -1515,6 +1620,16 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.FlavorIDRef != nil {
+		in, out := &in.FlavorIDRef, &out.FlavorIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FlavorIDSelector != nil {
+		in, out := &in.FlavorIDSelector, &out.FlavorIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.FlavorName != nil {
 		in, out := &in.FlavorName, &out.FlavorName
 		*out = new(string)
@@ -1539,6 +1654,21 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 		in, out := &in.ImageName, &out.ImageName
 		*out = new(string)
 		**out = **in
+	}
+	if in.KeyPair != nil {
+		in, out := &in.KeyPair, &out.KeyPair
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeyPairRef != nil {
+		in, out := &in.KeyPairRef, &out.KeyPairRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyPairSelector != nil {
+		in, out := &in.KeyPairSelector, &out.KeyPairSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Metadata != nil {
 		in, out := &in.Metadata, &out.Metadata
@@ -1597,6 +1727,29 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SecurityGroups != nil {
+		in, out := &in.SecurityGroups, &out.SecurityGroups
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.SecurityGroupsRefs != nil {
+		in, out := &in.SecurityGroupsRefs, &out.SecurityGroupsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SecurityGroupsSelector != nil {
+		in, out := &in.SecurityGroupsSelector, &out.SecurityGroupsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.StopBeforeDestroy != nil {
 		in, out := &in.StopBeforeDestroy, &out.StopBeforeDestroy
 		*out = new(bool)
@@ -1620,10 +1773,8 @@ func (in *InstanceV2InitParameters) DeepCopyInto(out *InstanceV2InitParameters) 
 	}
 	if in.VendorOptions != nil {
 		in, out := &in.VendorOptions, &out.VendorOptions
-		*out = make([]VendorOptionsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VendorOptionsInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Volume != nil {
 		in, out := &in.Volume, &out.Volume
@@ -1879,10 +2030,8 @@ func (in *InstanceV2Observation) DeepCopyInto(out *InstanceV2Observation) {
 	}
 	if in.VendorOptions != nil {
 		in, out := &in.VendorOptions, &out.VendorOptions
-		*out = make([]VendorOptionsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VendorOptionsObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Volume != nil {
 		in, out := &in.Volume, &out.Volume
@@ -1947,6 +2096,16 @@ func (in *InstanceV2Parameters) DeepCopyInto(out *InstanceV2Parameters) {
 		in, out := &in.FlavorID, &out.FlavorID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FlavorIDRef != nil {
+		in, out := &in.FlavorIDRef, &out.FlavorIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FlavorIDSelector != nil {
+		in, out := &in.FlavorIDSelector, &out.FlavorIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.FlavorName != nil {
 		in, out := &in.FlavorName, &out.FlavorName
@@ -2091,10 +2250,8 @@ func (in *InstanceV2Parameters) DeepCopyInto(out *InstanceV2Parameters) {
 	}
 	if in.VendorOptions != nil {
 		in, out := &in.VendorOptions, &out.VendorOptions
-		*out = make([]VendorOptionsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VendorOptionsParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Volume != nil {
 		in, out := &in.Volume, &out.Volume
@@ -2190,15 +2347,45 @@ func (in *InterfaceAttachV2InitParameters) DeepCopyInto(out *InterfaceAttachV2In
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkIDRef != nil {
+		in, out := &in.NetworkIDRef, &out.NetworkIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkIDSelector != nil {
+		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PortID != nil {
 		in, out := &in.PortID, &out.PortID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PortIDRef != nil {
+		in, out := &in.PortIDRef, &out.PortIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PortIDSelector != nil {
+		in, out := &in.PortIDSelector, &out.PortIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -2307,15 +2494,45 @@ func (in *InterfaceAttachV2Parameters) DeepCopyInto(out *InterfaceAttachV2Parame
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkIDRef != nil {
+		in, out := &in.NetworkIDRef, &out.NetworkIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkIDSelector != nil {
+		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PortID != nil {
 		in, out := &in.PortID, &out.PortID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PortIDRef != nil {
+		in, out := &in.PortIDRef, &out.PortIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PortIDSelector != nil {
+		in, out := &in.PortIDSelector, &out.PortIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -2659,6 +2876,16 @@ func (in *NetworkInitParameters) DeepCopyInto(out *NetworkInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PortRef != nil {
+		in, out := &in.PortRef, &out.PortRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PortSelector != nil {
+		in, out := &in.PortSelector, &out.PortSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.UUID != nil {
 		in, out := &in.UUID, &out.UUID
 		*out = new(string)
@@ -2763,6 +2990,16 @@ func (in *NetworkParameters) DeepCopyInto(out *NetworkParameters) {
 		in, out := &in.Port, &out.Port
 		*out = new(string)
 		**out = **in
+	}
+	if in.PortRef != nil {
+		in, out := &in.PortRef, &out.PortRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PortSelector != nil {
+		in, out := &in.PortSelector, &out.PortSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.UUID != nil {
 		in, out := &in.UUID, &out.UUID
@@ -2930,6 +3167,21 @@ func (in *QuotasetV2InitParameters) DeepCopyInto(out *QuotasetV2InitParameters) 
 		in, out := &in.MetadataItems, &out.MetadataItems
 		*out = new(float64)
 		**out = **in
+	}
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ProjectIDRef != nil {
+		in, out := &in.ProjectIDRef, &out.ProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectIDSelector != nil {
+		in, out := &in.ProjectIDSelector, &out.ProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.RAM != nil {
 		in, out := &in.RAM, &out.RAM
@@ -3978,10 +4230,8 @@ func (in *ServergroupV2InitParameters) DeepCopyInto(out *ServergroupV2InitParame
 	}
 	if in.Rules != nil {
 		in, out := &in.Rules, &out.Rules
-		*out = make([]RulesInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(RulesInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ValueSpecs != nil {
 		in, out := &in.ValueSpecs, &out.ValueSpecs
@@ -4085,10 +4335,8 @@ func (in *ServergroupV2Observation) DeepCopyInto(out *ServergroupV2Observation) 
 	}
 	if in.Rules != nil {
 		in, out := &in.Rules, &out.Rules
-		*out = make([]RulesObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(RulesObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ValueSpecs != nil {
 		in, out := &in.ValueSpecs, &out.ValueSpecs
@@ -4144,10 +4392,8 @@ func (in *ServergroupV2Parameters) DeepCopyInto(out *ServergroupV2Parameters) {
 	}
 	if in.Rules != nil {
 		in, out := &in.Rules, &out.Rules
-		*out = make([]RulesParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(RulesParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ValueSpecs != nil {
 		in, out := &in.ValueSpecs, &out.ValueSpecs
@@ -4327,6 +4573,16 @@ func (in *VolumeAttachV2InitParameters) DeepCopyInto(out *VolumeAttachV2InitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Multiattach != nil {
 		in, out := &in.Multiattach, &out.Multiattach
 		*out = new(bool)
@@ -4339,15 +4595,23 @@ func (in *VolumeAttachV2InitParameters) DeepCopyInto(out *VolumeAttachV2InitPara
 	}
 	if in.VendorOptions != nil {
 		in, out := &in.VendorOptions, &out.VendorOptions
-		*out = make([]VolumeAttachV2VendorOptionsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VolumeAttachV2VendorOptionsInitParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VolumeID != nil {
 		in, out := &in.VolumeID, &out.VolumeID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VolumeIDRef != nil {
+		in, out := &in.VolumeIDRef, &out.VolumeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeIDSelector != nil {
+		in, out := &in.VolumeIDSelector, &out.VolumeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -4423,10 +4687,8 @@ func (in *VolumeAttachV2Observation) DeepCopyInto(out *VolumeAttachV2Observation
 	}
 	if in.VendorOptions != nil {
 		in, out := &in.VendorOptions, &out.VendorOptions
-		*out = make([]VolumeAttachV2VendorOptionsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VolumeAttachV2VendorOptionsObservation)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VolumeID != nil {
 		in, out := &in.VolumeID, &out.VolumeID
@@ -4458,6 +4720,16 @@ func (in *VolumeAttachV2Parameters) DeepCopyInto(out *VolumeAttachV2Parameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.InstanceIDRef != nil {
+		in, out := &in.InstanceIDRef, &out.InstanceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.InstanceIDSelector != nil {
+		in, out := &in.InstanceIDSelector, &out.InstanceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Multiattach != nil {
 		in, out := &in.Multiattach, &out.Multiattach
 		*out = new(bool)
@@ -4470,15 +4742,23 @@ func (in *VolumeAttachV2Parameters) DeepCopyInto(out *VolumeAttachV2Parameters) 
 	}
 	if in.VendorOptions != nil {
 		in, out := &in.VendorOptions, &out.VendorOptions
-		*out = make([]VolumeAttachV2VendorOptionsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		*out = new(VolumeAttachV2VendorOptionsParameters)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VolumeID != nil {
 		in, out := &in.VolumeID, &out.VolumeID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VolumeIDRef != nil {
+		in, out := &in.VolumeIDRef, &out.VolumeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeIDSelector != nil {
+		in, out := &in.VolumeIDSelector, &out.VolumeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

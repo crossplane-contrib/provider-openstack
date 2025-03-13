@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -26,7 +22,17 @@ type ObjectV1InitParameters struct {
 	// The container name cannot contain a slash (/) character because this
 	// character delimits the container and object name. For example, the path
 	// /v1/account/www/pages specifies the www container, not the www/pages container.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	ContainerName *string `json:"containerName,omitempty" tf:"container_name,omitempty"`
+
+	// Reference to a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameRef *v1.Reference `json:"containerNameRef,omitempty" tf:"-"`
+
+	// Selector for a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameSelector *v1.Selector `json:"containerNameSelector,omitempty" tf:"-"`
 
 	// A string representing the content of the object. Conflicts with
 	// source and copy_from.
@@ -68,6 +74,7 @@ type ObjectV1InitParameters struct {
 	// Used to trigger updates. The only meaningful value is ${md5(file("path/to/file"))}.
 	Etag *string `json:"etag,omitempty" tf:"etag,omitempty"`
 
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the object.
@@ -159,6 +166,7 @@ type ObjectV1Observation struct {
 	// example, the offset value is -05:00.
 	LastModified *string `json:"lastModified,omitempty" tf:"last_modified,omitempty"`
 
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the object.
@@ -193,8 +201,18 @@ type ObjectV1Parameters struct {
 	// The container name cannot contain a slash (/) character because this
 	// character delimits the container and object name. For example, the path
 	// /v1/account/www/pages specifies the www container, not the www/pages container.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	ContainerName *string `json:"containerName,omitempty" tf:"container_name,omitempty"`
+
+	// Reference to a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameRef *v1.Reference `json:"containerNameRef,omitempty" tf:"-"`
+
+	// Selector for a ContainerV1 in objectstorage to populate containerName.
+	// +kubebuilder:validation:Optional
+	ContainerNameSelector *v1.Selector `json:"containerNameSelector,omitempty" tf:"-"`
 
 	// A string representing the content of the object. Conflicts with
 	// source and copy_from.
@@ -246,6 +264,7 @@ type ObjectV1Parameters struct {
 	Etag *string `json:"etag,omitempty" tf:"etag,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the object.
@@ -296,18 +315,18 @@ type ObjectV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ObjectV1 is the Schema for the ObjectV1s API. Manages a V1 container object resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ObjectV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.containerName) || (has(self.initProvider) && has(self.initProvider.containerName))",message="spec.forProvider.containerName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   ObjectV1Spec   `json:"spec"`
 	Status ObjectV1Status `json:"status,omitempty"`

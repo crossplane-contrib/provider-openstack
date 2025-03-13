@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -60,7 +56,17 @@ type BlockDeviceInitParameters struct {
 
 	// The UUID of
 	// the image, volume, or snapshot. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDRef *v1.Reference `json:"uuidRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDSelector *v1.Selector `json:"uuidSelector,omitempty" tf:"-"`
 
 	// The size of the volume to create (in gigabytes). Required
 	// in the following combinations: source=image and destination=volume,
@@ -182,8 +188,18 @@ type BlockDeviceParameters struct {
 
 	// The UUID of
 	// the image, volume, or snapshot. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDRef *v1.Reference `json:"uuidRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate uuid.
+	// +kubebuilder:validation:Optional
+	UUIDSelector *v1.Selector `json:"uuidSelector,omitempty" tf:"-"`
 
 	// The size of the volume to create (in gigabytes). Required
 	// in the following combinations: source=image and destination=volume,
@@ -207,6 +223,10 @@ type InstanceV2InitParameters struct {
 
 	// The first detected Fixed IPv6 address.
 	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
+
+	// The administrative password to assign to the server.
+	// Changing this changes the root password on the existing server.
+	AdminPassSecretRef *v1.SecretKeySelector `json:"adminPassSecretRef,omitempty" tf:"-"`
 
 	// The availability zone in which to create
 	// the server. Conflicts with availability_zone_hints. Changing this creates
@@ -235,7 +255,17 @@ type InstanceV2InitParameters struct {
 
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Reference to a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDRef *v1.Reference `json:"flavorIdRef,omitempty" tf:"-"`
+
+	// Selector for a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDSelector *v1.Selector `json:"flavorIdSelector,omitempty" tf:"-"`
 
 	// The name of the
 	// desired flavor for the server. Changing this resizes the existing server.
@@ -257,8 +287,23 @@ type InstanceV2InitParameters struct {
 	// desired image for the server. Changing this rebuilds the existing server.
 	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
 
+	// The name of a key pair to put on the server. The key
+	// pair must already be created and associated with the tenant's account.
+	// Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.KeypairV2
+	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
+
+	// Reference to a KeypairV2 in compute to populate keyPair.
+	// +kubebuilder:validation:Optional
+	KeyPairRef *v1.Reference `json:"keyPairRef,omitempty" tf:"-"`
+
+	// Selector for a KeypairV2 in compute to populate keyPair.
+	// +kubebuilder:validation:Optional
+	KeyPairSelector *v1.Selector `json:"keyPairSelector,omitempty" tf:"-"`
+
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
@@ -295,6 +340,24 @@ type InstanceV2InitParameters struct {
 	// the instance should be launched. The available hints are described below.
 	SchedulerHints []SchedulerHintsInitParameters `json:"schedulerHints,omitempty" tf:"scheduler_hints,omitempty"`
 
+	// An array of one or more security group names
+	// to associate with the server. Changing this results in adding/removing
+	// security groups from the existing server. Note: When attaching the
+	// instance to networks using Ports, place the security groups on the Port
+	// and not the instance. Note: Names should be used and not ids, as ids
+	// trigger unnecessary updates.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SecgroupV2
+	// +listType=set
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// References to SecgroupV2 in networking to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecgroupV2 in networking to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
 	// Whether to try stop instance gracefully
 	// before destroying it, thus giving chance for guest OS daemons to stop correctly.
 	// If instance doesn't stop within timeout, it will be destroyed anyway.
@@ -302,6 +365,7 @@ type InstanceV2InitParameters struct {
 
 	// A set of string tags for the instance. Changing this
 	// updates the existing instance tags.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The user data to provide when launching the instance.
@@ -310,7 +374,7 @@ type InstanceV2InitParameters struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	Volume []VolumeInitParameters `json:"volume,omitempty" tf:"volume,omitempty"`
 }
@@ -323,10 +387,12 @@ type InstanceV2Observation struct {
 	// The first detected Fixed IPv6 address.
 	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
 
+	// +mapType=granular
 	AllMetadata map[string]*string `json:"allMetadata,omitempty" tf:"all_metadata,omitempty"`
 
 	// The collection of tags assigned on the instance, which have
 	// been explicitly and implicitly added.
+	// +listType=set
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
 	// The availability zone in which to create
@@ -390,6 +456,7 @@ type InstanceV2Observation struct {
 
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
@@ -432,6 +499,7 @@ type InstanceV2Observation struct {
 	// instance to networks using Ports, place the security groups on the Port
 	// and not the instance. Note: Names should be used and not ids, as ids
 	// trigger unnecessary updates.
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Whether to try stop instance gracefully
@@ -441,6 +509,7 @@ type InstanceV2Observation struct {
 
 	// A set of string tags for the instance. Changing this
 	// updates the existing instance tags.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The time when the instance was last updated.
@@ -452,7 +521,7 @@ type InstanceV2Observation struct {
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
-	VendorOptions []VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	Volume []VolumeObservation `json:"volume,omitempty" tf:"volume,omitempty"`
 }
@@ -503,8 +572,18 @@ type InstanceV2Parameters struct {
 
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
+
+	// Reference to a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDRef *v1.Reference `json:"flavorIdRef,omitempty" tf:"-"`
+
+	// Selector for a FlavorV2 in compute to populate flavorId.
+	// +kubebuilder:validation:Optional
+	FlavorIDSelector *v1.Selector `json:"flavorIdSelector,omitempty" tf:"-"`
 
 	// The name of the
 	// desired flavor for the server. Changing this resizes the existing server.
@@ -534,21 +613,22 @@ type InstanceV2Parameters struct {
 	// The name of a key pair to put on the server. The key
 	// pair must already be created and associated with the tenant's account.
 	// Changing this creates a new server.
-	// +crossplane:generate:reference:type=KeypairV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.KeypairV2
 	// +kubebuilder:validation:Optional
 	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
 
-	// Reference to a KeypairV2 to populate keyPair.
+	// Reference to a KeypairV2 in compute to populate keyPair.
 	// +kubebuilder:validation:Optional
 	KeyPairRef *v1.Reference `json:"keyPairRef,omitempty" tf:"-"`
 
-	// Selector for a KeypairV2 to populate keyPair.
+	// Selector for a KeypairV2 in compute to populate keyPair.
 	// +kubebuilder:validation:Optional
 	KeyPairSelector *v1.Selector `json:"keyPairSelector,omitempty" tf:"-"`
 
 	// Metadata key/value pairs to make available from
 	// within the instance. Changing this updates the existing server metadata.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// A unique name for the resource.
@@ -598,15 +678,16 @@ type InstanceV2Parameters struct {
 	// instance to networks using Ports, place the security groups on the Port
 	// and not the instance. Note: Names should be used and not ids, as ids
 	// trigger unnecessary updates.
-	// +crossplane:generate:reference:type=SecgroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SecgroupV2
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
-	// References to SecgroupV2 to populate securityGroups.
+	// References to SecgroupV2 in networking to populate securityGroups.
 	// +kubebuilder:validation:Optional
 	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
 
-	// Selector for a list of SecgroupV2 to populate securityGroups.
+	// Selector for a list of SecgroupV2 in networking to populate securityGroups.
 	// +kubebuilder:validation:Optional
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
@@ -619,6 +700,7 @@ type InstanceV2Parameters struct {
 	// A set of string tags for the instance. Changing this
 	// updates the existing instance tags.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The user data to provide when launching the instance.
@@ -629,7 +711,7 @@ type InstanceV2Parameters struct {
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	// +kubebuilder:validation:Optional
-	VendorOptions []VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
+	VendorOptions *VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Volume []VolumeParameters `json:"volume,omitempty" tf:"volume,omitempty"`
@@ -655,7 +737,17 @@ type NetworkInitParameters struct {
 
 	// The port UUID of a
 	// network to attach to the server. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	Port *string `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Reference to a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortRef *v1.Reference `json:"portRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortSelector *v1.Selector `json:"portSelector,omitempty" tf:"-"`
 
 	// The network UUID to
 	// attach to the server. Changing this creates a new server.
@@ -716,8 +808,18 @@ type NetworkParameters struct {
 
 	// The port UUID of a
 	// network to attach to the server. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	Port *string `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Reference to a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortRef *v1.Reference `json:"portRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate port.
+	// +kubebuilder:validation:Optional
+	PortSelector *v1.Selector `json:"portSelector,omitempty" tf:"-"`
 
 	// The network UUID to
 	// attach to the server. Changing this creates a new server.
@@ -758,6 +860,7 @@ type SchedulerHintsInitParameters struct {
 
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// An IP Address in CIDR form. The instance
@@ -795,6 +898,7 @@ type SchedulerHintsObservation struct {
 
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// An IP Address in CIDR form. The instance
@@ -833,6 +937,7 @@ type SchedulerHintsParameters struct {
 	// Arbitrary key/value pairs of additional
 	// properties to pass to the scheduler.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	AdditionalProperties map[string]*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
 	// An IP Address in CIDR form. The instance
@@ -969,13 +1074,14 @@ type InstanceV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // InstanceV2 is the Schema for the InstanceV2s API. Manages a V2 VM instance resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type InstanceV2 struct {
 	metav1.TypeMeta   `json:",inline"`

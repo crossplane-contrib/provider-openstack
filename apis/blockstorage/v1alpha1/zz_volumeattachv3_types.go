@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -55,7 +51,17 @@ type VolumeAttachV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The ID of the Volume to attach to an Instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDRef *v1.Reference `json:"volumeIdRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDSelector *v1.Selector `json:"volumeIdSelector,omitempty" tf:"-"`
 
 	// A wwnn name. Used for Fibre Channel connections.
 	Wwnn *string `json:"wwnn,omitempty" tf:"wwnn,omitempty"`
@@ -166,8 +172,18 @@ type VolumeAttachV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The ID of the Volume to attach to an Instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
+
+	// Reference to a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDRef *v1.Reference `json:"volumeIdRef,omitempty" tf:"-"`
+
+	// Selector for a VolumeV3 in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDSelector *v1.Selector `json:"volumeIdSelector,omitempty" tf:"-"`
 
 	// A wwnn name. Used for Fibre Channel connections.
 	// +kubebuilder:validation:Optional
@@ -203,19 +219,19 @@ type VolumeAttachV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // VolumeAttachV3 is the Schema for the VolumeAttachV3s API. Creates an attachment connection to a Block Storage volume
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type VolumeAttachV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostName) || (has(self.initProvider) && has(self.initProvider.hostName))",message="spec.forProvider.hostName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.volumeId) || (has(self.initProvider) && has(self.initProvider.volumeId))",message="spec.forProvider.volumeId is a required parameter"
 	Spec   VolumeAttachV3Spec   `json:"spec"`
 	Status VolumeAttachV3Status `json:"status,omitempty"`
 }

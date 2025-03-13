@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -25,15 +21,45 @@ type InterfaceAttachV2InitParameters struct {
 	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
 
 	// The ID of the Instance to attach the Port or Network to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.InstanceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The ID of the Network to attach to an Instance. A port will be created automatically.
 	// NOTE: This option and port_id are mutually exclusive.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// The ID of the Port to attach to an Instance.
 	// NOTE: This option and network_id are mutually exclusive.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to create the interface attachment.
 	// If omitted, the region argument of the provider is used. Changing this
@@ -74,18 +100,48 @@ type InterfaceAttachV2Parameters struct {
 	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
 
 	// The ID of the Instance to attach the Port or Network to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.InstanceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
+	// Reference to a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceV2 in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
+
 	// The ID of the Network to attach to an Instance. A port will be created automatically.
 	// NOTE: This option and port_id are mutually exclusive.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
+	// Reference to a PortV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+
 	// The ID of the Port to attach to an Instance.
 	// NOTE: This option and network_id are mutually exclusive.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to create the interface attachment.
 	// If omitted, the region argument of the provider is used. Changing this
@@ -118,20 +174,20 @@ type InterfaceAttachV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // InterfaceAttachV2 is the Schema for the InterfaceAttachV2s API. Attaches a Network Interface to an Instance.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type InterfaceAttachV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
-	Spec   InterfaceAttachV2Spec   `json:"spec"`
-	Status InterfaceAttachV2Status `json:"status,omitempty"`
+	Spec              InterfaceAttachV2Spec   `json:"spec"`
+	Status            InterfaceAttachV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

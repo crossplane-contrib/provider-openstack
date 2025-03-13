@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -21,15 +17,29 @@ import (
 type UserV1InitParameters struct {
 
 	// A list of database user should have access to.
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// The ID for the database instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/db/v1alpha1.InstanceV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a InstanceV1 in db to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceV1 in db to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// A unique name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// User's password.
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Openstack region resource is created in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -38,6 +48,7 @@ type UserV1InitParameters struct {
 type UserV1Observation struct {
 
 	// A list of database user should have access to.
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
@@ -58,14 +69,25 @@ type UserV1Parameters struct {
 
 	// A list of database user should have access to.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Databases []*string `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// The ID for the database instance.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/db/v1alpha1.InstanceV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a InstanceV1 in db to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceV1 in db to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// A unique name for the resource.
 	// +kubebuilder:validation:Optional
@@ -104,18 +126,18 @@ type UserV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // UserV1 is the Schema for the UserV1s API. Manages a V1 database user resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type UserV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	Spec   UserV1Spec   `json:"spec"`

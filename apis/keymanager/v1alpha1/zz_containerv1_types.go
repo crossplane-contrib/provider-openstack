@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -19,17 +15,17 @@ import (
 )
 
 type ACLInitParameters struct {
-	Read []ReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type ACLObservation struct {
-	Read []ReadObservation `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ReadObservation `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type ACLParameters struct {
 
 	// +kubebuilder:validation:Optional
-	Read []ReadParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ReadParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type ConsumersInitParameters struct {
@@ -52,7 +48,7 @@ type ContainerV1InitParameters struct {
 	// Allows to control an access to a container. Currently only
 	// the read operation is supported. If not specified, the container is
 	// accessible project wide. The read structure is described below.
-	ACL []ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Human-readable name for the Container. Does not have
 	// to be unique.
@@ -77,7 +73,7 @@ type ContainerV1Observation struct {
 	// Allows to control an access to a container. Currently only
 	// the read operation is supported. If not specified, the container is
 	// accessible project wide. The read structure is described below.
-	ACL []ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// The list of the container consumers. The structure is described below.
 	Consumers []ConsumersObservation `json:"consumers,omitempty" tf:"consumers,omitempty"`
@@ -123,7 +119,7 @@ type ContainerV1Parameters struct {
 	// the read operation is supported. If not specified, the container is
 	// accessible project wide. The read structure is described below.
 	// +kubebuilder:validation:Optional
-	ACL []ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Human-readable name for the Container. Does not have
 	// to be unique.
@@ -155,6 +151,7 @@ type ReadInitParameters struct {
 
 	// The list of user IDs, which are allowed to access the
 	// container, when project_access is set to false.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -172,6 +169,7 @@ type ReadObservation struct {
 
 	// The list of user IDs, which are allowed to access the
 	// container, when project_access is set to false.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -185,6 +183,7 @@ type ReadParameters struct {
 	// The list of user IDs, which are allowed to access the
 	// container, when project_access is set to false.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -194,7 +193,17 @@ type SecretRefsInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The secret reference / where to find the secret, URL.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("secret_ref",true)
 	SecretRef *string `json:"secretRef,omitempty" tf:"secret_ref,omitempty"`
+
+	// Reference to a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefRef *v1.Reference `json:"secretRefRef,omitempty" tf:"-"`
+
+	// Selector for a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefSelector *v1.Selector `json:"secretRefSelector,omitempty" tf:"-"`
 }
 
 type SecretRefsObservation struct {
@@ -213,8 +222,18 @@ type SecretRefsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The secret reference / where to find the secret, URL.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("secret_ref",true)
 	// +kubebuilder:validation:Optional
-	SecretRef *string `json:"secretRef" tf:"secret_ref,omitempty"`
+	SecretRef *string `json:"secretRef,omitempty" tf:"secret_ref,omitempty"`
+
+	// Reference to a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefRef *v1.Reference `json:"secretRefRef,omitempty" tf:"-"`
+
+	// Selector for a SecretV1 in keymanager to populate secretRef.
+	// +kubebuilder:validation:Optional
+	SecretRefSelector *v1.Selector `json:"secretRefSelector,omitempty" tf:"-"`
 }
 
 // ContainerV1Spec defines the desired state of ContainerV1
@@ -241,13 +260,14 @@ type ContainerV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ContainerV1 is the Schema for the ContainerV1s API. Manages a V1 Barbican container resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ContainerV1 struct {
 	metav1.TypeMeta   `json:",inline"`

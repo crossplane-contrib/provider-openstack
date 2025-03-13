@@ -6,7 +6,7 @@ import "github.com/crossplane/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("openstack_identity_role_assignment_v3", func(r *config.Resource) {
 		r.References["project_id"] = config.Reference{
-			Type: "ProjectV3",
+			TerraformName: "openstack_identity_project_v3",
 		}
 	})
 }

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -49,9 +45,11 @@ type QosPolicyV2InitParameters struct {
 	Shared *bool `json:"shared,omitempty" tf:"shared,omitempty"`
 
 	// A set of string tags for the QoS policy.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -59,6 +57,7 @@ type QosPolicyV2Observation struct {
 
 	// The collection of tags assigned on the QoS policy, which have been
 	// explicitly and implicitly added.
+	// +listType=set
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
 	// The time at which QoS policy was created.
@@ -98,12 +97,14 @@ type QosPolicyV2Observation struct {
 	Shared *bool `json:"shared,omitempty" tf:"shared,omitempty"`
 
 	// A set of string tags for the QoS policy.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The time at which QoS policy was created.
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -145,10 +146,12 @@ type QosPolicyV2Parameters struct {
 
 	// A set of string tags for the QoS policy.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Map of additional options.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -176,13 +179,14 @@ type QosPolicyV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // QosPolicyV2 is the Schema for the QosPolicyV2s API. Manages a V2 Neutron QoS policy resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type QosPolicyV2 struct {
 	metav1.TypeMeta   `json:",inline"`

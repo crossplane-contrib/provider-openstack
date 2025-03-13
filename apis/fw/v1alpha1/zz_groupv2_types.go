@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -32,12 +28,32 @@ type GroupV2InitParameters struct {
 	// The egress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// egress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	EgressFirewallPolicyID *string `json:"egressFirewallPolicyId,omitempty" tf:"egress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDRef *v1.Reference `json:"egressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDSelector *v1.Selector `json:"egressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// The ingress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// ingress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IngressFirewallPolicyID *string `json:"ingressFirewallPolicyId,omitempty" tf:"ingress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDRef *v1.Reference `json:"ingressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDSelector *v1.Selector `json:"ingressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// A name for the firewall group. Changing this
 	// updates the name of an existing firewall.
@@ -46,6 +62,7 @@ type GroupV2InitParameters struct {
 	// Port(s) to associate this firewall group
 	// with. Must be a list of strings. Changing this updates the associated ports
 	// of an existing firewall group.
+	// +listType=set
 	Ports []*string `json:"ports,omitempty" tf:"ports,omitempty"`
 
 	// - This argument conflicts and  is interchangeable
@@ -104,6 +121,7 @@ type GroupV2Observation struct {
 	// Port(s) to associate this firewall group
 	// with. Must be a list of strings. Changing this updates the associated ports
 	// of an existing firewall group.
+	// +listType=set
 	Ports []*string `json:"ports,omitempty" tf:"ports,omitempty"`
 
 	// - This argument conflicts and  is interchangeable
@@ -151,14 +169,34 @@ type GroupV2Parameters struct {
 	// The egress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// egress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	EgressFirewallPolicyID *string `json:"egressFirewallPolicyId,omitempty" tf:"egress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDRef *v1.Reference `json:"egressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate egressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	EgressFirewallPolicyIDSelector *v1.Selector `json:"egressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// The ingress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// ingress_firewall_policy_id of an existing firewall group.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IngressFirewallPolicyID *string `json:"ingressFirewallPolicyId,omitempty" tf:"ingress_firewall_policy_id,omitempty"`
+
+	// Reference to a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDRef *v1.Reference `json:"ingressFirewallPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a PolicyV2 in fw to populate ingressFirewallPolicyId.
+	// +kubebuilder:validation:Optional
+	IngressFirewallPolicyIDSelector *v1.Selector `json:"ingressFirewallPolicyIdSelector,omitempty" tf:"-"`
 
 	// A name for the firewall group. Changing this
 	// updates the name of an existing firewall.
@@ -169,6 +207,7 @@ type GroupV2Parameters struct {
 	// with. Must be a list of strings. Changing this updates the associated ports
 	// of an existing firewall group.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Ports []*string `json:"ports,omitempty" tf:"ports,omitempty"`
 
 	// - This argument conflicts and  is interchangeable
@@ -225,13 +264,14 @@ type GroupV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // GroupV2 is the Schema for the GroupV2s API. Manages a v2 firewall group resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type GroupV2 struct {
 	metav1.TypeMeta   `json:",inline"`

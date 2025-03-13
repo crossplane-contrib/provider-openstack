@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -90,7 +86,7 @@ type MetaParameters struct {
 type OrderV1InitParameters struct {
 
 	// Dictionary containing the order metadata used to generate the order. The structure is described below.
-	Meta []MetaInitParameters `json:"meta,omitempty" tf:"meta,omitempty"`
+	Meta *MetaInitParameters `json:"meta,omitempty" tf:"meta,omitempty"`
 
 	// The region in which to obtain the V1 KeyManager client.
 	// A KeyManager client is needed to create a order. If omitted, the
@@ -116,7 +112,7 @@ type OrderV1Observation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Dictionary containing the order metadata used to generate the order. The structure is described below.
-	Meta []MetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
+	Meta *MetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
 
 	// The order reference / where to find the order.
 	OrderRef *string `json:"orderRef,omitempty" tf:"order_ref,omitempty"`
@@ -150,7 +146,7 @@ type OrderV1Parameters struct {
 
 	// Dictionary containing the order metadata used to generate the order. The structure is described below.
 	// +kubebuilder:validation:Optional
-	Meta []MetaParameters `json:"meta,omitempty" tf:"meta,omitempty"`
+	Meta *MetaParameters `json:"meta,omitempty" tf:"meta,omitempty"`
 
 	// The region in which to obtain the V1 KeyManager client.
 	// A KeyManager client is needed to create a order. If omitted, the
@@ -188,13 +184,14 @@ type OrderV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // OrderV1 is the Schema for the OrderV1s API. Manages a V1 Barbican order resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type OrderV1 struct {
 	metav1.TypeMeta   `json:",inline"`

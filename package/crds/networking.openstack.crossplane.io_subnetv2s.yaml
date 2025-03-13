@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.13.0
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: subnetv2s.networking.openstack.crossplane.io
 spec:
   group: networking.openstack.crossplane.io
@@ -19,11 +19,11 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=='Ready')].status
-      name: READY
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Synced')].status
       name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
       type: string
     - jsonPath: .metadata.annotations.crossplane\.io/external-name
       name: EXTERNAL-NAME
@@ -38,14 +38,19 @@ spec:
           subnet resource within OpenStack.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -68,12 +74,13 @@ spec:
               forProvider:
                 properties:
                   allocationPool:
-                    description: A block declaring the start and end range of the
-                      IP addresses available for use with DHCP in this subnet. Multiple
-                      allocation_pool blocks can be declared, providing the subnet
-                      with more than one range of IP addresses to use with DHCP. However,
-                      each IP range must be from the same CIDR that the subnet is
-                      part of. The allocation_pool block is documented below.
+                    description: |-
+                      A block declaring the start and end range of
+                      the IP addresses available for use with DHCP in this subnet. Multiple
+                      allocation_pool blocks can be declared, providing the subnet with more
+                      than one range of IP addresses to use with DHCP. However, each IP range
+                      must be from the same CIDR that the subnet is part of.
+                      The allocation_pool block is documented below.
                     items:
                       properties:
                         end:
@@ -85,10 +92,11 @@ spec:
                       type: object
                     type: array
                   allocationPools:
-                    description: (Deprecated - use allocation_pool instead) A block
-                      declaring the start and end range of the IP addresses available
-                      for use with DHCP in this subnet. The allocation_pools block
-                      is documented below.
+                    description: |-
+                      (Deprecated - use allocation_pool instead)
+                      A block declaring the start and end range of the IP addresses available for
+                      use with DHCP in this subnet.
+                      The allocation_pools block is documented below.
                     items:
                       properties:
                         end:
@@ -100,39 +108,44 @@ spec:
                       type: object
                     type: array
                   cidr:
-                    description: CIDR representing IP range for this subnet, based
-                      on IP version. You can omit this option if you are creating
-                      a subnet from a subnet pool.
+                    description: |-
+                      CIDR representing IP range for this subnet, based on IP
+                      version. You can omit this option if you are creating a subnet from a
+                      subnet pool.
                     type: string
                   description:
-                    description: Human-readable description of the subnet. Changing
-                      this updates the name of the existing subnet.
+                    description: |-
+                      Human-readable description of the subnet. Changing this
+                      updates the name of the existing subnet.
                     type: string
                   dnsNameservers:
-                    description: An array of DNS name server names used by hosts in
-                      this subnet. Changing this updates the DNS name servers for
-                      the existing subnet.
+                    description: |-
+                      An array of DNS name server names used by hosts
+                      in this subnet. Changing this updates the DNS name servers for the existing
+                      subnet.
                     items:
                       type: string
                     type: array
                   enableDhcp:
-                    description: The administrative state of the network. Acceptable
-                      values are "true" and "false". Changing this value enables or
-                      disables the DHCP capabilities of the existing subnet. Defaults
-                      to true.
+                    description: |-
+                      The administrative state of the network.
+                      Acceptable values are "true" and "false". Changing this value enables or
+                      disables the DHCP capabilities of the existing subnet. Defaults to true.
                     type: boolean
                   gatewayIp:
-                    description: Default gateway used by devices in this subnet. Leaving
-                      this blank and not setting no_gateway will cause a default gateway
-                      of .1 to be used. Changing this updates the gateway IP of the
+                    description: |-
+                      Default gateway used by devices in this subnet.
+                      Leaving this blank and not setting no_gateway will cause a default
+                      gateway of .1 to be used. Changing this updates the gateway IP of the
                       existing subnet.
                     type: string
                   hostRoutes:
-                    description: (Deprecated - use openstack_networking_subnet_route_v2
-                      instead) An array of routes that should be used by devices with
-                      IPs from this subnet (not including local subnet route). The
-                      host_route object structure is documented below. Changing this
-                      updates the host routes for the existing subnet.
+                    description: |-
+                      (Deprecated - use openstack_networking_subnet_route_v2
+                      instead) An array of routes that should be used by devices
+                      with IPs from this subnet (not including local subnet route). The host_route
+                      object structure is documented below. Changing this updates the host routes
+                      for the existing subnet.
                     items:
                       properties:
                         destinationCidr:
@@ -144,27 +157,33 @@ spec:
                       type: object
                     type: array
                   ipVersion:
-                    description: IP version, either 4 (default) or 6. Changing this
-                      creates a new subnet.
+                    description: |-
+                      IP version, either 4 (default) or 6. Changing this creates a
+                      new subnet.
                     type: number
                   ipv6AddressMode:
-                    description: The IPv6 address mode. Valid values are dhcpv6-stateful,
-                      dhcpv6-stateless, or slaac.
+                    description: |-
+                      The IPv6 address mode. Valid values are
+                      dhcpv6-stateful, dhcpv6-stateless, or slaac.
                     type: string
                   ipv6RaMode:
-                    description: The IPv6 Router Advertisement mode. Valid values
+                    description: |-
+                      The IPv6 Router Advertisement mode. Valid values
                       are dhcpv6-stateful, dhcpv6-stateless, or slaac.
                     type: string
                   name:
-                    description: The name of the subnet. Changing this updates the
-                      name of the existing subnet.
+                    description: |-
+                      The name of the subnet. Changing this updates the name of
+                      the existing subnet.
                     type: string
                   networkId:
-                    description: The UUID of the parent network. Changing this creates
-                      a new subnet.
+                    description: |-
+                      The UUID of the parent network. Changing this
+                      creates a new subnet.
                     type: string
                   networkIdRef:
-                    description: Reference to a NetworkV2 to populate networkId.
+                    description: Reference to a SubnetV2 in networking to populate
+                      networkId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -174,21 +193,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -198,11 +217,13 @@ spec:
                     - name
                     type: object
                   networkIdSelector:
-                    description: Selector for a NetworkV2 to populate networkId.
+                    description: Selector for a SubnetV2 in networking to populate
+                      networkId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -215,21 +236,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -237,24 +258,28 @@ spec:
                         type: object
                     type: object
                   noGateway:
-                    description: Do not set a gateway IP on this subnet. Changing
+                    description: |-
+                      Do not set a gateway IP on this subnet. Changing
                       this removes or adds a default gateway IP of the existing subnet.
                     type: boolean
                   prefixLength:
-                    description: The prefix length to use when creating a subnet from
-                      a subnet pool. The default subnet pool prefix length that was
-                      defined when creating the subnet pool will be used if not provided.
-                      Changing this creates a new subnet.
+                    description: |-
+                      The prefix length to use when creating a subnet
+                      from a subnet pool. The default subnet pool prefix length that was defined
+                      when creating the subnet pool will be used if not provided. Changing this
+                      creates a new subnet.
                     type: number
                   region:
-                    description: The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create a Neutron subnet. If
-                      omitted, the region argument of the provider is used. Changing
-                      this creates a new subnet.
+                    description: |-
+                      The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a Neutron subnet. If omitted, the
+                      region argument of the provider is used. Changing this creates a new
+                      subnet.
                     type: string
                   serviceTypes:
-                    description: An array of service types used by the subnet. Changing
-                      this updates the service types for the existing subnet.
+                    description: |-
+                      An array of service types used by the subnet.
+                      Changing this updates the service types for the existing subnet.
                     items:
                       type: string
                     type: array
@@ -266,36 +291,40 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   tenantId:
-                    description: The owner of the subnet. Required if admin wants
-                      to create a subnet for another tenant. Changing this creates
-                      a new subnet.
+                    description: |-
+                      The owner of the subnet. Required if admin wants to
+                      create a subnet for another tenant. Changing this creates a new subnet.
                     type: string
                   valueSpecs:
                     additionalProperties:
                       type: string
                     description: Map of additional options.
                     type: object
+                    x-kubernetes-map-type: granular
                 type: object
               initProvider:
-                description: THIS IS A BETA FIELD. It will be honored unless the Management
-                  Policies feature flag is disabled. InitProvider holds the same fields
-                  as ForProvider, with the exception of Identifier and other resource
-                  reference fields. The fields that are in InitProvider are merged
-                  into ForProvider when the resource is created. The same fields are
-                  also added to the terraform ignore_changes hook, to avoid updating
-                  them after creation. This is useful for fields that are required
-                  on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them,
-                  like an autoscaler.
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
                   allocationPool:
-                    description: A block declaring the start and end range of the
-                      IP addresses available for use with DHCP in this subnet. Multiple
-                      allocation_pool blocks can be declared, providing the subnet
-                      with more than one range of IP addresses to use with DHCP. However,
-                      each IP range must be from the same CIDR that the subnet is
-                      part of. The allocation_pool block is documented below.
+                    description: |-
+                      A block declaring the start and end range of
+                      the IP addresses available for use with DHCP in this subnet. Multiple
+                      allocation_pool blocks can be declared, providing the subnet with more
+                      than one range of IP addresses to use with DHCP. However, each IP range
+                      must be from the same CIDR that the subnet is part of.
+                      The allocation_pool block is documented below.
                     items:
                       properties:
                         end:
@@ -307,10 +336,11 @@ spec:
                       type: object
                     type: array
                   allocationPools:
-                    description: (Deprecated - use allocation_pool instead) A block
-                      declaring the start and end range of the IP addresses available
-                      for use with DHCP in this subnet. The allocation_pools block
-                      is documented below.
+                    description: |-
+                      (Deprecated - use allocation_pool instead)
+                      A block declaring the start and end range of the IP addresses available for
+                      use with DHCP in this subnet.
+                      The allocation_pools block is documented below.
                     items:
                       properties:
                         end:
@@ -322,39 +352,44 @@ spec:
                       type: object
                     type: array
                   cidr:
-                    description: CIDR representing IP range for this subnet, based
-                      on IP version. You can omit this option if you are creating
-                      a subnet from a subnet pool.
+                    description: |-
+                      CIDR representing IP range for this subnet, based on IP
+                      version. You can omit this option if you are creating a subnet from a
+                      subnet pool.
                     type: string
                   description:
-                    description: Human-readable description of the subnet. Changing
-                      this updates the name of the existing subnet.
+                    description: |-
+                      Human-readable description of the subnet. Changing this
+                      updates the name of the existing subnet.
                     type: string
                   dnsNameservers:
-                    description: An array of DNS name server names used by hosts in
-                      this subnet. Changing this updates the DNS name servers for
-                      the existing subnet.
+                    description: |-
+                      An array of DNS name server names used by hosts
+                      in this subnet. Changing this updates the DNS name servers for the existing
+                      subnet.
                     items:
                       type: string
                     type: array
                   enableDhcp:
-                    description: The administrative state of the network. Acceptable
-                      values are "true" and "false". Changing this value enables or
-                      disables the DHCP capabilities of the existing subnet. Defaults
-                      to true.
+                    description: |-
+                      The administrative state of the network.
+                      Acceptable values are "true" and "false". Changing this value enables or
+                      disables the DHCP capabilities of the existing subnet. Defaults to true.
                     type: boolean
                   gatewayIp:
-                    description: Default gateway used by devices in this subnet. Leaving
-                      this blank and not setting no_gateway will cause a default gateway
-                      of .1 to be used. Changing this updates the gateway IP of the
+                    description: |-
+                      Default gateway used by devices in this subnet.
+                      Leaving this blank and not setting no_gateway will cause a default
+                      gateway of .1 to be used. Changing this updates the gateway IP of the
                       existing subnet.
                     type: string
                   hostRoutes:
-                    description: (Deprecated - use openstack_networking_subnet_route_v2
-                      instead) An array of routes that should be used by devices with
-                      IPs from this subnet (not including local subnet route). The
-                      host_route object structure is documented below. Changing this
-                      updates the host routes for the existing subnet.
+                    description: |-
+                      (Deprecated - use openstack_networking_subnet_route_v2
+                      instead) An array of routes that should be used by devices
+                      with IPs from this subnet (not including local subnet route). The host_route
+                      object structure is documented below. Changing this updates the host routes
+                      for the existing subnet.
                     items:
                       properties:
                         destinationCidr:
@@ -366,40 +401,129 @@ spec:
                       type: object
                     type: array
                   ipVersion:
-                    description: IP version, either 4 (default) or 6. Changing this
-                      creates a new subnet.
+                    description: |-
+                      IP version, either 4 (default) or 6. Changing this creates a
+                      new subnet.
                     type: number
                   ipv6AddressMode:
-                    description: The IPv6 address mode. Valid values are dhcpv6-stateful,
-                      dhcpv6-stateless, or slaac.
+                    description: |-
+                      The IPv6 address mode. Valid values are
+                      dhcpv6-stateful, dhcpv6-stateless, or slaac.
                     type: string
                   ipv6RaMode:
-                    description: The IPv6 Router Advertisement mode. Valid values
+                    description: |-
+                      The IPv6 Router Advertisement mode. Valid values
                       are dhcpv6-stateful, dhcpv6-stateless, or slaac.
                     type: string
                   name:
-                    description: The name of the subnet. Changing this updates the
-                      name of the existing subnet.
+                    description: |-
+                      The name of the subnet. Changing this updates the name of
+                      the existing subnet.
                     type: string
+                  networkId:
+                    description: |-
+                      The UUID of the parent network. Changing this
+                      creates a new subnet.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a SubnetV2 in networking to populate
+                      networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a SubnetV2 in networking to populate
+                      networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   noGateway:
-                    description: Do not set a gateway IP on this subnet. Changing
+                    description: |-
+                      Do not set a gateway IP on this subnet. Changing
                       this removes or adds a default gateway IP of the existing subnet.
                     type: boolean
                   prefixLength:
-                    description: The prefix length to use when creating a subnet from
-                      a subnet pool. The default subnet pool prefix length that was
-                      defined when creating the subnet pool will be used if not provided.
-                      Changing this creates a new subnet.
+                    description: |-
+                      The prefix length to use when creating a subnet
+                      from a subnet pool. The default subnet pool prefix length that was defined
+                      when creating the subnet pool will be used if not provided. Changing this
+                      creates a new subnet.
                     type: number
                   region:
-                    description: The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create a Neutron subnet. If
-                      omitted, the region argument of the provider is used. Changing
-                      this creates a new subnet.
+                    description: |-
+                      The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a Neutron subnet. If omitted, the
+                      region argument of the provider is used. Changing this creates a new
+                      subnet.
                     type: string
                   serviceTypes:
-                    description: An array of service types used by the subnet. Changing
-                      this updates the service types for the existing subnet.
+                    description: |-
+                      An array of service types used by the subnet.
+                      Changing this updates the service types for the existing subnet.
                     items:
                       type: string
                     type: array
@@ -411,33 +535,37 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   tenantId:
-                    description: The owner of the subnet. Required if admin wants
-                      to create a subnet for another tenant. Changing this creates
-                      a new subnet.
+                    description: |-
+                      The owner of the subnet. Required if admin wants to
+                      create a subnet for another tenant. Changing this creates a new subnet.
                     type: string
                   valueSpecs:
                     additionalProperties:
                       type: string
                     description: Map of additional options.
                     type: object
+                    x-kubernetes-map-type: granular
                 type: object
               managementPolicies:
                 default:
                 - '*'
-                description: 'THIS IS A BETA FIELD. It is on by default but can be
-                  opted out through a Crossplane feature flag. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
                 items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
                   enum:
                   - Observe
                   - Create
@@ -450,9 +578,10 @@ spec:
               providerConfigRef:
                 default:
                   name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
                 properties:
                   name:
                     description: Name of the referenced object.
@@ -462,21 +591,21 @@ spec:
                     properties:
                       resolution:
                         default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
                         enum:
                         - Required
                         - Optional
                         type: string
                       resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
                         enum:
                         - Always
                         - IfNotPresent
@@ -486,17 +615,19 @@ spec:
                 - name
                 type: object
               publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
                 properties:
                   configRef:
                     default:
                       name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -506,21 +637,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -535,21 +666,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -560,14 +692,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -588,18 +721,21 @@ spec:
               atProvider:
                 properties:
                   allTags:
-                    description: The collection of ags assigned on the subnet, which
-                      have been explicitly and implicitly added.
+                    description: |-
+                      The collection of ags assigned on the subnet, which have been
+                      explicitly and implicitly added.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   allocationPool:
-                    description: A block declaring the start and end range of the
-                      IP addresses available for use with DHCP in this subnet. Multiple
-                      allocation_pool blocks can be declared, providing the subnet
-                      with more than one range of IP addresses to use with DHCP. However,
-                      each IP range must be from the same CIDR that the subnet is
-                      part of. The allocation_pool block is documented below.
+                    description: |-
+                      A block declaring the start and end range of
+                      the IP addresses available for use with DHCP in this subnet. Multiple
+                      allocation_pool blocks can be declared, providing the subnet with more
+                      than one range of IP addresses to use with DHCP. However, each IP range
+                      must be from the same CIDR that the subnet is part of.
+                      The allocation_pool block is documented below.
                     items:
                       properties:
                         end:
@@ -611,10 +747,11 @@ spec:
                       type: object
                     type: array
                   allocationPools:
-                    description: (Deprecated - use allocation_pool instead) A block
-                      declaring the start and end range of the IP addresses available
-                      for use with DHCP in this subnet. The allocation_pools block
-                      is documented below.
+                    description: |-
+                      (Deprecated - use allocation_pool instead)
+                      A block declaring the start and end range of the IP addresses available for
+                      use with DHCP in this subnet.
+                      The allocation_pools block is documented below.
                     items:
                       properties:
                         end:
@@ -626,39 +763,44 @@ spec:
                       type: object
                     type: array
                   cidr:
-                    description: CIDR representing IP range for this subnet, based
-                      on IP version. You can omit this option if you are creating
-                      a subnet from a subnet pool.
+                    description: |-
+                      CIDR representing IP range for this subnet, based on IP
+                      version. You can omit this option if you are creating a subnet from a
+                      subnet pool.
                     type: string
                   description:
-                    description: Human-readable description of the subnet. Changing
-                      this updates the name of the existing subnet.
+                    description: |-
+                      Human-readable description of the subnet. Changing this
+                      updates the name of the existing subnet.
                     type: string
                   dnsNameservers:
-                    description: An array of DNS name server names used by hosts in
-                      this subnet. Changing this updates the DNS name servers for
-                      the existing subnet.
+                    description: |-
+                      An array of DNS name server names used by hosts
+                      in this subnet. Changing this updates the DNS name servers for the existing
+                      subnet.
                     items:
                       type: string
                     type: array
                   enableDhcp:
-                    description: The administrative state of the network. Acceptable
-                      values are "true" and "false". Changing this value enables or
-                      disables the DHCP capabilities of the existing subnet. Defaults
-                      to true.
+                    description: |-
+                      The administrative state of the network.
+                      Acceptable values are "true" and "false". Changing this value enables or
+                      disables the DHCP capabilities of the existing subnet. Defaults to true.
                     type: boolean
                   gatewayIp:
-                    description: Default gateway used by devices in this subnet. Leaving
-                      this blank and not setting no_gateway will cause a default gateway
-                      of .1 to be used. Changing this updates the gateway IP of the
+                    description: |-
+                      Default gateway used by devices in this subnet.
+                      Leaving this blank and not setting no_gateway will cause a default
+                      gateway of .1 to be used. Changing this updates the gateway IP of the
                       existing subnet.
                     type: string
                   hostRoutes:
-                    description: (Deprecated - use openstack_networking_subnet_route_v2
-                      instead) An array of routes that should be used by devices with
-                      IPs from this subnet (not including local subnet route). The
-                      host_route object structure is documented below. Changing this
-                      updates the host routes for the existing subnet.
+                    description: |-
+                      (Deprecated - use openstack_networking_subnet_route_v2
+                      instead) An array of routes that should be used by devices
+                      with IPs from this subnet (not including local subnet route). The host_route
+                      object structure is documented below. Changing this updates the host routes
+                      for the existing subnet.
                     items:
                       properties:
                         destinationCidr:
@@ -672,44 +814,53 @@ spec:
                   id:
                     type: string
                   ipVersion:
-                    description: IP version, either 4 (default) or 6. Changing this
-                      creates a new subnet.
+                    description: |-
+                      IP version, either 4 (default) or 6. Changing this creates a
+                      new subnet.
                     type: number
                   ipv6AddressMode:
-                    description: The IPv6 address mode. Valid values are dhcpv6-stateful,
-                      dhcpv6-stateless, or slaac.
+                    description: |-
+                      The IPv6 address mode. Valid values are
+                      dhcpv6-stateful, dhcpv6-stateless, or slaac.
                     type: string
                   ipv6RaMode:
-                    description: The IPv6 Router Advertisement mode. Valid values
+                    description: |-
+                      The IPv6 Router Advertisement mode. Valid values
                       are dhcpv6-stateful, dhcpv6-stateless, or slaac.
                     type: string
                   name:
-                    description: The name of the subnet. Changing this updates the
-                      name of the existing subnet.
+                    description: |-
+                      The name of the subnet. Changing this updates the name of
+                      the existing subnet.
                     type: string
                   networkId:
-                    description: The UUID of the parent network. Changing this creates
-                      a new subnet.
+                    description: |-
+                      The UUID of the parent network. Changing this
+                      creates a new subnet.
                     type: string
                   noGateway:
-                    description: Do not set a gateway IP on this subnet. Changing
+                    description: |-
+                      Do not set a gateway IP on this subnet. Changing
                       this removes or adds a default gateway IP of the existing subnet.
                     type: boolean
                   prefixLength:
-                    description: The prefix length to use when creating a subnet from
-                      a subnet pool. The default subnet pool prefix length that was
-                      defined when creating the subnet pool will be used if not provided.
-                      Changing this creates a new subnet.
+                    description: |-
+                      The prefix length to use when creating a subnet
+                      from a subnet pool. The default subnet pool prefix length that was defined
+                      when creating the subnet pool will be used if not provided. Changing this
+                      creates a new subnet.
                     type: number
                   region:
-                    description: The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create a Neutron subnet. If
-                      omitted, the region argument of the provider is used. Changing
-                      this creates a new subnet.
+                    description: |-
+                      The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a Neutron subnet. If omitted, the
+                      region argument of the provider is used. Changing this creates a new
+                      subnet.
                     type: string
                   serviceTypes:
-                    description: An array of service types used by the subnet. Changing
-                      this updates the service types for the existing subnet.
+                    description: |-
+                      An array of service types used by the subnet.
+                      Changing this updates the service types for the existing subnet.
                     items:
                       type: string
                     type: array
@@ -721,16 +872,18 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   tenantId:
-                    description: The owner of the subnet. Required if admin wants
-                      to create a subnet for another tenant. Changing this creates
-                      a new subnet.
+                    description: |-
+                      The owner of the subnet. Required if admin wants to
+                      create a subnet for another tenant. Changing this creates a new subnet.
                     type: string
                   valueSpecs:
                     additionalProperties:
                       type: string
                     description: Map of additional options.
                     type: object
+                    x-kubernetes-map-type: granular
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -738,14 +891,23 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
                     reason:
                       description: A Reason for this condition's last transition from
                         one status to another.
@@ -755,8 +917,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime
@@ -768,6 +931,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
             type: object
         required:
         - spec

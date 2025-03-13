@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -89,19 +85,49 @@ type SiteConnectionV2InitParameters struct {
 	Dpd []DpdInitParameters `json:"dpd,omitempty" tf:"dpd,omitempty"`
 
 	// The ID of the IKE policy. Changing this creates a new connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IkePolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IkepolicyID *string `json:"ikepolicyId,omitempty" tf:"ikepolicy_id,omitempty"`
+
+	// Reference to a IkePolicyV2 in vpnaas to populate ikepolicyId.
+	// +kubebuilder:validation:Optional
+	IkepolicyIDRef *v1.Reference `json:"ikepolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a IkePolicyV2 in vpnaas to populate ikepolicyId.
+	// +kubebuilder:validation:Optional
+	IkepolicyIDSelector *v1.Selector `json:"ikepolicyIdSelector,omitempty" tf:"-"`
 
 	// A valid value is response-only or bi-directional. Default is bi-directional.
 	Initiator *string `json:"initiator,omitempty" tf:"initiator,omitempty"`
 
 	// The ID of the IPsec policy. Changing this creates a new connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IpsecPolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IpsecpolicyID *string `json:"ipsecpolicyId,omitempty" tf:"ipsecpolicy_id,omitempty"`
+
+	// Reference to a IpsecPolicyV2 in vpnaas to populate ipsecpolicyId.
+	// +kubebuilder:validation:Optional
+	IpsecpolicyIDRef *v1.Reference `json:"ipsecpolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a IpsecPolicyV2 in vpnaas to populate ipsecpolicyId.
+	// +kubebuilder:validation:Optional
+	IpsecpolicyIDSelector *v1.Selector `json:"ipsecpolicyIdSelector,omitempty" tf:"-"`
 
 	// The ID for the endpoint group that contains private subnets for the local side of the connection.
 	// You must specify this parameter with the peer_ep_group_id parameter unless
 	// in backward- compatible mode where peer_cidrs is provided with a subnet_id for the VPN service.
 	// Changing this updates the existing connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	LocalEpGroupID *string `json:"localEpGroupId,omitempty" tf:"local_ep_group_id,omitempty"`
+
+	// Reference to a EndpointGroupV2 in vpnaas to populate localEpGroupId.
+	// +kubebuilder:validation:Optional
+	LocalEpGroupIDRef *v1.Reference `json:"localEpGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a EndpointGroupV2 in vpnaas to populate localEpGroupId.
+	// +kubebuilder:validation:Optional
+	LocalEpGroupIDSelector *v1.Selector `json:"localEpGroupIdSelector,omitempty" tf:"-"`
 
 	// An ID to be used instead of the external IP address for a virtual router used in traffic between instances on different networks in east-west traffic.
 	// Most often, local ID would be domain name, email address, etc.
@@ -125,7 +151,17 @@ type SiteConnectionV2InitParameters struct {
 	// The ID for the endpoint group that contains private CIDRs in the form < net_address > / < prefix > for the peer side of the connection.
 	// You must specify this parameter with the local_ep_group_id parameter unless in backward-compatible mode
 	// where peer_cidrs is provided with a subnet_id for the VPN service.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerEpGroupID *string `json:"peerEpGroupId,omitempty" tf:"peer_ep_group_id,omitempty"`
+
+	// Reference to a EndpointGroupV2 in vpnaas to populate peerEpGroupId.
+	// +kubebuilder:validation:Optional
+	PeerEpGroupIDRef *v1.Reference `json:"peerEpGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a EndpointGroupV2 in vpnaas to populate peerEpGroupId.
+	// +kubebuilder:validation:Optional
+	PeerEpGroupIDSelector *v1.Selector `json:"peerEpGroupIdSelector,omitempty" tf:"-"`
 
 	// The peer router identity for authentication. A valid value is an IPv4 address, IPv6 address, e-mail address, key ID, or FQDN.
 	// Typically, this value matches the peer_address value.
@@ -146,10 +182,21 @@ type SiteConnectionV2InitParameters struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the VPN service. Changing this creates a new connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.ServiceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VpnserviceID *string `json:"vpnserviceId,omitempty" tf:"vpnservice_id,omitempty"`
+
+	// Reference to a ServiceV2 in vpnaas to populate vpnserviceId.
+	// +kubebuilder:validation:Optional
+	VpnserviceIDRef *v1.Reference `json:"vpnserviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceV2 in vpnaas to populate vpnserviceId.
+	// +kubebuilder:validation:Optional
+	VpnserviceIDSelector *v1.Selector `json:"vpnserviceIdSelector,omitempty" tf:"-"`
 }
 
 type SiteConnectionV2Observation struct {
@@ -225,6 +272,7 @@ type SiteConnectionV2Observation struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the VPN service. Changing this creates a new connection.
@@ -248,23 +296,53 @@ type SiteConnectionV2Parameters struct {
 	Dpd []DpdParameters `json:"dpd,omitempty" tf:"dpd,omitempty"`
 
 	// The ID of the IKE policy. Changing this creates a new connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IkePolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IkepolicyID *string `json:"ikepolicyId,omitempty" tf:"ikepolicy_id,omitempty"`
+
+	// Reference to a IkePolicyV2 in vpnaas to populate ikepolicyId.
+	// +kubebuilder:validation:Optional
+	IkepolicyIDRef *v1.Reference `json:"ikepolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a IkePolicyV2 in vpnaas to populate ikepolicyId.
+	// +kubebuilder:validation:Optional
+	IkepolicyIDSelector *v1.Selector `json:"ikepolicyIdSelector,omitempty" tf:"-"`
 
 	// A valid value is response-only or bi-directional. Default is bi-directional.
 	// +kubebuilder:validation:Optional
 	Initiator *string `json:"initiator,omitempty" tf:"initiator,omitempty"`
 
 	// The ID of the IPsec policy. Changing this creates a new connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IpsecPolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IpsecpolicyID *string `json:"ipsecpolicyId,omitempty" tf:"ipsecpolicy_id,omitempty"`
+
+	// Reference to a IpsecPolicyV2 in vpnaas to populate ipsecpolicyId.
+	// +kubebuilder:validation:Optional
+	IpsecpolicyIDRef *v1.Reference `json:"ipsecpolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a IpsecPolicyV2 in vpnaas to populate ipsecpolicyId.
+	// +kubebuilder:validation:Optional
+	IpsecpolicyIDSelector *v1.Selector `json:"ipsecpolicyIdSelector,omitempty" tf:"-"`
 
 	// The ID for the endpoint group that contains private subnets for the local side of the connection.
 	// You must specify this parameter with the peer_ep_group_id parameter unless
 	// in backward- compatible mode where peer_cidrs is provided with a subnet_id for the VPN service.
 	// Changing this updates the existing connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	LocalEpGroupID *string `json:"localEpGroupId,omitempty" tf:"local_ep_group_id,omitempty"`
+
+	// Reference to a EndpointGroupV2 in vpnaas to populate localEpGroupId.
+	// +kubebuilder:validation:Optional
+	LocalEpGroupIDRef *v1.Reference `json:"localEpGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a EndpointGroupV2 in vpnaas to populate localEpGroupId.
+	// +kubebuilder:validation:Optional
+	LocalEpGroupIDSelector *v1.Selector `json:"localEpGroupIdSelector,omitempty" tf:"-"`
 
 	// An ID to be used instead of the external IP address for a virtual router used in traffic between instances on different networks in east-west traffic.
 	// Most often, local ID would be domain name, email address, etc.
@@ -293,8 +371,18 @@ type SiteConnectionV2Parameters struct {
 	// The ID for the endpoint group that contains private CIDRs in the form < net_address > / < prefix > for the peer side of the connection.
 	// You must specify this parameter with the local_ep_group_id parameter unless in backward-compatible mode
 	// where peer_cidrs is provided with a subnet_id for the VPN service.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerEpGroupID *string `json:"peerEpGroupId,omitempty" tf:"peer_ep_group_id,omitempty"`
+
+	// Reference to a EndpointGroupV2 in vpnaas to populate peerEpGroupId.
+	// +kubebuilder:validation:Optional
+	PeerEpGroupIDRef *v1.Reference `json:"peerEpGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a EndpointGroupV2 in vpnaas to populate peerEpGroupId.
+	// +kubebuilder:validation:Optional
+	PeerEpGroupIDSelector *v1.Selector `json:"peerEpGroupIdSelector,omitempty" tf:"-"`
 
 	// The peer router identity for authentication. A valid value is an IPv4 address, IPv6 address, e-mail address, key ID, or FQDN.
 	// Typically, this value matches the peer_address value.
@@ -320,11 +408,22 @@ type SiteConnectionV2Parameters struct {
 
 	// Map of additional options.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the VPN service. Changing this creates a new connection.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.ServiceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VpnserviceID *string `json:"vpnserviceId,omitempty" tf:"vpnservice_id,omitempty"`
+
+	// Reference to a ServiceV2 in vpnaas to populate vpnserviceId.
+	// +kubebuilder:validation:Optional
+	VpnserviceIDRef *v1.Reference `json:"vpnserviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceV2 in vpnaas to populate vpnserviceId.
+	// +kubebuilder:validation:Optional
+	VpnserviceIDSelector *v1.Selector `json:"vpnserviceIdSelector,omitempty" tf:"-"`
 }
 
 // SiteConnectionV2Spec defines the desired state of SiteConnectionV2
@@ -351,23 +450,21 @@ type SiteConnectionV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SiteConnectionV2 is the Schema for the SiteConnectionV2s API. Manages a V2 Neutron IPSec site connection resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type SiteConnectionV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ikepolicyId) || (has(self.initProvider) && has(self.initProvider.ikepolicyId))",message="spec.forProvider.ikepolicyId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ipsecpolicyId) || (has(self.initProvider) && has(self.initProvider.ipsecpolicyId))",message="spec.forProvider.ipsecpolicyId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.peerAddress) || (has(self.initProvider) && has(self.initProvider.peerAddress))",message="spec.forProvider.peerAddress is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.peerId) || (has(self.initProvider) && has(self.initProvider.peerId))",message="spec.forProvider.peerId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.psk) || (has(self.initProvider) && has(self.initProvider.psk))",message="spec.forProvider.psk is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vpnserviceId) || (has(self.initProvider) && has(self.initProvider.vpnserviceId))",message="spec.forProvider.vpnserviceId is a required parameter"
 	Spec   SiteConnectionV2Spec   `json:"spec"`
 	Status SiteConnectionV2Status `json:"status,omitempty"`
 }

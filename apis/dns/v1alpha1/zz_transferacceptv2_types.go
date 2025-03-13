@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -26,7 +22,17 @@ type TransferAcceptV2InitParameters struct {
 	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
 
 	// The transfer key.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key",false)
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Reference to a TransferRequestV2 in dns to populate key.
+	// +kubebuilder:validation:Optional
+	KeyRef *v1.Reference `json:"keyRef,omitempty" tf:"-"`
+
+	// Selector for a TransferRequestV2 in dns to populate key.
+	// +kubebuilder:validation:Optional
+	KeySelector *v1.Selector `json:"keySelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Compute client.
 	// Keypairs are associated with accounts, but a Compute client is needed to
@@ -36,10 +42,21 @@ type TransferAcceptV2InitParameters struct {
 
 	// Map of additional options. Changing this creates a
 	// new transfer accept.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone transfer request.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ZoneTransferRequestID *string `json:"zoneTransferRequestId,omitempty" tf:"zone_transfer_request_id,omitempty"`
+
+	// Reference to a TransferRequestV2 in dns to populate zoneTransferRequestId.
+	// +kubebuilder:validation:Optional
+	ZoneTransferRequestIDRef *v1.Reference `json:"zoneTransferRequestIdRef,omitempty" tf:"-"`
+
+	// Selector for a TransferRequestV2 in dns to populate zoneTransferRequestId.
+	// +kubebuilder:validation:Optional
+	ZoneTransferRequestIDSelector *v1.Selector `json:"zoneTransferRequestIdSelector,omitempty" tf:"-"`
 }
 
 type TransferAcceptV2Observation struct {
@@ -62,6 +79,7 @@ type TransferAcceptV2Observation struct {
 
 	// Map of additional options. Changing this creates a
 	// new transfer accept.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone transfer request.
@@ -77,8 +95,18 @@ type TransferAcceptV2Parameters struct {
 	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
 
 	// The transfer key.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("key",false)
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Reference to a TransferRequestV2 in dns to populate key.
+	// +kubebuilder:validation:Optional
+	KeyRef *v1.Reference `json:"keyRef,omitempty" tf:"-"`
+
+	// Selector for a TransferRequestV2 in dns to populate key.
+	// +kubebuilder:validation:Optional
+	KeySelector *v1.Selector `json:"keySelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Compute client.
 	// Keypairs are associated with accounts, but a Compute client is needed to
@@ -90,11 +118,22 @@ type TransferAcceptV2Parameters struct {
 	// Map of additional options. Changing this creates a
 	// new transfer accept.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone transfer request.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ZoneTransferRequestID *string `json:"zoneTransferRequestId,omitempty" tf:"zone_transfer_request_id,omitempty"`
+
+	// Reference to a TransferRequestV2 in dns to populate zoneTransferRequestId.
+	// +kubebuilder:validation:Optional
+	ZoneTransferRequestIDRef *v1.Reference `json:"zoneTransferRequestIdRef,omitempty" tf:"-"`
+
+	// Selector for a TransferRequestV2 in dns to populate zoneTransferRequestId.
+	// +kubebuilder:validation:Optional
+	ZoneTransferRequestIDSelector *v1.Selector `json:"zoneTransferRequestIdSelector,omitempty" tf:"-"`
 }
 
 // TransferAcceptV2Spec defines the desired state of TransferAcceptV2
@@ -121,21 +160,20 @@ type TransferAcceptV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TransferAcceptV2 is the Schema for the TransferAcceptV2s API. Manages a DNS zone Transfer accept in the OpenStack DNS Service
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type TransferAcceptV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.key) || (has(self.initProvider) && has(self.initProvider.key))",message="spec.forProvider.key is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneTransferRequestId) || (has(self.initProvider) && has(self.initProvider.zoneTransferRequestId))",message="spec.forProvider.zoneTransferRequestId is a required parameter"
-	Spec   TransferAcceptV2Spec   `json:"spec"`
-	Status TransferAcceptV2Status `json:"status,omitempty"`
+	Spec              TransferAcceptV2Spec   `json:"spec"`
+	Status            TransferAcceptV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

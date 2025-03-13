@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -29,7 +25,17 @@ type QosMinimumBandwidthRuleV2InitParameters struct {
 	MinKbps *float64 `json:"minKbps,omitempty" tf:"min_kbps,omitempty"`
 
 	// The QoS policy reference. Changing this creates a new QoS minimum bandwidth rule.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.QosPolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	QosPolicyID *string `json:"qosPolicyId,omitempty" tf:"qos_policy_id,omitempty"`
+
+	// Reference to a QosPolicyV2 in networking to populate qosPolicyId.
+	// +kubebuilder:validation:Optional
+	QosPolicyIDRef *v1.Reference `json:"qosPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a QosPolicyV2 in networking to populate qosPolicyId.
+	// +kubebuilder:validation:Optional
+	QosPolicyIDSelector *v1.Selector `json:"qosPolicyIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create a Neutron QoS minimum bandwidth rule. If omitted, the
@@ -71,8 +77,18 @@ type QosMinimumBandwidthRuleV2Parameters struct {
 	MinKbps *float64 `json:"minKbps,omitempty" tf:"min_kbps,omitempty"`
 
 	// The QoS policy reference. Changing this creates a new QoS minimum bandwidth rule.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.QosPolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	QosPolicyID *string `json:"qosPolicyId,omitempty" tf:"qos_policy_id,omitempty"`
+
+	// Reference to a QosPolicyV2 in networking to populate qosPolicyId.
+	// +kubebuilder:validation:Optional
+	QosPolicyIDRef *v1.Reference `json:"qosPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a QosPolicyV2 in networking to populate qosPolicyId.
+	// +kubebuilder:validation:Optional
+	QosPolicyIDSelector *v1.Selector `json:"qosPolicyIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create a Neutron QoS minimum bandwidth rule. If omitted, the
@@ -105,19 +121,19 @@ type QosMinimumBandwidthRuleV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // QosMinimumBandwidthRuleV2 is the Schema for the QosMinimumBandwidthRuleV2s API. Manages a V2 Neutron QoS minimum bandwidth rule resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type QosMinimumBandwidthRuleV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.minKbps) || (has(self.initProvider) && has(self.initProvider.minKbps))",message="spec.forProvider.minKbps is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.qosPolicyId) || (has(self.initProvider) && has(self.initProvider.qosPolicyId))",message="spec.forProvider.qosPolicyId is a required parameter"
 	Spec   QosMinimumBandwidthRuleV2Spec   `json:"spec"`
 	Status QosMinimumBandwidthRuleV2Status `json:"status,omitempty"`
 }

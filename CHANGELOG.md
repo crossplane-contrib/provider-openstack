@@ -11,11 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - All remaining config parameters that are supported via [terraform-provider-openstack](https://registry.terraform.io/providers/terraform-provider-openstack)
 - Made it easier to configure authentication by not requiring so many fields.
+- Migrated to Upjets new No-Fork/Provider v2 SDK Architecture. The provider now does not ship with Terraform CLI anymore.
+- Added many cross resource references (autmatically generated from Terraform provider schema)
 
 ### Changed
 
 - Update terraform-provider-openstack to `v1.54.1`
 - Update Terraform CLI to `v1.5.7`
+- Update provider to golang v1.23
+- Update upjet to v1.4.0
+- Update crossplane runtime to 1.16
+- Update various other go dependencies
+- Modernize CI Pipeline
+- Rebase dockerfle to alpine 3.12
 
 ## [0.4.0] - 2024-06-11
 

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -34,6 +30,7 @@ type QosV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// Key/Value pairs of specs for the qos.
+	// +mapType=granular
 	Specs map[string]*string `json:"specs,omitempty" tf:"specs,omitempty"`
 }
 
@@ -55,6 +52,7 @@ type QosV3Observation struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// Key/Value pairs of specs for the qos.
+	// +mapType=granular
 	Specs map[string]*string `json:"specs,omitempty" tf:"specs,omitempty"`
 }
 
@@ -78,6 +76,7 @@ type QosV3Parameters struct {
 
 	// Key/Value pairs of specs for the qos.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Specs map[string]*string `json:"specs,omitempty" tf:"specs,omitempty"`
 }
 
@@ -105,13 +104,14 @@ type QosV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // QosV3 is the Schema for the QosV3s API. Manages a V3 Quality-Of-Servirce (qos) resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type QosV3 struct {
 	metav1.TypeMeta   `json:",inline"`

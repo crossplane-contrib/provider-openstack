@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -21,7 +17,17 @@ import (
 type SubPortInitParameters struct {
 
 	// The ID of the port to be made a subport of the trunk.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The numeric id of the subport segment.
 	SegmentationID *float64 `json:"segmentationId,omitempty" tf:"segmentation_id,omitempty"`
@@ -45,8 +51,18 @@ type SubPortObservation struct {
 type SubPortParameters struct {
 
 	// The ID of the port to be made a subport of the trunk.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	PortID *string `json:"portId" tf:"port_id,omitempty"`
+	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The numeric id of the subport segment.
 	// +kubebuilder:validation:Optional
@@ -75,7 +91,17 @@ type TrunkV2InitParameters struct {
 	// The ID of the port to be used as the parent port of the
 	// trunk. This is the port that should be used as the compute instance network
 	// port. Changing this creates a new trunk.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 networking client.
 	// A networking client is needed to create a trunk. If omitted, the
@@ -88,6 +114,7 @@ type TrunkV2InitParameters struct {
 	SubPort []SubPortInitParameters `json:"subPort,omitempty" tf:"sub_port,omitempty"`
 
 	// A set of string tags for the port.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the Trunk. Required if admin wants
@@ -104,6 +131,7 @@ type TrunkV2Observation struct {
 
 	// The collection of tags assigned on the trunk, which have been
 	// explicitly and implicitly added.
+	// +listType=set
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
 	// Human-readable description of the trunk. Changing this
@@ -132,6 +160,7 @@ type TrunkV2Observation struct {
 	SubPort []SubPortObservation `json:"subPort,omitempty" tf:"sub_port,omitempty"`
 
 	// A set of string tags for the port.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the Trunk. Required if admin wants
@@ -160,8 +189,18 @@ type TrunkV2Parameters struct {
 	// The ID of the port to be used as the parent port of the
 	// trunk. This is the port that should be used as the compute instance network
 	// port. Changing this creates a new trunk.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.Reference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.Selector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 networking client.
 	// A networking client is needed to create a trunk. If omitted, the
@@ -177,6 +216,7 @@ type TrunkV2Parameters struct {
 
 	// A set of string tags for the port.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the Trunk. Required if admin wants
@@ -209,20 +249,20 @@ type TrunkV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TrunkV2 is the Schema for the TrunkV2s API. Manages a networking V2 trunk resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type TrunkV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.portId) || (has(self.initProvider) && has(self.initProvider.portId))",message="spec.forProvider.portId is a required parameter"
-	Spec   TrunkV2Spec   `json:"spec"`
-	Status TrunkV2Status `json:"status,omitempty"`
+	Spec              TrunkV2Spec   `json:"spec"`
+	Status            TrunkV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

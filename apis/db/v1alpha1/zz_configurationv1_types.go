@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -64,7 +60,7 @@ type ConfigurationV1InitParameters struct {
 
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates resource.
-	Datastore []DatastoreInitParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *DatastoreInitParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// Description of the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -84,7 +80,7 @@ type ConfigurationV1Observation struct {
 
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates resource.
-	Datastore []DatastoreObservation `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *DatastoreObservation `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// Description of the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -108,7 +104,7 @@ type ConfigurationV1Parameters struct {
 	// An array of database engine type and version. The datastore
 	// object structure is documented below. Changing this creates resource.
 	// +kubebuilder:validation:Optional
-	Datastore []DatastoreParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
+	Datastore *DatastoreParameters `json:"datastore,omitempty" tf:"datastore,omitempty"`
 
 	// Description of the resource.
 	// +kubebuilder:validation:Optional
@@ -177,13 +173,14 @@ type ConfigurationV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ConfigurationV1 is the Schema for the ConfigurationV1s API. Manages a V1 DB configuration resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ConfigurationV1 struct {
 	metav1.TypeMeta   `json:",inline"`

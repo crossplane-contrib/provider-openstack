@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -26,6 +22,7 @@ type ACLReadInitParameters struct {
 
 	// The list of user IDs, which are allowed to access the
 	// secret, when project_access is set to false.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -43,6 +40,7 @@ type ACLReadObservation struct {
 
 	// The list of user IDs, which are allowed to access the
 	// secret, when project_access is set to false.
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
@@ -56,21 +54,22 @@ type ACLReadParameters struct {
 	// The list of user IDs, which are allowed to access the
 	// secret, when project_access is set to false.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Users []*string `json:"users,omitempty" tf:"users,omitempty"`
 }
 
 type SecretV1ACLInitParameters struct {
-	Read []ACLReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ACLReadInitParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type SecretV1ACLObservation struct {
-	Read []ACLReadObservation `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ACLReadObservation `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type SecretV1ACLParameters struct {
 
 	// +kubebuilder:validation:Optional
-	Read []ACLReadParameters `json:"read,omitempty" tf:"read,omitempty"`
+	Read *ACLReadParameters `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type SecretV1InitParameters struct {
@@ -78,7 +77,7 @@ type SecretV1InitParameters struct {
 	// Allows to control an access to a secret. Currently only the
 	// read operation is supported. If not specified, the secret is accessible
 	// project wide.
-	ACL []SecretV1ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *SecretV1ACLInitParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
@@ -90,6 +89,7 @@ type SecretV1InitParameters struct {
 	Expiration *string `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
 	// Additional Metadata for the secret.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
@@ -104,6 +104,9 @@ type SecretV1InitParameters struct {
 
 	// The media type for the content of the payload. Must be one of text/plain, text/plain;charset=utf-8, text/plain; charset=utf-8, application/octet-stream, application/pkcs8.
 	PayloadContentType *string `json:"payloadContentType,omitempty" tf:"payload_content_type,omitempty"`
+
+	// The secret's data to be stored. payload_content_type must also be supplied if payload is included.
+	PayloadSecretRef *v1.SecretKeySelector `json:"payloadSecretRef,omitempty" tf:"-"`
 
 	// The region in which to obtain the V1 KeyManager client.
 	// A KeyManager client is needed to create a secret. If omitted, the
@@ -120,19 +123,21 @@ type SecretV1Observation struct {
 	// Allows to control an access to a secret. Currently only the
 	// read operation is supported. If not specified, the secret is accessible
 	// project wide.
-	ACL []SecretV1ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *SecretV1ACLObservation `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
 
 	// The map of metadata, assigned on the secret, which has been
 	// explicitly and implicitly added.
+	// +mapType=granular
 	AllMetadata map[string]*string `json:"allMetadata,omitempty" tf:"all_metadata,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	BitLength *float64 `json:"bitLength,omitempty" tf:"bit_length,omitempty"`
 
 	// The map of the content types, assigned on the secret.
+	// +mapType=granular
 	ContentTypes map[string]*string `json:"contentTypes,omitempty" tf:"content_types,omitempty"`
 
 	// The date the secret was created.
@@ -147,6 +152,7 @@ type SecretV1Observation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Additional Metadata for the secret.
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
@@ -187,7 +193,7 @@ type SecretV1Parameters struct {
 	// read operation is supported. If not specified, the secret is accessible
 	// project wide.
 	// +kubebuilder:validation:Optional
-	ACL []SecretV1ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
+	ACL *SecretV1ACLParameters `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
 	// +kubebuilder:validation:Optional
@@ -203,6 +209,7 @@ type SecretV1Parameters struct {
 
 	// Additional Metadata for the secret.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Metadata provided by a user or system for informational purposes.
@@ -262,13 +269,14 @@ type SecretV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SecretV1 is the Schema for the SecretV1s API. Manages a V1 Barbican secret resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type SecretV1 struct {
 	metav1.TypeMeta   `json:",inline"`

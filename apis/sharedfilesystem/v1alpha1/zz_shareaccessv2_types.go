@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -38,7 +34,17 @@ type ShareAccessV2InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of the share to which you are granted access.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.ShareV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ShareID *string `json:"shareId,omitempty" tf:"share_id,omitempty"`
+
+	// Reference to a ShareV2 in sharedfilesystem to populate shareId.
+	// +kubebuilder:validation:Optional
+	ShareIDRef *v1.Reference `json:"shareIdRef,omitempty" tf:"-"`
+
+	// Selector for a ShareV2 in sharedfilesystem to populate shareId.
+	// +kubebuilder:validation:Optional
+	ShareIDSelector *v1.Selector `json:"shareIdSelector,omitempty" tf:"-"`
 }
 
 type ShareAccessV2Observation struct {
@@ -94,8 +100,18 @@ type ShareAccessV2Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of the share to which you are granted access.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.ShareV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ShareID *string `json:"shareId,omitempty" tf:"share_id,omitempty"`
+
+	// Reference to a ShareV2 in sharedfilesystem to populate shareId.
+	// +kubebuilder:validation:Optional
+	ShareIDRef *v1.Reference `json:"shareIdRef,omitempty" tf:"-"`
+
+	// Selector for a ShareV2 in sharedfilesystem to populate shareId.
+	// +kubebuilder:validation:Optional
+	ShareIDSelector *v1.Selector `json:"shareIdSelector,omitempty" tf:"-"`
 }
 
 // ShareAccessV2Spec defines the desired state of ShareAccessV2
@@ -122,13 +138,14 @@ type ShareAccessV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ShareAccessV2 is the Schema for the ShareAccessV2s API. Configure a Shared File System share access list.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type ShareAccessV2 struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -136,7 +153,6 @@ type ShareAccessV2 struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessLevel) || (has(self.initProvider) && has(self.initProvider.accessLevel))",message="spec.forProvider.accessLevel is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessTo) || (has(self.initProvider) && has(self.initProvider.accessTo))",message="spec.forProvider.accessTo is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accessType) || (has(self.initProvider) && has(self.initProvider.accessType))",message="spec.forProvider.accessType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.shareId) || (has(self.initProvider) && has(self.initProvider.shareId))",message="spec.forProvider.shareId is a required parameter"
 	Spec   ShareAccessV2Spec   `json:"spec"`
 	Status ShareAccessV2Status `json:"status,omitempty"`
 }

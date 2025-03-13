@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -38,7 +34,17 @@ type L7RuleV2InitParameters struct {
 
 	// The ID of the L7 Policy to query. Changing this creates a new
 	// L7 Rule.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.L7PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	L7PolicyID *string `json:"l7policyId,omitempty" tf:"l7policy_id,omitempty"`
+
+	// Reference to a L7PolicyV2 in lb to populate l7policyId.
+	// +kubebuilder:validation:Optional
+	L7PolicyIDRef *v1.Reference `json:"l7policyIdRef,omitempty" tf:"-"`
+
+	// Selector for a L7PolicyV2 in lb to populate l7policyId.
+	// +kubebuilder:validation:Optional
+	L7PolicyIDSelector *v1.Selector `json:"l7policyIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create an . If omitted, the
@@ -132,8 +138,18 @@ type L7RuleV2Parameters struct {
 
 	// The ID of the L7 Policy to query. Changing this creates a new
 	// L7 Rule.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.L7PolicyV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	L7PolicyID *string `json:"l7policyId,omitempty" tf:"l7policy_id,omitempty"`
+
+	// Reference to a L7PolicyV2 in lb to populate l7policyId.
+	// +kubebuilder:validation:Optional
+	L7PolicyIDRef *v1.Reference `json:"l7policyIdRef,omitempty" tf:"-"`
+
+	// Selector for a L7PolicyV2 in lb to populate l7policyId.
+	// +kubebuilder:validation:Optional
+	L7PolicyIDSelector *v1.Selector `json:"l7policyIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
 	// A Networking client is needed to create an . If omitted, the
@@ -183,19 +199,19 @@ type L7RuleV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // L7RuleV2 is the Schema for the L7RuleV2s API. Manages a V2 l7rule resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type L7RuleV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compareType) || (has(self.initProvider) && has(self.initProvider.compareType))",message="spec.forProvider.compareType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.l7policyId) || (has(self.initProvider) && has(self.initProvider.l7policyId))",message="spec.forProvider.l7policyId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.value) || (has(self.initProvider) && has(self.initProvider.value))",message="spec.forProvider.value is a required parameter"
 	Spec   L7RuleV2Spec   `json:"spec"`

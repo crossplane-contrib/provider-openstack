@@ -6,7 +6,7 @@ import "github.com/crossplane/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("openstack_networking_subnet_v2", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
-			Type: "NetworkV2",
+			TerraformName: "openstack_networking_subnet_v2",
 		}
 		r.LateInitializer = config.LateInitializer{
 			IgnoredFields: []string{"allocation_pools"},
@@ -14,10 +14,10 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("openstack_networking_router_interface_v2", func(r *config.Resource) {
 		r.References["router_id"] = config.Reference{
-			Type: "RouterV2",
+			TerraformName: "openstack_networking_router_v2",
 		}
 		r.References["subnet_id"] = config.Reference{
-			Type: "SubnetV2",
+			TerraformName: "openstack_networking_subnet_v2",
 		}
 	})
 	p.AddResourceConfigurator("openstack_networking_router_v2", func(r *config.Resource) {
@@ -27,7 +27,7 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("openstack_networking_quota_v2", func(r *config.Resource) {
 		r.References["project_id"] = config.Reference{
-			Type: "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3",
+			TerraformName: "openstack_identity_project_v3",
 		}
 	})
 }

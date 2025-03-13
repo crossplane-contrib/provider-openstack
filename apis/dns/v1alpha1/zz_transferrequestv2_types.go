@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -41,11 +37,22 @@ type TransferRequestV2InitParameters struct {
 
 	// Map of additional options. Changing this creates a
 	// new transfer request.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone for which to create the transfer
 	// request.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.ZoneV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type TransferRequestV2Observation struct {
@@ -73,6 +80,7 @@ type TransferRequestV2Observation struct {
 
 	// Map of additional options. Changing this creates a
 	// new transfer request.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone for which to create the transfer
@@ -109,12 +117,23 @@ type TransferRequestV2Parameters struct {
 	// Map of additional options. Changing this creates a
 	// new transfer request.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone for which to create the transfer
 	// request.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.ZoneV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// Reference to a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a ZoneV2 in dns to populate zoneId.
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 // TransferRequestV2Spec defines the desired state of TransferRequestV2
@@ -141,20 +160,20 @@ type TransferRequestV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TransferRequestV2 is the Schema for the TransferRequestV2s API. Manages a DNS zone Transfer request in the OpenStack DNS Service
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type TransferRequestV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
-	Spec   TransferRequestV2Spec   `json:"spec"`
-	Status TransferRequestV2Status `json:"status,omitempty"`
+	Spec              TransferRequestV2Spec   `json:"spec"`
+	Status            TransferRequestV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

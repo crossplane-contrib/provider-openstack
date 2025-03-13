@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -40,6 +36,19 @@ type QuotasetV3InitParameters struct {
 	// Changing this updates the existing quotaset.
 	PerVolumeGigabytes *float64 `json:"perVolumeGigabytes,omitempty" tf:"per_volume_gigabytes,omitempty"`
 
+	// ID of the project to manage quotas. Changing this
+	// creates a new quotaset.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate projectId.
+	// +kubebuilder:validation:Optional
+	ProjectIDRef *v1.Reference `json:"projectIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate projectId.
+	// +kubebuilder:validation:Optional
+	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
+
 	// The region in which to create the volume. If
 	// omitted, the region argument of the provider is used. Changing this
 	// creates a new quotaset.
@@ -52,6 +61,7 @@ type QuotasetV3InitParameters struct {
 	// Key/Value pairs for setting quota for
 	// volumes types. Possible keys are snapshots_<volume_type_name>,
 	// volumes_<volume_type_name> and gigabytes_<volume_type_name>.
+	// +mapType=granular
 	VolumeTypeQuota map[string]*string `json:"volumeTypeQuota,omitempty" tf:"volume_type_quota,omitempty"`
 
 	// Quota value for volumes. Changing this updates the
@@ -99,6 +109,7 @@ type QuotasetV3Observation struct {
 	// Key/Value pairs for setting quota for
 	// volumes types. Possible keys are snapshots_<volume_type_name>,
 	// volumes_<volume_type_name> and gigabytes_<volume_type_name>.
+	// +mapType=granular
 	VolumeTypeQuota map[string]*string `json:"volumeTypeQuota,omitempty" tf:"volume_type_quota,omitempty"`
 
 	// Quota value for volumes. Changing this updates the
@@ -162,6 +173,7 @@ type QuotasetV3Parameters struct {
 	// volumes types. Possible keys are snapshots_<volume_type_name>,
 	// volumes_<volume_type_name> and gigabytes_<volume_type_name>.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	VolumeTypeQuota map[string]*string `json:"volumeTypeQuota,omitempty" tf:"volume_type_quota,omitempty"`
 
 	// Quota value for volumes. Changing this updates the
@@ -194,13 +206,14 @@ type QuotasetV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // QuotasetV3 is the Schema for the QuotasetV3s API. Manages a V3 quotaset resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type QuotasetV3 struct {
 	metav1.TypeMeta   `json:",inline"`

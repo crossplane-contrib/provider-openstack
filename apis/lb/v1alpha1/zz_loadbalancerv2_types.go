@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -53,10 +49,12 @@ type LoadbalancerV2InitParameters struct {
 	// A list of security group IDs to apply to the
 	// loadbalancer. The security groups must be specified by ID and not name (as
 	// opposed to how they are configured with the Compute Instance).
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// A list of simple strings assigned to the loadbalancer.
 	// Available only for Octavia minor version 2.5 or later.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
@@ -124,10 +122,12 @@ type LoadbalancerV2Observation struct {
 	// A list of security group IDs to apply to the
 	// loadbalancer. The security groups must be specified by ID and not name (as
 	// opposed to how they are configured with the Compute Instance).
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// A list of simple strings assigned to the loadbalancer.
 	// Available only for Octavia minor version 2.5 or later.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
@@ -201,11 +201,13 @@ type LoadbalancerV2Parameters struct {
 	// loadbalancer. The security groups must be specified by ID and not name (as
 	// opposed to how they are configured with the Compute Instance).
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// A list of simple strings assigned to the loadbalancer.
 	// Available only for Octavia minor version 2.5 or later.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
@@ -265,13 +267,14 @@ type LoadbalancerV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // LoadbalancerV2 is the Schema for the LoadbalancerV2s API. Manages a V2 loadbalancer resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type LoadbalancerV2 struct {
 	metav1.TypeMeta   `json:",inline"`

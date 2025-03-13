@@ -1,19 +1,14 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME ?= provider-openstack
-PROJECT_REPO ?= github.com/crossplane-contrib/$(PROJECT_NAME)
+PROJECT_NAME := provider-openstack
+PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION ?= 1.5.7
-
-export TERRAFORM_PROVIDER_SOURCE ?= terraform-provider-openstack/openstack
-export TERRAFORM_PROVIDER_REPO ?= https://github.com/terraform-provider-openstack/terraform-provider-openstack
-export TERRAFORM_PROVIDER_VERSION ?= 1.54.1
-export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-openstack
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-openstack_v1.54.1
-export TERRAFORM_DOCS_PATH ?= docs/resources
-
+export TERRAFORM_VERSION := 1.5.5
+export TERRAFORM_PROVIDER_SOURCE := terraform-provider-openstack/openstack
+export TERRAFORM_DOCS_PATH := docs/resources
+export TERRAFORM_PROVIDER_REPO := https://github.com/terraform-provider-openstack/terraform-provider-openstack
+export TERRAFORM_PROVIDER_VERSION := 1.54.1
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -40,8 +35,11 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.20
-GOLANGCILINT_VERSION ?= 1.61.0
+GO_REQUIRED_VERSION ?= 1.23
+# GOLANGCILINT_VERSION is inherited from build submodule by default.
+# Uncomment below if you need to override the version.
+# GOLANGCILINT_VERSION ?= 1.54.0
+
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
@@ -50,11 +48,28 @@ GO_SUBDIRS += cmd internal apis
 # ====================================================================================
 # Setup Kubernetes tools
 
-KIND_VERSION = v0.24.0
-UP_VERSION = v0.34.2
+KIND_VERSION = v0.21.0
+UP_VERSION = v0.28.0
 UP_CHANNEL = stable
-UPTEST_VERSION = v1.2.0
+UPTEST_VERSION = v0.11.1
+UPTEST_LOCAL_VERSION = v0.13.0
+UPTEST_LOCAL_CHANNEL = stable
+KUSTOMIZE_VERSION = v5.3.0
+YQ_VERSION = v4.40.5
+CROSSPLANE_VERSION = 1.14.6
+CRDDIFF_VERSION = v0.12.1
+
 -include build/makelib/k8s_tools.mk
+
+# uptest download and install
+UPTEST_LOCAL := $(TOOLS_HOST_DIR)/uptest-$(UPTEST_LOCAL_VERSION)
+
+$(UPTEST_LOCAL):
+	@$(INFO) installing uptest $(UPTEST_LOCAL)
+	@mkdir -p $(TOOLS_HOST_DIR)
+	@curl -fsSLo $(UPTEST_LOCAL) https://s3.us-west-2.amazonaws.com/crossplane.uptest.releases/$(UPTEST_LOCAL_CHANNEL)/$(UPTEST_LOCAL_VERSION)/bin/$(SAFEHOST_PLATFORM)/uptest || $(FAIL)
+	@chmod +x $(UPTEST_LOCAL)
+	@$(OK) installing uptest $(UPTEST_LOCAL)
 
 # ====================================================================================
 # Setup Images
@@ -71,7 +86,20 @@ XPKG_REG_ORGS ?= xpkg.upbound.io/crossplane-contrib
 # inferred.
 XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/crossplane-contrib
 XPKGS = $(PROJECT_NAME)
+#XPKG_DIR = $(OUTPUT_DIR)/package
+XPKG_IGNORE = kustomize/*,crds/kustomization.yaml
+# Set to true to enable the cleanup examples step in the build process
+XPKG_CLEANUP_EXAMPLES_ENABLED = true
+
 -include build/makelib/xpkg.mk
+
+# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
+# we ensure image is present in daemon.
+xpkg.build.provider-openstack: do.build.images
+
+# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
+# build steps in parallel to avoid encountering an installation race condition.
+build.init: $(UP)
 
 # ====================================================================================
 # Fallthrough
@@ -87,14 +115,6 @@ fallthrough: submodules
 	@echo Initial setup complete. Running make again . . .
 	@make
 
-# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
-# we ensure image is present in daemon.
-xpkg.build.provider-openstack: do.build.images
-
-# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
-# build steps in parallel to avoid encountering an installation race condition.
-build.init: $(UP)
-
 # ====================================================================================
 # Setup Terraform for fetching provider schema
 TERRAFORM := $(TOOLS_HOST_DIR)/terraform-$(TERRAFORM_VERSION)
@@ -104,7 +124,7 @@ TERRAFORM_PROVIDER_SCHEMA := config/schema.json
 $(TERRAFORM):
 	@$(INFO) installing terraform $(HOSTOS)-$(HOSTARCH)
 	@mkdir -p $(TOOLS_HOST_DIR)/tmp-terraform
-	@curl -fsSL https://releases.hashicorp.com/terraform/$(TERRAFORM_VERSION)/terraform_$(TERRAFORM_VERSION)_$(SAFEHOST_PLATFORM).zip -o $(TOOLS_HOST_DIR)/tmp-terraform/terraform.zip
+	@curl -fsSL https://github.com/upbound/terraform/releases/download/v$(TERRAFORM_VERSION)/terraform_$(TERRAFORM_VERSION)_$(SAFEHOST_PLATFORM).zip -o $(TOOLS_HOST_DIR)/tmp-terraform/terraform.zip
 	@unzip $(TOOLS_HOST_DIR)/tmp-terraform/terraform.zip -d $(TOOLS_HOST_DIR)/tmp-terraform
 	@mv $(TOOLS_HOST_DIR)/tmp-terraform/terraform $(TERRAFORM)
 	@rm -fr $(TOOLS_HOST_DIR)/tmp-terraform
@@ -119,11 +139,9 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(OK) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 
 pull-docs:
-	@if [ ! -d "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" ]; then \
-  		mkdir -p "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
-		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)"; \
-	fi
-	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
+	@rm -fR "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))"
+	@git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))"
+	@git -C "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
 
 generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 
@@ -139,6 +157,11 @@ generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 # its location in CI so that we cache between builds.
 go.cachedir:
 	@go env GOCACHE
+
+go.mod.cachedir:
+	@go env GOMODCACHE
+
+.PHONY: go.mod.cachedir go.cachedir
 
 # Generate a coverage report for cobertura applying exclusions on
 # - generated file
@@ -158,7 +181,7 @@ submodules:
 run: go.build
 	@$(INFO) Running Crossplane locally out-of-cluster . . .
 	@# To see other arguments that can be provided, run the command with --help instead
-	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/provider --debug
+	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/provider --debug --certs-dir=""
 
 # ====================================================================================
 # End to End Testing
@@ -168,21 +191,11 @@ CROSSPLANE_NAMESPACE = upbound-system
 
 # This target requires the following environment variables to be set:
 # - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
-#   To ensure the proper functioning of the end-to-end test resource pre-deletion hook, it is crucial to arrange your resources appropriately. 
-#   You can check the basic implementation here: https://github.com/upbound/uptest/blob/main/internal/openstacks/01-delete.yaml.tmpl.
-# - UPTEST_CLOUD_CREDENTIALS (optional), multiple sets of AWS IAM User credentials specified as key=value pairs.
-#   The support keys are currently `DEFAULT` and `PEER`. So, an example for the value of this env. variable is:
-#   DEFAULT='[default]
-#   aws_access_key_id = REDACTED
-#   aws_secret_access_key = REDACTED'
-#   PEER='[default]
-#   aws_access_key_id = REDACTED
-#   aws_secret_access_key = REDACTED'
-#   The associated `ProviderConfig`s will be named as `default` and `peer`.
+# - UPTEST_CLOUD_CREDENTIALS (optional), cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
-uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
+uptest: $(UPTEST_LOCAL) $(KUBECTL) $(KUTTL)
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST_LOCAL) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
@@ -191,9 +204,15 @@ local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
+# This target requires the following environment variables to be set:
+# - UPTEST_CLOUD_CREDENTIALS, cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
+# - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
+# - UPTEST_DATASOURCE_PATH, see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 e2e: local-deploy uptest
 
-crddiff: $(UPTEST)
+# TODO: please move this to the common build submodule
+# once the use cases mature
+crddiff:
 	@$(INFO) Checking breaking CRD schema changes
 	@for crd in $${MODIFIED_CRD_LIST}; do \
 		if ! git cat-file -e "$${GITHUB_BASE_REF}:$${crd}" 2>/dev/null; then \
@@ -201,7 +220,7 @@ crddiff: $(UPTEST)
 			continue ; \
 		fi ; \
 		echo "Checking $${crd} for breaking API changes..." ; \
-		changes_detected=$$($(UPTEST) crddiff revision <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
+		changes_detected=$$(go run github.com/upbound/uptest/cmd/crddiff@$(CRDDIFF_VERSION) revision --enable-upjet-extensions <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
 		if [[ $$? != 0 ]] ; then \
 			printf "\033[31m"; echo "Breaking change detected!"; printf "\033[0m" ; \
 			echo "$${changes_detected}" ; \
@@ -220,7 +239,14 @@ schema-version-diff:
 	./scripts/version_diff.py config/generated.lst "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}" config/schema.json
 	@$(OK) Checking for native state schema version changes
 
-.PHONY: cobertura submodules fallthrough run crds.clean
+go.lint.analysiskey-interval:
+	@# cache is invalidated at least every 7 days
+	@echo -n golangci-lint.cache-$$(( $$(date +%s) / (7 * 86400) ))-
+
+go.lint.analysiskey:
+	@echo $$(make go.lint.analysiskey-interval)$$(sha1sum go.sum | cut -d' ' -f1)
+
+.PHONY: cobertura submodules fallthrough run crds.clean uptest e2e crddiff schema-version-diff
 
 # ====================================================================================
 # Special Targets

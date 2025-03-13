@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -21,14 +17,34 @@ import (
 type TempurlV1InitParameters struct {
 
 	// The container name the object belongs to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
+
+	// Reference to a ContainerV1 in objectstorage to populate container.
+	// +kubebuilder:validation:Optional
+	ContainerRef *v1.Reference `json:"containerRef,omitempty" tf:"-"`
+
+	// Selector for a ContainerV1 in objectstorage to populate container.
+	// +kubebuilder:validation:Optional
+	ContainerSelector *v1.Selector `json:"containerSelector,omitempty" tf:"-"`
 
 	// The method allowed when accessing this URL.
 	// Valid values are GET, and POST. Default is GET.
 	Method *string `json:"method,omitempty" tf:"method,omitempty"`
 
 	// The object name the tempurl is for.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ObjectV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
+
+	// Reference to a ObjectV1 in objectstorage to populate object.
+	// +kubebuilder:validation:Optional
+	ObjectRef *v1.Reference `json:"objectRef,omitempty" tf:"-"`
+
+	// Selector for a ObjectV1 in objectstorage to populate object.
+	// +kubebuilder:validation:Optional
+	ObjectSelector *v1.Selector `json:"objectSelector,omitempty" tf:"-"`
 
 	// Whether to automatically regenerate the URL when
 	// it has expired. If set to true, this will create a new resource with a new
@@ -78,8 +94,18 @@ type TempurlV1Observation struct {
 type TempurlV1Parameters struct {
 
 	// The container name the object belongs to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
+
+	// Reference to a ContainerV1 in objectstorage to populate container.
+	// +kubebuilder:validation:Optional
+	ContainerRef *v1.Reference `json:"containerRef,omitempty" tf:"-"`
+
+	// Selector for a ContainerV1 in objectstorage to populate container.
+	// +kubebuilder:validation:Optional
+	ContainerSelector *v1.Selector `json:"containerSelector,omitempty" tf:"-"`
 
 	// The method allowed when accessing this URL.
 	// Valid values are GET, and POST. Default is GET.
@@ -87,8 +113,18 @@ type TempurlV1Parameters struct {
 	Method *string `json:"method,omitempty" tf:"method,omitempty"`
 
 	// The object name the tempurl is for.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ObjectV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
+
+	// Reference to a ObjectV1 in objectstorage to populate object.
+	// +kubebuilder:validation:Optional
+	ObjectRef *v1.Reference `json:"objectRef,omitempty" tf:"-"`
+
+	// Selector for a ObjectV1 in objectstorage to populate object.
+	// +kubebuilder:validation:Optional
+	ObjectSelector *v1.Selector `json:"objectSelector,omitempty" tf:"-"`
 
 	// Whether to automatically regenerate the URL when
 	// it has expired. If set to true, this will create a new resource with a new
@@ -133,19 +169,18 @@ type TempurlV1Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TempurlV1 is the Schema for the TempurlV1s API. Generate a TempURL for a Swift container and object.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type TempurlV1 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.container) || (has(self.initProvider) && has(self.initProvider.container))",message="spec.forProvider.container is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.object) || (has(self.initProvider) && has(self.initProvider.object))",message="spec.forProvider.object is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ttl) || (has(self.initProvider) && has(self.initProvider.ttl))",message="spec.forProvider.ttl is a required parameter"
 	Spec   TempurlV1Spec   `json:"spec"`
 	Status TempurlV1Status `json:"status,omitempty"`

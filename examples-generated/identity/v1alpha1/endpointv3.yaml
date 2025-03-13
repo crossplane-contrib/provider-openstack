@@ -1,0 +1,33 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: EndpointV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/endpointv3
+  labels:
+    testing.upbound.io/example-name: endpoint_1
+  name: endpoint-1
+spec:
+  forProvider:
+    endpointRegionSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service_1
+    name: my-endpoint
+    serviceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: service_1
+    url: http://my-endpoint
+
+---
+
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ServiceV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/endpointv3
+  labels:
+    testing.upbound.io/example-name: service_1
+  name: service-1
+spec:
+  forProvider:
+    name: my-service
+    type: my-service-type

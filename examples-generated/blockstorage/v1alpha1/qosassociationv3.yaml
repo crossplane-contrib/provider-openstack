@@ -1,0 +1,47 @@
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QosAssociationV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/qosassociationv3
+  labels:
+    testing.upbound.io/example-name: qos_association
+  name: qos-association
+spec:
+  forProvider:
+    qosIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: qos
+    volumeTypeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_type
+
+---
+
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QosV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/qosassociationv3
+  labels:
+    testing.upbound.io/example-name: qos
+  name: qos
+spec:
+  forProvider:
+    consumer: front-end
+    name: '%s'
+    specs:
+      read_iops_sec: "20000"
+
+---
+
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: VolumeTypeV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/qosassociationv3
+  labels:
+    testing.upbound.io/example-name: volume_type
+  name: volume-type
+spec:
+  forProvider:
+    name: '%s'

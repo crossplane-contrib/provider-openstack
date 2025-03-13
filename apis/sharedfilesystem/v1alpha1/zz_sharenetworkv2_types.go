@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -31,12 +27,32 @@ type SharenetworkV2InitParameters struct {
 	// The UUID of a neutron network when setting up or updating
 	// a share network. Changing this updates the existing share network if it's not used by
 	// shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NeutronNetID *string `json:"neutronNetId,omitempty" tf:"neutron_net_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDRef *v1.Reference `json:"neutronNetIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDSelector *v1.Selector `json:"neutronNetIdSelector,omitempty" tf:"-"`
 
 	// The UUID of the neutron subnet when setting up or
 	// updating a share network. Changing this updates the existing share network if it's
 	// not used by shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NeutronSubnetID *string `json:"neutronSubnetId,omitempty" tf:"neutron_subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDRef *v1.Reference `json:"neutronSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDSelector *v1.Selector `json:"neutronSubnetIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Shared File System client.
 	// A Shared File System client is needed to create a share network. If omitted, the
@@ -46,6 +62,7 @@ type SharenetworkV2InitParameters struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
+	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
 }
 
@@ -92,6 +109,7 @@ type SharenetworkV2Observation struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
+	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
 
 	// The share network segmentation ID.
@@ -113,14 +131,34 @@ type SharenetworkV2Parameters struct {
 	// The UUID of a neutron network when setting up or updating
 	// a share network. Changing this updates the existing share network if it's not used by
 	// shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NeutronNetID *string `json:"neutronNetId,omitempty" tf:"neutron_net_id,omitempty"`
+
+	// Reference to a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDRef *v1.Reference `json:"neutronNetIdRef,omitempty" tf:"-"`
+
+	// Selector for a NetworkV2 in networking to populate neutronNetId.
+	// +kubebuilder:validation:Optional
+	NeutronNetIDSelector *v1.Selector `json:"neutronNetIdSelector,omitempty" tf:"-"`
 
 	// The UUID of the neutron subnet when setting up or
 	// updating a share network. Changing this updates the existing share network if it's
 	// not used by shares.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NeutronSubnetID *string `json:"neutronSubnetId,omitempty" tf:"neutron_subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDRef *v1.Reference `json:"neutronSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate neutronSubnetId.
+	// +kubebuilder:validation:Optional
+	NeutronSubnetIDSelector *v1.Selector `json:"neutronSubnetIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Shared File System client.
 	// A Shared File System client is needed to create a share network. If omitted, the
@@ -132,6 +170,7 @@ type SharenetworkV2Parameters struct {
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
 }
 
@@ -159,21 +198,20 @@ type SharenetworkV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SharenetworkV2 is the Schema for the SharenetworkV2s API. Configure a Shared File System share network.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type SharenetworkV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.neutronNetId) || (has(self.initProvider) && has(self.initProvider.neutronNetId))",message="spec.forProvider.neutronNetId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.neutronSubnetId) || (has(self.initProvider) && has(self.initProvider.neutronSubnetId))",message="spec.forProvider.neutronSubnetId is a required parameter"
-	Spec   SharenetworkV2Spec   `json:"spec"`
-	Status SharenetworkV2Status `json:"status,omitempty"`
+	Spec              SharenetworkV2Spec   `json:"spec"`
+	Status            SharenetworkV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

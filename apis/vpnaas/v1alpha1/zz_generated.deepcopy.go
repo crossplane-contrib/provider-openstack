@@ -10,6 +10,7 @@ Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -1613,6 +1614,16 @@ func (in *SiteConnectionV2InitParameters) DeepCopyInto(out *SiteConnectionV2Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.IkepolicyIDRef != nil {
+		in, out := &in.IkepolicyIDRef, &out.IkepolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IkepolicyIDSelector != nil {
+		in, out := &in.IkepolicyIDSelector, &out.IkepolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Initiator != nil {
 		in, out := &in.Initiator, &out.Initiator
 		*out = new(string)
@@ -1623,10 +1634,30 @@ func (in *SiteConnectionV2InitParameters) DeepCopyInto(out *SiteConnectionV2Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.IpsecpolicyIDRef != nil {
+		in, out := &in.IpsecpolicyIDRef, &out.IpsecpolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IpsecpolicyIDSelector != nil {
+		in, out := &in.IpsecpolicyIDSelector, &out.IpsecpolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.LocalEpGroupID != nil {
 		in, out := &in.LocalEpGroupID, &out.LocalEpGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.LocalEpGroupIDRef != nil {
+		in, out := &in.LocalEpGroupIDRef, &out.LocalEpGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.LocalEpGroupIDSelector != nil {
+		in, out := &in.LocalEpGroupIDSelector, &out.LocalEpGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.LocalID != nil {
 		in, out := &in.LocalID, &out.LocalID
@@ -1663,6 +1694,16 @@ func (in *SiteConnectionV2InitParameters) DeepCopyInto(out *SiteConnectionV2Init
 		in, out := &in.PeerEpGroupID, &out.PeerEpGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PeerEpGroupIDRef != nil {
+		in, out := &in.PeerEpGroupIDRef, &out.PeerEpGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PeerEpGroupIDSelector != nil {
+		in, out := &in.PeerEpGroupIDSelector, &out.PeerEpGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PeerID != nil {
 		in, out := &in.PeerID, &out.PeerID
@@ -1704,6 +1745,16 @@ func (in *SiteConnectionV2InitParameters) DeepCopyInto(out *SiteConnectionV2Init
 		in, out := &in.VpnserviceID, &out.VpnserviceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VpnserviceIDRef != nil {
+		in, out := &in.VpnserviceIDRef, &out.VpnserviceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VpnserviceIDSelector != nil {
+		in, out := &in.VpnserviceIDSelector, &out.VpnserviceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1908,6 +1959,16 @@ func (in *SiteConnectionV2Parameters) DeepCopyInto(out *SiteConnectionV2Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.IkepolicyIDRef != nil {
+		in, out := &in.IkepolicyIDRef, &out.IkepolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IkepolicyIDSelector != nil {
+		in, out := &in.IkepolicyIDSelector, &out.IkepolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Initiator != nil {
 		in, out := &in.Initiator, &out.Initiator
 		*out = new(string)
@@ -1918,10 +1979,30 @@ func (in *SiteConnectionV2Parameters) DeepCopyInto(out *SiteConnectionV2Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.IpsecpolicyIDRef != nil {
+		in, out := &in.IpsecpolicyIDRef, &out.IpsecpolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IpsecpolicyIDSelector != nil {
+		in, out := &in.IpsecpolicyIDSelector, &out.IpsecpolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.LocalEpGroupID != nil {
 		in, out := &in.LocalEpGroupID, &out.LocalEpGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.LocalEpGroupIDRef != nil {
+		in, out := &in.LocalEpGroupIDRef, &out.LocalEpGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.LocalEpGroupIDSelector != nil {
+		in, out := &in.LocalEpGroupIDSelector, &out.LocalEpGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.LocalID != nil {
 		in, out := &in.LocalID, &out.LocalID
@@ -1958,6 +2039,16 @@ func (in *SiteConnectionV2Parameters) DeepCopyInto(out *SiteConnectionV2Paramete
 		in, out := &in.PeerEpGroupID, &out.PeerEpGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PeerEpGroupIDRef != nil {
+		in, out := &in.PeerEpGroupIDRef, &out.PeerEpGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PeerEpGroupIDSelector != nil {
+		in, out := &in.PeerEpGroupIDSelector, &out.PeerEpGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PeerID != nil {
 		in, out := &in.PeerID, &out.PeerID
@@ -1999,6 +2090,16 @@ func (in *SiteConnectionV2Parameters) DeepCopyInto(out *SiteConnectionV2Paramete
 		in, out := &in.VpnserviceID, &out.VpnserviceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VpnserviceIDRef != nil {
+		in, out := &in.VpnserviceIDRef, &out.VpnserviceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VpnserviceIDSelector != nil {
+		in, out := &in.VpnserviceIDSelector, &out.VpnserviceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

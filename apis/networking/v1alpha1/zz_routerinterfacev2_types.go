@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -34,6 +30,32 @@ type RouterInterfaceV2InitParameters struct {
 	// region argument of the provider is used. Changing this creates a new
 	// router interface.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// ID of the router this interface belongs to. Changing
+	// this creates a new router interface.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.RouterV2
+	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
+
+	// Reference to a RouterV2 in networking to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouterV2 in networking to populate routerId.
+	// +kubebuilder:validation:Optional
+	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
+
+	// ID of the subnet this interface connects to. Changing
+	// this creates a new router interface.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type RouterInterfaceV2Observation struct {
@@ -86,29 +108,29 @@ type RouterInterfaceV2Parameters struct {
 
 	// ID of the router this interface belongs to. Changing
 	// this creates a new router interface.
-	// +crossplane:generate:reference:type=RouterV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.RouterV2
 	// +kubebuilder:validation:Optional
 	RouterID *string `json:"routerId,omitempty" tf:"router_id,omitempty"`
 
-	// Reference to a RouterV2 to populate routerId.
+	// Reference to a RouterV2 in networking to populate routerId.
 	// +kubebuilder:validation:Optional
 	RouterIDRef *v1.Reference `json:"routerIdRef,omitempty" tf:"-"`
 
-	// Selector for a RouterV2 to populate routerId.
+	// Selector for a RouterV2 in networking to populate routerId.
 	// +kubebuilder:validation:Optional
 	RouterIDSelector *v1.Selector `json:"routerIdSelector,omitempty" tf:"-"`
 
 	// ID of the subnet this interface connects to. Changing
 	// this creates a new router interface.
-	// +crossplane:generate:reference:type=SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// Reference to a SubnetV2 to populate subnetId.
+	// Reference to a SubnetV2 in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
-	// Selector for a SubnetV2 to populate subnetId.
+	// Selector for a SubnetV2 in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
@@ -137,13 +159,14 @@ type RouterInterfaceV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // RouterInterfaceV2 is the Schema for the RouterInterfaceV2s API. Manages a V2 router interface resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type RouterInterfaceV2 struct {
 	metav1.TypeMeta   `json:",inline"`

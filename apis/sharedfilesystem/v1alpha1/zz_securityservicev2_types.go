@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -38,6 +34,9 @@ type SecurityserviceV2InitParameters struct {
 	// The security service ou. An organizational unit can be added to
 	// specify where the share ends up. New in Manila microversion 2.44.
 	Ou *string `json:"ou,omitempty" tf:"ou,omitempty"`
+
+	// The user password, if you specify a user.
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Shared File System client.
 	// A Shared File System client is needed to create a security service. If omitted, the
@@ -178,13 +177,14 @@ type SecurityserviceV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SecurityserviceV2 is the Schema for the SecurityserviceV2s API. Configure a Shared File System security service.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type SecurityserviceV2 struct {
 	metav1.TypeMeta   `json:",inline"`

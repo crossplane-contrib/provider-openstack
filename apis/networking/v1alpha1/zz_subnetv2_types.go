@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -169,6 +165,19 @@ type SubnetV2InitParameters struct {
 	// the existing subnet.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The UUID of the parent network. Changing this
+	// creates a new subnet.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a SubnetV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a SubnetV2 in networking to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+
 	// Do not set a gateway IP on this subnet. Changing
 	// this removes or adds a default gateway IP of the existing subnet.
 	NoGateway *bool `json:"noGateway,omitempty" tf:"no_gateway,omitempty"`
@@ -193,6 +202,7 @@ type SubnetV2InitParameters struct {
 	SubnetpoolID *string `json:"subnetpoolId,omitempty" tf:"subnetpool_id,omitempty"`
 
 	// A set of string tags for the subnet.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the subnet. Required if admin wants to
@@ -200,6 +210,7 @@ type SubnetV2InitParameters struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -207,6 +218,7 @@ type SubnetV2Observation struct {
 
 	// The collection of ags assigned on the subnet, which have been
 	// explicitly and implicitly added.
+	// +listType=set
 	AllTags []*string `json:"allTags,omitempty" tf:"all_tags,omitempty"`
 
 	// A block declaring the start and end range of
@@ -301,6 +313,7 @@ type SubnetV2Observation struct {
 	SubnetpoolID *string `json:"subnetpoolId,omitempty" tf:"subnetpool_id,omitempty"`
 
 	// A set of string tags for the subnet.
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the subnet. Required if admin wants to
@@ -308,6 +321,7 @@ type SubnetV2Observation struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// Map of additional options.
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -389,15 +403,15 @@ type SubnetV2Parameters struct {
 
 	// The UUID of the parent network. Changing this
 	// creates a new subnet.
-	// +crossplane:generate:reference:type=NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Reference to a NetworkV2 to populate networkId.
+	// Reference to a SubnetV2 in networking to populate networkId.
 	// +kubebuilder:validation:Optional
 	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
 
-	// Selector for a NetworkV2 to populate networkId.
+	// Selector for a SubnetV2 in networking to populate networkId.
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
@@ -431,6 +445,7 @@ type SubnetV2Parameters struct {
 
 	// A set of string tags for the subnet.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// The owner of the subnet. Required if admin wants to
@@ -440,6 +455,7 @@ type SubnetV2Parameters struct {
 
 	// Map of additional options.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 }
 
@@ -467,13 +483,14 @@ type SubnetV2Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SubnetV2 is the Schema for the SubnetV2s API. Manages a V2 Neutron subnet resource within OpenStack.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type SubnetV2 struct {
 	metav1.TypeMeta   `json:",inline"`

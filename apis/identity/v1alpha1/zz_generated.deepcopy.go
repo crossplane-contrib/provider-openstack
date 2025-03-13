@@ -177,6 +177,11 @@ func (in *ApplicationCredentialV3InitParameters) DeepCopyInto(out *ApplicationCr
 			}
 		}
 	}
+	if in.SecretSecretRef != nil {
+		in, out := &in.SecretSecretRef, &out.SecretSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.Unrestricted != nil {
 		in, out := &in.Unrestricted, &out.Unrestricted
 		*out = new(bool)
@@ -626,6 +631,16 @@ func (in *EndpointV3InitParameters) DeepCopyInto(out *EndpointV3InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.EndpointRegionRef != nil {
+		in, out := &in.EndpointRegionRef, &out.EndpointRegionRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EndpointRegionSelector != nil {
+		in, out := &in.EndpointRegionSelector, &out.EndpointRegionSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Interface != nil {
 		in, out := &in.Interface, &out.Interface
 		*out = new(string)
@@ -645,6 +660,16 @@ func (in *EndpointV3InitParameters) DeepCopyInto(out *EndpointV3InitParameters) 
 		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceIDRef != nil {
+		in, out := &in.ServiceIDRef, &out.ServiceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceIDSelector != nil {
+		in, out := &in.ServiceIDSelector, &out.ServiceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.URL != nil {
 		in, out := &in.URL, &out.URL
@@ -763,6 +788,16 @@ func (in *EndpointV3Parameters) DeepCopyInto(out *EndpointV3Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.EndpointRegionRef != nil {
+		in, out := &in.EndpointRegionRef, &out.EndpointRegionRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EndpointRegionSelector != nil {
+		in, out := &in.EndpointRegionSelector, &out.EndpointRegionSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Interface != nil {
 		in, out := &in.Interface, &out.Interface
 		*out = new(string)
@@ -782,6 +817,16 @@ func (in *EndpointV3Parameters) DeepCopyInto(out *EndpointV3Parameters) {
 		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceIDRef != nil {
+		in, out := &in.ServiceIDRef, &out.ServiceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceIDSelector != nil {
+		in, out := &in.ServiceIDSelector, &out.ServiceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.URL != nil {
 		in, out := &in.URL, &out.URL
@@ -1094,10 +1139,30 @@ func (in *InheritRoleAssignmentV3InitParameters) DeepCopyInto(out *InheritRoleAs
 		*out = new(string)
 		**out = **in
 	}
+	if in.RoleIDRef != nil {
+		in, out := &in.RoleIDRef, &out.RoleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleIDSelector != nil {
+		in, out := &in.RoleIDSelector, &out.RoleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.UserID != nil {
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1221,10 +1286,30 @@ func (in *InheritRoleAssignmentV3Parameters) DeepCopyInto(out *InheritRoleAssign
 		*out = new(string)
 		**out = **in
 	}
+	if in.RoleIDRef != nil {
+		in, out := &in.RoleIDRef, &out.RoleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleIDSelector != nil {
+		in, out := &in.RoleIDSelector, &out.RoleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.UserID != nil {
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1673,6 +1758,21 @@ func (in *RoleAssignmentV3InitParameters) DeepCopyInto(out *RoleAssignmentV3Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ProjectIDRef != nil {
+		in, out := &in.ProjectIDRef, &out.ProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectIDSelector != nil {
+		in, out := &in.ProjectIDSelector, &out.ProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -1683,10 +1783,30 @@ func (in *RoleAssignmentV3InitParameters) DeepCopyInto(out *RoleAssignmentV3Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.RoleIDRef != nil {
+		in, out := &in.RoleIDRef, &out.RoleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleIDSelector != nil {
+		in, out := &in.RoleIDSelector, &out.RoleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.UserID != nil {
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1820,10 +1940,30 @@ func (in *RoleAssignmentV3Parameters) DeepCopyInto(out *RoleAssignmentV3Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.RoleIDRef != nil {
+		in, out := &in.RoleIDRef, &out.RoleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoleIDSelector != nil {
+		in, out := &in.RoleIDSelector, &out.RoleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.UserID != nil {
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2315,6 +2455,16 @@ func (in *UserMembershipV3InitParameters) DeepCopyInto(out *UserMembershipV3Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupIDRef != nil {
+		in, out := &in.GroupIDRef, &out.GroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GroupIDSelector != nil {
+		in, out := &in.GroupIDSelector, &out.GroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -2324,6 +2474,16 @@ func (in *UserMembershipV3InitParameters) DeepCopyInto(out *UserMembershipV3Init
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2412,6 +2572,16 @@ func (in *UserMembershipV3Parameters) DeepCopyInto(out *UserMembershipV3Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupIDRef != nil {
+		in, out := &in.GroupIDRef, &out.GroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GroupIDSelector != nil {
+		in, out := &in.GroupIDSelector, &out.GroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -2421,6 +2591,16 @@ func (in *UserMembershipV3Parameters) DeepCopyInto(out *UserMembershipV3Paramete
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2504,6 +2684,16 @@ func (in *UserV3InitParameters) DeepCopyInto(out *UserV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DefaultProjectIDRef != nil {
+		in, out := &in.DefaultProjectIDRef, &out.DefaultProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefaultProjectIDSelector != nil {
+		in, out := &in.DefaultProjectIDSelector, &out.DefaultProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -2565,6 +2755,11 @@ func (in *UserV3InitParameters) DeepCopyInto(out *UserV3InitParameters) {
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
+		**out = **in
+	}
+	if in.PasswordSecretRef != nil {
+		in, out := &in.PasswordSecretRef, &out.PasswordSecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.Region != nil {
@@ -2716,6 +2911,16 @@ func (in *UserV3Parameters) DeepCopyInto(out *UserV3Parameters) {
 		in, out := &in.DefaultProjectID, &out.DefaultProjectID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DefaultProjectIDRef != nil {
+		in, out := &in.DefaultProjectIDRef, &out.DefaultProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefaultProjectIDSelector != nil {
+		in, out := &in.DefaultProjectIDSelector, &out.DefaultProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
@@ -22,7 +18,17 @@ type EndpointV3InitParameters struct {
 
 	// The endpoint region. The region and
 	// endpoint_region can be different.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("region",false)
 	EndpointRegion *string `json:"endpointRegion,omitempty" tf:"endpoint_region,omitempty"`
+
+	// Reference to a ServiceV3 in identity to populate endpointRegion.
+	// +kubebuilder:validation:Optional
+	EndpointRegionRef *v1.Reference `json:"endpointRegionRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceV3 in identity to populate endpointRegion.
+	// +kubebuilder:validation:Optional
+	EndpointRegionSelector *v1.Selector `json:"endpointRegionSelector,omitempty" tf:"-"`
 
 	// The endpoint interface. Valid values are public,
 	// internal and admin. Default value is public
@@ -36,7 +42,17 @@ type EndpointV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The endpoint service ID.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a ServiceV3 in identity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v1.Reference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceV3 in identity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
 
 	// The endpoint url.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
@@ -78,8 +94,18 @@ type EndpointV3Parameters struct {
 
 	// The endpoint region. The region and
 	// endpoint_region can be different.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("region",false)
 	// +kubebuilder:validation:Optional
 	EndpointRegion *string `json:"endpointRegion,omitempty" tf:"endpoint_region,omitempty"`
+
+	// Reference to a ServiceV3 in identity to populate endpointRegion.
+	// +kubebuilder:validation:Optional
+	EndpointRegionRef *v1.Reference `json:"endpointRegionRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceV3 in identity to populate endpointRegion.
+	// +kubebuilder:validation:Optional
+	EndpointRegionSelector *v1.Selector `json:"endpointRegionSelector,omitempty" tf:"-"`
 
 	// The endpoint interface. Valid values are public,
 	// internal and admin. Default value is public
@@ -96,8 +122,18 @@ type EndpointV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The endpoint service ID.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a ServiceV3 in identity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v1.Reference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceV3 in identity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v1.Selector `json:"serviceIdSelector,omitempty" tf:"-"`
 
 	// The endpoint url.
 	// +kubebuilder:validation:Optional
@@ -128,19 +164,18 @@ type EndpointV3Status struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // EndpointV3 is the Schema for the EndpointV3s API. Manages a V3 Endpoint resource within OpenStack Keystone.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,openstack}
 type EndpointV3 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.endpointRegion) || (has(self.initProvider) && has(self.initProvider.endpointRegion))",message="spec.forProvider.endpointRegion is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serviceId) || (has(self.initProvider) && has(self.initProvider.serviceId))",message="spec.forProvider.serviceId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.url) || (has(self.initProvider) && has(self.initProvider.url))",message="spec.forProvider.url is a required parameter"
 	Spec   EndpointV3Spec   `json:"spec"`
 	Status EndpointV3Status `json:"status,omitempty"`

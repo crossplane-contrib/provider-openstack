@@ -109,6 +109,16 @@ func (in *QosAssociationV3InitParameters) DeepCopyInto(out *QosAssociationV3Init
 		*out = new(string)
 		**out = **in
 	}
+	if in.QosIDRef != nil {
+		in, out := &in.QosIDRef, &out.QosIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.QosIDSelector != nil {
+		in, out := &in.QosIDSelector, &out.QosIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -118,6 +128,16 @@ func (in *QosAssociationV3InitParameters) DeepCopyInto(out *QosAssociationV3Init
 		in, out := &in.VolumeTypeID, &out.VolumeTypeID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VolumeTypeIDRef != nil {
+		in, out := &in.VolumeTypeIDRef, &out.VolumeTypeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeTypeIDSelector != nil {
+		in, out := &in.VolumeTypeIDSelector, &out.VolumeTypeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -206,6 +226,16 @@ func (in *QosAssociationV3Parameters) DeepCopyInto(out *QosAssociationV3Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.QosIDRef != nil {
+		in, out := &in.QosIDRef, &out.QosIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.QosIDSelector != nil {
+		in, out := &in.QosIDSelector, &out.QosIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -215,6 +245,16 @@ func (in *QosAssociationV3Parameters) DeepCopyInto(out *QosAssociationV3Paramete
 		in, out := &in.VolumeTypeID, &out.VolumeTypeID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VolumeTypeIDRef != nil {
+		in, out := &in.VolumeTypeIDRef, &out.VolumeTypeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeTypeIDSelector != nil {
+		in, out := &in.VolumeTypeIDSelector, &out.VolumeTypeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -554,6 +594,21 @@ func (in *QuotasetV3InitParameters) DeepCopyInto(out *QuotasetV3InitParameters) 
 		in, out := &in.PerVolumeGigabytes, &out.PerVolumeGigabytes
 		*out = new(float64)
 		**out = **in
+	}
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ProjectIDRef != nil {
+		in, out := &in.ProjectIDRef, &out.ProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectIDSelector != nil {
+		in, out := &in.ProjectIDSelector, &out.ProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -1101,6 +1156,16 @@ func (in *VolumeAttachV3InitParameters) DeepCopyInto(out *VolumeAttachV3InitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.VolumeIDRef != nil {
+		in, out := &in.VolumeIDRef, &out.VolumeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeIDSelector != nil {
+		in, out := &in.VolumeIDSelector, &out.VolumeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Wwnn != nil {
 		in, out := &in.Wwnn, &out.Wwnn
 		*out = new(string)
@@ -1310,6 +1375,16 @@ func (in *VolumeAttachV3Parameters) DeepCopyInto(out *VolumeAttachV3Parameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.VolumeIDRef != nil {
+		in, out := &in.VolumeIDRef, &out.VolumeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeIDSelector != nil {
+		in, out := &in.VolumeIDSelector, &out.VolumeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Wwnn != nil {
 		in, out := &in.Wwnn, &out.Wwnn
 		*out = new(string)
@@ -1408,6 +1483,16 @@ func (in *VolumeTypeAccessV3InitParameters) DeepCopyInto(out *VolumeTypeAccessV3
 		*out = new(string)
 		**out = **in
 	}
+	if in.ProjectIDRef != nil {
+		in, out := &in.ProjectIDRef, &out.ProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectIDSelector != nil {
+		in, out := &in.ProjectIDSelector, &out.ProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -1417,6 +1502,16 @@ func (in *VolumeTypeAccessV3InitParameters) DeepCopyInto(out *VolumeTypeAccessV3
 		in, out := &in.VolumeTypeID, &out.VolumeTypeID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VolumeTypeIDRef != nil {
+		in, out := &in.VolumeTypeIDRef, &out.VolumeTypeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeTypeIDSelector != nil {
+		in, out := &in.VolumeTypeIDSelector, &out.VolumeTypeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1505,6 +1600,16 @@ func (in *VolumeTypeAccessV3Parameters) DeepCopyInto(out *VolumeTypeAccessV3Para
 		*out = new(string)
 		**out = **in
 	}
+	if in.ProjectIDRef != nil {
+		in, out := &in.ProjectIDRef, &out.ProjectIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ProjectIDSelector != nil {
+		in, out := &in.ProjectIDSelector, &out.ProjectIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -1514,6 +1619,16 @@ func (in *VolumeTypeAccessV3Parameters) DeepCopyInto(out *VolumeTypeAccessV3Para
 		in, out := &in.VolumeTypeID, &out.VolumeTypeID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VolumeTypeIDRef != nil {
+		in, out := &in.VolumeTypeIDRef, &out.VolumeTypeIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VolumeTypeIDSelector != nil {
+		in, out := &in.VolumeTypeIDSelector, &out.VolumeTypeIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

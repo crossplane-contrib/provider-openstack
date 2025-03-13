@@ -10,6 +10,7 @@ Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -58,10 +59,30 @@ func (in *GroupV2InitParameters) DeepCopyInto(out *GroupV2InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.EgressFirewallPolicyIDRef != nil {
+		in, out := &in.EgressFirewallPolicyIDRef, &out.EgressFirewallPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EgressFirewallPolicyIDSelector != nil {
+		in, out := &in.EgressFirewallPolicyIDSelector, &out.EgressFirewallPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IngressFirewallPolicyID != nil {
 		in, out := &in.IngressFirewallPolicyID, &out.IngressFirewallPolicyID
 		*out = new(string)
 		**out = **in
+	}
+	if in.IngressFirewallPolicyIDRef != nil {
+		in, out := &in.IngressFirewallPolicyIDRef, &out.IngressFirewallPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IngressFirewallPolicyIDSelector != nil {
+		in, out := &in.IngressFirewallPolicyIDSelector, &out.IngressFirewallPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
@@ -242,10 +263,30 @@ func (in *GroupV2Parameters) DeepCopyInto(out *GroupV2Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.EgressFirewallPolicyIDRef != nil {
+		in, out := &in.EgressFirewallPolicyIDRef, &out.EgressFirewallPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.EgressFirewallPolicyIDSelector != nil {
+		in, out := &in.EgressFirewallPolicyIDSelector, &out.EgressFirewallPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IngressFirewallPolicyID != nil {
 		in, out := &in.IngressFirewallPolicyID, &out.IngressFirewallPolicyID
 		*out = new(string)
 		**out = **in
+	}
+	if in.IngressFirewallPolicyIDRef != nil {
+		in, out := &in.IngressFirewallPolicyIDRef, &out.IngressFirewallPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IngressFirewallPolicyIDSelector != nil {
+		in, out := &in.IngressFirewallPolicyIDSelector, &out.IngressFirewallPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
