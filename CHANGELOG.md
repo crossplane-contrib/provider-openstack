@@ -7,12 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Migration from 0.4.0
+
+- In compliance with the Community Extension Projects Policies, we moved the provider to the new crossplane package registry. The provider will be available at `xpkg.crossplane.io/crossplane-contrib/provider-openstack`. The previously published packages in the Upbound Marketplace will no longer be updated but kept there for backwards compatbility.
+
 ### Added
 
 - All remaining config parameters that are supported via [terraform-provider-openstack](https://registry.terraform.io/providers/terraform-provider-openstack)
 - Made it easier to configure authentication by not requiring so many fields.
 - Migrated to Upjets new No-Fork/Provider v2 SDK Architecture. The provider now does not ship with Terraform CLI anymore.
 - Added many cross resource references (autmatically generated from Terraform provider schema)
+- Add native metrics for managed resources (see [Upjet 1.3.0](https://github.com/crossplane/upjet/releases/tag/v1.3.0) for more details)
 
 ### Changed
 
@@ -24,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update various other go dependencies
 - Modernize CI Pipeline
 - Rebase dockerfle to alpine 3.12
+
+### Removed
+
+- Removed Terraform CLI specific metrics, as there is no Terraform CLI involved anymore
 
 ## [0.4.0] - 2024-06-11
 
