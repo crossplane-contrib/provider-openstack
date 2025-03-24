@@ -355,8 +355,6 @@ spec:
                       The name of the
                       desired flavor for the server. Changing this resizes the existing server.
                     type: string
-                  floatingIp:
-                    type: string
                   forceDelete:
                     description: |-
                       Whether to force the OpenStack instance to be
@@ -484,8 +482,6 @@ spec:
                           type: string
                         fixedIpV6:
                           type: string
-                        floatingIp:
-                          type: string
                         name:
                           description: |-
                             The human-readable
@@ -602,9 +598,9 @@ spec:
                     type: array
                   powerState:
                     description: |-
-                      Provide the VM state. Only 'active', 'shutoff'
+                      Provide the VM state. Only 'active', 'shutoff', 'paused'
                       and 'shelved_offloaded' are supported values.
-                      Note: If the initial power_state is the shutoff
+                      Note: If the initial power_state is the shutoff or paused
                       the VM will be stopped immediately after build and the provisioners like
                       remote-exec or files are not supported.
                     type: string
@@ -648,7 +644,8 @@ spec:
                         group:
                           description: |-
                             A UUID of a Server Group. The instance will be placed
-                            into that group.
+                            into that group. See reference
+                            for details on managing servergroup resources
                           type: string
                         query:
                           description: |-
@@ -802,17 +799,6 @@ spec:
                           instances after some timeout.
                         type: boolean
                     type: object
-                  volume:
-                    items:
-                      properties:
-                        device:
-                          type: string
-                        id:
-                          type: string
-                        volumeId:
-                          type: string
-                      type: object
-                    type: array
                 type: object
               initProvider:
                 description: |-
@@ -1109,8 +1095,6 @@ spec:
                       The name of the
                       desired flavor for the server. Changing this resizes the existing server.
                     type: string
-                  floatingIp:
-                    type: string
                   forceDelete:
                     description: |-
                       Whether to force the OpenStack instance to be
@@ -1238,8 +1222,6 @@ spec:
                           type: string
                         fixedIpV6:
                           type: string
-                        floatingIp:
-                          type: string
                         name:
                           description: |-
                             The human-readable
@@ -1356,9 +1338,9 @@ spec:
                     type: array
                   powerState:
                     description: |-
-                      Provide the VM state. Only 'active', 'shutoff'
+                      Provide the VM state. Only 'active', 'shutoff', 'paused'
                       and 'shelved_offloaded' are supported values.
-                      Note: If the initial power_state is the shutoff
+                      Note: If the initial power_state is the shutoff or paused
                       the VM will be stopped immediately after build and the provisioners like
                       remote-exec or files are not supported.
                     type: string
@@ -1402,7 +1384,8 @@ spec:
                         group:
                           description: |-
                             A UUID of a Server Group. The instance will be placed
-                            into that group.
+                            into that group. See reference
+                            for details on managing servergroup resources
                           type: string
                         query:
                           description: |-
@@ -1556,17 +1539,6 @@ spec:
                           instances after some timeout.
                         type: boolean
                     type: object
-                  volume:
-                    items:
-                      properties:
-                        device:
-                          type: string
-                        id:
-                          type: string
-                        volumeId:
-                          type: string
-                      type: object
-                    type: array
                 type: object
               managementPolicies:
                 default:
@@ -1874,8 +1846,6 @@ spec:
                       The name of the
                       desired flavor for the server. Changing this resizes the existing server.
                     type: string
-                  floatingIp:
-                    type: string
                   forceDelete:
                     description: |-
                       Whether to force the OpenStack instance to be
@@ -1931,8 +1901,6 @@ spec:
                           type: string
                         fixedIpV6:
                           type: string
-                        floatingIp:
-                          type: string
                         mac:
                           type: string
                         name:
@@ -1975,9 +1943,9 @@ spec:
                     type: array
                   powerState:
                     description: |-
-                      Provide the VM state. Only 'active', 'shutoff'
+                      Provide the VM state. Only 'active', 'shutoff', 'paused'
                       and 'shelved_offloaded' are supported values.
-                      Note: If the initial power_state is the shutoff
+                      Note: If the initial power_state is the shutoff or paused
                       the VM will be stopped immediately after build and the provisioners like
                       remote-exec or files are not supported.
                     type: string
@@ -2021,7 +1989,8 @@ spec:
                         group:
                           description: |-
                             A UUID of a Server Group. The instance will be placed
-                            into that group.
+                            into that group. See reference
+                            for details on managing servergroup resources
                           type: string
                         query:
                           description: |-
@@ -2099,17 +2068,6 @@ spec:
                           instances after some timeout.
                         type: boolean
                     type: object
-                  volume:
-                    items:
-                      properties:
-                        device:
-                          type: string
-                        id:
-                          type: string
-                        volumeId:
-                          type: string
-                      type: object
-                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

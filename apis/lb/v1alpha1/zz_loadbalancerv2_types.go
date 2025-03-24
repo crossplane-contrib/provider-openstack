@@ -69,19 +69,24 @@ type LoadbalancerV2InitParameters struct {
 	// The network on which to allocate the
 	// Loadbalancer's address. A tenant can only create Loadbalancers on networks
 	// authorized by policy (e.g. networks that belong to them or networks that
-	// are shared).  Changing this creates a new loadbalancer.
-	// It is available only for Octavia.
+	// are shared).  Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	VipNetworkID *string `json:"vipNetworkId,omitempty" tf:"vip_network_id,omitempty"`
 
 	// The port UUID that the loadbalancer will use.
-	// Changing this creates a new loadbalancer. It is available only for Octavia.
+	// Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	VipPortID *string `json:"vipPortId,omitempty" tf:"vip_port_id,omitempty"`
+
+	// The ID of the QoS Policy which will
+	// be applied to the Virtual IP (VIP).
+	VipQosPolicyID *string `json:"vipQosPolicyId,omitempty" tf:"vip_qos_policy_id,omitempty"`
 
 	// The subnet on which to allocate the
 	// Loadbalancer's address. A tenant can only create Loadbalancers on networks
 	// authorized by policy (e.g. networks that belong to them or networks that
-	// are shared).  Changing this creates a new loadbalancer.
-	// It is required to Neutron LBaaS but optional for Octavia.
+	// are shared).  Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	VipSubnetID *string `json:"vipSubnetId,omitempty" tf:"vip_subnet_id,omitempty"`
 }
 
@@ -142,19 +147,24 @@ type LoadbalancerV2Observation struct {
 	// The network on which to allocate the
 	// Loadbalancer's address. A tenant can only create Loadbalancers on networks
 	// authorized by policy (e.g. networks that belong to them or networks that
-	// are shared).  Changing this creates a new loadbalancer.
-	// It is available only for Octavia.
+	// are shared).  Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	VipNetworkID *string `json:"vipNetworkId,omitempty" tf:"vip_network_id,omitempty"`
 
 	// The port UUID that the loadbalancer will use.
-	// Changing this creates a new loadbalancer. It is available only for Octavia.
+	// Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	VipPortID *string `json:"vipPortId,omitempty" tf:"vip_port_id,omitempty"`
+
+	// The ID of the QoS Policy which will
+	// be applied to the Virtual IP (VIP).
+	VipQosPolicyID *string `json:"vipQosPolicyId,omitempty" tf:"vip_qos_policy_id,omitempty"`
 
 	// The subnet on which to allocate the
 	// Loadbalancer's address. A tenant can only create Loadbalancers on networks
 	// authorized by policy (e.g. networks that belong to them or networks that
-	// are shared).  Changing this creates a new loadbalancer.
-	// It is required to Neutron LBaaS but optional for Octavia.
+	// are shared).  Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	VipSubnetID *string `json:"vipSubnetId,omitempty" tf:"vip_subnet_id,omitempty"`
 }
 
@@ -224,21 +234,27 @@ type LoadbalancerV2Parameters struct {
 	// The network on which to allocate the
 	// Loadbalancer's address. A tenant can only create Loadbalancers on networks
 	// authorized by policy (e.g. networks that belong to them or networks that
-	// are shared).  Changing this creates a new loadbalancer.
-	// It is available only for Octavia.
+	// are shared).  Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	// +kubebuilder:validation:Optional
 	VipNetworkID *string `json:"vipNetworkId,omitempty" tf:"vip_network_id,omitempty"`
 
 	// The port UUID that the loadbalancer will use.
-	// Changing this creates a new loadbalancer. It is available only for Octavia.
+	// Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	// +kubebuilder:validation:Optional
 	VipPortID *string `json:"vipPortId,omitempty" tf:"vip_port_id,omitempty"`
+
+	// The ID of the QoS Policy which will
+	// be applied to the Virtual IP (VIP).
+	// +kubebuilder:validation:Optional
+	VipQosPolicyID *string `json:"vipQosPolicyId,omitempty" tf:"vip_qos_policy_id,omitempty"`
 
 	// The subnet on which to allocate the
 	// Loadbalancer's address. A tenant can only create Loadbalancers on networks
 	// authorized by policy (e.g. networks that belong to them or networks that
-	// are shared).  Changing this creates a new loadbalancer.
-	// It is required to Neutron LBaaS but optional for Octavia.
+	// are shared).  Changing this creates a new loadbalancer. Exactly one of
+	// vip_subnet_id, vip_network_id or vip_port_id has to be defined.
 	// +kubebuilder:validation:Optional
 	VipSubnetID *string `json:"vipSubnetId,omitempty" tf:"vip_subnet_id,omitempty"`
 }

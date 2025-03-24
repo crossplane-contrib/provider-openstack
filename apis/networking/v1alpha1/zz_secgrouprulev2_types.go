@@ -37,7 +37,9 @@ type SecgroupRuleV2InitParameters struct {
 	// security group rule.
 	PortRangeMin *float64 `json:"portRangeMin,omitempty" tf:"port_range_min,omitempty"`
 
-	// The layer 4 protocol type, valid values are following. Changing this creates a new security group rule. This is required if you want to specify a port range.
+	// The layer 4 protocol type, valid values are
+	// following. Changing this creates a new security group rule. This is required
+	// if you want to specify a port range.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The region in which to obtain the V2 networking client.
@@ -101,7 +103,9 @@ type SecgroupRuleV2Observation struct {
 	// security group rule.
 	PortRangeMin *float64 `json:"portRangeMin,omitempty" tf:"port_range_min,omitempty"`
 
-	// The layer 4 protocol type, valid values are following. Changing this creates a new security group rule. This is required if you want to specify a port range.
+	// The layer 4 protocol type, valid values are
+	// following. Changing this creates a new security group rule. This is required
+	// if you want to specify a port range.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The region in which to obtain the V2 networking client.
@@ -158,7 +162,9 @@ type SecgroupRuleV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	PortRangeMin *float64 `json:"portRangeMin,omitempty" tf:"port_range_min,omitempty"`
 
-	// The layer 4 protocol type, valid values are following. Changing this creates a new security group rule. This is required if you want to specify a port range.
+	// The layer 4 protocol type, valid values are
+	// following. Changing this creates a new security group rule. This is required
+	// if you want to specify a port range.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 

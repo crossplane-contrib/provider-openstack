@@ -135,6 +135,11 @@ func (in *ClusterV1InitParameters) DeepCopyInto(out *ClusterV1InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.MasterLBEnabled != nil {
+		in, out := &in.MasterLBEnabled, &out.MasterLBEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MergeLabels != nil {
 		in, out := &in.MergeLabels, &out.MergeLabels
 		*out = new(bool)
@@ -309,6 +314,11 @@ func (in *ClusterV1Observation) DeepCopyInto(out *ClusterV1Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.MasterLBEnabled != nil {
+		in, out := &in.MasterLBEnabled, &out.MasterLBEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MergeLabels != nil {
 		in, out := &in.MergeLabels, &out.MergeLabels
 		*out = new(bool)
@@ -464,6 +474,11 @@ func (in *ClusterV1Parameters) DeepCopyInto(out *ClusterV1Parameters) {
 	if in.MasterFlavor != nil {
 		in, out := &in.MasterFlavor, &out.MasterFlavor
 		*out = new(string)
+		**out = **in
+	}
+	if in.MasterLBEnabled != nil {
+		in, out := &in.MasterLBEnabled, &out.MasterLBEnabled
+		*out = new(bool)
 		**out = **in
 	}
 	if in.MergeLabels != nil {

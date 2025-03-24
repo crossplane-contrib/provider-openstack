@@ -43,6 +43,11 @@ type VolumeAttachV2InitParameters struct {
 	// new volume attachment.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Add a device role tag that is applied to the volume when
+	// attaching it to the VM. Changing this creates a new volume attachment with
+	// the new tag. Requires microversion >= 2.49.
+	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
+
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	VendorOptions *VolumeAttachV2VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
@@ -81,6 +86,11 @@ type VolumeAttachV2Observation struct {
 	// region argument of the provider is used. Changing this creates a
 	// new volume attachment.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Add a device role tag that is applied to the volume when
+	// attaching it to the VM. Changing this creates a new volume attachment with
+	// the new tag. Requires microversion >= 2.49.
+	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
@@ -122,6 +132,12 @@ type VolumeAttachV2Parameters struct {
 	// new volume attachment.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Add a device role tag that is applied to the volume when
+	// attaching it to the VM. Changing this creates a new volume attachment with
+	// the new tag. Requires microversion >= 2.49.
+	// +kubebuilder:validation:Optional
+	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
 	// Map of additional vendor-specific options.
 	// Supported options are described below.

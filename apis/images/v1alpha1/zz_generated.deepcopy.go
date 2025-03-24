@@ -819,11 +819,6 @@ func (in *ImageV2Observation) DeepCopyInto(out *ImageV2Observation) {
 			}
 		}
 	}
-	if in.UpdateAt != nil {
-		in, out := &in.UpdateAt, &out.UpdateAt
-		*out = new(string)
-		**out = **in
-	}
 	if in.UpdatedAt != nil {
 		in, out := &in.UpdatedAt, &out.UpdatedAt
 		*out = new(string)

@@ -175,7 +175,7 @@ spec:
                   region:
                     description: |-
                       The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create an . If omitted, the
+                      A Networking client is needed to create an L7 rule. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       L7 Rule.
                     type: string
@@ -188,7 +188,7 @@ spec:
                   type:
                     description: |-
                       The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-                      HOST_NAME or PATH.
+                      HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
                     type: string
                   value:
                     description: |-
@@ -311,7 +311,7 @@ spec:
                   region:
                     description: |-
                       The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create an . If omitted, the
+                      A Networking client is needed to create an L7 rule. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       L7 Rule.
                     type: string
@@ -324,7 +324,7 @@ spec:
                   type:
                     description: |-
                       The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-                      HOST_NAME or PATH.
+                      HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
                     type: string
                   value:
                     description: |-
@@ -551,7 +551,7 @@ spec:
                   region:
                     description: |-
                       The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create an . If omitted, the
+                      A Networking client is needed to create an L7 rule. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       L7 Rule.
                     type: string
@@ -564,7 +564,7 @@ spec:
                   type:
                     description: |-
                       The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-                      HOST_NAME or PATH.
+                      HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
                     type: string
                   value:
                     description: |-

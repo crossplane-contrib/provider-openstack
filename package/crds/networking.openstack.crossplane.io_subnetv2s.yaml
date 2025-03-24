@@ -91,22 +91,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  allocationPools:
-                    description: |-
-                      (Deprecated - use allocation_pool instead)
-                      A block declaring the start and end range of the IP addresses available for
-                      use with DHCP in this subnet.
-                      The allocation_pools block is documented below.
-                    items:
-                      properties:
-                        end:
-                          description: The ending address.
-                          type: string
-                        start:
-                          description: The starting address.
-                          type: string
-                      type: object
-                    type: array
                   cidr:
                     description: |-
                       CIDR representing IP range for this subnet, based on IP
@@ -126,6 +110,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  dnsPublishFixedIp:
+                    description: |-
+                      Whether to publish DNS records for IPs
+                      from this subnet. Defaults is false.
+                    type: boolean
                   enableDhcp:
                     description: |-
                       The administrative state of the network.
@@ -139,23 +128,6 @@ spec:
                       gateway of .1 to be used. Changing this updates the gateway IP of the
                       existing subnet.
                     type: string
-                  hostRoutes:
-                    description: |-
-                      (Deprecated - use openstack_networking_subnet_route_v2
-                      instead) An array of routes that should be used by devices
-                      with IPs from this subnet (not including local subnet route). The host_route
-                      object structure is documented below. Changing this updates the host routes
-                      for the existing subnet.
-                    items:
-                      properties:
-                        destinationCidr:
-                          description: The destination CIDR.
-                          type: string
-                        nextHop:
-                          description: The next hop in the route.
-                          type: string
-                      type: object
-                    type: array
                   ipVersion:
                     description: |-
                       IP version, either 4 (default) or 6. Changing this creates a
@@ -335,22 +307,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  allocationPools:
-                    description: |-
-                      (Deprecated - use allocation_pool instead)
-                      A block declaring the start and end range of the IP addresses available for
-                      use with DHCP in this subnet.
-                      The allocation_pools block is documented below.
-                    items:
-                      properties:
-                        end:
-                          description: The ending address.
-                          type: string
-                        start:
-                          description: The starting address.
-                          type: string
-                      type: object
-                    type: array
                   cidr:
                     description: |-
                       CIDR representing IP range for this subnet, based on IP
@@ -370,6 +326,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  dnsPublishFixedIp:
+                    description: |-
+                      Whether to publish DNS records for IPs
+                      from this subnet. Defaults is false.
+                    type: boolean
                   enableDhcp:
                     description: |-
                       The administrative state of the network.
@@ -383,23 +344,6 @@ spec:
                       gateway of .1 to be used. Changing this updates the gateway IP of the
                       existing subnet.
                     type: string
-                  hostRoutes:
-                    description: |-
-                      (Deprecated - use openstack_networking_subnet_route_v2
-                      instead) An array of routes that should be used by devices
-                      with IPs from this subnet (not including local subnet route). The host_route
-                      object structure is documented below. Changing this updates the host routes
-                      for the existing subnet.
-                    items:
-                      properties:
-                        destinationCidr:
-                          description: The destination CIDR.
-                          type: string
-                        nextHop:
-                          description: The next hop in the route.
-                          type: string
-                      type: object
-                    type: array
                   ipVersion:
                     description: |-
                       IP version, either 4 (default) or 6. Changing this creates a
@@ -746,22 +690,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  allocationPools:
-                    description: |-
-                      (Deprecated - use allocation_pool instead)
-                      A block declaring the start and end range of the IP addresses available for
-                      use with DHCP in this subnet.
-                      The allocation_pools block is documented below.
-                    items:
-                      properties:
-                        end:
-                          description: The ending address.
-                          type: string
-                        start:
-                          description: The starting address.
-                          type: string
-                      type: object
-                    type: array
                   cidr:
                     description: |-
                       CIDR representing IP range for this subnet, based on IP
@@ -781,6 +709,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  dnsPublishFixedIp:
+                    description: |-
+                      Whether to publish DNS records for IPs
+                      from this subnet. Defaults is false.
+                    type: boolean
                   enableDhcp:
                     description: |-
                       The administrative state of the network.
@@ -794,23 +727,6 @@ spec:
                       gateway of .1 to be used. Changing this updates the gateway IP of the
                       existing subnet.
                     type: string
-                  hostRoutes:
-                    description: |-
-                      (Deprecated - use openstack_networking_subnet_route_v2
-                      instead) An array of routes that should be used by devices
-                      with IPs from this subnet (not including local subnet route). The host_route
-                      object structure is documented below. Changing this updates the host routes
-                      for the existing subnet.
-                    items:
-                      properties:
-                        destinationCidr:
-                          description: The destination CIDR.
-                          type: string
-                        nextHop:
-                          description: The next hop in the route.
-                          type: string
-                      type: object
-                    type: array
                   id:
                     type: string
                   ipVersion:

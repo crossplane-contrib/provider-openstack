@@ -258,6 +258,8 @@ spec:
                     type: number
                   masterFlavor:
                     type: string
+                  masterLbEnabled:
+                    type: boolean
                   mergeLabels:
                     description: |-
                       Indicates whether the provided labels should be
@@ -479,6 +481,8 @@ spec:
                     type: number
                   masterFlavor:
                     type: string
+                  masterLbEnabled:
+                    type: boolean
                   mergeLabels:
                     description: |-
                       Indicates whether the provided labels should be
@@ -727,6 +731,8 @@ spec:
                     type: number
                   masterFlavor:
                     type: string
+                  masterLbEnabled:
+                    type: boolean
                   mergeLabels:
                     description: |-
                       Indicates whether the provided labels should be

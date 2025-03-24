@@ -48,7 +48,9 @@ metadata:
   name: listener-1
 spec:
   forProvider:
-    loadbalancerId: ${openstack_lb_loadbalancer_v2.loadbalancer_1.id}
+    loadbalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loadbalancer_1
     name: listener_1
     protocol: HTTP
     protocolPort: 8080

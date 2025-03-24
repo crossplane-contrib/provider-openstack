@@ -62,6 +62,8 @@ type ClusterV1InitParameters struct {
 
 	MasterFlavor *string `json:"masterFlavor,omitempty" tf:"master_flavor,omitempty"`
 
+	MasterLBEnabled *bool `json:"masterLbEnabled,omitempty" tf:"master_lb_enabled,omitempty"`
+
 	// Indicates whether the provided labels should be
 	// merged with cluster labels. Changing this creates a new nodegroup.
 	MergeLabels *bool `json:"mergeLabels,omitempty" tf:"merge_labels,omitempty"`
@@ -123,6 +125,8 @@ type ClusterV1Observation struct {
 	MasterCount *float64 `json:"masterCount,omitempty" tf:"master_count,omitempty"`
 
 	MasterFlavor *string `json:"masterFlavor,omitempty" tf:"master_flavor,omitempty"`
+
+	MasterLBEnabled *bool `json:"masterLbEnabled,omitempty" tf:"master_lb_enabled,omitempty"`
 
 	// Indicates whether the provided labels should be
 	// merged with cluster labels. Changing this creates a new nodegroup.
@@ -217,6 +221,9 @@ type ClusterV1Parameters struct {
 
 	// +kubebuilder:validation:Optional
 	MasterFlavor *string `json:"masterFlavor,omitempty" tf:"master_flavor,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MasterLBEnabled *bool `json:"masterLbEnabled,omitempty" tf:"master_lb_enabled,omitempty"`
 
 	// Indicates whether the provided labels should be
 	// merged with cluster labels. Changing this creates a new nodegroup.

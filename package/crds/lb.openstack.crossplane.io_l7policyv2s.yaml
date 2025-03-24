@@ -174,6 +174,13 @@ spec:
                     description: The position of this policy on the listener. Positions
                       start at 1.
                     type: number
+                  redirectHttpCode:
+                    description: |-
+                      Integer. Requests matching this policy will be
+                      redirected to the specified URL or Prefix URL with the HTTP response code.
+                      Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+                      301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
+                    type: number
                   redirectPoolId:
                     description: |-
                       Requests matching this policy will be redirected to the
@@ -253,6 +260,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  redirectPrefix:
+                    description: |-
+                      Requests matching this policy will be redirected to
+                      this Prefix URL. Only valid if action is REDIRECT_PREFIX.
+                    type: string
                   redirectUrl:
                     description: |-
                       Requests matching this policy will be redirected to this URL.
@@ -261,7 +273,7 @@ spec:
                   region:
                     description: |-
                       The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create an . If omitted, the
+                      A Networking client is needed to create an L7 policy. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       L7 Policy.
                     type: string
@@ -386,6 +398,13 @@ spec:
                     description: The position of this policy on the listener. Positions
                       start at 1.
                     type: number
+                  redirectHttpCode:
+                    description: |-
+                      Integer. Requests matching this policy will be
+                      redirected to the specified URL or Prefix URL with the HTTP response code.
+                      Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+                      301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
+                    type: number
                   redirectPoolId:
                     description: |-
                       Requests matching this policy will be redirected to the
@@ -465,6 +484,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  redirectPrefix:
+                    description: |-
+                      Requests matching this policy will be redirected to
+                      this Prefix URL. Only valid if action is REDIRECT_PREFIX.
+                    type: string
                   redirectUrl:
                     description: |-
                       Requests matching this policy will be redirected to this URL.
@@ -473,7 +497,7 @@ spec:
                   region:
                     description: |-
                       The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create an . If omitted, the
+                      A Networking client is needed to create an L7 policy. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       L7 Policy.
                     type: string
@@ -691,10 +715,22 @@ spec:
                     description: The position of this policy on the listener. Positions
                       start at 1.
                     type: number
+                  redirectHttpCode:
+                    description: |-
+                      Integer. Requests matching this policy will be
+                      redirected to the specified URL or Prefix URL with the HTTP response code.
+                      Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+                      301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
+                    type: number
                   redirectPoolId:
                     description: |-
                       Requests matching this policy will be redirected to the
                       pool with this ID. Only valid if action is REDIRECT_TO_POOL.
+                    type: string
+                  redirectPrefix:
+                    description: |-
+                      Requests matching this policy will be redirected to
+                      this Prefix URL. Only valid if action is REDIRECT_PREFIX.
                     type: string
                   redirectUrl:
                     description: |-
@@ -704,7 +740,7 @@ spec:
                   region:
                     description: |-
                       The region in which to obtain the V2 Networking client.
-                      A Networking client is needed to create an . If omitted, the
+                      A Networking client is needed to create an L7 policy. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       L7 Policy.
                     type: string

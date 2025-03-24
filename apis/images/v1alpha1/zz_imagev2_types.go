@@ -16,18 +16,19 @@ import (
 
 type ImageV2InitParameters struct {
 
-	// The container format. Must be one of
-	// "ami", "ari", "aki", "bare", "ovf".
+	// The container format. Must be one of "bare",
+	// "ovf", "aki", "ari", "ami", "ova", "docker", "compressed".
 	ContainerFormat *string `json:"containerFormat,omitempty" tf:"container_format,omitempty"`
 
 	// If true, this provider will decompress downloaded
 	// image before uploading it to OpenStack. Decompression algorithm is chosen by
-	// checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+	// checking "Content-Type" or Content-Disposition header to detect the
+	// filename extension. Supported algorithms are: gzip, bzip2, xz and zst.
 	// Defaults to false. Changing this creates a new Image.
 	Decompress *bool `json:"decompress,omitempty" tf:"decompress,omitempty"`
 
-	// The disk format. Must be one of
-	// "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+	// The disk format. Must be one of "raw", "vhd",
+	// "vhdx", "vmdk", "vdi", "iso", "ploop", "qcow2", "aki", "ari", "ami"
 	DiskFormat *string `json:"diskFormat,omitempty" tf:"disk_format,omitempty"`
 
 	// If true, image will be hidden from public list.
@@ -35,24 +36,26 @@ type ImageV2InitParameters struct {
 	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
 
 	// This is the directory where the images will
-	// be downloaded. Images will be stored with a filename corresponding to
-	// the url's md5 hash. Defaults to "$HOME/
+	// be downloaded. Images will be stored with a filename corresponding to the
+	// url's md5 hash. Defaults to "$HOME/
 	ImageCachePath *string `json:"imageCachePath,omitempty" tf:"image_cache_path,omitempty"`
 
 	// Unique ID (valid UUID) of image to create. Changing
 	// this creates a new image.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// The password of basic auth to download image_source_url.
+	// The password of basic auth to download
+	// image_source_url.
 	ImageSourcePasswordSecretRef *v1.SecretKeySelector `json:"imageSourcePasswordSecretRef,omitempty" tf:"-"`
 
-	// This is the url of the raw image. If web_download
-	// is not used, then the image will be downloaded in the image_cache_path before
-	// being uploaded to Glance.
-	// Conflicts with local_file_path.
+	// This is the url of the raw image. If
+	// web_download is not used, then the image will be downloaded in the
+	// image_cache_path before being uploaded to Glance. Conflicts with
+	// local_file_path.
 	ImageSourceURL *string `json:"imageSourceUrl,omitempty" tf:"image_source_url,omitempty"`
 
-	// The username of basic auth to download image_source_url.
+	// The username of basic auth to download
+	// image_source_url.
 	ImageSourceUsername *string `json:"imageSourceUsername,omitempty" tf:"image_source_username,omitempty"`
 
 	// This is the filepath of the raw image file
@@ -60,8 +63,8 @@ type ImageV2InitParameters struct {
 	// web_download.
 	LocalFilePath *string `json:"localFilePath,omitempty" tf:"local_file_path,omitempty"`
 
-	// Amount of disk space (in GB) required to boot image.
-	// Defaults to 0.
+	// Amount of disk space (in GB) required to boot
+	// image. Defaults to 0.
 	MinDiskGb *float64 `json:"minDiskGb,omitempty" tf:"min_disk_gb,omitempty"`
 
 	// Amount of ram (in MB) required to boot image.
@@ -72,29 +75,29 @@ type ImageV2InitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// A map of key/value pairs to set freeform
-	// information about an image. See the "Notes" section for further
-	// information about properties.
+	// information about an image. See the "Notes" section for further information
+	// about properties.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// If true, image will not be deletable.
-	// Defaults to false.
+	// If true, image will not be deletable. Defaults to
+	// false.
 	Protected *bool `json:"protected,omitempty" tf:"protected,omitempty"`
 
-	// The region in which to obtain the V2 Glance client.
-	// A Glance client is needed to create an Image that can be used with
-	// a compute instance. If omitted, the region argument of the provider
-	// is used. Changing this creates a new Image.
+	// The region in which to obtain the V2 Glance client. A
+	// Glance client is needed to create an Image that can be used with a compute
+	// instance. If omitted, the region argument of the provider is used. Changing
+	// this creates a new Image.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// The tags of the image. It must be a list of strings.
-	// At this time, it is not possible to delete all tags of an image.
+	// The tags of the image. It must be a list of strings. At
+	// this time, it is not possible to delete all tags of an image.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// If false, the checksum will not be verified
-	// once the image is finished uploading. Conflicts with web_download.
-	// Defaults to true when not using web_download.
+	// once the image is finished uploading. Conflicts with web_download. Defaults
+	// to true when not using web_download.
 	VerifyChecksum *bool `json:"verifyChecksum,omitempty" tf:"verify_checksum,omitempty"`
 
 	// The visibility of the image. Must be one of
@@ -102,8 +105,8 @@ type ImageV2InitParameters struct {
 	// visibility depends upon the configuration of the OpenStack cloud.
 	Visibility *string `json:"visibility,omitempty" tf:"visibility,omitempty"`
 
-	// If true, the "web-download" import method will
-	// be used to let Openstack download the image directly from the remote source.
+	// If true, the "web-download" import method will be
+	// used to let Openstack download the image directly from the remote source.
 	// Conflicts with local_file_path. Defaults to false.
 	WebDownload *bool `json:"webDownload,omitempty" tf:"web_download,omitempty"`
 }
@@ -113,8 +116,8 @@ type ImageV2Observation struct {
 	// The checksum of the data associated with the image.
 	Checksum *string `json:"checksum,omitempty" tf:"checksum,omitempty"`
 
-	// The container format. Must be one of
-	// "ami", "ari", "aki", "bare", "ovf".
+	// The container format. Must be one of "bare",
+	// "ovf", "aki", "ari", "ami", "ova", "docker", "compressed".
 	ContainerFormat *string `json:"containerFormat,omitempty" tf:"container_format,omitempty"`
 
 	// The date the image was created.
@@ -122,12 +125,13 @@ type ImageV2Observation struct {
 
 	// If true, this provider will decompress downloaded
 	// image before uploading it to OpenStack. Decompression algorithm is chosen by
-	// checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+	// checking "Content-Type" or Content-Disposition header to detect the
+	// filename extension. Supported algorithms are: gzip, bzip2, xz and zst.
 	// Defaults to false. Changing this creates a new Image.
 	Decompress *bool `json:"decompress,omitempty" tf:"decompress,omitempty"`
 
-	// The disk format. Must be one of
-	// "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+	// The disk format. Must be one of "raw", "vhd",
+	// "vhdx", "vmdk", "vdi", "iso", "ploop", "qcow2", "aki", "ari", "ami"
 	DiskFormat *string `json:"diskFormat,omitempty" tf:"disk_format,omitempty"`
 
 	// the trailing path after the glance
@@ -143,21 +147,22 @@ type ImageV2Observation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// This is the directory where the images will
-	// be downloaded. Images will be stored with a filename corresponding to
-	// the url's md5 hash. Defaults to "$HOME/
+	// be downloaded. Images will be stored with a filename corresponding to the
+	// url's md5 hash. Defaults to "$HOME/
 	ImageCachePath *string `json:"imageCachePath,omitempty" tf:"image_cache_path,omitempty"`
 
 	// Unique ID (valid UUID) of image to create. Changing
 	// this creates a new image.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// This is the url of the raw image. If web_download
-	// is not used, then the image will be downloaded in the image_cache_path before
-	// being uploaded to Glance.
-	// Conflicts with local_file_path.
+	// This is the url of the raw image. If
+	// web_download is not used, then the image will be downloaded in the
+	// image_cache_path before being uploaded to Glance. Conflicts with
+	// local_file_path.
 	ImageSourceURL *string `json:"imageSourceUrl,omitempty" tf:"image_source_url,omitempty"`
 
-	// The username of basic auth to download image_source_url.
+	// The username of basic auth to download
+	// image_source_url.
 	ImageSourceUsername *string `json:"imageSourceUsername,omitempty" tf:"image_source_username,omitempty"`
 
 	// This is the filepath of the raw image file
@@ -171,8 +176,8 @@ type ImageV2Observation struct {
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Amount of disk space (in GB) required to boot image.
-	// Defaults to 0.
+	// Amount of disk space (in GB) required to boot
+	// image. Defaults to 0.
 	MinDiskGb *float64 `json:"minDiskGb,omitempty" tf:"min_disk_gb,omitempty"`
 
 	// Amount of ram (in MB) required to boot image.
@@ -186,19 +191,19 @@ type ImageV2Observation struct {
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
 	// A map of key/value pairs to set freeform
-	// information about an image. See the "Notes" section for further
-	// information about properties.
+	// information about an image. See the "Notes" section for further information
+	// about properties.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// If true, image will not be deletable.
-	// Defaults to false.
+	// If true, image will not be deletable. Defaults to
+	// false.
 	Protected *bool `json:"protected,omitempty" tf:"protected,omitempty"`
 
-	// The region in which to obtain the V2 Glance client.
-	// A Glance client is needed to create an Image that can be used with
-	// a compute instance. If omitted, the region argument of the provider
-	// is used. Changing this creates a new Image.
+	// The region in which to obtain the V2 Glance client. A
+	// Glance client is needed to create an Image that can be used with a compute
+	// instance. If omitted, the region argument of the provider is used. Changing
+	// this creates a new Image.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The path to the JSON-schema that represent
@@ -212,20 +217,17 @@ type ImageV2Observation struct {
 	// or "saving".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// The tags of the image. It must be a list of strings.
-	// At this time, it is not possible to delete all tags of an image.
+	// The tags of the image. It must be a list of strings. At
+	// this time, it is not possible to delete all tags of an image.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
-
-	// (Deprecated - use updated_at instead)
-	UpdateAt *string `json:"updateAt,omitempty" tf:"update_at,omitempty"`
 
 	// The date the image was last updated.
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 
 	// If false, the checksum will not be verified
-	// once the image is finished uploading. Conflicts with web_download.
-	// Defaults to true when not using web_download.
+	// once the image is finished uploading. Conflicts with web_download. Defaults
+	// to true when not using web_download.
 	VerifyChecksum *bool `json:"verifyChecksum,omitempty" tf:"verify_checksum,omitempty"`
 
 	// The visibility of the image. Must be one of
@@ -233,28 +235,29 @@ type ImageV2Observation struct {
 	// visibility depends upon the configuration of the OpenStack cloud.
 	Visibility *string `json:"visibility,omitempty" tf:"visibility,omitempty"`
 
-	// If true, the "web-download" import method will
-	// be used to let Openstack download the image directly from the remote source.
+	// If true, the "web-download" import method will be
+	// used to let Openstack download the image directly from the remote source.
 	// Conflicts with local_file_path. Defaults to false.
 	WebDownload *bool `json:"webDownload,omitempty" tf:"web_download,omitempty"`
 }
 
 type ImageV2Parameters struct {
 
-	// The container format. Must be one of
-	// "ami", "ari", "aki", "bare", "ovf".
+	// The container format. Must be one of "bare",
+	// "ovf", "aki", "ari", "ami", "ova", "docker", "compressed".
 	// +kubebuilder:validation:Optional
 	ContainerFormat *string `json:"containerFormat,omitempty" tf:"container_format,omitempty"`
 
 	// If true, this provider will decompress downloaded
 	// image before uploading it to OpenStack. Decompression algorithm is chosen by
-	// checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+	// checking "Content-Type" or Content-Disposition header to detect the
+	// filename extension. Supported algorithms are: gzip, bzip2, xz and zst.
 	// Defaults to false. Changing this creates a new Image.
 	// +kubebuilder:validation:Optional
 	Decompress *bool `json:"decompress,omitempty" tf:"decompress,omitempty"`
 
-	// The disk format. Must be one of
-	// "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+	// The disk format. Must be one of "raw", "vhd",
+	// "vhdx", "vmdk", "vdi", "iso", "ploop", "qcow2", "aki", "ari", "ami"
 	// +kubebuilder:validation:Optional
 	DiskFormat *string `json:"diskFormat,omitempty" tf:"disk_format,omitempty"`
 
@@ -264,8 +267,8 @@ type ImageV2Parameters struct {
 	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
 
 	// This is the directory where the images will
-	// be downloaded. Images will be stored with a filename corresponding to
-	// the url's md5 hash. Defaults to "$HOME/
+	// be downloaded. Images will be stored with a filename corresponding to the
+	// url's md5 hash. Defaults to "$HOME/
 	// +kubebuilder:validation:Optional
 	ImageCachePath *string `json:"imageCachePath,omitempty" tf:"image_cache_path,omitempty"`
 
@@ -274,18 +277,20 @@ type ImageV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// The password of basic auth to download image_source_url.
+	// The password of basic auth to download
+	// image_source_url.
 	// +kubebuilder:validation:Optional
 	ImageSourcePasswordSecretRef *v1.SecretKeySelector `json:"imageSourcePasswordSecretRef,omitempty" tf:"-"`
 
-	// This is the url of the raw image. If web_download
-	// is not used, then the image will be downloaded in the image_cache_path before
-	// being uploaded to Glance.
-	// Conflicts with local_file_path.
+	// This is the url of the raw image. If
+	// web_download is not used, then the image will be downloaded in the
+	// image_cache_path before being uploaded to Glance. Conflicts with
+	// local_file_path.
 	// +kubebuilder:validation:Optional
 	ImageSourceURL *string `json:"imageSourceUrl,omitempty" tf:"image_source_url,omitempty"`
 
-	// The username of basic auth to download image_source_url.
+	// The username of basic auth to download
+	// image_source_url.
 	// +kubebuilder:validation:Optional
 	ImageSourceUsername *string `json:"imageSourceUsername,omitempty" tf:"image_source_username,omitempty"`
 
@@ -295,8 +300,8 @@ type ImageV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	LocalFilePath *string `json:"localFilePath,omitempty" tf:"local_file_path,omitempty"`
 
-	// Amount of disk space (in GB) required to boot image.
-	// Defaults to 0.
+	// Amount of disk space (in GB) required to boot
+	// image. Defaults to 0.
 	// +kubebuilder:validation:Optional
 	MinDiskGb *float64 `json:"minDiskGb,omitempty" tf:"min_disk_gb,omitempty"`
 
@@ -310,33 +315,33 @@ type ImageV2Parameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// A map of key/value pairs to set freeform
-	// information about an image. See the "Notes" section for further
-	// information about properties.
+	// information about an image. See the "Notes" section for further information
+	// about properties.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// If true, image will not be deletable.
-	// Defaults to false.
+	// If true, image will not be deletable. Defaults to
+	// false.
 	// +kubebuilder:validation:Optional
 	Protected *bool `json:"protected,omitempty" tf:"protected,omitempty"`
 
-	// The region in which to obtain the V2 Glance client.
-	// A Glance client is needed to create an Image that can be used with
-	// a compute instance. If omitted, the region argument of the provider
-	// is used. Changing this creates a new Image.
+	// The region in which to obtain the V2 Glance client. A
+	// Glance client is needed to create an Image that can be used with a compute
+	// instance. If omitted, the region argument of the provider is used. Changing
+	// this creates a new Image.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// The tags of the image. It must be a list of strings.
-	// At this time, it is not possible to delete all tags of an image.
+	// The tags of the image. It must be a list of strings. At
+	// this time, it is not possible to delete all tags of an image.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// If false, the checksum will not be verified
-	// once the image is finished uploading. Conflicts with web_download.
-	// Defaults to true when not using web_download.
+	// once the image is finished uploading. Conflicts with web_download. Defaults
+	// to true when not using web_download.
 	// +kubebuilder:validation:Optional
 	VerifyChecksum *bool `json:"verifyChecksum,omitempty" tf:"verify_checksum,omitempty"`
 
@@ -346,8 +351,8 @@ type ImageV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Visibility *string `json:"visibility,omitempty" tf:"visibility,omitempty"`
 
-	// If true, the "web-download" import method will
-	// be used to let Openstack download the image directly from the remote source.
+	// If true, the "web-download" import method will be
+	// used to let Openstack download the image directly from the remote source.
 	// Conflicts with local_file_path. Defaults to false.
 	// +kubebuilder:validation:Optional
 	WebDownload *bool `json:"webDownload,omitempty" tf:"web_download,omitempty"`

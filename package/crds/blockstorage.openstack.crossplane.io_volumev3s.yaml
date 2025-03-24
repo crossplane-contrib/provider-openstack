@@ -114,11 +114,6 @@ spec:
                       Changing this updates the existing volume metadata.
                     type: object
                     x-kubernetes-map-type: granular
-                  multiattach:
-                    description: (Deprecated - use multiattach enabled volume types
-                      instead)  Allow the volume to be attached to more than one Compute
-                      instance.
-                    type: boolean
                   name:
                     description: |-
                       A unique name for the volume. Changing this updates the
@@ -252,11 +247,6 @@ spec:
                       Changing this updates the existing volume metadata.
                     type: object
                     x-kubernetes-map-type: granular
-                  multiattach:
-                    description: (Deprecated - use multiattach enabled volume types
-                      instead)  Allow the volume to be attached to more than one Compute
-                      instance.
-                    type: boolean
                   name:
                     description: |-
                       A unique name for the volume. Changing this updates the
@@ -571,11 +561,6 @@ spec:
                       Changing this updates the existing volume metadata.
                     type: object
                     x-kubernetes-map-type: granular
-                  multiattach:
-                    description: (Deprecated - use multiattach enabled volume types
-                      instead)  Allow the volume to be attached to more than one Compute
-                      instance.
-                    type: boolean
                   name:
                     description: |-
                       A unique name for the volume. Changing this updates the

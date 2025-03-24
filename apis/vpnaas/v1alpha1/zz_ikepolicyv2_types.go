@@ -28,7 +28,7 @@ type IkePolicyV2InitParameters struct {
 	// The default value is aes-128. Changing this updates the existing policy.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
-	// The IKE mode. A valid value is v1 or v2. Default is v1.
+	// The IKE version. A valid value is v1 or v2. Default is v1.
 	// Changing this updates the existing policy.
 	IkeVersion *string `json:"ikeVersion,omitempty" tf:"ike_version,omitempty"`
 
@@ -78,7 +78,7 @@ type IkePolicyV2Observation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The IKE mode. A valid value is v1 or v2. Default is v1.
+	// The IKE version. A valid value is v1 or v2. Default is v1.
 	// Changing this updates the existing policy.
 	IkeVersion *string `json:"ikeVersion,omitempty" tf:"ike_version,omitempty"`
 
@@ -129,7 +129,7 @@ type IkePolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
-	// The IKE mode. A valid value is v1 or v2. Default is v1.
+	// The IKE version. A valid value is v1 or v2. Default is v1.
 	// Changing this updates the existing policy.
 	// +kubebuilder:validation:Optional
 	IkeVersion *string `json:"ikeVersion,omitempty" tf:"ike_version,omitempty"`

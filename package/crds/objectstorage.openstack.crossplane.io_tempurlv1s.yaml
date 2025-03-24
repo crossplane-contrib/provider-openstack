@@ -152,6 +152,30 @@ spec:
                             type: string
                         type: object
                     type: object
+                  digest:
+                    description: |-
+                      The digest to use when generating the tempurl.
+                      Supported values are sha1, sha256 and sha512. Default is sha1.
+                    type: string
+                  keySecretRef:
+                    description: |-
+                      The key to use when generating the tempurl. If not
+                      provided, the key will be read from the container or account metadata.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   method:
                     description: |-
                       The method allowed when accessing this URL.
@@ -246,6 +270,9 @@ spec:
                     description: The region the tempurl is located in.
                     type: string
                   split:
+                    description: |-
+                      Split is the string on which to split the object URL.
+                      Default is /v1/.
                     type: string
                   ttl:
                     description: |-
@@ -345,6 +372,30 @@ spec:
                             type: string
                         type: object
                     type: object
+                  digest:
+                    description: |-
+                      The digest to use when generating the tempurl.
+                      Supported values are sha1, sha256 and sha512. Default is sha1.
+                    type: string
+                  keySecretRef:
+                    description: |-
+                      The key to use when generating the tempurl. If not
+                      provided, the key will be read from the container or account metadata.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   method:
                     description: |-
                       The method allowed when accessing this URL.
@@ -439,6 +490,9 @@ spec:
                     description: The region the tempurl is located in.
                     type: string
                   split:
+                    description: |-
+                      Split is the string on which to split the object URL.
+                      Default is /v1/.
                     type: string
                   ttl:
                     description: |-
@@ -626,6 +680,11 @@ spec:
                   container:
                     description: The container name the object belongs to.
                     type: string
+                  digest:
+                    description: |-
+                      The digest to use when generating the tempurl.
+                      Supported values are sha1, sha256 and sha512. Default is sha1.
+                    type: string
                   id:
                     description: Computed md5 hash based on the generated url
                     type: string
@@ -647,6 +706,9 @@ spec:
                     description: The region the tempurl is located in.
                     type: string
                   split:
+                    description: |-
+                      Split is the string on which to split the object URL.
+                      Default is /v1/.
                     type: string
                   ttl:
                     description: |-

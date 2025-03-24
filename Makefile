@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.5.5
 export TERRAFORM_PROVIDER_SOURCE := terraform-provider-openstack/openstack
 export TERRAFORM_DOCS_PATH := docs/resources
 export TERRAFORM_PROVIDER_REPO := https://github.com/terraform-provider-openstack/terraform-provider-openstack
-export TERRAFORM_PROVIDER_VERSION := 1.54.1
+export TERRAFORM_PROVIDER_VERSION := 3.0.0
 
 PLATFORMS ?= linux_amd64 linux_arm64
 

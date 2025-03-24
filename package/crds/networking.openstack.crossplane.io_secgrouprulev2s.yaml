@@ -100,8 +100,9 @@ spec:
                       security group rule.
                     type: number
                   protocol:
-                    description: The layer 4 protocol type, valid values are following.
-                      Changing this creates a new security group rule. This is required
+                    description: |-
+                      The layer 4 protocol type, valid values are
+                      following. Changing this creates a new security group rule. This is required
                       if you want to specify a port range.
                     type: string
                   region:
@@ -251,8 +252,9 @@ spec:
                       security group rule.
                     type: number
                   protocol:
-                    description: The layer 4 protocol type, valid values are following.
-                      Changing this creates a new security group rule. This is required
+                    description: |-
+                      The layer 4 protocol type, valid values are
+                      following. Changing this creates a new security group rule. This is required
                       if you want to specify a port range.
                     type: string
                   region:
@@ -572,8 +574,9 @@ spec:
                       security group rule.
                     type: number
                   protocol:
-                    description: The layer 4 protocol type, valid values are following.
-                      Changing this creates a new security group rule. This is required
+                    description: |-
+                      The layer 4 protocol type, valid values are
+                      following. Changing this creates a new security group rule. This is required
                       if you want to specify a port range.
                     type: string
                   region:

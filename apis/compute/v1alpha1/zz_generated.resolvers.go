@@ -8,9 +8,9 @@ package v1alpha1
 
 import (
 	"context"
-	v1alpha12 "github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1"
+	v1alpha11 "github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1"
 	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
-	v1alpha11 "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
+	v1alpha12 "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -91,80 +91,6 @@ func (mg *FlavorAccessV2) ResolveReferences(ctx context.Context, c client.Reader
 	return nil
 }
 
-// ResolveReferences of this FloatingipAssociateV2.
-func (mg *FloatingipAssociateV2) ResolveReferences(ctx context.Context, c client.Reader) error {
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FloatingIP),
-		Extract:      resource.ExtractParamPath("address", false),
-		Reference:    mg.Spec.ForProvider.FloatingIPRef,
-		Selector:     mg.Spec.ForProvider.FloatingIPSelector,
-		To: reference.To{
-			List:    &v1alpha11.FloatingipV2List{},
-			Managed: &v1alpha11.FloatingipV2{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FloatingIP")
-	}
-	mg.Spec.ForProvider.FloatingIP = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FloatingIPRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceID),
-		Extract:      resource.ExtractResourceID(),
-		Reference:    mg.Spec.ForProvider.InstanceIDRef,
-		Selector:     mg.Spec.ForProvider.InstanceIDSelector,
-		To: reference.To{
-			List:    &InstanceV2List{},
-			Managed: &InstanceV2{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.InstanceID")
-	}
-	mg.Spec.ForProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.InstanceIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FloatingIP),
-		Extract:      resource.ExtractParamPath("address", false),
-		Reference:    mg.Spec.InitProvider.FloatingIPRef,
-		Selector:     mg.Spec.InitProvider.FloatingIPSelector,
-		To: reference.To{
-			List:    &v1alpha11.FloatingipV2List{},
-			Managed: &v1alpha11.FloatingipV2{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.FloatingIP")
-	}
-	mg.Spec.InitProvider.FloatingIP = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.FloatingIPRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceID),
-		Extract:      resource.ExtractResourceID(),
-		Reference:    mg.Spec.InitProvider.InstanceIDRef,
-		Selector:     mg.Spec.InitProvider.InstanceIDSelector,
-		To: reference.To{
-			List:    &InstanceV2List{},
-			Managed: &InstanceV2{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.InstanceID")
-	}
-	mg.Spec.InitProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.InstanceIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
 // ResolveReferences of this InstanceV2.
 func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -180,8 +106,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 			Reference:    mg.Spec.ForProvider.BlockDevice[i3].UUIDRef,
 			Selector:     mg.Spec.ForProvider.BlockDevice[i3].UUIDSelector,
 			To: reference.To{
-				List:    &v1alpha12.VolumeV3List{},
-				Managed: &v1alpha12.VolumeV3{},
+				List:    &v1alpha11.VolumeV3List{},
+				Managed: &v1alpha11.VolumeV3{},
 			},
 		})
 		if err != nil {
@@ -230,8 +156,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 			Reference:    mg.Spec.ForProvider.Network[i3].PortRef,
 			Selector:     mg.Spec.ForProvider.Network[i3].PortSelector,
 			To: reference.To{
-				List:    &v1alpha11.PortV2List{},
-				Managed: &v1alpha11.PortV2{},
+				List:    &v1alpha12.PortV2List{},
+				Managed: &v1alpha12.PortV2{},
 			},
 		})
 		if err != nil {
@@ -247,8 +173,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 		References:    mg.Spec.ForProvider.SecurityGroupsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecgroupV2List{},
-			Managed: &v1alpha11.SecgroupV2{},
+			List:    &v1alpha12.SecgroupV2List{},
+			Managed: &v1alpha12.SecgroupV2{},
 		},
 	})
 	if err != nil {
@@ -264,8 +190,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 			Reference:    mg.Spec.InitProvider.BlockDevice[i3].UUIDRef,
 			Selector:     mg.Spec.InitProvider.BlockDevice[i3].UUIDSelector,
 			To: reference.To{
-				List:    &v1alpha12.VolumeV3List{},
-				Managed: &v1alpha12.VolumeV3{},
+				List:    &v1alpha11.VolumeV3List{},
+				Managed: &v1alpha11.VolumeV3{},
 			},
 		})
 		if err != nil {
@@ -314,8 +240,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 			Reference:    mg.Spec.InitProvider.Network[i3].PortRef,
 			Selector:     mg.Spec.InitProvider.Network[i3].PortSelector,
 			To: reference.To{
-				List:    &v1alpha11.PortV2List{},
-				Managed: &v1alpha11.PortV2{},
+				List:    &v1alpha12.PortV2List{},
+				Managed: &v1alpha12.PortV2{},
 			},
 		})
 		if err != nil {
@@ -331,8 +257,8 @@ func (mg *InstanceV2) ResolveReferences(ctx context.Context, c client.Reader) er
 		References:    mg.Spec.InitProvider.SecurityGroupsRefs,
 		Selector:      mg.Spec.InitProvider.SecurityGroupsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecgroupV2List{},
-			Managed: &v1alpha11.SecgroupV2{},
+			List:    &v1alpha12.SecgroupV2List{},
+			Managed: &v1alpha12.SecgroupV2{},
 		},
 	})
 	if err != nil {
@@ -373,8 +299,8 @@ func (mg *InterfaceAttachV2) ResolveReferences(ctx context.Context, c client.Rea
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.PortV2List{},
-			Managed: &v1alpha11.PortV2{},
+			List:    &v1alpha12.NetworkV2List{},
+			Managed: &v1alpha12.NetworkV2{},
 		},
 	})
 	if err != nil {
@@ -389,8 +315,8 @@ func (mg *InterfaceAttachV2) ResolveReferences(ctx context.Context, c client.Rea
 		Reference:    mg.Spec.ForProvider.PortIDRef,
 		Selector:     mg.Spec.ForProvider.PortIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.PortV2List{},
-			Managed: &v1alpha11.PortV2{},
+			List:    &v1alpha12.PortV2List{},
+			Managed: &v1alpha12.PortV2{},
 		},
 	})
 	if err != nil {
@@ -421,8 +347,8 @@ func (mg *InterfaceAttachV2) ResolveReferences(ctx context.Context, c client.Rea
 		Reference:    mg.Spec.InitProvider.NetworkIDRef,
 		Selector:     mg.Spec.InitProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.PortV2List{},
-			Managed: &v1alpha11.PortV2{},
+			List:    &v1alpha12.NetworkV2List{},
+			Managed: &v1alpha12.NetworkV2{},
 		},
 	})
 	if err != nil {
@@ -437,8 +363,8 @@ func (mg *InterfaceAttachV2) ResolveReferences(ctx context.Context, c client.Rea
 		Reference:    mg.Spec.InitProvider.PortIDRef,
 		Selector:     mg.Spec.InitProvider.PortIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.PortV2List{},
-			Managed: &v1alpha11.PortV2{},
+			List:    &v1alpha12.PortV2List{},
+			Managed: &v1alpha12.PortV2{},
 		},
 	})
 	if err != nil {
@@ -521,8 +447,8 @@ func (mg *VolumeAttachV2) ResolveReferences(ctx context.Context, c client.Reader
 		Reference:    mg.Spec.ForProvider.VolumeIDRef,
 		Selector:     mg.Spec.ForProvider.VolumeIDSelector,
 		To: reference.To{
-			List:    &v1alpha12.VolumeV3List{},
-			Managed: &v1alpha12.VolumeV3{},
+			List:    &v1alpha11.VolumeV3List{},
+			Managed: &v1alpha11.VolumeV3{},
 		},
 	})
 	if err != nil {
@@ -553,8 +479,8 @@ func (mg *VolumeAttachV2) ResolveReferences(ctx context.Context, c client.Reader
 		Reference:    mg.Spec.InitProvider.VolumeIDRef,
 		Selector:     mg.Spec.InitProvider.VolumeIDSelector,
 		To: reference.To{
-			List:    &v1alpha12.VolumeV3List{},
-			Managed: &v1alpha12.VolumeV3{},
+			List:    &v1alpha11.VolumeV3List{},
+			Managed: &v1alpha11.VolumeV3{},
 		},
 	})
 	if err != nil {

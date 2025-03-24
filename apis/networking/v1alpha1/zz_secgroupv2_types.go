@@ -33,6 +33,12 @@ type SecgroupV2InitParameters struct {
 	// security group.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Indicates if the security group is stateful or
+	// stateless. Update of the stateful argument is allowed when there is no port
+	// associated with the security group. Available only in OpenStack environments
+	// with the stateful-security-group extension. Defaults to true.
+	Stateful *bool `json:"stateful,omitempty" tf:"stateful,omitempty"`
+
 	// A set of string tags for the security group.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -69,6 +75,12 @@ type SecgroupV2Observation struct {
 	// security group.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Indicates if the security group is stateful or
+	// stateless. Update of the stateful argument is allowed when there is no port
+	// associated with the security group. Available only in OpenStack environments
+	// with the stateful-security-group extension. Defaults to true.
+	Stateful *bool `json:"stateful,omitempty" tf:"stateful,omitempty"`
+
 	// A set of string tags for the security group.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -101,6 +113,13 @@ type SecgroupV2Parameters struct {
 	// security group.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Indicates if the security group is stateful or
+	// stateless. Update of the stateful argument is allowed when there is no port
+	// associated with the security group. Available only in OpenStack environments
+	// with the stateful-security-group extension. Defaults to true.
+	// +kubebuilder:validation:Optional
+	Stateful *bool `json:"stateful,omitempty" tf:"stateful,omitempty"`
 
 	// A set of string tags for the security group.
 	// +kubebuilder:validation:Optional

@@ -1,5 +1,188 @@
 name: terraform-provider-openstack/openstack
 resources:
+    openstack_bgpvpn_network_associate_v2:
+        subCategory: BGP VPN / Neutron
+        description: Manages a V2 BGP VPN network association resource within OpenStack.
+        name: openstack_bgpvpn_network_associate_v2
+        title: openstack_bgpvpn_network_associate_v2
+        examples:
+            - name: association_1
+              manifest: |-
+                {
+                  "bgpvpn_id": "e7189337-5684-46ee-bcb1-44f1a57066c9",
+                  "network_id": "de83d56c-4d2f-44f7-ac24-af393252204f"
+                }
+        argumentDocs:
+            bgpvpn_id: |-
+                - (Required) The ID of the BGP VPN to which the network will be
+                associated. Changing this creates a new BGP VPN network association
+            id: '- The ID of the BGP VPN network association.'
+            network_id: |-
+                - (Required) The ID of the network to be associated with the BGP
+                VPN. Changing this creates a new BGP VPN network association.
+            project_id: |-
+                - (Optional) The ID of the project that owns the BGP VPN network
+                association. Only administrative and users with advsvc role can specify a
+                project ID other than their own. Changing this creates a new BGP VPN network
+                association.
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a BGP VPN network association. If
+                omitted, the region argument of the provider is used. Changing this creates
+                a new BGP VPN network association.
+        importStatements: []
+    openstack_bgpvpn_port_associate_v2:
+        subCategory: BGP VPN / Neutron
+        description: Manages a V2 BGP VPN port association resource within OpenStack.
+        name: openstack_bgpvpn_port_associate_v2
+        title: openstack_bgpvpn_port_associate_v2
+        examples:
+            - name: association_1
+              manifest: |-
+                {
+                  "bgpvpn_id": "19382ec5-8098-47d9-a9c6-6270c91103f4",
+                  "port_id": "b83a95b8-c2c8-4eac-9a9e-ddc85bd1266f",
+                  "routes": [
+                    {
+                      "prefix": "192.168.170.1/32",
+                      "type": "prefix"
+                    },
+                    {
+                      "bgpvpn_id": "35af1cc6-3d0f-4c5d-86f8-8cdb508d3f0c",
+                      "type": "bgpvpn"
+                    }
+                  ]
+                }
+        argumentDocs:
+            advertise_fixed_ips: |-
+                - (Optional) A boolean flag indicating whether fixed
+                IPs should be advertised. Defaults to true.
+            bgpvpn_id: |-
+                - (Required) The ID of the BGP VPN to which the port will be
+                associated. Changing this creates a new BGP VPN port association.
+            id: '- The ID of the BGP VPN port association.'
+            local_pref: |-
+                - (Optional) The BGP LOCAL_PREF value of the routes that will
+                be advertised.
+            port_id: |-
+                - (Required) The ID of the port to be associated with the BGP VPN.
+                Changing this creates a new BGP VPN port association.
+            prefix: |-
+                - (Optional) The CIDR prefix (v4 or v6) to be advertised. Required
+                if type is prefix. Conflicts with bgpvpn_id.
+            project_id: |-
+                - (Optional) The ID of the project that owns the port
+                association. Only administrative and users with advsvc role can specify a
+                project ID other than their own. Changing this creates a new BGP VPN port
+                association.
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a BGP VPN port association. If
+                omitted, the region argument of the provider is used. Changing this creates
+                a new BGP VPN port association.
+            routes: '- (Optional) A list of dictionaries containing the following keys:'
+            type: |-
+                - (Required) Can be prefix or bgpvpn. For the prefix type, the
+                CIDR prefix (v4 or v6) must be specified in the prefix key. For the
+                bgpvpn type, the BGP VPN ID must be specified in the bgpvpn_id key.
+        importStatements: []
+    openstack_bgpvpn_router_associate_v2:
+        subCategory: BGP VPN / Neutron
+        description: Manages a V2 BGP VPN router association resource within OpenStack.
+        name: openstack_bgpvpn_router_associate_v2
+        title: openstack_bgpvpn_router_associate_v2
+        examples:
+            - name: association_1
+              manifest: |-
+                {
+                  "bgpvpn_id": "d57d39e1-dc63-44fd-8cbd-a4e1488100c5",
+                  "router_id": "423fa80f-e0d7-4d02-a9a5-8b8c05812bf6"
+                }
+        argumentDocs:
+            advertise_extra_routes: |-
+                - (Optional) A boolean flag indicating whether extra
+                routes should be advertised. Defaults to true.
+            bgpvpn_id: |-
+                - (Required) The ID of the BGP VPN to which the router will be
+                associated. Changing this creates a new BGP VPN router association.
+            id: '- The ID of the BGP VPN router association.'
+            project_id: |-
+                - (Optional) The ID of the project that owns the BGP VPN router
+                association. Only administrative and users with advsvc role can specify a
+                project ID other than their own. Changing this creates a new BGP VPN router
+                association.
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a BGP VPN router association. If
+                omitted, the region argument of the provider is used. Changing this creates
+                a new BGP VPN router association.
+            router_id: |-
+                - (Required) The ID of the router to be associated with the BGP
+                VPN. Changing this creates a new BGP VPN router association.
+        importStatements: []
+    openstack_bgpvpn_v2:
+        subCategory: BGP VPN / Neutron
+        description: Manages a V2 BGP VPN service resource within OpenStack.
+        name: openstack_bgpvpn_v2
+        title: openstack_bgpvpn_v2
+        examples:
+            - name: bgpvpn_1
+              manifest: |-
+                {
+                  "export_targets": [
+                    "64512:3"
+                  ],
+                  "import_targets": [
+                    "64512:2"
+                  ],
+                  "name": "bgpvpn1",
+                  "route_distinguishers": [
+                    "64512:1"
+                  ],
+                  "route_targets": [
+                    "64512:1"
+                  ]
+                }
+        argumentDocs:
+            export_targets: |-
+                - (Optional) A list of additional Route Targets that will be
+                used for export.
+            id: '- The ID of the BGP VPN.'
+            import_targets: |-
+                - (Optional) A list of additional Route Targets that will be
+                imported.
+            local_pref: |-
+                - (Optional) The default BGP LOCAL_PREF of routes that will be
+                advertised to the BGP VPN, unless overridden per-route.
+            name: |-
+                - (Optional) The name of the BGP VPN. Changing this updates the name of
+                the existing BGP VPN.
+            networks: '- A list of network IDs that are associated with the BGP VPN.'
+            ports: '- A list of port IDs that are associated with the BGP VPN.'
+            project_id: |-
+                - (Optional) The ID of the project that owns the BGPVPN. Only
+                administrative and users with advsvc role can specify a project ID other
+                than their own. Changing this creates a new BGP VPN.
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a BGP VPN service. If omitted, the
+                region argument of the provider is used. Changing this creates a new
+                BGP VPN.
+            route_distinguishers: |-
+                - (Optional) A list of route distinguisher strings. If
+                specified, one of these RDs will be used to advertise VPN routes.
+            route_targets: |-
+                - (Optional) A list of Route Targets that will be both
+                imported and used for export.
+            routers: '- A list of router IDs that are associated with the BGP VPN.'
+            shared: '- Indicates whether the BGP VPN is shared across projects.'
+            type: |-
+                - (Optional) The type of the BGP VPN (either l2 or l3). Changing this
+                creates a new BGP VPN. Defaults to l3.
+            vni: |-
+                - (Optional) The globally-assigned VXLAN VNI for the BGP VPN. Changing
+                this creates a new BGP VPN.
+        importStatements: []
     openstack_blockstorage_qos_association_v3:
         subCategory: Block Storage / Cinder
         description: Manages a V3 Qos association resource within OpenStack.
@@ -68,70 +251,6 @@ resources:
                 a new qos.
             specs: '- (Optional) Key/Value pairs of specs for the qos.'
         importStatements: []
-    openstack_blockstorage_quotaset_v2:
-        subCategory: Deprecated
-        description: Manages a V2 quotaset resource within OpenStack.
-        name: openstack_blockstorage_quotaset_v2
-        title: openstack_blockstorage_quotaset_v2
-        examples:
-            - name: quotaset_1
-              manifest: |-
-                {
-                  "backup_gigabytes": 10,
-                  "backups": 4,
-                  "gigabytes": 100,
-                  "groups": 100,
-                  "per_volume_gigabytes": 10,
-                  "project_id": "${openstack_identity_project_v3.project_1.id}",
-                  "snapshots": 4,
-                  "volume_type_quota": {
-                    "gigabytes_ssd": 500,
-                    "snapshots_ssd": 10,
-                    "volumes_ssd": 30
-                  },
-                  "volumes": 10
-                }
-              references:
-                project_id: openstack_identity_project_v3.project_1.id
-              dependencies:
-                openstack_identity_project_v3.project_1: |-
-                    {
-                      "name": "${project_1}"
-                    }
-        argumentDocs:
-            backup_gigabytes: |-
-                - (Optional) Quota value for backup gigabytes. Changing
-                this updates the existing quotaset.
-            backups: |-
-                - (Optional) Quota value for backups. Changing this updates the
-                existing quotaset.
-            gigabytes: |-
-                - (Optional) Quota value for gigabytes. Changing this updates the
-                existing quotaset.
-            groups: |-
-                - (Optional) Quota value for groups. Changing this updates the
-                existing quotaset.
-            per_volume_gigabytes: |-
-                - (Optional) Quota value for gigabytes per volume .
-                Changing this updates the existing quotaset.
-            project_id: |-
-                - (Required) ID of the project to manage quotas. Changing this
-                creates a new quotaset.
-            region: |-
-                - (Optional) The region in which to create the volume. If
-                omitted, the region argument of the provider is used. Changing this
-                creates a new quotaset.
-            snapshots: |-
-                - (Optional) Quota value for snapshots. Changing this updates the
-                existing quotaset.
-            volume_type_quota: |-
-                - (Optional)  Key/Value pairs for setting quota for
-                volumes types. Possible keys are snapshots_<volume_type_name>,
-                volumes_<volume_type_name> and gigabytes_<volume_type_name>.
-            volumes: |-
-                - (Optional) Quota value for volumes. Changing this updates the
-                existing quotaset.
-        importStatements: []
     openstack_blockstorage_quotaset_v3:
         subCategory: Block Storage / Cinder
         description: Manages a V3 quotaset resource within OpenStack.
@@ -195,63 +314,6 @@ resources:
             volumes: |-
                 - (Optional) Quota value for volumes. Changing this updates the
                 existing quotaset.
-        importStatements: []
-    openstack_blockstorage_volume_attach_v2:
-        subCategory: Deprecated
-        description: Creates an attachment connection to a Block Storage volume
-        name: openstack_blockstorage_volume_attach_v2
-        title: openstack_blockstorage_volume_attach_v2
-        examples:
-            - name: va_1
-              manifest: |-
-                {
-                  "device": "auto",
-                  "host_name": "devstack",
-                  "initiator": "iqn.1993-08.org.debian:01:e9861fb1859",
-                  "ip_address": "192.168.255.10",
-                  "os_type": "linux2",
-                  "platform": "x86_64",
-                  "volume_id": "${openstack_blockstorage_volume_v2.volume_1.id}"
-                }
-              references:
-                volume_id: openstack_blockstorage_volume_v2.volume_1.id
-              dependencies:
-                openstack_blockstorage_volume_v2.volume_1: |-
-                    {
-                      "name": "volume_1",
-                      "size": 1
-                    }
-        argumentDocs:
-            attach_mode: |-
-                - (Optional) Specify whether to attach the volume as Read-Only
-                (ro) or Read-Write (rw). Only values of ro and rw are accepted.
-                If left unspecified, the Block Storage API will apply a default of rw.
-            data: |-
-                - This is a map of key/value pairs that contain the connection
-                information. You will want to pass this information to a provisioner
-                script to finalize the connection. See below for more information.
-            device: |-
-                - (Optional) The device to tell the Block Storage service this
-                volume will be attached as. This is purely for informational purposes.
-                You can specify auto or a device such as /dev/vdc.
-            driver_volume_type: '- The storage driver that the volume is based on.'
-            host_name: '- (Required) The host to attach the volume to.'
-            initiator: '- (Optional) The iSCSI initiator string to make the connection.'
-            ip_address: '- (Optional) The IP address of the host_name above.'
-            mount_point_base: '- A mount point base name for shared storage.'
-            multipath: '- (Optional) Whether to connect to this volume via multipath.'
-            os_type: '- (Optional) The iSCSI initiator OS type.'
-            platform: '- (Optional) The iSCSI initiator platform.'
-            region: |-
-                - (Optional) The region in which to obtain the V2 Block Storage
-                client. A Block Storage client is needed to create a volume attachment.
-                If omitted, the region argument of the provider is used. Changing this
-                creates a new volume attachment.
-            volume_id: '- (Required) The ID of the Volume to attach to an Instance.'
-            wwnn: '- (Optional) A wwnn name. Used for Fibre Channel connections.'
-            wwpn: |-
-                - (Optional) An array of wwpn strings. Used for Fibre Channel
-                connections.
         importStatements: []
     openstack_blockstorage_volume_attach_v3:
         subCategory: Block Storage / Cinder
@@ -363,6 +425,15 @@ resources:
                   },
                   "name": "volume_type_1"
                 }
+            - name: multiattach
+              manifest: |-
+                {
+                  "description": "Multiattach-enabled volume type",
+                  "extra_specs": {
+                    "multiattach": "\u003cis\u003e True"
+                  },
+                  "name": "multiattach"
+                }
         argumentDocs:
             description: |-
                 - (Optional) Human-readable description of the port. Changing
@@ -378,134 +449,6 @@ resources:
                 - (Optional) The region in which to create the volume. If
                 omitted, the region argument of the provider is used. Changing this
                 creates a new quotaset.
-        importStatements: []
-    openstack_blockstorage_volume_v1:
-        subCategory: Deprecated
-        description: Manages a V1 volume resource within OpenStack.
-        name: openstack_blockstorage_volume_v1
-        title: openstack_blockstorage_volume_v1
-        examples:
-            - name: volume_1
-              manifest: |-
-                {
-                  "description": "first test volume",
-                  "name": "tf-test-volume",
-                  "region": "RegionOne",
-                  "size": 3
-                }
-        argumentDocs:
-            attachment: |-
-                - If a volume is attached to an instance, this attribute will
-                display the Attachment ID, Instance ID, and the Device as the Instance
-                sees it.
-            availability_zone: |-
-                - (Optional) The availability zone for the volume.
-                Changing this creates a new volume.
-            description: |-
-                - (Optional) A description of the volume. Changing this updates
-                the volume's description.
-            image_id: |-
-                - (Optional) The image ID from which to create the volume.
-                Changing this creates a new volume.
-            metadata: |-
-                - (Optional) Metadata key/value pairs to associate with the volume.
-                Changing this updates the existing volume metadata.
-            name: |-
-                - (Optional) A unique name for the volume. Changing this updates the
-                volume's name.
-            region: |-
-                - (Optional) The region in which to create the volume. If
-                omitted, the region argument of the provider is used. Changing this
-                creates a new volume.
-            size: |-
-                - (Required) The size of the volume to create (in gigabytes). Changing
-                this creates a new volume.
-            snapshot_id: |-
-                - (Optional) The snapshot ID from which to create the volume.
-                Changing this creates a new volume.
-            source_vol_id: |-
-                - (Optional) The volume ID from which to create the volume.
-                Changing this creates a new volume.
-            volume_type: |-
-                - (Optional) The type of volume to create.
-                Changing this creates a new volume.
-        importStatements: []
-    openstack_blockstorage_volume_v2:
-        subCategory: Deprecated
-        description: Manages a V2 volume resource within OpenStack.
-        name: openstack_blockstorage_volume_v2
-        title: openstack_blockstorage_volume_v2
-        examples:
-            - name: volume_1
-              manifest: |-
-                {
-                  "description": "first test volume",
-                  "name": "volume_1",
-                  "region": "RegionOne",
-                  "size": 3
-                }
-        argumentDocs:
-            attachment: |-
-                - If a volume is attached to an instance, this attribute will
-                display the Attachment ID, Instance ID, and the Device as the Instance
-                sees it.
-            availability_zone: |-
-                - (Optional) The availability zone for the volume.
-                Changing this creates a new volume.
-            consistency_group_id: |-
-                - (Optional) The consistency group to place the volume
-                in.
-            description: |-
-                - (Optional) A description of the volume. Changing this updates
-                the volume's description.
-            image_id: |-
-                - (Optional) The image ID from which to create the volume.
-                Changing this creates a new volume.
-            metadata: |-
-                - (Optional) Metadata key/value pairs to associate with the volume.
-                Changing this updates the existing volume metadata.
-            name: |-
-                - (Optional) A unique name for the volume. Changing this updates the
-                volume's name.
-            region: |-
-                - (Optional) The region in which to create the volume. If
-                omitted, the region argument of the provider is used. Changing this
-                creates a new volume.
-            scheduler_hints: |-
-                - (Optional) Provide the Cinder scheduler with hints on where
-                to instantiate a volume in the OpenStack cloud. The available hints are described below.
-            scheduler_hints.additional_properties: |-
-                - (Optional) Arbitrary key/value pairs of additional
-                properties to pass to the scheduler.
-            scheduler_hints.different_host: |-
-                - (Optional) The volume should be scheduled on a
-                different host from the set of volumes specified in the list provided.
-            scheduler_hints.local_to_instance: |-
-                - (Optional) An instance UUID. The volume should be
-                scheduled on the same host as the instance.
-            scheduler_hints.query: |-
-                - (Optional) A conditional query that a back-end must pass in
-                order to host a volume. The query must use the JsonFilter syntax
-                which is described
-                here.
-                At this time, only simple queries are supported. Compound queries using
-                and, or, or not are not supported. An example of a simple query is:
-            scheduler_hints.same_host: |-
-                - (Optional) A list of volume UUIDs. The volume should be
-                scheduled on the same host as another volume specified in the list provided.
-            size: |-
-                - (Required) The size of the volume to create (in gigabytes). Changing
-                this creates a new volume.
-            snapshot_id: |-
-                - (Optional) The snapshot ID from which to create the volume.
-                Changing this creates a new volume.
-            source_replica: '- (Optional) The volume ID to replicate with.'
-            source_vol_id: |-
-                - (Optional) The volume ID from which to create the volume.
-                Changing this creates a new volume.
-            volume_type: |-
-                - (Optional) The type of volume to create.
-                Changing this creates a new volume.
         importStatements: []
     openstack_blockstorage_volume_v3:
         subCategory: Block Storage / Cinder
@@ -550,7 +493,6 @@ resources:
             metadata: |-
                 - (Optional) Metadata key/value pairs to associate with the volume.
                 Changing this updates the existing volume metadata.
-            multiattach: '- (Deprecated - use multiattach enabled volume types instead) (Optional) Allow the volume to be attached to more than one Compute instance.'
             name: |-
                 - (Optional) A unique name for the volume. Changing this updates the
                 volume's name.
@@ -727,110 +669,6 @@ resources:
             vcpus: |-
                 - (Required) The number of virtual CPUs to use. Changing this creates
                 a new flavor.
-        importStatements: []
-    openstack_compute_floatingip_associate_v2:
-        subCategory: Deprecated
-        description: Associate a floating IP to an instance
-        name: openstack_compute_floatingip_associate_v2
-        title: openstack_compute_floatingip_associate_v2
-        examples:
-            - name: fip_1
-              manifest: |-
-                {
-                  "floating_ip": "${openstack_networking_floatingip_v2.fip_1.address}",
-                  "instance_id": "${openstack_compute_instance_v2.instance_1.id}"
-                }
-              references:
-                floating_ip: openstack_networking_floatingip_v2.fip_1.address
-                instance_id: openstack_compute_instance_v2.instance_1.id
-              dependencies:
-                openstack_compute_instance_v2.instance_1: |-
-                    {
-                      "flavor_id": 3,
-                      "image_id": "ad091b52-742f-469e-8f3c-fd81cadf0743",
-                      "key_pair": "my_key_pair_name",
-                      "name": "instance_1",
-                      "security_groups": [
-                        "default"
-                      ]
-                    }
-                openstack_networking_floatingip_v2.fip_1: |-
-                    {
-                      "pool": "my_pool"
-                    }
-            - name: fip_1
-              manifest: |-
-                {
-                  "fixed_ip": "${openstack_compute_instance_v2.instance_1.network.1.fixed_ip_v4}",
-                  "floating_ip": "${openstack_networking_floatingip_v2.fip_1.address}",
-                  "instance_id": "${openstack_compute_instance_v2.instance_1.id}"
-                }
-              references:
-                fixed_ip: openstack_compute_instance_v2.instance_1.network.1.fixed_ip_v4
-                floating_ip: openstack_networking_floatingip_v2.fip_1.address
-                instance_id: openstack_compute_instance_v2.instance_1.id
-              dependencies:
-                openstack_compute_instance_v2.instance_1: |-
-                    {
-                      "flavor_id": 3,
-                      "image_id": "ad091b52-742f-469e-8f3c-fd81cadf0743",
-                      "key_pair": "my_key_pair_name",
-                      "name": "instance_1",
-                      "network": [
-                        {
-                          "name": "my_network"
-                        },
-                        {
-                          "name": "default"
-                        }
-                      ],
-                      "security_groups": [
-                        "default"
-                      ]
-                    }
-                openstack_networking_floatingip_v2.fip_1: |-
-                    {
-                      "pool": "my_pool"
-                    }
-        argumentDocs:
-            fixed_ip: '- (Optional) The specific IP address to direct traffic to.'
-            floating_ip: '- (Required) The floating IP to associate.'
-            instance_id: '- (Required) The instance to associte the floating IP with.'
-            region: |-
-                - (Optional) The region in which to obtain the V2 Compute client.
-                Keypairs are associated with accounts, but a Compute client is needed to
-                create one. If omitted, the region argument of the provider is used.
-                Changing this creates a new floatingip_associate.
-            wait_until_associated: |-
-                - (Optional) In cases where the OpenStack environment
-                does not automatically wait until the association has finished, set this
-                option to have Terraform poll the instance until the floating IP has been
-                associated. Defaults to false.
-        importStatements: []
-    openstack_compute_floatingip_v2:
-        subCategory: Deprecated
-        description: Manages a V2 floating IP resource within OpenStack Nova (compute).
-        name: openstack_compute_floatingip_v2
-        title: openstack_compute_floatingip_v2
-        examples:
-            - name: floatip_1
-              manifest: |-
-                {
-                  "pool": "public"
-                }
-        argumentDocs:
-            address: '- The actual floating IP address itself.'
-            fixed_ip: '- The fixed IP address corresponding to the floating IP.'
-            instance_id: '- UUID of the compute instance associated with the floating IP.'
-            pool: |-
-                - (Required) The name of the pool from which to obtain the floating
-                IP. Changing this creates a new floating IP.
-            region: |-
-                - (Optional) The region in which to obtain the V2 Compute client.
-                A Compute client is needed to create a floating IP that can be used with
-                a compute instance. If omitted, the region argument of the provider
-                is used. Changing this creates a new floating IP (which may or may not
-                have a different address).
         importStatements: []
     openstack_compute_instance_v2:
         subCategory: Compute / Nova
@@ -1024,11 +862,10 @@ resources:
                   ]
                 }
               dependencies:
-                openstack_compute_floatingip_associate_v2.myip: |-
+                openstack_networking_floatingip_associate_v2.myip: |-
                     {
-                      "fixed_ip": "${openstack_compute_instance_v2.multi-net.network.1.fixed_ip_v4}",
-                      "floating_ip": "${openstack_networking_floatingip_v2.myip.address}",
-                      "instance_id": "${openstack_compute_instance_v2.multi-net.id}"
+                      "floating_ip": "${openstack_networking_floatingip_v2.fip_vm.address}",
+                      "port_id": "${data.openstack_networking_port_v2.vm-port.id}"
                     }
                 openstack_networking_floatingip_v2.myip: |-
                     {
@@ -1455,9 +1292,9 @@ resources:
             personality.content: '- (Required) The contents of the file. Limited to 255 bytes.'
             personality.file: '- (Required) The absolute path of the destination file.'
             power_state: |-
-                - (Optional) Provide the VM state. Only 'active', 'shutoff'
+                - (Optional) Provide the VM state. Only 'active', 'shutoff', 'paused'
                 and 'shelved_offloaded' are supported values.
-                Note: If the initial power_state is the shutoff
+                Note: If the initial power_state is the shutoff or paused
                 the VM will be stopped immediately after build and the provisioners like
                 remote-exec or files are not supported.
             region: |-
@@ -1479,7 +1316,8 @@ resources:
                 be scheduled on a different host than all other instances.
             scheduler_hints.group: |-
                 - (Optional) A UUID of a Server Group. The instance will be placed
-                into that group.
+                into that group. See reference
+                for details on managing servergroup resources
             scheduler_hints.query: |-
                 - (Optional) A conditional query that a compute node must pass in
                 order to host an instance. The query must use the JsonFilter syntax
@@ -1532,11 +1370,11 @@ resources:
               manifest: |-
                 {
                   "instance_id": "${openstack_compute_instance_v2.instance_1.id}",
-                  "network_id": "${openstack_networking_port_v2.network_1.id}"
+                  "network_id": "${openstack_networking_network_v2.network_1.id}"
                 }
               references:
                 instance_id: openstack_compute_instance_v2.instance_1.id
-                network_id: openstack_networking_port_v2.network_1.id
+                network_id: openstack_networking_network_v2.network_1.id
               dependencies:
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -1819,72 +1657,6 @@ resources:
                 - (Optional) Quota value for server groups.
                 Changing this updates the existing quotaset.
         importStatements: []
-    openstack_compute_secgroup_v2:
-        subCategory: Deprecated
-        description: Manages a V2 security group resource within OpenStack.
-        name: openstack_compute_secgroup_v2
-        title: openstack_compute_secgroup_v2
-        examples:
-            - name: secgroup_1
-              manifest: |-
-                {
-                  "description": "my security group",
-                  "name": "my_secgroup",
-                  "rule": [
-                    {
-                      "cidr": "0.0.0.0/0",
-                      "from_port": 22,
-                      "ip_protocol": "tcp",
-                      "to_port": 22
-                    },
-                    {
-                      "cidr": "0.0.0.0/0",
-                      "from_port": 80,
-                      "ip_protocol": "tcp",
-                      "to_port": 80
-                    }
-                  ]
-                }
-        argumentDocs:
-            description: |-
-                - (Required) A description for the security group. Changing this
-                updates the description of an existing security group.
-            name: |-
-                - (Required) A unique name for the security group. Changing this
-                updates the name of an existing security group.
-            region: |-
-                - (Optional) The region in which to obtain the V2 Compute client.
-                A Compute client is needed to create a security group. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                security group.
-            rule: |-
-                - (Optional) A rule describing how the security group operates. The
-                rule object structure is documented below. Changing this updates the
-                security group rules. As shown in the example above, multiple rule blocks
-                may be used.
-            rule.cidr: |-
-                - (Optional) Required if from_group_id or self is empty. The IP range
-                that will be the source of network traffic to the security group. Use 0.0.0.0/0
-                to allow all IP addresses. Changing this creates a new security group rule. Cannot
-                be combined with from_group_id or self.
-            rule.from_group_id: |-
-                - (Optional) Required if cidr or self is empty. The ID of a
-                group from which to forward traffic to the parent group. Changing this creates a
-                new security group rule. Cannot be combined with cidr or self.
-            rule.from_port: |-
-                - (Required) An integer representing the lower bound of the port
-                range to open. Changing this creates a new security group rule.
-            rule.ip_protocol: |-
-                - (Required) The protocol type that will be allowed. Changing
-                this creates a new security group rule.
-            rule.self: |-
-                - (Optional) Required if cidr and from_group_id is empty. If true,
-                the security group itself will be added as a source to this ingress rule. Cannot
-                be combined with cidr or from_group_id.
-            rule.to_port: |-
-                - (Required) An integer representing the upper bound of the port
-                range to open. Changing this creates a new security group rule.
-        importStatements: []
     openstack_compute_servergroup_v2:
         subCategory: Compute / Nova
         description: Manages a V2 Server Group resource within OpenStack.
@@ -1899,6 +1671,23 @@ resources:
                     "anti-affinity"
                   ]
                 }
+              dependencies:
+                openstack_compute_instance_v2.test-instance: |-
+                    {
+                      "flavor_id": "3",
+                      "image_id": "ad091b52-742f-469e-8f3c-fd81cadf0743",
+                      "name": "my-instance",
+                      "network": [
+                        {
+                          "name": "my_network"
+                        }
+                      ],
+                      "scheduler_hints": [
+                        {
+                          "group": "${openstack_compute_servergroup_v2.test-sg.id}"
+                        }
+                      ]
+                    }
             - name: test-sg
               manifest: |-
                 {
@@ -1912,6 +1701,23 @@ resources:
                     }
                   ]
                 }
+              dependencies:
+                openstack_compute_instance_v2.test-instance: |-
+                    {
+                      "flavor_id": "3",
+                      "image_id": "ad091b52-742f-469e-8f3c-fd81cadf0743",
+                      "name": "my-instance",
+                      "network": [
+                        {
+                          "name": "my_network"
+                        }
+                      ],
+                      "scheduler_hints": [
+                        {
+                          "group": "${openstack_compute_servergroup_v2.test-sg.id}"
+                        }
+                      ]
+                    }
         argumentDocs:
             affinity: |-
                 - All instances/servers launched in this group will be hosted on
@@ -2059,9 +1865,9 @@ resources:
               dependencies:
                 openstack_blockstorage_volume_v3.volume_1: |-
                     {
-                      "multiattach": true,
                       "name": "volume_1",
-                      "size": 1
+                      "size": 1,
+                      "volume_type": "multiattach"
                     }
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -2093,9 +1899,9 @@ resources:
               dependencies:
                 openstack_blockstorage_volume_v3.volume_1: |-
                     {
-                      "multiattach": true,
                       "name": "volume_1",
-                      "size": 1
+                      "size": 1,
+                      "volume_type": "multiattach"
                     }
                 openstack_compute_instance_v2.instance_1: |-
                     {
@@ -2126,6 +1932,10 @@ resources:
                 A Compute client is needed to create a volume attachment. If omitted, the
                 region argument of the provider is used. Changing this creates a
                 new volume attachment.
+            tag: |-
+                - (Optional) Add a device role tag that is applied to the volume when
+                attaching it to the VM. Changing this creates a new volume attachment with
+                the new tag. Requires microversion >= 2.49.
             vendor_options: |-
                 - (Optional) Map of additional vendor-specific options.
                 Supported options are described below.
@@ -2728,80 +2538,6 @@ resources:
                 - (Optional) Map of additional options. Changing this creates a
                 new zone.
         importStatements: []
-    openstack_fw_firewall_v1:
-        subCategory: Deprecated
-        description: Manages a v1 firewall resource within OpenStack.
-        name: openstack_fw_firewall_v1
-        title: openstack_fw_firewall_v1
-        examples:
-            - name: firewall_1
-              manifest: |-
-                {
-                  "name": "my-firewall",
-                  "policy_id": "${openstack_fw_policy_v1.policy_1.id}"
-                }
-              references:
-                policy_id: openstack_fw_policy_v1.policy_1.id
-              dependencies:
-                openstack_fw_policy_v1.policy_1: |-
-                    {
-                      "name": "my-policy",
-                      "rules": [
-                        "${openstack_fw_rule_v1.rule_1.id}",
-                        "${openstack_fw_rule_v1.rule_2.id}"
-                      ]
-                    }
-                openstack_fw_rule_v1.rule_1: |-
-                    {
-                      "action": "deny",
-                      "description": "drop TELNET traffic",
-                      "destination_port": "23",
-                      "enabled": "true",
-                      "name": "my-rule-1",
-                      "protocol": "tcp"
-                    }
-                openstack_fw_rule_v1.rule_2: |-
-                    {
-                      "action": "deny",
-                      "description": "drop NTP traffic",
-                      "destination_port": "123",
-                      "enabled": "false",
-                      "name": "my-rule-2",
-                      "protocol": "udp"
-                    }
-        argumentDocs:
-            admin_state_up: |-
-                - (Optional) Administrative up/down status for the firewall
-                (must be "true" or "false" if provided - defaults to "true").
-                Changing this updates the admin_state_up of an existing firewall.
-            associated_routers: |-
-                - (Optional) Router(s) to associate this firewall instance
-                with. Must be a list of strings. Changing this updates the associated routers
-                of an existing firewall. Conflicts with no_routers.
-            description: |-
-                - (Required) A description for the firewall. Changing this
-                updates the description of an existing firewall.
-            name: |-
-                - (Optional) A name for the firewall. Changing this
-                updates the name of an existing firewall.
-            no_routers: |-
-                - (Optional) Should this firewall not be associated with any routers
-                (must be "true" or "false" if provide - defaults to "false").
-                Conflicts with associated_routers.
-            policy_id: |-
-                - (Required) The policy resource id for the firewall. Changing
-                this updates the policy_id of an existing firewall.
-            region: |-
-                - (Optional) The region in which to obtain the v1 networking client.
-                A networking client is needed to create a firewall. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                firewall.
-            tenant_id: |-
-                - (Optional) The owner of the floating IP. Required if admin wants
-                to create a firewall for another tenant. Changing this creates a new
-                firewall.
-            value_specs: '- (Optional) Map of additional options.'
-        importStatements: []
     openstack_fw_group_v2:
         subCategory: FWaaS / Neutron
         description: Manages a v2 firewall group resource within OpenStack.
@@ -2897,70 +2633,6 @@ resources:
                 create a firewall group for another tenant. Changing this creates a new
                 firewall group.
         importStatements: []
-    openstack_fw_policy_v1:
-        subCategory: Deprecated
-        description: Manages a v1 firewall policy resource within OpenStack.
-        name: openstack_fw_policy_v1
-        title: openstack_fw_policy_v1
-        examples:
-            - name: policy_1
-              manifest: |-
-                {
-                  "name": "my-policy",
-                  "rules": [
-                    "${openstack_fw_rule_v1.rule_1.id}",
-                    "${openstack_fw_rule_v1.rule_2.id}"
-                  ]
-                }
-              dependencies:
-                openstack_fw_rule_v1.rule_1: |-
-                    {
-                      "action": "deny",
-                      "description": "drop TELNET traffic",
-                      "destination_port": "23",
-                      "enabled": "true",
-                      "name": "my-rule-1",
-                      "protocol": "tcp"
-                    }
-                openstack_fw_rule_v1.rule_2: |-
-                    {
-                      "action": "deny",
-                      "description": "drop NTP traffic",
-                      "destination_port": "123",
-                      "enabled": "false",
-                      "name": "my-rule-2",
-                      "protocol": "udp"
-                    }
-        argumentDocs:
-            audited: |-
-                - (Optional) Audit status of the firewall policy
-                (must be "true" or "false" if provided - defaults to "false").
-                This status is set to "false" whenever the firewall policy or any of its
-                rules are changed. Changing this updates the audited status of an existing
-                firewall policy.
-            description: |-
-                - (Optional) A description for the firewall policy. Changing
-                this updates the description of an existing firewall policy.
-            name: |-
-                - (Optional) A name for the firewall policy. Changing this
-                updates the name of an existing firewall policy.
-            region: |-
-                - (Optional) The region in which to obtain the v1 networking client.
-                A networking client is needed to create a firewall policy. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                firewall policy.
-            rules: |-
-                - (Optional) An array of one or more firewall rules that comprise
-                the policy. Changing this results in adding/removing rules from the
-                existing firewall policy.
-            shared: |-
-                - (Optional) Sharing status of the firewall policy (must be "true"
-                or "false" if provided). If this is "true" the policy is visible to, and
-                can be used in, firewalls in other tenants. Changing this updates the
-                shared status of an existing firewall policy. Only administrative users
-                can specify if the policy should be shared.
-            value_specs: '- (Optional) Map of additional options.'
-        importStatements: []
     openstack_fw_policy_v2:
         subCategory: FWaaS / Neutron
         description: Manages a v2 firewall policy resource within OpenStack.
@@ -3033,71 +2705,6 @@ resources:
                 with project_id. The owner of the firewall policy. Required if admin wants
                 to create a firewall policy for another tenant. Changing this creates a new
                 firewall policy.
-        importStatements: []
-    openstack_fw_rule_v1:
-        subCategory: Deprecated
-        description: Manages a v1 firewall rule resource within OpenStack.
-        name: openstack_fw_rule_v1
-        title: openstack_fw_rule_v1
-        examples:
-            - name: rule_1
-              manifest: |-
-                {
-                  "action": "deny",
-                  "description": "drop TELNET traffic",
-                  "destination_port": "23",
-                  "enabled": "true",
-                  "name": "my_rule",
-                  "protocol": "tcp"
-                }
-        argumentDocs:
-            action: |-
-                - (Required) Action to be taken ( must be "allow" or "deny") when the
-                firewall rule matches. Changing this updates the action of an existing
-                firewall rule.
-            description: |-
-                - (Optional) A description for the firewall rule. Changing this
-                updates the description of an existing firewall rule.
-            destination_ip_address: |-
-                - (Optional) The destination IP address on which the
-                firewall rule operates. Changing this updates the destination_ip_address
-                of an existing firewall rule.
-            destination_port: |-
-                - (Optional) The destination port on which the firewall
-                rule operates. Changing this updates the destination_port of an existing
-                firewall rule.
-            enabled: |-
-                - (Optional) Enabled status for the firewall rule (must be "true"
-                or "false" if provided - defaults to "true"). Changing this updates the
-                enabled status of an existing firewall rule.
-            ip_version: |-
-                - (Optional) IP version, either 4 (default) or 6. Changing this
-                updates the ip_version of an existing firewall rule.
-            name: |-
-                - (Optional) A unique name for the firewall rule. Changing this
-                updates the name of an existing firewall rule.
-            protocol: |-
-                - (Required) The protocol type on which the firewall rule operates.
-                Valid values are: tcp, udp, icmp, and any. Changing this updates the
-                protocol of an existing firewall rule.
-            region: |-
-                - (Optional) The region in which to obtain the v1 Compute client.
-                A Compute client is needed to create a firewall rule. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                firewall rule.
-            source_ip_address: |-
-                - (Optional) The source IP address on which the firewall
-                rule operates. Changing this updates the source_ip_address of an existing
-                firewall rule.
-            source_port: |-
-                - (Optional) The source port on which the firewall
-                rule operates. Changing this updates the source_port of an existing
-                firewall rule.
-            tenant_id: |-
-                - (Optional) The owner of the firewall rule. Required if admin
-                wants to create a firewall rule for another tenant. Changing this creates a
-                new firewall rule.
-            value_specs: '- (Optional) Map of additional options.'
         importStatements: []
     openstack_fw_rule_v2:
         subCategory: FWaaS / Neutron
@@ -3750,17 +3357,18 @@ resources:
         argumentDocs:
             checksum: '- The checksum of the data associated with the image.'
             container_format: |-
-                - (Required) The container format. Must be one of
-                "ami", "ari", "aki", "bare", "ovf".
+                - (Required) The container format. Must be one of "bare",
+                "ovf", "aki", "ari", "ami", "ova", "docker", "compressed".
             created_at: '- The date the image was created.'
             decompress: |-
                 - (Optional) If true, this provider will decompress downloaded
                 image before uploading it to OpenStack. Decompression algorithm is chosen by
-                checking "Content-Type" header, supported algorithm are: gzip, bzip2 and xz.
+                checking "Content-Type" or Content-Disposition header to detect the
+                filename extension. Supported algorithms are: gzip, bzip2, xz and zst.
                 Defaults to false. Changing this creates a new Image.
             disk_format: |-
-                - (Required) The disk format. Must be one of
-                "ami", "ari", "aki", "vhd", "vmdk", "raw", "qcow2", "vdi", "iso".
+                - (Required) The disk format. Must be one of "raw", "vhd",
+                "vhdx", "vmdk", "vdi", "iso", "ploop", "qcow2", "aki", "ari", "ami"
             file: |-
                 - the trailing path after the glance
                 endpoint that represent the location of the image
@@ -3771,18 +3379,22 @@ resources:
             id: '- A unique ID assigned by Glance.'
             image_cache_path: |-
                 - (Optional) This is the directory where the images will
-                be downloaded. Images will be stored with a filename corresponding to
-                the url's md5 hash. Defaults to "$HOME/.terraform/image_cache"
+                be downloaded. Images will be stored with a filename corresponding to the
+                url's md5 hash. Defaults to "$HOME/.terraform/image_cache"
             image_id: |-
                 - (Optional) Unique ID (valid UUID) of image to create. Changing
                 this creates a new image.
-            image_source_password: '- (Optional) The password of basic auth to download image_source_url.'
+            image_source_password: |-
+                - (Optional) The password of basic auth to download
+                image_source_url.
             image_source_url: |-
-                - (Optional) This is the url of the raw image. If web_download
-                is not used, then the image will be downloaded in the image_cache_path before
-                being uploaded to Glance.
-                Conflicts with local_file_path.
-            image_source_username: '- (Optional) The username of basic auth to download image_source_url.'
+                - (Optional) This is the url of the raw image. If
+                web_download is not used, then the image will be downloaded in the
+                image_cache_path before being uploaded to Glance. Conflicts with
+                local_file_path.
+            image_source_username: |-
+                - (Optional) The username of basic auth to download
+                image_source_url.
             local_file_path: |-
                 - (Optional) This is the filepath of the raw image file
                 that will be uploaded to Glance. Conflicts with image_source_url and
@@ -3792,8 +3404,8 @@ resources:
                 Image metadata allow for meaningfully define the image properties
                 and tags. See https://docs.openstack.org/glance/latest/user/metadefs-concepts.html.
             min_disk_gb: |-
-                - (Optional) Amount of disk space (in GB) required to boot image.
-                Defaults to 0.
+                - (Optional) Amount of disk space (in GB) required to boot
+                image. Defaults to 0.
             min_ram_mb: |-
                 - (Optional) Amount of ram (in MB) required to boot image.
                 Defauts to 0.
@@ -3801,16 +3413,16 @@ resources:
             owner: '- The id of the openstack user who owns the image.'
             properties: |-
                 - (Optional) A map of key/value pairs to set freeform
-                information about an image. See the "Notes" section for further
-                information about properties.
+                information about an image. See the "Notes" section for further information
+                about properties.
             protected: |-
-                - (Optional) If true, image will not be deletable.
-                Defaults to false.
+                - (Optional) If true, image will not be deletable. Defaults to
+                false.
             region: |-
-                - (Optional) The region in which to obtain the V2 Glance client.
-                A Glance client is needed to create an Image that can be used with
-                a compute instance. If omitted, the region argument of the provider
-                is used. Changing this creates a new Image.
+                - (Optional) The region in which to obtain the V2 Glance client. A
+                Glance client is needed to create an Image that can be used with a compute
+                instance. If omitted, the region argument of the provider is used. Changing
+                this creates a new Image.
             schema: |-
                 - The path to the JSON-schema that represent
                 the image or image
@@ -3819,21 +3431,20 @@ resources:
                 - The status of the image. It can be "queued", "active"
                 or "saving".
             tags: |-
-                - (Optional) The tags of the image. It must be a list of strings.
-                At this time, it is not possible to delete all tags of an image.
-            update_at: '- (Deprecated - use updated_at instead)'
+                - (Optional) The tags of the image. It must be a list of strings. At
+                this time, it is not possible to delete all tags of an image.
             updated_at: '- The date the image was last updated.'
             verify_checksum: |-
                 - (Optional) If false, the checksum will not be verified
-                once the image is finished uploading. Conflicts with web_download.
-                Defaults to true when not using web_download.
+                once the image is finished uploading. Conflicts with web_download. Defaults
+                to true when not using web_download.
             visibility: |-
                 - (Optional) The visibility of the image. Must be one of
                 "public", "private", "community", or "shared". The ability to set the
                 visibility depends upon the configuration of the OpenStack cloud.
             web_download: |-
-                - (Optional) If true, the "web-download" import method will
-                be used to let Openstack download the image directly from the remote source.
+                - (Optional) If true, the "web-download" import method will be
+                used to let Openstack download the image directly from the remote source.
                 Conflicts with local_file_path. Defaults to false.
         importStatements: []
     openstack_keymanager_container_v1:
@@ -3885,19 +3496,6 @@ resources:
                       "payload": "${file(\"cert-key.pem\")}",
                       "payload_content_type": "text/plain",
                       "secret_type": "private"
-                    }
-                openstack_lb_listener_v2.listener_1: |-
-                    {
-                      "default_tls_container_ref": "${openstack_keymanager_container_v1.tls_1.container_ref}",
-                      "loadbalancer_id": "${openstack_lb_loadbalancer_v2.lb_1.id}",
-                      "name": "https",
-                      "protocol": "TERMINATED_HTTPS",
-                      "protocol_port": 443
-                    }
-                openstack_lb_loadbalancer_v2.lb_1: |-
-                    {
-                      "name": "loadbalancer",
-                      "vip_subnet_id": "${data.openstack_networking_subnet_v2.subnet_1.id}"
                     }
             - name: tls_1
               manifest: |-
@@ -4131,6 +3729,39 @@ resources:
             status: '- The status of the secret.'
             updated_at: '- The date the secret was last updated.'
         importStatements: []
+    openstack_lb_flavorprofile_v2:
+        subCategory: Load Balancing as a Service / Octavia
+        description: Manages a V2 flavorprofile resource within OpenStack.
+        name: openstack_lb_flavorprofile_v2
+        title: openstack_lb_flavorprofile_v2
+        examples:
+            - name: flavorprofile_1
+              manifest: |-
+                {
+                  "flavor_data": "${jsonencode({\n    \"loadbalancer_topology\": \"SINGLE\",\n  })}",
+                  "name": "amphora-single-profile",
+                  "provider_name": "amphora"
+                }
+            - name: flavorprofile_1
+              manifest: |-
+                {
+                  "flavor_data": "{\"loadbalancer_topology\": \"SINGLE\"}",
+                  "name": "amphora-single-profile",
+                  "provider_name": "amphora"
+                }
+        argumentDocs:
+            flavor_data: |-
+                - (Required) String that passes the flavor_data for the flavorprofile.
+                The data that are allowed depend on the provider_name that is passed. jsonencode
+                can be used for readability as shown in the example above.
+                Changing this updates the existing flavorprofile.
+            name: |-
+                - (Required) Name of the flavorprofile. Changing this updates the existing
+                flavorprofile.
+            provider_name: |-
+                - (Required) The provider_name that the flavor_profile will use.
+                Changing this updates the existing flavorprofile.
+        importStatements: []
     openstack_lb_l7policy_v2:
         subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 L7 Policy resource within OpenStack.
@@ -4198,15 +3829,23 @@ resources:
                 - (Optional) Human-readable name for the L7 Policy. Does not have
                 to be unique.
             position: '- (Optional) The position of this policy on the listener. Positions start at 1.'
+            redirect_http_code: |-
+                - (Optional) Integer. Requests matching this policy will be
+                redirected to the specified URL or Prefix URL with the HTTP response code.
+                Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+                301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
             redirect_pool_id: |-
                 - (Optional) Requests matching this policy will be redirected to the
                 pool with this ID. Only valid if action is REDIRECT_TO_POOL.
+            redirect_prefix: |-
+                - (Optional) Requests matching this policy will be redirected to
+                this Prefix URL. Only valid if action is REDIRECT_PREFIX.
             redirect_url: |-
                 - (Optional) Requests matching this policy will be redirected to this URL.
                 Only valid if action is REDIRECT_TO_URL.
             region: |-
                 - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an . If omitted, the
+                A Networking client is needed to create an L7 policy. If omitted, the
                 region argument of the provider is used. Changing this creates a new
                 L7 Policy.
             tenant_id: |-
@@ -4292,7 +3931,7 @@ resources:
             listener_id: '- The ID of the Listener owning this resource.'
             region: |-
                 - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an . If omitted, the
+                A Networking client is needed to create an L7 rule. If omitted, the
                 region argument of the provider is used. Changing this creates a new
                 L7 Rule.
             tenant_id: |-
@@ -4301,7 +3940,7 @@ resources:
                 other than their own. Changing this creates a new L7 Rule.
             type: |-
                 - (Required) The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-                HOST_NAME or PATH.
+                HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
             value: |-
                 - (Required) The value to use for the comparison. For example, the file type to
                 compare.
@@ -4322,66 +3961,154 @@ resources:
                   "protocol": "HTTP",
                   "protocol_port": 8080
                 }
+            - name: listener_1
+              manifest: |-
+                {
+                  "client_authentication": "OPTIONAL",
+                  "client_ca_tls_container_ref": "${openstack_keymanager_secret_v1.ca_certificate_2.secret_ref}",
+                  "default_tls_container_ref": "${openstack_keymanager_secret_v1.certificate_1}",
+                  "loadbalancer_id": "${openstack_lb_loadbalancer_v2.lb_1.id}",
+                  "name": "https",
+                  "protocol": "TERMINATED_HTTPS",
+                  "protocol_port": 443
+                }
+              references:
+                client_ca_tls_container_ref: openstack_keymanager_secret_v1.ca_certificate_2.secret_ref
+                default_tls_container_ref: openstack_keymanager_secret_v1.certificate_1
+                loadbalancer_id: openstack_lb_loadbalancer_v2.lb_1.id
+              dependencies:
+                openstack_keymanager_secret_v1.ca_certificate_1: |-
+                    {
+                      "name": "certificate",
+                      "payload": "${file(\"CA.pem\")}",
+                      "payload_content_type": "text/plain",
+                      "secret_type": "certificate"
+                    }
+                openstack_keymanager_secret_v1.certificate_1: |-
+                    {
+                      "name": "certificate",
+                      "payload": "${filebase64(\"snakeoil.p12\")}",
+                      "payload_content_encoding": "base64",
+                      "payload_content_type": "application/octet-stream"
+                    }
+                openstack_lb_loadbalancer_v2.lb_1: |-
+                    {
+                      "name": "loadbalancer",
+                      "vip_subnet_id": "${data.openstack_networking_subnet_v2.subnet_1.id}"
+                    }
         argumentDocs:
             admin_state_up: |-
-                - (Optional) The administrative state of the Listener.
-                A valid value is true (UP) or false (DOWN).
+                - (Optional) The administrative state of the Listener. A
+                valid value is true (UP) or false (DOWN).
             allowed_cidrs: |-
-                - (Optional) A list of CIDR blocks that are permitted to connect to this listener, denying
-                all other source addresses. If not present, defaults to allow all.
+                - (Optional) A list of CIDR blocks that are permitted to
+                connect to this listener, denying all other source addresses. If not present,
+                defaults to allow all.
+            alpn_protocols: |-
+                - (Optional) A list of ALPN protocols. Available protocols:
+                http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+                2.20.
+            client_authentication: |-
+                - (Optional) The TLS client authentication mode.
+                Available options: NONE, OPTIONAL or MANDATORY. Requires
+                TERMINATED_HTTPS listener protocol and the client_ca_tls_container_ref.
+                Supported only in Octavia minor version >= 2.8.
+            client_ca_tls_container_ref: |-
+                - (Optional) The ref of the key manager service
+                secret containing a PEM format client CA certificate bundle for
+                TERMINATED_HTTPS listeners. Required if client_authentication is
+                OPTIONAL or MANDATORY. Supported only in Octavia minor version >=
+                2.8.
+            client_crl_container_ref: |-
+                - (Optional) The URI of the key manager service
+                secret containing a PEM format CA revocation list file for TERMINATED_HTTPS
+                listeners. Supported only in Octavia minor version >= 2.8.
             connection_limit: |-
-                - (Optional) The maximum number of connections allowed
-                for the Listener.
+                - (Optional) The maximum number of connections allowed for
+                the Listener.
             default_pool_id: |-
                 - (Optional) The ID of the default pool with which the
                 Listener is associated.
-            default_port_id: '- See Argument Reference above.'
             default_tls_container_ref: |-
                 - (Optional) A reference to a Barbican Secrets
-                container which stores TLS information. This is required if the protocol
-                is TERMINATED_HTTPS. See
+                container which stores TLS information. This is required if the protocol is
+                TERMINATED_HTTPS. See
                 here
                 for more information.
             description: '- (Optional) Human-readable description for the Listener.'
+            hsts_include_subdomains: |-
+                - (Optional) Defines whether the
+                includeSubDomains directive should be added to the
+                Strict-Transport-Security HTTP response header. This requires setting the
+                hsts_max_age option as well in order to become effective. Requires
+                TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+                version >= 2.27.
+            hsts_max_age: |-
+                - (Optional) The value of the max_age directive for the
+                Strict-Transport-Security HTTP response header. Setting this enables HTTP
+                Strict Transport Security (HSTS) for the TLS-terminated listener. Requires
+                TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+                version >= 2.27.
+            hsts_preload: |-
+                - (Optional) Defines whether the preload directive should
+                be added to the Strict-Transport-Security HTTP response header. This requires
+                setting the hsts_max_age option as well in order to become effective.
+                Requires TERMINATED_HTTPS listener protocol. Supported only in Octavia
+                minor version >= 2.27.
             id: '- The unique ID for the Listener.'
             insert_headers: |-
-                - (Optional) The list of key value pairs representing headers to insert
-                into the request before it is sent to the backend members. Changing this updates the headers of the
-                existing listener.
+                - (Optional) The list of key value pairs representing
+                headers to insert into the request before it is sent to the backend members.
+                Changing this updates the headers of the existing listener.
             loadbalancer_id: |-
                 - (Required) The load balancer on which to provision this
                 Listener. Changing this creates a new Listener.
             name: |-
-                - (Optional) Human-readable name for the Listener. Does not have
-                to be unique.
+                - (Optional) Human-readable name for the Listener. Does not have to be
+                unique.
             protocol: |-
-                - (Required) The protocol - can either be TCP, HTTP, HTTPS,
-                TERMINATED_HTTPS, UDP (supported only in Octavia), SCTP (supported only
-                in Octavia minor version >= 2.23) or PROMETHEUS (supported only in
-                Octavia minor version >=2.25). Changing this creates a new Listener.
-            protocol_port: |-
-                - (Required) The port on which to listen for client traffic.
-                Changing this creates a new Listener.
+                - (Required) The protocol can be either TCP, HTTP, HTTPS,
+                TERMINATED_HTTPS, UDP, SCTP (supported only in Octavia minor version
+                >= 2.23), or PROMETHEUS (supported only in Octavia minor version >=
+                2.25). Changing this creates a new Listener.
+            protocol_port: '- (Required) The port on which to listen for client traffic.'
             region: |-
                 - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an . If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                Listener.
+                A Networking client is needed to create a listener. If omitted, the region
+                argument of the provider is used. Changing this creates a new Listener.
             sni_container_refs: |-
                 - (Optional) A list of references to Barbican Secrets
                 containers which store SNI information. See
                 here
                 for more information.
+            tags: |-
+                - (Optional) A list of simple strings assigned to the pool. Available
+                for Octavia minor version 2.5 or later.
             tenant_id: |-
                 - (Optional) Required for admins. The UUID of the tenant who owns
-                the Listener.  Only administrative users can specify a tenant UUID
-                other than their own. Changing this creates a new Listener.
-            timeout_client_data: '- (Optional) The client inactivity timeout in milliseconds.'
-            timeout_member_connect: '- (Optional) The member connection timeout in milliseconds.'
-            timeout_member_data: '- (Optional) The member inactivity timeout in milliseconds.'
+                the Listener.  Only administrative users can specify a tenant UUID other than
+                their own. Changing this creates a new Listener.
+            timeout_client_data: |-
+                - (Optional) The client inactivity timeout in
+                milliseconds.
+            timeout_member_connect: |-
+                - (Optional) The member connection timeout in
+                milliseconds.
+            timeout_member_data: |-
+                - (Optional) The member inactivity timeout in
+                milliseconds.
             timeout_tcp_inspect: |-
-                - (Optional) The time in milliseconds, to wait for additional
-                TCP packets for content inspection.
+                - (Optional) The time in milliseconds, to wait for
+                additional TCP packets for content inspection.
+            tls_ciphers: |-
+                - (Optional) List of ciphers in OpenSSL format
+                (colon-separated). See
+                https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+                Supported only in Octavia minor version >= 2.15.
+            tls_versions: |-
+                - (Optional) A list of TLS protocol versions. Available
+                versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+                Octavia minor version >= 2.17.
         importStatements: []
     openstack_lb_loadbalancer_v2:
         subCategory: Load Balancing as a Service / Octavia
@@ -4435,56 +4162,21 @@ resources:
                 - (Optional) The network on which to allocate the
                 Loadbalancer's address. A tenant can only create Loadbalancers on networks
                 authorized by policy (e.g. networks that belong to them or networks that
-                are shared).  Changing this creates a new loadbalancer.
-                It is available only for Octavia.
+                are shared).  Changing this creates a new loadbalancer. Exactly one of
+                vip_subnet_id, vip_network_id or vip_port_id has to be defined.
             vip_port_id: |-
                 - (Optional) The port UUID that the loadbalancer will use.
-                Changing this creates a new loadbalancer. It is available only for Octavia.
+                Changing this creates a new loadbalancer. Exactly one of
+                vip_subnet_id, vip_network_id or vip_port_id has to be defined.
+            vip_qos_policy_id: |-
+                - (Optional) The ID of the QoS Policy which will
+                be applied to the Virtual IP (VIP).
             vip_subnet_id: |-
                 - (Optional) The subnet on which to allocate the
                 Loadbalancer's address. A tenant can only create Loadbalancers on networks
                 authorized by policy (e.g. networks that belong to them or networks that
-                are shared).  Changing this creates a new loadbalancer.
-                It is required to Neutron LBaaS but optional for Octavia.
-        importStatements: []
-    openstack_lb_member_v1:
-        subCategory: Deprecated
-        description: Manages a V1 load balancer member resource within OpenStack.
-        name: openstack_lb_member_v1
-        title: openstack_lb_member_v1
-        examples:
-            - name: member_1
-              manifest: |-
-                {
-                  "address": "192.168.0.10",
-                  "pool_id": "d9415786-5f1a-428b-b35f-2f1523e146d2",
-                  "port": 80
-                }
-        argumentDocs:
-            address: |-
-                - (Required) The IP address of the member. Changing this creates a
-                new member.
-            admin_state_up: |-
-                - (Optional) The administrative state of the member.
-                Acceptable values are 'true' and 'false'. Changing this value updates the
-                state of the existing member.
-            pool_id: |-
-                - (Required)  The ID of the LB pool. Changing this creates a new
-                member.
-            port: |-
-                - (Required) An integer representing the port on which the member is
-                hosted. Changing this creates a new member.
-            region: |-
-                - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an LB member. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                LB member.
-            tenant_id: |-
-                - (Optional) The owner of the member. Required if admin wants to
-                create a member for another tenant. Changing this creates a new member.
-            weight: |-
-                - The load balancing weight of the member. This is currently unable
-                to be set through Terraform.
+                are shared).  Changing this creates a new loadbalancer. Exactly one of
+                vip_subnet_id, vip_network_id or vip_port_id has to be defined.
         importStatements: []
     openstack_lb_member_v2:
         subCategory: Load Balancing as a Service / Octavia
@@ -4530,6 +4222,9 @@ resources:
             subnet_id: |-
                 - (Optional) The subnet in which to access the member. Changing
                 this creates a new member.
+            tags: |-
+                - (Optional) A list of simple strings assigned to the member.
+                Available only for Octavia >= 2.5.
             tenant_id: |-
                 - (Optional) Required for admins. The UUID of the tenant who owns
                 the member.  Only administrative users can specify a tenant UUID
@@ -4598,63 +4293,6 @@ resources:
                 region argument of the provider is used. Changing this creates a new
                 members resource.
         importStatements: []
-    openstack_lb_monitor_v1:
-        subCategory: Deprecated
-        description: Manages a V1 load balancer monitor resource within OpenStack.
-        name: openstack_lb_monitor_v1
-        title: openstack_lb_monitor_v1
-        examples:
-            - name: monitor_1
-              manifest: |-
-                {
-                  "admin_state_up": "true",
-                  "delay": 30,
-                  "max_retries": 3,
-                  "timeout": 5,
-                  "type": "PING"
-                }
-        argumentDocs:
-            admin_state_up: |-
-                - (Optional) The administrative state of the monitor.
-                Acceptable values are "true" and "false". Changing this value updates the
-                state of the existing monitor.
-            delay: |-
-                - (Required) The time, in seconds, between sending probes to members.
-                Changing this creates a new monitor.
-            expected_codes: |-
-                - (Optional) Required for HTTP(S) types. Expected HTTP codes
-                for a passing HTTP(S) monitor. You can either specify a single status like
-                "200", or a range like "200-202". Changing this updates the expected_codes
-                of the existing monitor.
-            http_method: |-
-                - (Optional) Required for HTTP(S) types. The HTTP method used
-                for requests by the monitor. If this attribute is not specified, it defaults
-                to "GET". Changing this updates the http_method of the existing monitor.
-            max_retries: |-
-                - (Required) Number of permissible ping failures before changing
-                the member's status to INACTIVE. Must be a number between 1 and 10. Changing
-                this updates the max_retries of the existing monitor.
-            region: |-
-                - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an LB monitor. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                LB monitor.
-            tenant_id: |-
-                - (Optional) The owner of the monitor. Required if admin wants to
-                create a monitor for another tenant. Changing this creates a new monitor.
-            timeout: |-
-                - (Required) Maximum number of seconds for a monitor to wait for a
-                ping reply before it times out. The value must be less than the delay value.
-                Changing this updates the timeout of the existing monitor.
-            type: |-
-                - (Required) The type of probe, which is PING, TCP, HTTP, or HTTPS,
-                that is sent by the monitor to verify the member state. Changing this
-                creates a new monitor.
-            url_path: |-
-                - (Optional) Required for HTTP(S) types. URI path that will be
-                accessed if monitor type is HTTP or HTTPS. Changing this updates the
-                url_path of the existing monitor.
-        importStatements: []
     openstack_lb_monitor_v2:
         subCategory: Load Balancing as a Service / Octavia
         description: Manages a V2 monitor resource within OpenStack.
@@ -4677,28 +4315,36 @@ resources:
                 - (Optional) The administrative state of the monitor.
                 A valid value is true (UP) or false (DOWN).
             delay: '- (Required) The time, in seconds, between sending probes to members.'
+            domain_name: |-
+                - (Optional) The domain name to use in the HTTP host header
+                health monitor requests. Supported in Octavia API version 2.10 or later.
             expected_codes: |-
                 - (Optional) Required for HTTP(S) types. Expected HTTP codes
                 for a passing HTTP(S) monitor. You can either specify a single status like
-                "200", or a range like "200-202".
+                "200", a list like "200, 202" or a range like "200-202". Default is "200".
             http_method: |-
-                - (Optional) Required for HTTP(S) types. The HTTP method used
-                for requests by the monitor. If this attribute is not specified, it
-                defaults to "GET".
+                - (Optional) Required for HTTP(S) types. The HTTP method that
+                the health monitor uses for requests. One of CONNECT, DELETE, GET, HEAD,
+                OPTIONS, PATCH, POST, PUT, or TRACE. The default is GET.
+            http_version: |-
+                - (Optional) Required for HTTP(S) types. The HTTP version that
+                the health monitor uses for requests. One of 1.0 or 1.1is supported for HTTP(S) monitors. The default is1.0`. Supported in Octavia API version
+                2.10 or later.
             id: '- The unique ID for the monitor.'
             max_retries: |-
                 - (Required) Number of permissible ping failures before
                 changing the member's status to INACTIVE. Must be a number between 1
                 and 10.
             max_retries_down: |-
-                - (Optional) Number of permissible ping failures befor changing the member's
-                status to ERROR. Must be a number between 1 and 10 (supported only in Octavia).
-                Changing this updates the max_retries_down of the existing monitor.
+                - (Optional) Number of permissible ping failures before
+                changing the member's status to ERROR. Must be a number between 1 and 10.
+                The default is 3. Changing this updates the max_retries_down of the
+                existing monitor.
             name: '- (Optional) The Name of the Monitor.'
             pool_id: '- (Required) The id of the pool that this monitor will be assigned to.'
             region: |-
                 - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an . If omitted, the
+                A Networking client is needed to create a monitor. If omitted, the
                 region argument of the provider is used. Changing this creates a new
                 monitor.
             tenant_id: |-
@@ -4711,78 +4357,11 @@ resources:
                 value.
             type: |-
                 - (Required) The type of probe, which is PING, TCP, HTTP, HTTPS,
-                TLS-HELLO or UDP-CONNECT (supported only in Octavia), that is sent by the load
-                balancer to verify the member state. Changing this creates a new monitor.
+                TLS-HELLO, SCTP or UDP-CONNECT, that is sent by the loadbalancer to
+                verify the member state. Changing this creates a new monitor.
             url_path: |-
                 - (Optional) Required for HTTP(S) types. URI path that will be
-                accessed if monitor type is HTTP or HTTPS.
-        importStatements: []
-    openstack_lb_pool_v1:
-        subCategory: Deprecated
-        description: Manages a V1 load balancer pool resource within OpenStack.
-        name: openstack_lb_pool_v1
-        title: openstack_lb_pool_v1
-        examples:
-            - name: pool_1
-              manifest: |-
-                {
-                  "lb_method": "ROUND_ROBIN",
-                  "lb_provider": "haproxy",
-                  "monitor_ids": [
-                    "67890"
-                  ],
-                  "name": "tf_test_lb_pool",
-                  "protocol": "HTTP",
-                  "subnet_id": "12345"
-                }
-        argumentDocs:
-            lb_method: |-
-                - (Required) The algorithm used to distribute load between the
-                members of the pool. The current specification supports 'ROUND_ROBIN' and
-                'LEAST_CONNECTIONS' as valid values for this attribute.
-            lb_provider: |-
-                - (Optional) The backend load balancing provider. For example:
-                haproxy, F5, etc.
-            member: |-
-                - (Optional) An existing node to add to the pool. Changing this
-                updates the members of the pool. The member object structure is documented
-                below. Please note that the member block is deprecated in favor of the
-                openstack_lb_member_v1 resource.
-            member.address: |-
-                - (Required) The IP address of the member. Changing this creates a
-                new member.
-            member.admin_state_up: |-
-                - (Required) The administrative state of the member.
-                Acceptable values are 'true' and 'false'. Changing this value updates the
-                state of the existing member.
-            member.port: |-
-                - (Required) An integer representing the port on which the member is
-                hosted. Changing this creates a new member.
-            member.tenant_id: |-
-                - (Optional) The owner of the member. Required if admin wants to
-                create a pool member for another tenant. Changing this creates a new member.
-            monitor_id: '- See Argument Reference above.'
-            monitor_ids: |-
-                - (Optional) A list of IDs of monitors to associate with the
-                pool.
-            name: |-
-                - (Required) The name of the pool. Changing this updates the name of
-                the existing pool.
-            protocol: |-
-                - (Required)  The protocol used by the pool members, you can use
-                either 'TCP, 'HTTP', or 'HTTPS'. Changing this creates a new pool.
-            region: |-
-                - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an LB pool. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                LB pool.
-            subnet_id: |-
-                - (Required) The network on which the members of the pool will be
-                located. Only members that are on this network can be added to the pool.
-                Changing this creates a new pool.
-            tenant_id: |-
-                - (Optional) The owner of the pool. Required if admin wants to
-                create a pool member for another tenant. Changing this creates a new pool.
+                accessed if monitor type is HTTP or HTTPS. Default is /.
         importStatements: []
     openstack_lb_pool_v2:
         subCategory: Load Balancing as a Service / Octavia
@@ -4805,44 +4384,72 @@ resources:
                 }
         argumentDocs:
             admin_state_up: |-
-                - (Optional) The administrative state of the pool.
-                A valid value is true (UP) or false (DOWN).
+                - (Optional) The administrative state of the pool. A valid
+                value is true (UP) or false (DOWN).
+            alpn_protocols: |-
+                - (Optional) A list of ALPN protocols. Available protocols:
+                http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+                2.24.
+            ca_tls_container_ref: |-
+                - (Optional) The reference of the key manager service
+                secret containing a PEM format CA certificate bundle for tls_enabled pools.
+                Supported only in Octavia minor version >= 2.8.
             cookie_name: |-
                 - (Optional) The name of the cookie if persistence mode is set
                 appropriately. Required if type = APP_COOKIE.
+            crl_container_ref: |-
+                - (Optional) The reference of the key manager service
+                secret containing a PEM format CA revocation list file for tls_enabled
+                pools. Supported only in Octavia minor version >= 2.8.
             description: '- (Optional) Human-readable description for the pool.'
             id: '- The unique ID for the pool.'
             lb_method: |-
-                - (Required) The load balancing algorithm to
-                distribute traffic to the pool's members. Must be one of
-                ROUND_ROBIN, LEAST_CONNECTIONS, SOURCE_IP, or SOURCE_IP_PORT (supported only
-                in Octavia).
+                - (Required) The load balancing algorithm to distribute traffic
+                to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+                SOURCE_IP, or SOURCE_IP_PORT.
             listener_id: |-
-                - (Optional) The Listener on which the members of the pool
-                will be associated with. Changing this creates a new pool.
-                Note:  One of LoadbalancerID or ListenerID must be provided.
+                - (Optional) The Listener on which the members of the pool will
+                be associated with. Changing this creates a new pool. Note: One of
+                LoadbalancerID or ListenerID must be provided.
             loadbalancer_id: |-
                 - (Optional) The load balancer on which to provision this
-                pool. Changing this creates a new pool.
-                Note:  One of LoadbalancerID or ListenerID must be provided.
+                pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+                ListenerID must be provided.
             name: '- (Optional) Human-readable name for the pool.'
             persistence: |-
-                - Omit this field to prevent session persistence.  Indicates
-                whether connections in the same session will be processed by the same Pool
-                member or not. Changing this creates a new pool.
+                - (Optional) Omit this field to prevent session persistence.
+                Indicates whether connections in the same session will be processed by the
+                same Pool member or not. Changing this creates a new pool.
             protocol: |-
                 - (Required) The protocol - can either be TCP, HTTP, HTTPS, PROXY,
-                UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
-                or SCTP (Octavia minor version >= 2.23). Changing this creates a new pool.
+                UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+                version >= 2.23). Changing this creates a new pool.
             region: |-
                 - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create an . If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                pool.
+                A Networking client is needed to create a pool. If omitted, the region
+                argument of the provider is used. Changing this creates a new pool.
             tenant_id: |-
                 - (Optional) Required for admins. The UUID of the tenant who owns
-                the pool.  Only administrative users can specify a tenant UUID
-                other than their own. Changing this creates a new pool.
+                the pool.  Only administrative users can specify a tenant UUID other than
+                their own. Changing this creates a new pool.
+            tls_ciphers: |-
+                - (Optional) List of ciphers in OpenSSL format
+                (colon-separated). See
+                https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+                Supported only in Octavia minor version >= 2.15.
+            tls_container_ref: |-
+                - (Optional) The reference to the key manager service
+                secret containing a PKCS12 format certificate/key bundle for tls_enabled
+                pools for TLS client authentication to the member servers. Supported only in
+                Octavia minor version >= 2.8.
+            tls_enabled: |-
+                - (Optional) When true connections to backend member servers
+                will use TLS encryption. Default is false. Supported only in Octavia minor
+                version >= 2.8.
+            tls_versions: |-
+                - (Optional) A list of TLS protocol versions. Available
+                versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+                Octavia minor version >= 2.17.
             type: |-
                 - (Required) The type of persistence mode. The current specification
                 supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
@@ -4902,76 +4509,6 @@ resources:
             region: |-
                 - (Optional) Region in which to manage quotas. Changing this
                 creates a new quota. If ommited, the region of the credentials is used.
-        importStatements: []
-    openstack_lb_vip_v1:
-        subCategory: Deprecated
-        description: Manages a V1 load balancer vip resource within OpenStack.
-        name: openstack_lb_vip_v1
-        title: openstack_lb_vip_v1
-        examples:
-            - name: vip_1
-              manifest: |-
-                {
-                  "name": "tf_test_lb_vip",
-                  "pool_id": "67890",
-                  "port": 80,
-                  "protocol": "HTTP",
-                  "subnet_id": "12345"
-                }
-        argumentDocs:
-            address: |-
-                - (Optional)  The IP address of the vip. Changing this creates a new
-                vip.
-            admin_state_up: |-
-                - (Optional) The administrative state of the vip.
-                Acceptable values are "true" and "false". Changing this value updates the
-                state of the existing vip.
-            conn_limit: |-
-                - (Optional) The maximum number of connections allowed for the
-                vip. Default is -1, meaning no limit. Changing this updates the conn_limit
-                of the existing vip.
-            description: |-
-                - (Optional) Human-readable description for the vip. Changing
-                this updates the description of the existing vip.
-            floating_ip: |-
-                - (Optional) A Networking Floating IP that will be associated
-                with the vip. The Floating IP must be provisioned already.
-            name: |-
-                - (Required) The name of the vip. Changing this updates the name of
-                the existing vip.
-            persistence: |-
-                - (Optional) Omit this field to prevent session persistence.
-                The persistence object structure is documented below. Changing this updates
-                the persistence of the existing vip.
-            persistence.cookie_name: |-
-                - (Optional) The name of the cookie if persistence mode is set
-                appropriately.
-            persistence.type: |-
-                - (Required) The type of persistence mode. Valid values are "SOURCE_IP",
-                "HTTP_COOKIE", or "APP_COOKIE".
-            pool_id: |-
-                - (Required) The ID of the pool with which the vip is associated.
-                Changing this updates the pool_id of the existing vip.
-            port: |-
-                - (Required) The port on which to listen for client traffic. Changing
-                this creates a new vip.
-            port_id: '- Port UUID for this VIP at associated floating IP (if any).'
-            protocol: |-
-                - (Required)  The protocol - can be either 'TCP, 'HTTP', or
-                HTTPS'. Changing this creates a new vip.
-            region: |-
-                - (Optional) The region in which to obtain the V2 Networking client.
-                A Networking client is needed to create a VIP. If omitted, the
-                region argument of the provider is used. Changing this creates a new
-                VIP.
-            subnet_id: |-
-                - (Required) The network on which to allocate the vip's address. A
-                tenant can only create vips on networks authorized by policy (e.g. networks
-                that belong to them or networks that are shared). Changing this creates a
-                new vip.
-            tenant_id: |-
-                - (Optional) The owner of the vip. Required if admin wants to
-                create a vip member for another tenant. Changing this creates a new vip.
         importStatements: []
     openstack_networking_addressscope_v2:
         subCategory: Networking / Neutron
@@ -5146,20 +4683,7 @@ resources:
                         }
                       ],
                       "security_groups": [
-                        "${openstack_compute_secgroup_v2.secgroup_1.name}"
-                      ]
-                    }
-                openstack_compute_secgroup_v2.secgroup_1: |-
-                    {
-                      "description": "a security group",
-                      "name": "secgroup_1",
-                      "rule": [
-                        {
-                          "cidr": "0.0.0.0/0",
-                          "from_port": 22,
-                          "ip_protocol": "tcp",
-                          "to_port": 22
-                        }
+                        "${openstack_networking_secgroup_v2.secgroup_1.name}"
                       ]
                     }
                 openstack_networking_port_v2.port_1: |-
@@ -5174,8 +4698,23 @@ resources:
                       "name": "port_1",
                       "network_id": "${openstack_networking_network_v2.network_1.id}",
                       "security_group_ids": [
-                        "${openstack_compute_secgroup_v2.secgroup_1.id}"
+                        "${openstack_networking_secgroup_v2.secgroup_1.id}"
                       ]
+                    }
+                openstack_networking_secgroup_rule_v2.secgroup_rule_1: |-
+                    {
+                      "direction": "ingress",
+                      "ethertype": "IPv4",
+                      "port_range_max": 22,
+                      "port_range_min": 22,
+                      "protocol": "tcp",
+                      "remote_ip_prefix": "0.0.0.0/0",
+                      "security_group_id": "${openstack_networking_secgroup_v2.secgroup_1.id}"
+                    }
+                openstack_networking_secgroup_v2.secgroup_1: |-
+                    {
+                      "description": "a security group",
+                      "name": "secgroup_1"
                     }
                 openstack_networking_subnet_v2.subnet_1: |-
                     {
@@ -5193,7 +4732,7 @@ resources:
                 - The collection of tags assigned on the network, which have been
                 explicitly and implicitly added.
             availability_zone_hints: |-
-                -  (Optional) An availability zone is used to make
+                - (Optional) An availability zone is used to make
                 network resources highly available. Used for resources with high availability
                 so that they are scheduled on different availability zones. Changing this
                 creates a new network.
@@ -5442,7 +4981,7 @@ resources:
                 is left blank or omitted. To retrieve the assigned IP address, use the
                 all_fixed_ips attribute.
             fixed_ip.subnet_id: |-
-                - (Required) Subnet in which to allocate IP address for
+                - (Optional) Subnet in which to allocate IP address for
                 this port.
             mac_address: |-
                 - (Optional) Specify a specific MAC address for the port. Changing
@@ -5773,7 +5312,7 @@ resources:
             object_type: |-
                 - (Required) The type of the object that the RBAC policy
                 affects. Can be one of the following: address_scope, address_group,
-                network, qos_policy, security_group or subnetpool.
+                network, qos_policy, security_group, subnetpool or bgpvpn.
             region: |-
                 - (Optional) The region in which to obtain the V2 networking client.
                 A networking client is needed to configure a routing entry on a subnet. If omitted, the
@@ -5914,7 +5453,7 @@ resources:
                 - The collection of tags assigned on the router, which have been
                 explicitly and implicitly added.
             availability_zone_hints: |-
-                -  (Optional) An availability zone is used to make
+                - (Optional) An availability zone is used to make
                 network resources highly available. Used for resources with high availability
                 so that they are scheduled on different availability zones. Changing this
                 creates a new router.
@@ -5936,12 +5475,6 @@ resources:
                 external fixed IPs of the router.
             external_fixed_ip.ip_address: '- (Optional) The IP address to set on the router.'
             external_fixed_ip.subnet_id: '- (Optional) Subnet in which the fixed IP belongs to.'
-            external_gateway: |-
-                - (Deprecated - use external_network_id instead) The
-                network UUID of an external gateway for the router. A router with an
-                external gateway is required if any compute instances or load balancers
-                will be using floating IPs. Changing this updates the external gateway
-                of an existing router.
             external_network_id: |-
                 - (Optional) The network UUID of an external gateway
                 for the router. A router with an external gateway is required if any
@@ -6015,7 +5548,10 @@ resources:
                 - (Optional) The lower part of the allowed port range, valid
                 integer value needs to be between 1 and 65535. Changing this creates a new
                 security group rule.
-            protocol: '- (Optional) The layer 4 protocol type, valid values are following. Changing this creates a new security group rule. This is required if you want to specify a port range.'
+            protocol: |-
+                - (Optional) The layer 4 protocol type, valid values are
+                following. Changing this creates a new security group rule. This is required
+                if you want to specify a port range.
             region: |-
                 - (Optional) The region in which to obtain the V2 networking client.
                 A networking client is needed to create a port. If omitted, the
@@ -6064,6 +5600,11 @@ resources:
                 A networking client is needed to create a port. If omitted, the
                 region argument of the provider is used. Changing this creates a new
                 security group.
+            stateful: |-
+                - (Optional) Indicates if the security group is stateful or
+                stateless. Update of the stateful argument is allowed when there is no port
+                associated with the security group. Available only in OpenStack environments
+                with the stateful-security-group extension. Defaults to true.
             tags: '- (Optional) A set of string tags for the security group.'
             tenant_id: |-
                 - (Optional) The owner of the security group. Required if admin
@@ -6151,13 +5692,6 @@ resources:
                 The allocation_pool block is documented below.
             allocation_pool.end: '- (Required) The ending address.'
             allocation_pool.start: '- (Required) The starting address.'
-            allocation_pools: |-
-                - (Deprecated - use allocation_pool instead)
-                A block declaring the start and end range of the IP addresses available for
-                use with DHCP in this subnet.
-                The allocation_pools block is documented below.
-            allocation_pools.end: '- (Required) The ending address.'
-            allocation_pools.start: '- (Required) The starting address.'
             cidr: |-
                 - (Optional) CIDR representing IP range for this subnet, based on IP
                 version. You can omit this option if you are creating a subnet from a
@@ -6169,6 +5703,9 @@ resources:
                 - (Optional) An array of DNS name server names used by hosts
                 in this subnet. Changing this updates the DNS name servers for the existing
                 subnet.
+            dns_publish_fixed_ip: |-
+                - (Optional) Whether to publish DNS records for IPs
+                from this subnet. Defaults is false.
             enable_dhcp: |-
                 - (Optional) The administrative state of the network.
                 Acceptable values are "true" and "false". Changing this value enables or
@@ -6178,14 +5715,6 @@ resources:
                 Leaving this blank and not setting no_gateway will cause a default
                 gateway of .1 to be used. Changing this updates the gateway IP of the
                 existing subnet.
-            host_routes: |-
-                - (Deprecated - use openstack_networking_subnet_route_v2
-                instead) An array of routes that should be used by devices
-                with IPs from this subnet (not including local subnet route). The host_route
-                object structure is documented below. Changing this updates the host routes
-                for the existing subnet.
-            host_routes.destination_cidr: '- (Required) The destination CIDR.'
-            host_routes.next_hop: '- (Required) The next hop in the route.'
             ip_version: |-
                 - (Optional) IP version, either 4 (default) or 6. Changing this creates a
                 new subnet.
@@ -6424,6 +5953,39 @@ resources:
                 - (Optional) The owner of the Trunk. Required if admin wants
                 to create a trunk on behalf of another tenant. Changing this creates a new trunk.
         importStatements: []
+    openstack_objectstorage_account_v1:
+        subCategory: Object Storage / Swift
+        description: Manages a V1 account resource within OpenStack.
+        name: openstack_objectstorage_account_v1
+        title: openstack_objectstorage_account_v1
+        examples:
+            - name: account_1
+              manifest: |-
+                {
+                  "metadata": {
+                    "Temp-Url-Key": "testkey",
+                    "test": "true"
+                  },
+                  "region": "RegionOne"
+                }
+        argumentDocs:
+            bytes_used: '- The number of bytes used by the account.'
+            container_count: '- The number of containers in the account.'
+            headers: '- A map of headers returned for the account.'
+            metadata: |-
+                - (Optional) A map of custom key/value pairs to associate with the
+                account metadata. Changing the Quota-Bytes key value is allowed to be
+                updated only by the cloud administrator.
+            object_count: '- The number of objects in the account.'
+            project_id: |-
+                - (Optional) The project ID of the corresponding account. If
+                omitted, the token's project ID is used. Changing this creates a new account.
+            quota_bytes: '- The number of bytes allowed for the account.'
+            region: |-
+                - (Optional) The region in which to create the account. If omitted,
+                the region argument of the provider is used. Changing this creates a new
+                account.
+        importStatements: []
     openstack_objectstorage_container_v1:
         subCategory: Object Storage / Swift
         description: Manages a V1 container resource within OpenStack.
@@ -6497,7 +6059,7 @@ resources:
             content_type: |-
                 - (Optional) The MIME type for the container. Changing this
                 updates the MIME type.
-            force_destroy: '-  (Optional, Default:false ) A boolean that indicates all objects should be deleted from the container so that the container can be destroyed without error. These objects are not recoverable.'
+            force_destroy: '- (Optional, Default:false ) A boolean that indicates all objects should be deleted from the container so that the container can be destroyed without error. These objects are not recoverable.'
             metadata: |-
                 - (Optional) Custom key/value pairs to associate with the container.
                 Changing this updates the existing container metadata.
@@ -6687,7 +6249,13 @@ resources:
                     }
         argumentDocs:
             container: '- (Required) The container name the object belongs to.'
+            digest: |-
+                - (Optional) The digest to use when generating the tempurl.
+                Supported values are sha1, sha256 and sha512. Default is sha1.
             id: '- Computed md5 hash based on the generated url'
+            key: |-
+                - (Optional) The key to use when generating the tempurl. If not
+                provided, the key will be read from the container or account metadata.
             method: |-
                 - (Optional) The method allowed when accessing this URL.
                 Valid values are GET, and POST. Default is GET.
@@ -6697,6 +6265,9 @@ resources:
                 it has expired. If set to true, this will create a new resource with a new
                 ID and new URL. Defaults to false.
             region: '- (Optional) The region the tempurl is located in.'
+            split: |-
+                - (Optional) Split is the string on which to split the object URL.
+                Default is /v1/.
             ttl: |-
                 - (Required) The TTL, in seconds, for the URL. For how long it should
                 be valid.
@@ -7205,7 +6776,7 @@ resources:
                 - (Optional) The owner of the group. Required if admin wants to
                 create an endpoint group for another project. Changing this creates a new group.
             type: |-
-                -  The type of the endpoints in the group. A valid value is subnet, cidr, network, router, or vlan.
+                - The type of the endpoints in the group. A valid value is subnet, cidr, network, router, or vlan.
                 Changing this creates a new group.
             value_specs: '- (Optional) Map of additional options.'
         importStatements: []
@@ -7232,7 +6803,7 @@ resources:
                 - (Optional) The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
                 The default value is aes-128. Changing this updates the existing policy.
             ike_version: |-
-                - (Optional) The IKE mode. A valid value is v1 or v2. Default is v1.
+                - (Optional) The IKE version. A valid value is v1 or v2. Default is v1.
                 Changing this updates the existing policy.
             lifetime: '- (Optional) The lifetime of the security association. Consists of Unit and Value.'
             name: |-
@@ -7409,7 +6980,7 @@ resources:
                 Most often, local ID would be domain name, email address, etc.
                 If this is not configured then the external IP address will be used as the ID.
             mtu: |-
-                -  (Optional) The maximum transmission unit (MTU) value to address fragmentation.
+                - (Optional) The maximum transmission unit (MTU) value to address fragmentation.
                 Minimum value is 68 for IPv4, and 1280 for IPv6.
             name: |-
                 - (Optional) The name of the connection. Changing this updates the name of

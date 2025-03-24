@@ -47,7 +47,7 @@ type L7RuleV2InitParameters struct {
 	L7PolicyIDSelector *v1.Selector `json:"l7policyIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create an L7 rule. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// L7 Rule.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -58,7 +58,7 @@ type L7RuleV2InitParameters struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-	// HOST_NAME or PATH.
+	// HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The value to use for the comparison. For example, the file type to
@@ -95,7 +95,7 @@ type L7RuleV2Observation struct {
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create an L7 rule. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// L7 Rule.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -106,7 +106,7 @@ type L7RuleV2Observation struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-	// HOST_NAME or PATH.
+	// HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The value to use for the comparison. For example, the file type to
@@ -152,7 +152,7 @@ type L7RuleV2Parameters struct {
 	L7PolicyIDSelector *v1.Selector `json:"l7policyIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create an L7 rule. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// L7 Rule.
 	// +kubebuilder:validation:Optional
@@ -165,7 +165,7 @@ type L7RuleV2Parameters struct {
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// The L7 Rule type - can either be COOKIE, FILE_TYPE, HEADER,
-	// HOST_NAME or PATH.
+	// HOST_NAME, PATH, SSL_CONN_HAS_CERT, SSL_VERIFY_RESULT or SSL_DN_FIELD.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 

@@ -2005,11 +2005,6 @@ func (in *VolumeV3InitParameters) DeepCopyInto(out *VolumeV3InitParameters) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.Multiattach != nil {
-		in, out := &in.Multiattach, &out.Multiattach
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -2157,11 +2152,6 @@ func (in *VolumeV3Observation) DeepCopyInto(out *VolumeV3Observation) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.Multiattach != nil {
-		in, out := &in.Multiattach, &out.Multiattach
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -2264,11 +2254,6 @@ func (in *VolumeV3Parameters) DeepCopyInto(out *VolumeV3Parameters) {
 			}
 			(*out)[key] = outVal
 		}
-	}
-	if in.Multiattach != nil {
-		in, out := &in.Multiattach, &out.Multiattach
-		*out = new(bool)
-		**out = **in
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name

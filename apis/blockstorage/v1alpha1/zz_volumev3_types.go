@@ -151,9 +151,6 @@ type VolumeV3InitParameters struct {
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
-	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
-
 	// A unique name for the volume. Changing this updates the
 	// volume's name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -229,9 +226,6 @@ type VolumeV3Observation struct {
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
-	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
-
 	// A unique name for the volume. Changing this updates the
 	// volume's name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -306,10 +300,6 @@ type VolumeV3Parameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
-
-	// (Deprecated - use multiattach enabled volume types instead)  Allow the volume to be attached to more than one Compute instance.
-	// +kubebuilder:validation:Optional
-	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
 
 	// A unique name for the volume. Changing this updates the
 	// volume's name.

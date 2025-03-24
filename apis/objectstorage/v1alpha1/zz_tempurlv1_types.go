@@ -29,6 +29,14 @@ type TempurlV1InitParameters struct {
 	// +kubebuilder:validation:Optional
 	ContainerSelector *v1.Selector `json:"containerSelector,omitempty" tf:"-"`
 
+	// The digest to use when generating the tempurl.
+	// Supported values are sha1, sha256 and sha512. Default is sha1.
+	Digest *string `json:"digest,omitempty" tf:"digest,omitempty"`
+
+	// The key to use when generating the tempurl. If not
+	// provided, the key will be read from the container or account metadata.
+	KeySecretRef *v1.SecretKeySelector `json:"keySecretRef,omitempty" tf:"-"`
+
 	// The method allowed when accessing this URL.
 	// Valid values are GET, and POST. Default is GET.
 	Method *string `json:"method,omitempty" tf:"method,omitempty"`
@@ -54,6 +62,8 @@ type TempurlV1InitParameters struct {
 	// The region the tempurl is located in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Split is the string on which to split the object URL.
+	// Default is /v1/.
 	Split *string `json:"split,omitempty" tf:"split,omitempty"`
 
 	// The TTL, in seconds, for the URL. For how long it should
@@ -65,6 +75,10 @@ type TempurlV1Observation struct {
 
 	// The container name the object belongs to.
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
+
+	// The digest to use when generating the tempurl.
+	// Supported values are sha1, sha256 and sha512. Default is sha1.
+	Digest *string `json:"digest,omitempty" tf:"digest,omitempty"`
 
 	// Computed md5 hash based on the generated url
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -84,6 +98,8 @@ type TempurlV1Observation struct {
 	// The region the tempurl is located in.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Split is the string on which to split the object URL.
+	// Default is /v1/.
 	Split *string `json:"split,omitempty" tf:"split,omitempty"`
 
 	// The TTL, in seconds, for the URL. For how long it should
@@ -107,6 +123,16 @@ type TempurlV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	ContainerSelector *v1.Selector `json:"containerSelector,omitempty" tf:"-"`
 
+	// The digest to use when generating the tempurl.
+	// Supported values are sha1, sha256 and sha512. Default is sha1.
+	// +kubebuilder:validation:Optional
+	Digest *string `json:"digest,omitempty" tf:"digest,omitempty"`
+
+	// The key to use when generating the tempurl. If not
+	// provided, the key will be read from the container or account metadata.
+	// +kubebuilder:validation:Optional
+	KeySecretRef *v1.SecretKeySelector `json:"keySecretRef,omitempty" tf:"-"`
+
 	// The method allowed when accessing this URL.
 	// Valid values are GET, and POST. Default is GET.
 	// +kubebuilder:validation:Optional
@@ -136,6 +162,8 @@ type TempurlV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Split is the string on which to split the object URL.
+	// Default is /v1/.
 	// +kubebuilder:validation:Optional
 	Split *string `json:"split,omitempty" tf:"split,omitempty"`
 
