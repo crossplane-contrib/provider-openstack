@@ -33,26 +33,6 @@ spec:
 
 ---
 
-apiVersion: compute.openstack.crossplane.io/v1alpha1
-kind: SecgroupV2
-metadata:
-  annotations:
-    meta.upbound.io/example-id: networking/v1alpha1/networkv2
-  labels:
-    testing.upbound.io/example-name: secgroup_1
-  name: secgroup-1
-spec:
-  forProvider:
-    description: a security group
-    name: secgroup_1
-    rule:
-    - cidr: 0.0.0.0/0
-      fromPort: 22
-      ipProtocol: tcp
-      toPort: 22
-
----
-
 apiVersion: networking.openstack.crossplane.io/v1alpha1
 kind: PortV2
 metadata:
@@ -74,7 +54,44 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: network_1
     securityGroupIds:
-    - ${openstack_compute_secgroup_v2.secgroup_1.id}
+    - ${openstack_networking_secgroup_v2.secgroup_1.id}
+
+---
+
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: SecgroupRuleV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/networkv2
+  labels:
+    testing.upbound.io/example-name: secgroup_rule_1
+  name: secgroup-rule-1
+spec:
+  forProvider:
+    direction: ingress
+    ethertype: IPv4
+    portRangeMax: 22
+    portRangeMin: 22
+    protocol: tcp
+    remoteIpPrefix: 0.0.0.0/0
+    securityGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: secgroup_1
+
+---
+
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: SecgroupV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/networkv2
+  labels:
+    testing.upbound.io/example-name: secgroup_1
+  name: secgroup-1
+spec:
+  forProvider:
+    description: a security group
+    name: secgroup_1
 
 ---
 

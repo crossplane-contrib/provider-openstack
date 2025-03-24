@@ -17,12 +17,6 @@ func (tr *FlavorAccessV2) Hub() {}
 func (tr *FlavorV2) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *FloatingipAssociateV2) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *FloatingipV2) Hub() {}
-
-// Hub marks this type as a conversion hub.
 func (tr *InstanceV2) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -33,9 +27,6 @@ func (tr *KeypairV2) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *QuotasetV2) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *SecgroupV2) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *ServergroupV2) Hub() {}

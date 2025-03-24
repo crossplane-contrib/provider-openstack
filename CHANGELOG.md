@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [Unreleased]
+
+TODO: Include all important changes of v2.1 and v3
+
+### Changed
+
+- Update terraform-provider-openstack to `v3.0.0`
+
+### Removed
+
+- Removed support for deprecated `openstack_compute_floatingip_associate_v2` resource
+- Removed support for deprecated `openstack_compute_floatingip_v2` resource
+- Removed support for deprecated `openstack_compute_secgroup_v2` resource
+
 ## [0.5.0] - 2025-03-24
 
 ### Migration from 0.4.0

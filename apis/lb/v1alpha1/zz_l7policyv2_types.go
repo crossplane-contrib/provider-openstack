@@ -48,6 +48,12 @@ type L7PolicyV2InitParameters struct {
 	// The position of this policy on the listener. Positions start at 1.
 	Position *float64 `json:"position,omitempty" tf:"position,omitempty"`
 
+	// Integer. Requests matching this policy will be
+	// redirected to the specified URL or Prefix URL with the HTTP response code.
+	// Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+	// 301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
+	RedirectHTTPCode *float64 `json:"redirectHttpCode,omitempty" tf:"redirect_http_code,omitempty"`
+
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
@@ -62,12 +68,16 @@ type L7PolicyV2InitParameters struct {
 	// +kubebuilder:validation:Optional
 	RedirectPoolIDSelector *v1.Selector `json:"redirectPoolIdSelector,omitempty" tf:"-"`
 
+	// Requests matching this policy will be redirected to
+	// this Prefix URL. Only valid if action is REDIRECT_PREFIX.
+	RedirectPrefix *string `json:"redirectPrefix,omitempty" tf:"redirect_prefix,omitempty"`
+
 	// Requests matching this policy will be redirected to this URL.
 	// Only valid if action is REDIRECT_TO_URL.
 	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create an L7 policy. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// L7 Policy.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -105,16 +115,26 @@ type L7PolicyV2Observation struct {
 	// The position of this policy on the listener. Positions start at 1.
 	Position *float64 `json:"position,omitempty" tf:"position,omitempty"`
 
+	// Integer. Requests matching this policy will be
+	// redirected to the specified URL or Prefix URL with the HTTP response code.
+	// Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+	// 301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
+	RedirectHTTPCode *float64 `json:"redirectHttpCode,omitempty" tf:"redirect_http_code,omitempty"`
+
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
 	RedirectPoolID *string `json:"redirectPoolId,omitempty" tf:"redirect_pool_id,omitempty"`
+
+	// Requests matching this policy will be redirected to
+	// this Prefix URL. Only valid if action is REDIRECT_PREFIX.
+	RedirectPrefix *string `json:"redirectPrefix,omitempty" tf:"redirect_prefix,omitempty"`
 
 	// Requests matching this policy will be redirected to this URL.
 	// Only valid if action is REDIRECT_TO_URL.
 	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create an L7 policy. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// L7 Policy.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -165,6 +185,13 @@ type L7PolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Position *float64 `json:"position,omitempty" tf:"position,omitempty"`
 
+	// Integer. Requests matching this policy will be
+	// redirected to the specified URL or Prefix URL with the HTTP response code.
+	// Valid if action is REDIRECT_TO_URL or REDIRECT_PREFIX. Valid options are:
+	// 301, 302, 303, 307, or 308. Default is 302. New in octavia version 2.9
+	// +kubebuilder:validation:Optional
+	RedirectHTTPCode *float64 `json:"redirectHttpCode,omitempty" tf:"redirect_http_code,omitempty"`
+
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
@@ -180,13 +207,18 @@ type L7PolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	RedirectPoolIDSelector *v1.Selector `json:"redirectPoolIdSelector,omitempty" tf:"-"`
 
+	// Requests matching this policy will be redirected to
+	// this Prefix URL. Only valid if action is REDIRECT_PREFIX.
+	// +kubebuilder:validation:Optional
+	RedirectPrefix *string `json:"redirectPrefix,omitempty" tf:"redirect_prefix,omitempty"`
+
 	// Requests matching this policy will be redirected to this URL.
 	// Only valid if action is REDIRECT_TO_URL.
 	// +kubebuilder:validation:Optional
 	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create an L7 policy. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// L7 Policy.
 	// +kubebuilder:validation:Optional

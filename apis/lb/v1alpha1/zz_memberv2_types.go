@@ -56,6 +56,11 @@ type MemberV2InitParameters struct {
 	// this creates a new member.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
+	// A list of simple strings assigned to the member.
+	// Available only for Octavia >= 2.5.
+	// +listType=set
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Required for admins. The UUID of the tenant who owns
 	// the member.  Only administrative users can specify a tenant UUID
 	// other than their own. Changing this creates a new member.
@@ -112,6 +117,11 @@ type MemberV2Observation struct {
 	// The subnet in which to access the member. Changing
 	// this creates a new member.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// A list of simple strings assigned to the member.
+	// Available only for Octavia >= 2.5.
+	// +listType=set
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
 	// the member.  Only administrative users can specify a tenant UUID
@@ -176,6 +186,12 @@ type MemberV2Parameters struct {
 	// this creates a new member.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// A list of simple strings assigned to the member.
+	// Available only for Octavia >= 2.5.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
 	// the member.  Only administrative users can specify a tenant UUID

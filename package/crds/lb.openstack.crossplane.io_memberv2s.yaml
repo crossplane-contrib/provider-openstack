@@ -122,6 +122,14 @@ spec:
                       The subnet in which to access the member. Changing
                       this creates a new member.
                     type: string
+                  tags:
+                    description: |-
+                      A list of simple strings assigned to the member.
+                      Available only for Octavia >= 2.5.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   tenantId:
                     description: |-
                       Required for admins. The UUID of the tenant who owns
@@ -198,6 +206,14 @@ spec:
                       The subnet in which to access the member. Changing
                       this creates a new member.
                     type: string
+                  tags:
+                    description: |-
+                      A list of simple strings assigned to the member.
+                      Available only for Octavia >= 2.5.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   tenantId:
                     description: |-
                       Required for admins. The UUID of the tenant who owns
@@ -449,6 +465,14 @@ spec:
                       The subnet in which to access the member. Changing
                       this creates a new member.
                     type: string
+                  tags:
+                    description: |-
+                      A list of simple strings assigned to the member.
+                      Available only for Octavia >= 2.5.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   tenantId:
                     description: |-
                       Required for admins. The UUID of the tenant who owns

@@ -121,14 +121,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  externalGateway:
-                    description: |-
-                      (Deprecated - use external_network_id instead) The
-                      network UUID of an external gateway for the router. A router with an
-                      external gateway is required if any compute instances or load balancers
-                      will be using floating IPs. Changing this updates the external gateway
-                      of an existing router.
-                    type: string
                   externalNetworkId:
                     description: |-
                       The network UUID of an external gateway
@@ -248,14 +240,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  externalGateway:
-                    description: |-
-                      (Deprecated - use external_network_id instead) The
-                      network UUID of an external gateway for the router. A router with an
-                      external gateway is required if any compute instances or load balancers
-                      will be using floating IPs. Changing this updates the external gateway
-                      of an existing router.
-                    type: string
                   externalNetworkId:
                     description: |-
                       The network UUID of an external gateway
@@ -542,14 +526,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  externalGateway:
-                    description: |-
-                      (Deprecated - use external_network_id instead) The
-                      network UUID of an external gateway for the router. A router with an
-                      external gateway is required if any compute instances or load balancers
-                      will be using floating IPs. Changing this updates the external gateway
-                      of an existing router.
-                    type: string
                   externalNetworkId:
                     description: |-
                       The network UUID of an external gateway

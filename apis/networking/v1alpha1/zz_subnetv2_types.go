@@ -43,64 +43,6 @@ type AllocationPoolParameters struct {
 	Start *string `json:"start" tf:"start,omitempty"`
 }
 
-type AllocationPoolsInitParameters struct {
-
-	// The ending address.
-	End *string `json:"end,omitempty" tf:"end,omitempty"`
-
-	// The starting address.
-	Start *string `json:"start,omitempty" tf:"start,omitempty"`
-}
-
-type AllocationPoolsObservation struct {
-
-	// The ending address.
-	End *string `json:"end,omitempty" tf:"end,omitempty"`
-
-	// The starting address.
-	Start *string `json:"start,omitempty" tf:"start,omitempty"`
-}
-
-type AllocationPoolsParameters struct {
-
-	// The ending address.
-	// +kubebuilder:validation:Optional
-	End *string `json:"end" tf:"end,omitempty"`
-
-	// The starting address.
-	// +kubebuilder:validation:Optional
-	Start *string `json:"start" tf:"start,omitempty"`
-}
-
-type HostRoutesInitParameters struct {
-
-	// The destination CIDR.
-	DestinationCidr *string `json:"destinationCidr,omitempty" tf:"destination_cidr,omitempty"`
-
-	// The next hop in the route.
-	NextHop *string `json:"nextHop,omitempty" tf:"next_hop,omitempty"`
-}
-
-type HostRoutesObservation struct {
-
-	// The destination CIDR.
-	DestinationCidr *string `json:"destinationCidr,omitempty" tf:"destination_cidr,omitempty"`
-
-	// The next hop in the route.
-	NextHop *string `json:"nextHop,omitempty" tf:"next_hop,omitempty"`
-}
-
-type HostRoutesParameters struct {
-
-	// The destination CIDR.
-	// +kubebuilder:validation:Optional
-	DestinationCidr *string `json:"destinationCidr" tf:"destination_cidr,omitempty"`
-
-	// The next hop in the route.
-	// +kubebuilder:validation:Optional
-	NextHop *string `json:"nextHop" tf:"next_hop,omitempty"`
-}
-
 type SubnetV2InitParameters struct {
 
 	// A block declaring the start and end range of
@@ -111,12 +53,6 @@ type SubnetV2InitParameters struct {
 	// The allocation_pool block is documented below.
 	AllocationPool []AllocationPoolInitParameters `json:"allocationPool,omitempty" tf:"allocation_pool,omitempty"`
 
-	// (Deprecated - use allocation_pool instead)
-	// A block declaring the start and end range of the IP addresses available for
-	// use with DHCP in this subnet.
-	// The allocation_pools block is documented below.
-	AllocationPools []AllocationPoolsInitParameters `json:"allocationPools,omitempty" tf:"allocation_pools,omitempty"`
-
 	// CIDR representing IP range for this subnet, based on IP
 	// version. You can omit this option if you are creating a subnet from a
 	// subnet pool.
@@ -126,6 +62,10 @@ type SubnetV2InitParameters struct {
 	// in this subnet. Changing this updates the DNS name servers for the existing
 	// subnet.
 	DNSNameservers []*string `json:"dnsNameservers,omitempty" tf:"dns_nameservers,omitempty"`
+
+	// Whether to publish DNS records for IPs
+	// from this subnet. Defaults is false.
+	DNSPublishFixedIP *bool `json:"dnsPublishFixedIp,omitempty" tf:"dns_publish_fixed_ip,omitempty"`
 
 	// Human-readable description of the subnet. Changing this
 	// updates the name of the existing subnet.
@@ -141,13 +81,6 @@ type SubnetV2InitParameters struct {
 	// gateway of .1 to be used. Changing this updates the gateway IP of the
 	// existing subnet.
 	GatewayIP *string `json:"gatewayIp,omitempty" tf:"gateway_ip,omitempty"`
-
-	// (Deprecated - use openstack_networking_subnet_route_v2
-	// instead) An array of routes that should be used by devices
-	// with IPs from this subnet (not including local subnet route). The host_route
-	// object structure is documented below. Changing this updates the host routes
-	// for the existing subnet.
-	HostRoutes []HostRoutesInitParameters `json:"hostRoutes,omitempty" tf:"host_routes,omitempty"`
 
 	// IP version, either 4 (default) or 6. Changing this creates a
 	// new subnet.
@@ -229,12 +162,6 @@ type SubnetV2Observation struct {
 	// The allocation_pool block is documented below.
 	AllocationPool []AllocationPoolObservation `json:"allocationPool,omitempty" tf:"allocation_pool,omitempty"`
 
-	// (Deprecated - use allocation_pool instead)
-	// A block declaring the start and end range of the IP addresses available for
-	// use with DHCP in this subnet.
-	// The allocation_pools block is documented below.
-	AllocationPools []AllocationPoolsObservation `json:"allocationPools,omitempty" tf:"allocation_pools,omitempty"`
-
 	// CIDR representing IP range for this subnet, based on IP
 	// version. You can omit this option if you are creating a subnet from a
 	// subnet pool.
@@ -244,6 +171,10 @@ type SubnetV2Observation struct {
 	// in this subnet. Changing this updates the DNS name servers for the existing
 	// subnet.
 	DNSNameservers []*string `json:"dnsNameservers,omitempty" tf:"dns_nameservers,omitempty"`
+
+	// Whether to publish DNS records for IPs
+	// from this subnet. Defaults is false.
+	DNSPublishFixedIP *bool `json:"dnsPublishFixedIp,omitempty" tf:"dns_publish_fixed_ip,omitempty"`
 
 	// Human-readable description of the subnet. Changing this
 	// updates the name of the existing subnet.
@@ -259,13 +190,6 @@ type SubnetV2Observation struct {
 	// gateway of .1 to be used. Changing this updates the gateway IP of the
 	// existing subnet.
 	GatewayIP *string `json:"gatewayIp,omitempty" tf:"gateway_ip,omitempty"`
-
-	// (Deprecated - use openstack_networking_subnet_route_v2
-	// instead) An array of routes that should be used by devices
-	// with IPs from this subnet (not including local subnet route). The host_route
-	// object structure is documented below. Changing this updates the host routes
-	// for the existing subnet.
-	HostRoutes []HostRoutesObservation `json:"hostRoutes,omitempty" tf:"host_routes,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -336,13 +260,6 @@ type SubnetV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	AllocationPool []AllocationPoolParameters `json:"allocationPool,omitempty" tf:"allocation_pool,omitempty"`
 
-	// (Deprecated - use allocation_pool instead)
-	// A block declaring the start and end range of the IP addresses available for
-	// use with DHCP in this subnet.
-	// The allocation_pools block is documented below.
-	// +kubebuilder:validation:Optional
-	AllocationPools []AllocationPoolsParameters `json:"allocationPools,omitempty" tf:"allocation_pools,omitempty"`
-
 	// CIDR representing IP range for this subnet, based on IP
 	// version. You can omit this option if you are creating a subnet from a
 	// subnet pool.
@@ -354,6 +271,11 @@ type SubnetV2Parameters struct {
 	// subnet.
 	// +kubebuilder:validation:Optional
 	DNSNameservers []*string `json:"dnsNameservers,omitempty" tf:"dns_nameservers,omitempty"`
+
+	// Whether to publish DNS records for IPs
+	// from this subnet. Defaults is false.
+	// +kubebuilder:validation:Optional
+	DNSPublishFixedIP *bool `json:"dnsPublishFixedIp,omitempty" tf:"dns_publish_fixed_ip,omitempty"`
 
 	// Human-readable description of the subnet. Changing this
 	// updates the name of the existing subnet.
@@ -372,14 +294,6 @@ type SubnetV2Parameters struct {
 	// existing subnet.
 	// +kubebuilder:validation:Optional
 	GatewayIP *string `json:"gatewayIp,omitempty" tf:"gateway_ip,omitempty"`
-
-	// (Deprecated - use openstack_networking_subnet_route_v2
-	// instead) An array of routes that should be used by devices
-	// with IPs from this subnet (not including local subnet route). The host_route
-	// object structure is documented below. Changing this updates the host routes
-	// for the existing subnet.
-	// +kubebuilder:validation:Optional
-	HostRoutes []HostRoutesParameters `json:"hostRoutes,omitempty" tf:"host_routes,omitempty"`
 
 	// IP version, either 4 (default) or 6. Changing this creates a
 	// new subnet.

@@ -84,6 +84,11 @@ func (in *L7PolicyV2InitParameters) DeepCopyInto(out *L7PolicyV2InitParameters) 
 		*out = new(float64)
 		**out = **in
 	}
+	if in.RedirectHTTPCode != nil {
+		in, out := &in.RedirectHTTPCode, &out.RedirectHTTPCode
+		*out = new(float64)
+		**out = **in
+	}
 	if in.RedirectPoolID != nil {
 		in, out := &in.RedirectPoolID, &out.RedirectPoolID
 		*out = new(string)
@@ -98,6 +103,11 @@ func (in *L7PolicyV2InitParameters) DeepCopyInto(out *L7PolicyV2InitParameters) 
 		in, out := &in.RedirectPoolIDSelector, &out.RedirectPoolIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.RedirectPrefix != nil {
+		in, out := &in.RedirectPrefix, &out.RedirectPrefix
+		*out = new(string)
+		**out = **in
 	}
 	if in.RedirectURL != nil {
 		in, out := &in.RedirectURL, &out.RedirectURL
@@ -196,8 +206,18 @@ func (in *L7PolicyV2Observation) DeepCopyInto(out *L7PolicyV2Observation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.RedirectHTTPCode != nil {
+		in, out := &in.RedirectHTTPCode, &out.RedirectHTTPCode
+		*out = new(float64)
+		**out = **in
+	}
 	if in.RedirectPoolID != nil {
 		in, out := &in.RedirectPoolID, &out.RedirectPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RedirectPrefix != nil {
+		in, out := &in.RedirectPrefix, &out.RedirectPrefix
 		*out = new(string)
 		**out = **in
 	}
@@ -271,6 +291,11 @@ func (in *L7PolicyV2Parameters) DeepCopyInto(out *L7PolicyV2Parameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.RedirectHTTPCode != nil {
+		in, out := &in.RedirectHTTPCode, &out.RedirectHTTPCode
+		*out = new(float64)
+		**out = **in
+	}
 	if in.RedirectPoolID != nil {
 		in, out := &in.RedirectPoolID, &out.RedirectPoolID
 		*out = new(string)
@@ -285,6 +310,11 @@ func (in *L7PolicyV2Parameters) DeepCopyInto(out *L7PolicyV2Parameters) {
 		in, out := &in.RedirectPoolIDSelector, &out.RedirectPoolIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.RedirectPrefix != nil {
+		in, out := &in.RedirectPrefix, &out.RedirectPrefix
+		*out = new(string)
+		**out = **in
 	}
 	if in.RedirectURL != nil {
 		in, out := &in.RedirectURL, &out.RedirectURL
@@ -698,6 +728,42 @@ func (in *ListenerV2InitParameters) DeepCopyInto(out *ListenerV2InitParameters) 
 			}
 		}
 	}
+	if in.AlpnProtocols != nil {
+		in, out := &in.AlpnProtocols, &out.AlpnProtocols
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ClientAuthentication != nil {
+		in, out := &in.ClientAuthentication, &out.ClientAuthentication
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientCATLSContainerRef != nil {
+		in, out := &in.ClientCATLSContainerRef, &out.ClientCATLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientCATLSContainerRefRef != nil {
+		in, out := &in.ClientCATLSContainerRefRef, &out.ClientCATLSContainerRefRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientCATLSContainerRefSelector != nil {
+		in, out := &in.ClientCATLSContainerRefSelector, &out.ClientCATLSContainerRefSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientCrlContainerRef != nil {
+		in, out := &in.ClientCrlContainerRef, &out.ClientCrlContainerRef
+		*out = new(string)
+		**out = **in
+	}
 	if in.ConnectionLimit != nil {
 		in, out := &in.ConnectionLimit, &out.ConnectionLimit
 		*out = new(float64)
@@ -716,6 +782,21 @@ func (in *ListenerV2InitParameters) DeepCopyInto(out *ListenerV2InitParameters) 
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
+		**out = **in
+	}
+	if in.HstsIncludeSubdomains != nil {
+		in, out := &in.HstsIncludeSubdomains, &out.HstsIncludeSubdomains
+		*out = new(bool)
+		**out = **in
+	}
+	if in.HstsMaxAge != nil {
+		in, out := &in.HstsMaxAge, &out.HstsMaxAge
+		*out = new(float64)
+		**out = **in
+	}
+	if in.HstsPreload != nil {
+		in, out := &in.HstsPreload, &out.HstsPreload
+		*out = new(bool)
 		**out = **in
 	}
 	if in.InsertHeaders != nil {
@@ -739,6 +820,16 @@ func (in *ListenerV2InitParameters) DeepCopyInto(out *ListenerV2InitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.LoadbalancerIDRef != nil {
+		in, out := &in.LoadbalancerIDRef, &out.LoadbalancerIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.LoadbalancerIDSelector != nil {
+		in, out := &in.LoadbalancerIDSelector, &out.LoadbalancerIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -761,6 +852,22 @@ func (in *ListenerV2InitParameters) DeepCopyInto(out *ListenerV2InitParameters) 
 	}
 	if in.SniContainerRefs != nil {
 		in, out := &in.SniContainerRefs, &out.SniContainerRefs
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSVersions != nil {
+		in, out := &in.TLSVersions, &out.TLSVersions
 		*out = make([]*string, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -869,6 +976,32 @@ func (in *ListenerV2Observation) DeepCopyInto(out *ListenerV2Observation) {
 			}
 		}
 	}
+	if in.AlpnProtocols != nil {
+		in, out := &in.AlpnProtocols, &out.AlpnProtocols
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ClientAuthentication != nil {
+		in, out := &in.ClientAuthentication, &out.ClientAuthentication
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientCATLSContainerRef != nil {
+		in, out := &in.ClientCATLSContainerRef, &out.ClientCATLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientCrlContainerRef != nil {
+		in, out := &in.ClientCrlContainerRef, &out.ClientCrlContainerRef
+		*out = new(string)
+		**out = **in
+	}
 	if in.ConnectionLimit != nil {
 		in, out := &in.ConnectionLimit, &out.ConnectionLimit
 		*out = new(float64)
@@ -887,6 +1020,21 @@ func (in *ListenerV2Observation) DeepCopyInto(out *ListenerV2Observation) {
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
+		**out = **in
+	}
+	if in.HstsIncludeSubdomains != nil {
+		in, out := &in.HstsIncludeSubdomains, &out.HstsIncludeSubdomains
+		*out = new(bool)
+		**out = **in
+	}
+	if in.HstsMaxAge != nil {
+		in, out := &in.HstsMaxAge, &out.HstsMaxAge
+		*out = new(float64)
+		**out = **in
+	}
+	if in.HstsPreload != nil {
+		in, out := &in.HstsPreload, &out.HstsPreload
+		*out = new(bool)
 		**out = **in
 	}
 	if in.ID != nil {
@@ -937,6 +1085,22 @@ func (in *ListenerV2Observation) DeepCopyInto(out *ListenerV2Observation) {
 	}
 	if in.SniContainerRefs != nil {
 		in, out := &in.SniContainerRefs, &out.SniContainerRefs
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSVersions != nil {
+		in, out := &in.TLSVersions, &out.TLSVersions
 		*out = make([]*string, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -1013,6 +1177,42 @@ func (in *ListenerV2Parameters) DeepCopyInto(out *ListenerV2Parameters) {
 			}
 		}
 	}
+	if in.AlpnProtocols != nil {
+		in, out := &in.AlpnProtocols, &out.AlpnProtocols
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ClientAuthentication != nil {
+		in, out := &in.ClientAuthentication, &out.ClientAuthentication
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientCATLSContainerRef != nil {
+		in, out := &in.ClientCATLSContainerRef, &out.ClientCATLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientCATLSContainerRefRef != nil {
+		in, out := &in.ClientCATLSContainerRefRef, &out.ClientCATLSContainerRefRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientCATLSContainerRefSelector != nil {
+		in, out := &in.ClientCATLSContainerRefSelector, &out.ClientCATLSContainerRefSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientCrlContainerRef != nil {
+		in, out := &in.ClientCrlContainerRef, &out.ClientCrlContainerRef
+		*out = new(string)
+		**out = **in
+	}
 	if in.ConnectionLimit != nil {
 		in, out := &in.ConnectionLimit, &out.ConnectionLimit
 		*out = new(float64)
@@ -1031,6 +1231,21 @@ func (in *ListenerV2Parameters) DeepCopyInto(out *ListenerV2Parameters) {
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
+		**out = **in
+	}
+	if in.HstsIncludeSubdomains != nil {
+		in, out := &in.HstsIncludeSubdomains, &out.HstsIncludeSubdomains
+		*out = new(bool)
+		**out = **in
+	}
+	if in.HstsMaxAge != nil {
+		in, out := &in.HstsMaxAge, &out.HstsMaxAge
+		*out = new(float64)
+		**out = **in
+	}
+	if in.HstsPreload != nil {
+		in, out := &in.HstsPreload, &out.HstsPreload
+		*out = new(bool)
 		**out = **in
 	}
 	if in.InsertHeaders != nil {
@@ -1054,6 +1269,16 @@ func (in *ListenerV2Parameters) DeepCopyInto(out *ListenerV2Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.LoadbalancerIDRef != nil {
+		in, out := &in.LoadbalancerIDRef, &out.LoadbalancerIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.LoadbalancerIDSelector != nil {
+		in, out := &in.LoadbalancerIDSelector, &out.LoadbalancerIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1076,6 +1301,22 @@ func (in *ListenerV2Parameters) DeepCopyInto(out *ListenerV2Parameters) {
 	}
 	if in.SniContainerRefs != nil {
 		in, out := &in.SniContainerRefs, &out.SniContainerRefs
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSVersions != nil {
+		in, out := &in.TLSVersions, &out.TLSVersions
 		*out = make([]*string, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -1275,6 +1516,11 @@ func (in *LoadbalancerV2InitParameters) DeepCopyInto(out *LoadbalancerV2InitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.VipQosPolicyID != nil {
+		in, out := &in.VipQosPolicyID, &out.VipQosPolicyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.VipSubnetID != nil {
 		in, out := &in.VipSubnetID, &out.VipSubnetID
 		*out = new(string)
@@ -1409,6 +1655,11 @@ func (in *LoadbalancerV2Observation) DeepCopyInto(out *LoadbalancerV2Observation
 		*out = new(string)
 		**out = **in
 	}
+	if in.VipQosPolicyID != nil {
+		in, out := &in.VipQosPolicyID, &out.VipQosPolicyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.VipSubnetID != nil {
 		in, out := &in.VipSubnetID, &out.VipSubnetID
 		*out = new(string)
@@ -1503,6 +1754,11 @@ func (in *LoadbalancerV2Parameters) DeepCopyInto(out *LoadbalancerV2Parameters) 
 	}
 	if in.VipPortID != nil {
 		in, out := &in.VipPortID, &out.VipPortID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VipQosPolicyID != nil {
+		in, out := &in.VipQosPolicyID, &out.VipQosPolicyID
 		*out = new(string)
 		**out = **in
 	}
@@ -1823,6 +2079,17 @@ func (in *MemberV2InitParameters) DeepCopyInto(out *MemberV2InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID
 		*out = new(string)
@@ -1935,6 +2202,17 @@ func (in *MemberV2Observation) DeepCopyInto(out *MemberV2Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID
 		*out = new(string)
@@ -2009,6 +2287,17 @@ func (in *MemberV2Parameters) DeepCopyInto(out *MemberV2Parameters) {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID
@@ -2302,6 +2591,11 @@ func (in *MonitorV2InitParameters) DeepCopyInto(out *MonitorV2InitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.DomainName != nil {
+		in, out := &in.DomainName, &out.DomainName
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExpectedCodes != nil {
 		in, out := &in.ExpectedCodes, &out.ExpectedCodes
 		*out = new(string)
@@ -2309,6 +2603,11 @@ func (in *MonitorV2InitParameters) DeepCopyInto(out *MonitorV2InitParameters) {
 	}
 	if in.HTTPMethod != nil {
 		in, out := &in.HTTPMethod, &out.HTTPMethod
+		*out = new(string)
+		**out = **in
+	}
+	if in.HTTPVersion != nil {
+		in, out := &in.HTTPVersion, &out.HTTPVersion
 		*out = new(string)
 		**out = **in
 	}
@@ -2424,6 +2723,11 @@ func (in *MonitorV2Observation) DeepCopyInto(out *MonitorV2Observation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.DomainName != nil {
+		in, out := &in.DomainName, &out.DomainName
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExpectedCodes != nil {
 		in, out := &in.ExpectedCodes, &out.ExpectedCodes
 		*out = new(string)
@@ -2431,6 +2735,11 @@ func (in *MonitorV2Observation) DeepCopyInto(out *MonitorV2Observation) {
 	}
 	if in.HTTPMethod != nil {
 		in, out := &in.HTTPMethod, &out.HTTPMethod
+		*out = new(string)
+		**out = **in
+	}
+	if in.HTTPVersion != nil {
+		in, out := &in.HTTPVersion, &out.HTTPVersion
 		*out = new(string)
 		**out = **in
 	}
@@ -2509,6 +2818,11 @@ func (in *MonitorV2Parameters) DeepCopyInto(out *MonitorV2Parameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.DomainName != nil {
+		in, out := &in.DomainName, &out.DomainName
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExpectedCodes != nil {
 		in, out := &in.ExpectedCodes, &out.ExpectedCodes
 		*out = new(string)
@@ -2516,6 +2830,11 @@ func (in *MonitorV2Parameters) DeepCopyInto(out *MonitorV2Parameters) {
 	}
 	if in.HTTPMethod != nil {
 		in, out := &in.HTTPMethod, &out.HTTPMethod
+		*out = new(string)
+		**out = **in
+	}
+	if in.HTTPVersion != nil {
+		in, out := &in.HTTPVersion, &out.HTTPVersion
 		*out = new(string)
 		**out = **in
 	}
@@ -2731,6 +3050,27 @@ func (in *PoolV2InitParameters) DeepCopyInto(out *PoolV2InitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.AlpnProtocols != nil {
+		in, out := &in.AlpnProtocols, &out.AlpnProtocols
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.CATLSContainerRef != nil {
+		in, out := &in.CATLSContainerRef, &out.CATLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.CrlContainerRef != nil {
+		in, out := &in.CrlContainerRef, &out.CrlContainerRef
+		*out = new(string)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -2770,6 +3110,43 @@ func (in *PoolV2InitParameters) DeepCopyInto(out *PoolV2InitParameters) {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
 		**out = **in
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSContainerRef != nil {
+		in, out := &in.TLSContainerRef, &out.TLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSEnabled != nil {
+		in, out := &in.TLSEnabled, &out.TLSEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.TLSVersions != nil {
+		in, out := &in.TLSVersions, &out.TLSVersions
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID
@@ -2828,6 +3205,27 @@ func (in *PoolV2Observation) DeepCopyInto(out *PoolV2Observation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.AlpnProtocols != nil {
+		in, out := &in.AlpnProtocols, &out.AlpnProtocols
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.CATLSContainerRef != nil {
+		in, out := &in.CATLSContainerRef, &out.CATLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.CrlContainerRef != nil {
+		in, out := &in.CrlContainerRef, &out.CrlContainerRef
+		*out = new(string)
+		**out = **in
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -2873,6 +3271,43 @@ func (in *PoolV2Observation) DeepCopyInto(out *PoolV2Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSContainerRef != nil {
+		in, out := &in.TLSContainerRef, &out.TLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSEnabled != nil {
+		in, out := &in.TLSEnabled, &out.TLSEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.TLSVersions != nil {
+		in, out := &in.TLSVersions, &out.TLSVersions
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID
 		*out = new(string)
@@ -2896,6 +3331,27 @@ func (in *PoolV2Parameters) DeepCopyInto(out *PoolV2Parameters) {
 	if in.AdminStateUp != nil {
 		in, out := &in.AdminStateUp, &out.AdminStateUp
 		*out = new(bool)
+		**out = **in
+	}
+	if in.AlpnProtocols != nil {
+		in, out := &in.AlpnProtocols, &out.AlpnProtocols
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.CATLSContainerRef != nil {
+		in, out := &in.CATLSContainerRef, &out.CATLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.CrlContainerRef != nil {
+		in, out := &in.CrlContainerRef, &out.CrlContainerRef
+		*out = new(string)
 		**out = **in
 	}
 	if in.Description != nil {
@@ -2937,6 +3393,43 @@ func (in *PoolV2Parameters) DeepCopyInto(out *PoolV2Parameters) {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
 		**out = **in
+	}
+	if in.TLSCiphers != nil {
+		in, out := &in.TLSCiphers, &out.TLSCiphers
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSContainerRef != nil {
+		in, out := &in.TLSContainerRef, &out.TLSContainerRef
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSEnabled != nil {
+		in, out := &in.TLSEnabled, &out.TLSEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.TLSVersions != nil {
+		in, out := &in.TLSVersions, &out.TLSVersions
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID

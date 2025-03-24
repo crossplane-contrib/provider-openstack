@@ -77,13 +77,6 @@ type RouterV2InitParameters struct {
 	// external fixed IPs of the router.
 	ExternalFixedIP []ExternalFixedIPInitParameters `json:"externalFixedIp,omitempty" tf:"external_fixed_ip,omitempty"`
 
-	// (Deprecated - use external_network_id instead) The
-	// network UUID of an external gateway for the router. A router with an
-	// external gateway is required if any compute instances or load balancers
-	// will be using floating IPs. Changing this updates the external gateway
-	// of an existing router.
-	ExternalGateway *string `json:"externalGateway,omitempty" tf:"external_gateway,omitempty"`
-
 	// The network UUID of an external gateway
 	// for the router. A router with an external gateway is required if any
 	// compute instances or load balancers will be using floating IPs. Changing
@@ -162,13 +155,6 @@ type RouterV2Observation struct {
 	// has to be set in order to set this property. Changing this updates the
 	// external fixed IPs of the router.
 	ExternalFixedIP []ExternalFixedIPObservation `json:"externalFixedIp,omitempty" tf:"external_fixed_ip,omitempty"`
-
-	// (Deprecated - use external_network_id instead) The
-	// network UUID of an external gateway for the router. A router with an
-	// external gateway is required if any compute instances or load balancers
-	// will be using floating IPs. Changing this updates the external gateway
-	// of an existing router.
-	ExternalGateway *string `json:"externalGateway,omitempty" tf:"external_gateway,omitempty"`
 
 	// The network UUID of an external gateway
 	// for the router. A router with an external gateway is required if any
@@ -252,14 +238,6 @@ type RouterV2Parameters struct {
 	// external fixed IPs of the router.
 	// +kubebuilder:validation:Optional
 	ExternalFixedIP []ExternalFixedIPParameters `json:"externalFixedIp,omitempty" tf:"external_fixed_ip,omitempty"`
-
-	// (Deprecated - use external_network_id instead) The
-	// network UUID of an external gateway for the router. A router with an
-	// external gateway is required if any compute instances or load balancers
-	// will be using floating IPs. Changing this updates the external gateway
-	// of an existing router.
-	// +kubebuilder:validation:Optional
-	ExternalGateway *string `json:"externalGateway,omitempty" tf:"external_gateway,omitempty"`
 
 	// The network UUID of an external gateway
 	// for the router. A router with an external gateway is required if any

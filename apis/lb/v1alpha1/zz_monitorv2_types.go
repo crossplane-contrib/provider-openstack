@@ -23,24 +23,34 @@ type MonitorV2InitParameters struct {
 	// The time, in seconds, between sending probes to members.
 	Delay *float64 `json:"delay,omitempty" tf:"delay,omitempty"`
 
+	// The domain name to use in the HTTP host header
+	// health monitor requests. Supported in Octavia API version 2.10 or later.
+	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
 	// Required for HTTP(S) types. Expected HTTP codes
 	// for a passing HTTP(S) monitor. You can either specify a single status like
-	// "200", or a range like "200-202".
+	// "200", a list like "200, 202" or a range like "200-202". Default is "200".
 	ExpectedCodes *string `json:"expectedCodes,omitempty" tf:"expected_codes,omitempty"`
 
-	// Required for HTTP(S) types. The HTTP method used
-	// for requests by the monitor. If this attribute is not specified, it
-	// defaults to "GET".
+	// Required for HTTP(S) types. The HTTP method that
+	// the health monitor uses for requests. One of CONNECT, DELETE, GET, HEAD,
+	// OPTIONS, PATCH, POST, PUT, or TRACE. The default is GET.
 	HTTPMethod *string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
+
+	// Required for HTTP(S) types. The HTTP version that
+	// the health monitor uses for requests. One of 1.0 or 1.1is supported for HTTP(S) monitors. The default is1.0`. Supported in Octavia API version
+	// 2.10 or later.
+	HTTPVersion *string `json:"httpVersion,omitempty" tf:"http_version,omitempty"`
 
 	// Number of permissible ping failures before
 	// changing the member's status to INACTIVE. Must be a number between 1
 	// and 10.
 	MaxRetries *float64 `json:"maxRetries,omitempty" tf:"max_retries,omitempty"`
 
-	// Number of permissible ping failures befor changing the member's
-	// status to ERROR. Must be a number between 1 and 10 (supported only in Octavia).
-	// Changing this updates the max_retries_down of the existing monitor.
+	// Number of permissible ping failures before
+	// changing the member's status to ERROR. Must be a number between 1 and 10.
+	// The default is 3. Changing this updates the max_retries_down of the
+	// existing monitor.
 	MaxRetriesDown *float64 `json:"maxRetriesDown,omitempty" tf:"max_retries_down,omitempty"`
 
 	// The Name of the Monitor.
@@ -60,7 +70,7 @@ type MonitorV2InitParameters struct {
 	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create a monitor. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// monitor.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -76,12 +86,12 @@ type MonitorV2InitParameters struct {
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// The type of probe, which is PING, TCP, HTTP, HTTPS,
-	// TLS-HELLO or UDP-CONNECT (supported only in Octavia), that is sent by the load
-	// balancer to verify the member state. Changing this creates a new monitor.
+	// TLS-HELLO, SCTP or UDP-CONNECT, that is sent by the loadbalancer to
+	// verify the member state. Changing this creates a new monitor.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Required for HTTP(S) types. URI path that will be
-	// accessed if monitor type is HTTP or HTTPS.
+	// accessed if monitor type is HTTP or HTTPS. Default is /.
 	URLPath *string `json:"urlPath,omitempty" tf:"url_path,omitempty"`
 }
 
@@ -94,15 +104,24 @@ type MonitorV2Observation struct {
 	// The time, in seconds, between sending probes to members.
 	Delay *float64 `json:"delay,omitempty" tf:"delay,omitempty"`
 
+	// The domain name to use in the HTTP host header
+	// health monitor requests. Supported in Octavia API version 2.10 or later.
+	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
 	// Required for HTTP(S) types. Expected HTTP codes
 	// for a passing HTTP(S) monitor. You can either specify a single status like
-	// "200", or a range like "200-202".
+	// "200", a list like "200, 202" or a range like "200-202". Default is "200".
 	ExpectedCodes *string `json:"expectedCodes,omitempty" tf:"expected_codes,omitempty"`
 
-	// Required for HTTP(S) types. The HTTP method used
-	// for requests by the monitor. If this attribute is not specified, it
-	// defaults to "GET".
+	// Required for HTTP(S) types. The HTTP method that
+	// the health monitor uses for requests. One of CONNECT, DELETE, GET, HEAD,
+	// OPTIONS, PATCH, POST, PUT, or TRACE. The default is GET.
 	HTTPMethod *string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
+
+	// Required for HTTP(S) types. The HTTP version that
+	// the health monitor uses for requests. One of 1.0 or 1.1is supported for HTTP(S) monitors. The default is1.0`. Supported in Octavia API version
+	// 2.10 or later.
+	HTTPVersion *string `json:"httpVersion,omitempty" tf:"http_version,omitempty"`
 
 	// The unique ID for the monitor.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -112,9 +131,10 @@ type MonitorV2Observation struct {
 	// and 10.
 	MaxRetries *float64 `json:"maxRetries,omitempty" tf:"max_retries,omitempty"`
 
-	// Number of permissible ping failures befor changing the member's
-	// status to ERROR. Must be a number between 1 and 10 (supported only in Octavia).
-	// Changing this updates the max_retries_down of the existing monitor.
+	// Number of permissible ping failures before
+	// changing the member's status to ERROR. Must be a number between 1 and 10.
+	// The default is 3. Changing this updates the max_retries_down of the
+	// existing monitor.
 	MaxRetriesDown *float64 `json:"maxRetriesDown,omitempty" tf:"max_retries_down,omitempty"`
 
 	// The Name of the Monitor.
@@ -124,7 +144,7 @@ type MonitorV2Observation struct {
 	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create a monitor. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// monitor.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
@@ -140,12 +160,12 @@ type MonitorV2Observation struct {
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// The type of probe, which is PING, TCP, HTTP, HTTPS,
-	// TLS-HELLO or UDP-CONNECT (supported only in Octavia), that is sent by the load
-	// balancer to verify the member state. Changing this creates a new monitor.
+	// TLS-HELLO, SCTP or UDP-CONNECT, that is sent by the loadbalancer to
+	// verify the member state. Changing this creates a new monitor.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Required for HTTP(S) types. URI path that will be
-	// accessed if monitor type is HTTP or HTTPS.
+	// accessed if monitor type is HTTP or HTTPS. Default is /.
 	URLPath *string `json:"urlPath,omitempty" tf:"url_path,omitempty"`
 }
 
@@ -160,17 +180,28 @@ type MonitorV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Delay *float64 `json:"delay,omitempty" tf:"delay,omitempty"`
 
+	// The domain name to use in the HTTP host header
+	// health monitor requests. Supported in Octavia API version 2.10 or later.
+	// +kubebuilder:validation:Optional
+	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
 	// Required for HTTP(S) types. Expected HTTP codes
 	// for a passing HTTP(S) monitor. You can either specify a single status like
-	// "200", or a range like "200-202".
+	// "200", a list like "200, 202" or a range like "200-202". Default is "200".
 	// +kubebuilder:validation:Optional
 	ExpectedCodes *string `json:"expectedCodes,omitempty" tf:"expected_codes,omitempty"`
 
-	// Required for HTTP(S) types. The HTTP method used
-	// for requests by the monitor. If this attribute is not specified, it
-	// defaults to "GET".
+	// Required for HTTP(S) types. The HTTP method that
+	// the health monitor uses for requests. One of CONNECT, DELETE, GET, HEAD,
+	// OPTIONS, PATCH, POST, PUT, or TRACE. The default is GET.
 	// +kubebuilder:validation:Optional
 	HTTPMethod *string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
+
+	// Required for HTTP(S) types. The HTTP version that
+	// the health monitor uses for requests. One of 1.0 or 1.1is supported for HTTP(S) monitors. The default is1.0`. Supported in Octavia API version
+	// 2.10 or later.
+	// +kubebuilder:validation:Optional
+	HTTPVersion *string `json:"httpVersion,omitempty" tf:"http_version,omitempty"`
 
 	// Number of permissible ping failures before
 	// changing the member's status to INACTIVE. Must be a number between 1
@@ -178,9 +209,10 @@ type MonitorV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	MaxRetries *float64 `json:"maxRetries,omitempty" tf:"max_retries,omitempty"`
 
-	// Number of permissible ping failures befor changing the member's
-	// status to ERROR. Must be a number between 1 and 10 (supported only in Octavia).
-	// Changing this updates the max_retries_down of the existing monitor.
+	// Number of permissible ping failures before
+	// changing the member's status to ERROR. Must be a number between 1 and 10.
+	// The default is 3. Changing this updates the max_retries_down of the
+	// existing monitor.
 	// +kubebuilder:validation:Optional
 	MaxRetriesDown *float64 `json:"maxRetriesDown,omitempty" tf:"max_retries_down,omitempty"`
 
@@ -203,7 +235,7 @@ type MonitorV2Parameters struct {
 	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
+	// A Networking client is needed to create a monitor. If omitted, the
 	// region argument of the provider is used. Changing this creates a new
 	// monitor.
 	// +kubebuilder:validation:Optional
@@ -222,13 +254,13 @@ type MonitorV2Parameters struct {
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// The type of probe, which is PING, TCP, HTTP, HTTPS,
-	// TLS-HELLO or UDP-CONNECT (supported only in Octavia), that is sent by the load
-	// balancer to verify the member state. Changing this creates a new monitor.
+	// TLS-HELLO, SCTP or UDP-CONNECT, that is sent by the loadbalancer to
+	// verify the member state. Changing this creates a new monitor.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// Required for HTTP(S) types. URI path that will be
-	// accessed if monitor type is HTTP or HTTPS.
+	// accessed if monitor type is HTTP or HTTPS. Default is /.
 	// +kubebuilder:validation:Optional
 	URLPath *string `json:"urlPath,omitempty" tf:"url_path,omitempty"`
 }

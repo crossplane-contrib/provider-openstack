@@ -20,13 +20,10 @@ import (
 	aggregatev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/aggregatev2"
 	flavoraccessv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/flavoraccessv2"
 	flavorv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/flavorv2"
-	floatingipassociatev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/floatingipassociatev2"
-	floatingipv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/floatingipv2"
 	instancev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/instancev2"
 	interfaceattachv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/interfaceattachv2"
 	keypairv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/keypairv2"
 	quotasetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/quotasetv2"
-	secgroupv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/secgroupv2"
 	servergroupv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/servergroupv2"
 	volumeattachv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/compute/volumeattachv2"
 	clustertemplatev1 "github.com/crossplane-contrib/provider-openstack/internal/controller/containerinfra/clustertemplatev1"
@@ -70,8 +67,8 @@ import (
 	poolv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/lb/poolv2"
 	quotav2 "github.com/crossplane-contrib/provider-openstack/internal/controller/lb/quotav2"
 	addressscopev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/addressscopev2"
-	floatingipassociatev2networking "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipassociatev2"
-	floatingipv2networking "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipv2"
+	floatingipassociatev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipassociatev2"
+	floatingipv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/floatingipv2"
 	networkv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/networkv2"
 	portforwardingv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/portforwardingv2"
 	portsecgroupassociatev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/portsecgroupassociatev2"
@@ -86,7 +83,7 @@ import (
 	routerroutev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerroutev2"
 	routerv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/routerv2"
 	secgrouprulev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/secgrouprulev2"
-	secgroupv2networking "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/secgroupv2"
+	secgroupv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/secgroupv2"
 	subnetpoolv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/subnetpoolv2"
 	subnetroutev2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/subnetroutev2"
 	subnetv2 "github.com/crossplane-contrib/provider-openstack/internal/controller/networking/subnetv2"
@@ -121,13 +118,10 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		aggregatev2.Setup,
 		flavoraccessv2.Setup,
 		flavorv2.Setup,
-		floatingipassociatev2.Setup,
-		floatingipv2.Setup,
 		instancev2.Setup,
 		interfaceattachv2.Setup,
 		keypairv2.Setup,
 		quotasetv2.Setup,
-		secgroupv2.Setup,
 		servergroupv2.Setup,
 		volumeattachv2.Setup,
 		clustertemplatev1.Setup,
@@ -171,8 +165,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		poolv2.Setup,
 		quotav2.Setup,
 		addressscopev2.Setup,
-		floatingipassociatev2networking.Setup,
-		floatingipv2networking.Setup,
+		floatingipassociatev2.Setup,
+		floatingipv2.Setup,
 		networkv2.Setup,
 		portforwardingv2.Setup,
 		portsecgroupassociatev2.Setup,
@@ -187,7 +181,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		routerroutev2.Setup,
 		routerv2.Setup,
 		secgrouprulev2.Setup,
-		secgroupv2networking.Setup,
+		secgroupv2.Setup,
 		subnetpoolv2.Setup,
 		subnetroutev2.Setup,
 		subnetv2.Setup,

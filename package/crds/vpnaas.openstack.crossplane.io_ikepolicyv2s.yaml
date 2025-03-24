@@ -90,7 +90,7 @@ spec:
                     type: string
                   ikeVersion:
                     description: |-
-                      The IKE mode. A valid value is v1 or v2. Default is v1.
+                      The IKE version. A valid value is v1 or v2. Default is v1.
                       Changing this updates the existing policy.
                     type: string
                   lifetime:
@@ -171,7 +171,7 @@ spec:
                     type: string
                   ikeVersion:
                     description: |-
-                      The IKE mode. A valid value is v1 or v2. Default is v1.
+                      The IKE version. A valid value is v1 or v2. Default is v1.
                       Changing this updates the existing policy.
                     type: string
                   lifetime:
@@ -413,7 +413,7 @@ spec:
                     type: string
                   ikeVersion:
                     description: |-
-                      The IKE mode. A valid value is v1 or v2. Default is v1.
+                      The IKE version. A valid value is v1 or v2. Default is v1.
                       Changing this updates the existing policy.
                     type: string
                   lifetime:
