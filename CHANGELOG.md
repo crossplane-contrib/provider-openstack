@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-TODO: Include all important changes of v2.1 and v3
+This release upgrades the internally used terraform-provider-openstack from v1 to v3. This includes removals of many fields that were previously deprecated. If you didn't use any deprecated fields, this upgrade should break non of your workloads.
+
+View the [upstream changelogs](https://github.com/terraform-provider-openstack/terraform-provider-openstack/blob/main/CHANGELOG.md#300--25-september-2024-) for detailed changes between `v1.54.1` and `v3.0.0`.
 
 ### Changed
 
@@ -16,9 +18,9 @@ TODO: Include all important changes of v2.1 and v3
 
 ### Removed
 
-- Removed support for deprecated `openstack_compute_floatingip_associate_v2` resource
-- Removed support for deprecated `openstack_compute_floatingip_v2` resource
-- Removed support for deprecated `openstack_compute_secgroup_v2` resource
+- Removed support for deprecated `openstack_compute_floatingip_associate_v2` resource. Use `openstack_networking_floatingip_associate_v2` instead.
+- Removed support for deprecated `openstack_compute_floatingip_v2` resource. Use `openstack_networking_floatingip_v2` instead.
+- Removed support for deprecated `openstack_compute_secgroup_v2` resource. Use `openstack_networking_secgroup_v2` instead.
 
 ## [0.5.0] - 2025-03-24
 
