@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-04-17
+
 This release upgrades the internally used terraform-provider-openstack from v1 to v3. This includes removals of many fields that were previously deprecated. If you didn't use any deprecated fields, this upgrade should break non of your workloads.
 
 View the [upstream changelogs](https://github.com/terraform-provider-openstack/terraform-provider-openstack/blob/main/CHANGELOG.md#300--25-september-2024-) for detailed changes between `v1.54.1` and `v3.0.0`.
