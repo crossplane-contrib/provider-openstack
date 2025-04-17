@@ -16,16 +16,51 @@ import (
 
 type ListenerV2InitParameters struct {
 
-	// The administrative state of the Listener.
-	// A valid value is true (UP) or false (DOWN).
+	// The administrative state of the Listener. A
+	// valid value is true (UP) or false (DOWN).
 	AdminStateUp *bool `json:"adminStateUp,omitempty" tf:"admin_state_up,omitempty"`
 
-	// A list of CIDR blocks that are permitted to connect to this listener, denying
-	// all other source addresses. If not present, defaults to allow all.
+	// A list of CIDR blocks that are permitted to
+	// connect to this listener, denying all other source addresses. If not present,
+	// defaults to allow all.
 	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 
-	// The maximum number of connections allowed
-	// for the Listener.
+	// A list of ALPN protocols. Available protocols:
+	// http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+	// 2.20.
+	// +listType=set
+	AlpnProtocols []*string `json:"alpnProtocols,omitempty" tf:"alpn_protocols,omitempty"`
+
+	// The TLS client authentication mode.
+	// Available options: NONE, OPTIONAL or MANDATORY. Requires
+	// TERMINATED_HTTPS listener protocol and the client_ca_tls_container_ref.
+	// Supported only in Octavia minor version >= 2.8.
+	ClientAuthentication *string `json:"clientAuthentication,omitempty" tf:"client_authentication,omitempty"`
+
+	// The ref of the key manager service
+	// secret containing a PEM format client CA certificate bundle for
+	// TERMINATED_HTTPS listeners. Required if client_authentication is
+	// OPTIONAL or MANDATORY. Supported only in Octavia minor version >=
+	// 2.8.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("secret_ref",true)
+	ClientCATLSContainerRef *string `json:"clientCaTlsContainerRef,omitempty" tf:"client_ca_tls_container_ref,omitempty"`
+
+	// Reference to a SecretV1 in keymanager to populate clientCaTlsContainerRef.
+	// +kubebuilder:validation:Optional
+	ClientCATLSContainerRefRef *v1.Reference `json:"clientCaTlsContainerRefRef,omitempty" tf:"-"`
+
+	// Selector for a SecretV1 in keymanager to populate clientCaTlsContainerRef.
+	// +kubebuilder:validation:Optional
+	ClientCATLSContainerRefSelector *v1.Selector `json:"clientCaTlsContainerRefSelector,omitempty" tf:"-"`
+
+	// The URI of the key manager service
+	// secret containing a PEM format CA revocation list file for TERMINATED_HTTPS
+	// listeners. Supported only in Octavia minor version >= 2.8.
+	ClientCrlContainerRef *string `json:"clientCrlContainerRef,omitempty" tf:"client_crl_container_ref,omitempty"`
+
+	// The maximum number of connections allowed for
+	// the Listener.
 	ConnectionLimit *float64 `json:"connectionLimit,omitempty" tf:"connection_limit,omitempty"`
 
 	// The ID of the default pool with which the
@@ -33,8 +68,8 @@ type ListenerV2InitParameters struct {
 	DefaultPoolID *string `json:"defaultPoolId,omitempty" tf:"default_pool_id,omitempty"`
 
 	// A reference to a Barbican Secrets
-	// container which stores TLS information. This is required if the protocol
-	// is TERMINATED_HTTPS. See
+	// container which stores TLS information. This is required if the protocol is
+	// TERMINATED_HTTPS. See
 	// here
 	// for more information.
 	DefaultTLSContainerRef *string `json:"defaultTlsContainerRef,omitempty" tf:"default_tls_container_ref,omitempty"`
@@ -42,34 +77,64 @@ type ListenerV2InitParameters struct {
 	// Human-readable description for the Listener.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The list of key value pairs representing headers to insert
-	// into the request before it is sent to the backend members. Changing this updates the headers of the
-	// existing listener.
+	// Defines whether the
+	// includeSubDomains directive should be added to the
+	// Strict-Transport-Security HTTP response header. This requires setting the
+	// hsts_max_age option as well in order to become effective. Requires
+	// TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+	// version >= 2.27.
+	HstsIncludeSubdomains *bool `json:"hstsIncludeSubdomains,omitempty" tf:"hsts_include_subdomains,omitempty"`
+
+	// The value of the max_age directive for the
+	// Strict-Transport-Security HTTP response header. Setting this enables HTTP
+	// Strict Transport Security (HSTS) for the TLS-terminated listener. Requires
+	// TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+	// version >= 2.27.
+	HstsMaxAge *float64 `json:"hstsMaxAge,omitempty" tf:"hsts_max_age,omitempty"`
+
+	// Defines whether the preload directive should
+	// be added to the Strict-Transport-Security HTTP response header. This requires
+	// setting the hsts_max_age option as well in order to become effective.
+	// Requires TERMINATED_HTTPS listener protocol. Supported only in Octavia
+	// minor version >= 2.27.
+	HstsPreload *bool `json:"hstsPreload,omitempty" tf:"hsts_preload,omitempty"`
+
+	// The list of key value pairs representing
+	// headers to insert into the request before it is sent to the backend members.
+	// Changing this updates the headers of the existing listener.
 	// +mapType=granular
 	InsertHeaders map[string]*string `json:"insertHeaders,omitempty" tf:"insert_headers,omitempty"`
 
 	// The load balancer on which to provision this
 	// Listener. Changing this creates a new Listener.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.LoadbalancerV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
-	// Human-readable name for the Listener. Does not have
-	// to be unique.
+	// Reference to a LoadbalancerV2 in lb to populate loadbalancerId.
+	// +kubebuilder:validation:Optional
+	LoadbalancerIDRef *v1.Reference `json:"loadbalancerIdRef,omitempty" tf:"-"`
+
+	// Selector for a LoadbalancerV2 in lb to populate loadbalancerId.
+	// +kubebuilder:validation:Optional
+	LoadbalancerIDSelector *v1.Selector `json:"loadbalancerIdSelector,omitempty" tf:"-"`
+
+	// Human-readable name for the Listener. Does not have to be
+	// unique.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The protocol - can either be TCP, HTTP, HTTPS,
-	// TERMINATED_HTTPS, UDP (supported only in Octavia), SCTP (supported only
-	// in Octavia minor version >= 2.23) or PROMETHEUS (supported only in
-	// Octavia minor version >=2.25). Changing this creates a new Listener.
+	// The protocol can be either TCP, HTTP, HTTPS,
+	// TERMINATED_HTTPS, UDP, SCTP (supported only in Octavia minor version
+	// >= 2.23), or PROMETHEUS (supported only in Octavia minor version >=
+	// 2.25). Changing this creates a new Listener.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The port on which to listen for client traffic.
-	// Changing this creates a new Listener.
 	ProtocolPort *float64 `json:"protocolPort,omitempty" tf:"protocol_port,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
-	// region argument of the provider is used. Changing this creates a new
-	// Listener.
+	// A Networking client is needed to create a listener. If omitted, the region
+	// argument of the provider is used. Changing this creates a new Listener.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// A list of references to Barbican Secrets
@@ -78,40 +143,82 @@ type ListenerV2InitParameters struct {
 	// for more information.
 	SniContainerRefs []*string `json:"sniContainerRefs,omitempty" tf:"sni_container_refs,omitempty"`
 
+	// List of ciphers in OpenSSL format
+	// (colon-separated). See
+	// https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+	// Supported only in Octavia minor version >= 2.15.
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// A list of TLS protocol versions. Available
+	// versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+	// Octavia minor version >= 2.17.
+	// +listType=set
+	TLSVersions []*string `json:"tlsVersions,omitempty" tf:"tls_versions,omitempty"`
+
+	// A list of simple strings assigned to the pool. Available
+	// for Octavia minor version 2.5 or later.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
-	// the Listener.  Only administrative users can specify a tenant UUID
-	// other than their own. Changing this creates a new Listener.
+	// the Listener.  Only administrative users can specify a tenant UUID other than
+	// their own. Changing this creates a new Listener.
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
-	// The client inactivity timeout in milliseconds.
+	// The client inactivity timeout in
+	// milliseconds.
 	TimeoutClientData *float64 `json:"timeoutClientData,omitempty" tf:"timeout_client_data,omitempty"`
 
-	// The member connection timeout in milliseconds.
+	// The member connection timeout in
+	// milliseconds.
 	TimeoutMemberConnect *float64 `json:"timeoutMemberConnect,omitempty" tf:"timeout_member_connect,omitempty"`
 
-	// The member inactivity timeout in milliseconds.
+	// The member inactivity timeout in
+	// milliseconds.
 	TimeoutMemberData *float64 `json:"timeoutMemberData,omitempty" tf:"timeout_member_data,omitempty"`
 
-	// The time in milliseconds, to wait for additional
-	// TCP packets for content inspection.
+	// The time in milliseconds, to wait for
+	// additional TCP packets for content inspection.
 	TimeoutTCPInspect *float64 `json:"timeoutTcpInspect,omitempty" tf:"timeout_tcp_inspect,omitempty"`
 }
 
 type ListenerV2Observation struct {
 
-	// The administrative state of the Listener.
-	// A valid value is true (UP) or false (DOWN).
+	// The administrative state of the Listener. A
+	// valid value is true (UP) or false (DOWN).
 	AdminStateUp *bool `json:"adminStateUp,omitempty" tf:"admin_state_up,omitempty"`
 
-	// A list of CIDR blocks that are permitted to connect to this listener, denying
-	// all other source addresses. If not present, defaults to allow all.
+	// A list of CIDR blocks that are permitted to
+	// connect to this listener, denying all other source addresses. If not present,
+	// defaults to allow all.
 	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 
-	// The maximum number of connections allowed
-	// for the Listener.
+	// A list of ALPN protocols. Available protocols:
+	// http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+	// 2.20.
+	// +listType=set
+	AlpnProtocols []*string `json:"alpnProtocols,omitempty" tf:"alpn_protocols,omitempty"`
+
+	// The TLS client authentication mode.
+	// Available options: NONE, OPTIONAL or MANDATORY. Requires
+	// TERMINATED_HTTPS listener protocol and the client_ca_tls_container_ref.
+	// Supported only in Octavia minor version >= 2.8.
+	ClientAuthentication *string `json:"clientAuthentication,omitempty" tf:"client_authentication,omitempty"`
+
+	// The ref of the key manager service
+	// secret containing a PEM format client CA certificate bundle for
+	// TERMINATED_HTTPS listeners. Required if client_authentication is
+	// OPTIONAL or MANDATORY. Supported only in Octavia minor version >=
+	// 2.8.
+	ClientCATLSContainerRef *string `json:"clientCaTlsContainerRef,omitempty" tf:"client_ca_tls_container_ref,omitempty"`
+
+	// The URI of the key manager service
+	// secret containing a PEM format CA revocation list file for TERMINATED_HTTPS
+	// listeners. Supported only in Octavia minor version >= 2.8.
+	ClientCrlContainerRef *string `json:"clientCrlContainerRef,omitempty" tf:"client_crl_container_ref,omitempty"`
+
+	// The maximum number of connections allowed for
+	// the Listener.
 	ConnectionLimit *float64 `json:"connectionLimit,omitempty" tf:"connection_limit,omitempty"`
 
 	// The ID of the default pool with which the
@@ -119,8 +226,8 @@ type ListenerV2Observation struct {
 	DefaultPoolID *string `json:"defaultPoolId,omitempty" tf:"default_pool_id,omitempty"`
 
 	// A reference to a Barbican Secrets
-	// container which stores TLS information. This is required if the protocol
-	// is TERMINATED_HTTPS. See
+	// container which stores TLS information. This is required if the protocol is
+	// TERMINATED_HTTPS. See
 	// here
 	// for more information.
 	DefaultTLSContainerRef *string `json:"defaultTlsContainerRef,omitempty" tf:"default_tls_container_ref,omitempty"`
@@ -128,12 +235,34 @@ type ListenerV2Observation struct {
 	// Human-readable description for the Listener.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Defines whether the
+	// includeSubDomains directive should be added to the
+	// Strict-Transport-Security HTTP response header. This requires setting the
+	// hsts_max_age option as well in order to become effective. Requires
+	// TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+	// version >= 2.27.
+	HstsIncludeSubdomains *bool `json:"hstsIncludeSubdomains,omitempty" tf:"hsts_include_subdomains,omitempty"`
+
+	// The value of the max_age directive for the
+	// Strict-Transport-Security HTTP response header. Setting this enables HTTP
+	// Strict Transport Security (HSTS) for the TLS-terminated listener. Requires
+	// TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+	// version >= 2.27.
+	HstsMaxAge *float64 `json:"hstsMaxAge,omitempty" tf:"hsts_max_age,omitempty"`
+
+	// Defines whether the preload directive should
+	// be added to the Strict-Transport-Security HTTP response header. This requires
+	// setting the hsts_max_age option as well in order to become effective.
+	// Requires TERMINATED_HTTPS listener protocol. Supported only in Octavia
+	// minor version >= 2.27.
+	HstsPreload *bool `json:"hstsPreload,omitempty" tf:"hsts_preload,omitempty"`
+
 	// The unique ID for the Listener.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The list of key value pairs representing headers to insert
-	// into the request before it is sent to the backend members. Changing this updates the headers of the
-	// existing listener.
+	// The list of key value pairs representing
+	// headers to insert into the request before it is sent to the backend members.
+	// Changing this updates the headers of the existing listener.
 	// +mapType=granular
 	InsertHeaders map[string]*string `json:"insertHeaders,omitempty" tf:"insert_headers,omitempty"`
 
@@ -141,24 +270,22 @@ type ListenerV2Observation struct {
 	// Listener. Changing this creates a new Listener.
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
-	// Human-readable name for the Listener. Does not have
-	// to be unique.
+	// Human-readable name for the Listener. Does not have to be
+	// unique.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The protocol - can either be TCP, HTTP, HTTPS,
-	// TERMINATED_HTTPS, UDP (supported only in Octavia), SCTP (supported only
-	// in Octavia minor version >= 2.23) or PROMETHEUS (supported only in
-	// Octavia minor version >=2.25). Changing this creates a new Listener.
+	// The protocol can be either TCP, HTTP, HTTPS,
+	// TERMINATED_HTTPS, UDP, SCTP (supported only in Octavia minor version
+	// >= 2.23), or PROMETHEUS (supported only in Octavia minor version >=
+	// 2.25). Changing this creates a new Listener.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The port on which to listen for client traffic.
-	// Changing this creates a new Listener.
 	ProtocolPort *float64 `json:"protocolPort,omitempty" tf:"protocol_port,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
-	// region argument of the provider is used. Changing this creates a new
-	// Listener.
+	// A Networking client is needed to create a listener. If omitted, the region
+	// argument of the provider is used. Changing this creates a new Listener.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// A list of references to Barbican Secrets
@@ -167,42 +294,98 @@ type ListenerV2Observation struct {
 	// for more information.
 	SniContainerRefs []*string `json:"sniContainerRefs,omitempty" tf:"sni_container_refs,omitempty"`
 
+	// List of ciphers in OpenSSL format
+	// (colon-separated). See
+	// https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+	// Supported only in Octavia minor version >= 2.15.
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// A list of TLS protocol versions. Available
+	// versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+	// Octavia minor version >= 2.17.
+	// +listType=set
+	TLSVersions []*string `json:"tlsVersions,omitempty" tf:"tls_versions,omitempty"`
+
+	// A list of simple strings assigned to the pool. Available
+	// for Octavia minor version 2.5 or later.
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
-	// the Listener.  Only administrative users can specify a tenant UUID
-	// other than their own. Changing this creates a new Listener.
+	// the Listener.  Only administrative users can specify a tenant UUID other than
+	// their own. Changing this creates a new Listener.
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
-	// The client inactivity timeout in milliseconds.
+	// The client inactivity timeout in
+	// milliseconds.
 	TimeoutClientData *float64 `json:"timeoutClientData,omitempty" tf:"timeout_client_data,omitempty"`
 
-	// The member connection timeout in milliseconds.
+	// The member connection timeout in
+	// milliseconds.
 	TimeoutMemberConnect *float64 `json:"timeoutMemberConnect,omitempty" tf:"timeout_member_connect,omitempty"`
 
-	// The member inactivity timeout in milliseconds.
+	// The member inactivity timeout in
+	// milliseconds.
 	TimeoutMemberData *float64 `json:"timeoutMemberData,omitempty" tf:"timeout_member_data,omitempty"`
 
-	// The time in milliseconds, to wait for additional
-	// TCP packets for content inspection.
+	// The time in milliseconds, to wait for
+	// additional TCP packets for content inspection.
 	TimeoutTCPInspect *float64 `json:"timeoutTcpInspect,omitempty" tf:"timeout_tcp_inspect,omitempty"`
 }
 
 type ListenerV2Parameters struct {
 
-	// The administrative state of the Listener.
-	// A valid value is true (UP) or false (DOWN).
+	// The administrative state of the Listener. A
+	// valid value is true (UP) or false (DOWN).
 	// +kubebuilder:validation:Optional
 	AdminStateUp *bool `json:"adminStateUp,omitempty" tf:"admin_state_up,omitempty"`
 
-	// A list of CIDR blocks that are permitted to connect to this listener, denying
-	// all other source addresses. If not present, defaults to allow all.
+	// A list of CIDR blocks that are permitted to
+	// connect to this listener, denying all other source addresses. If not present,
+	// defaults to allow all.
 	// +kubebuilder:validation:Optional
 	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 
-	// The maximum number of connections allowed
-	// for the Listener.
+	// A list of ALPN protocols. Available protocols:
+	// http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+	// 2.20.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	AlpnProtocols []*string `json:"alpnProtocols,omitempty" tf:"alpn_protocols,omitempty"`
+
+	// The TLS client authentication mode.
+	// Available options: NONE, OPTIONAL or MANDATORY. Requires
+	// TERMINATED_HTTPS listener protocol and the client_ca_tls_container_ref.
+	// Supported only in Octavia minor version >= 2.8.
+	// +kubebuilder:validation:Optional
+	ClientAuthentication *string `json:"clientAuthentication,omitempty" tf:"client_authentication,omitempty"`
+
+	// The ref of the key manager service
+	// secret containing a PEM format client CA certificate bundle for
+	// TERMINATED_HTTPS listeners. Required if client_authentication is
+	// OPTIONAL or MANDATORY. Supported only in Octavia minor version >=
+	// 2.8.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("secret_ref",true)
+	// +kubebuilder:validation:Optional
+	ClientCATLSContainerRef *string `json:"clientCaTlsContainerRef,omitempty" tf:"client_ca_tls_container_ref,omitempty"`
+
+	// Reference to a SecretV1 in keymanager to populate clientCaTlsContainerRef.
+	// +kubebuilder:validation:Optional
+	ClientCATLSContainerRefRef *v1.Reference `json:"clientCaTlsContainerRefRef,omitempty" tf:"-"`
+
+	// Selector for a SecretV1 in keymanager to populate clientCaTlsContainerRef.
+	// +kubebuilder:validation:Optional
+	ClientCATLSContainerRefSelector *v1.Selector `json:"clientCaTlsContainerRefSelector,omitempty" tf:"-"`
+
+	// The URI of the key manager service
+	// secret containing a PEM format CA revocation list file for TERMINATED_HTTPS
+	// listeners. Supported only in Octavia minor version >= 2.8.
+	// +kubebuilder:validation:Optional
+	ClientCrlContainerRef *string `json:"clientCrlContainerRef,omitempty" tf:"client_crl_container_ref,omitempty"`
+
+	// The maximum number of connections allowed for
+	// the Listener.
 	// +kubebuilder:validation:Optional
 	ConnectionLimit *float64 `json:"connectionLimit,omitempty" tf:"connection_limit,omitempty"`
 
@@ -212,8 +395,8 @@ type ListenerV2Parameters struct {
 	DefaultPoolID *string `json:"defaultPoolId,omitempty" tf:"default_pool_id,omitempty"`
 
 	// A reference to a Barbican Secrets
-	// container which stores TLS information. This is required if the protocol
-	// is TERMINATED_HTTPS. See
+	// container which stores TLS information. This is required if the protocol is
+	// TERMINATED_HTTPS. See
 	// here
 	// for more information.
 	// +kubebuilder:validation:Optional
@@ -223,39 +406,72 @@ type ListenerV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The list of key value pairs representing headers to insert
-	// into the request before it is sent to the backend members. Changing this updates the headers of the
-	// existing listener.
+	// Defines whether the
+	// includeSubDomains directive should be added to the
+	// Strict-Transport-Security HTTP response header. This requires setting the
+	// hsts_max_age option as well in order to become effective. Requires
+	// TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+	// version >= 2.27.
+	// +kubebuilder:validation:Optional
+	HstsIncludeSubdomains *bool `json:"hstsIncludeSubdomains,omitempty" tf:"hsts_include_subdomains,omitempty"`
+
+	// The value of the max_age directive for the
+	// Strict-Transport-Security HTTP response header. Setting this enables HTTP
+	// Strict Transport Security (HSTS) for the TLS-terminated listener. Requires
+	// TERMINATED_HTTPS listener protocol. Supported only in Octavia minor
+	// version >= 2.27.
+	// +kubebuilder:validation:Optional
+	HstsMaxAge *float64 `json:"hstsMaxAge,omitempty" tf:"hsts_max_age,omitempty"`
+
+	// Defines whether the preload directive should
+	// be added to the Strict-Transport-Security HTTP response header. This requires
+	// setting the hsts_max_age option as well in order to become effective.
+	// Requires TERMINATED_HTTPS listener protocol. Supported only in Octavia
+	// minor version >= 2.27.
+	// +kubebuilder:validation:Optional
+	HstsPreload *bool `json:"hstsPreload,omitempty" tf:"hsts_preload,omitempty"`
+
+	// The list of key value pairs representing
+	// headers to insert into the request before it is sent to the backend members.
+	// Changing this updates the headers of the existing listener.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	InsertHeaders map[string]*string `json:"insertHeaders,omitempty" tf:"insert_headers,omitempty"`
 
 	// The load balancer on which to provision this
 	// Listener. Changing this creates a new Listener.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.LoadbalancerV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
-	// Human-readable name for the Listener. Does not have
-	// to be unique.
+	// Reference to a LoadbalancerV2 in lb to populate loadbalancerId.
+	// +kubebuilder:validation:Optional
+	LoadbalancerIDRef *v1.Reference `json:"loadbalancerIdRef,omitempty" tf:"-"`
+
+	// Selector for a LoadbalancerV2 in lb to populate loadbalancerId.
+	// +kubebuilder:validation:Optional
+	LoadbalancerIDSelector *v1.Selector `json:"loadbalancerIdSelector,omitempty" tf:"-"`
+
+	// Human-readable name for the Listener. Does not have to be
+	// unique.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The protocol - can either be TCP, HTTP, HTTPS,
-	// TERMINATED_HTTPS, UDP (supported only in Octavia), SCTP (supported only
-	// in Octavia minor version >= 2.23) or PROMETHEUS (supported only in
-	// Octavia minor version >=2.25). Changing this creates a new Listener.
+	// The protocol can be either TCP, HTTP, HTTPS,
+	// TERMINATED_HTTPS, UDP, SCTP (supported only in Octavia minor version
+	// >= 2.23), or PROMETHEUS (supported only in Octavia minor version >=
+	// 2.25). Changing this creates a new Listener.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The port on which to listen for client traffic.
-	// Changing this creates a new Listener.
 	// +kubebuilder:validation:Optional
 	ProtocolPort *float64 `json:"protocolPort,omitempty" tf:"protocol_port,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
-	// region argument of the provider is used. Changing this creates a new
-	// Listener.
+	// A Networking client is needed to create a listener. If omitted, the region
+	// argument of the provider is used. Changing this creates a new Listener.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
@@ -266,30 +482,49 @@ type ListenerV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	SniContainerRefs []*string `json:"sniContainerRefs,omitempty" tf:"sni_container_refs,omitempty"`
 
+	// List of ciphers in OpenSSL format
+	// (colon-separated). See
+	// https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+	// Supported only in Octavia minor version >= 2.15.
+	// +kubebuilder:validation:Optional
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// A list of TLS protocol versions. Available
+	// versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+	// Octavia minor version >= 2.17.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	TLSVersions []*string `json:"tlsVersions,omitempty" tf:"tls_versions,omitempty"`
+
+	// A list of simple strings assigned to the pool. Available
+	// for Octavia minor version 2.5 or later.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Required for admins. The UUID of the tenant who owns
-	// the Listener.  Only administrative users can specify a tenant UUID
-	// other than their own. Changing this creates a new Listener.
+	// the Listener.  Only administrative users can specify a tenant UUID other than
+	// their own. Changing this creates a new Listener.
 	// +kubebuilder:validation:Optional
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
-	// The client inactivity timeout in milliseconds.
+	// The client inactivity timeout in
+	// milliseconds.
 	// +kubebuilder:validation:Optional
 	TimeoutClientData *float64 `json:"timeoutClientData,omitempty" tf:"timeout_client_data,omitempty"`
 
-	// The member connection timeout in milliseconds.
+	// The member connection timeout in
+	// milliseconds.
 	// +kubebuilder:validation:Optional
 	TimeoutMemberConnect *float64 `json:"timeoutMemberConnect,omitempty" tf:"timeout_member_connect,omitempty"`
 
-	// The member inactivity timeout in milliseconds.
+	// The member inactivity timeout in
+	// milliseconds.
 	// +kubebuilder:validation:Optional
 	TimeoutMemberData *float64 `json:"timeoutMemberData,omitempty" tf:"timeout_member_data,omitempty"`
 
-	// The time in milliseconds, to wait for additional
-	// TCP packets for content inspection.
+	// The time in milliseconds, to wait for
+	// additional TCP packets for content inspection.
 	// +kubebuilder:validation:Optional
 	TimeoutTCPInspect *float64 `json:"timeoutTcpInspect,omitempty" tf:"timeout_tcp_inspect,omitempty"`
 }
@@ -330,7 +565,6 @@ type ListenerV2Status struct {
 type ListenerV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.loadbalancerId) || (has(self.initProvider) && has(self.initProvider.loadbalancerId))",message="spec.forProvider.loadbalancerId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protocol) || (has(self.initProvider) && has(self.initProvider.protocol))",message="spec.forProvider.protocol is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protocolPort) || (has(self.initProvider) && has(self.initProvider.protocolPort))",message="spec.forProvider.protocolPort is a required parameter"
 	Spec   ListenerV2Spec   `json:"spec"`

@@ -22,7 +22,7 @@ func (mg *TempurlV1) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this TempurlV1
 func (tr *TempurlV1) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"url": "status.atProvider.url"}
+	return map[string]string{"key": "keySecretRef", "url": "status.atProvider.url"}
 }
 
 // GetObservation of this TempurlV1

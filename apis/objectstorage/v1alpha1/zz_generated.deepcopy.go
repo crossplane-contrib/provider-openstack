@@ -858,6 +858,16 @@ func (in *TempurlV1InitParameters) DeepCopyInto(out *TempurlV1InitParameters) {
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Digest != nil {
+		in, out := &in.Digest, &out.Digest
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeySecretRef != nil {
+		in, out := &in.KeySecretRef, &out.KeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.Method != nil {
 		in, out := &in.Method, &out.Method
 		*out = new(string)
@@ -950,6 +960,11 @@ func (in *TempurlV1Observation) DeepCopyInto(out *TempurlV1Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Digest != nil {
+		in, out := &in.Digest, &out.Digest
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1014,6 +1029,16 @@ func (in *TempurlV1Parameters) DeepCopyInto(out *TempurlV1Parameters) {
 		in, out := &in.ContainerSelector, &out.ContainerSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Digest != nil {
+		in, out := &in.Digest, &out.Digest
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeySecretRef != nil {
+		in, out := &in.KeySecretRef, &out.KeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
 	}
 	if in.Method != nil {
 		in, out := &in.Method, &out.Method

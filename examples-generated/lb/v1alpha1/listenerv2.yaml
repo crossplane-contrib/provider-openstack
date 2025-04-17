@@ -10,6 +10,8 @@ spec:
   forProvider:
     insertHeaders:
       X-Forwarded-For: "true"
-    loadbalancerId: d9415786-5f1a-428b-b35f-2f1523e146d2
+    loadbalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     protocol: HTTP
     protocolPort: 8080

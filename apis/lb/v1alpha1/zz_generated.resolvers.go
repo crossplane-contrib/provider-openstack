@@ -8,7 +8,8 @@ package v1alpha1
 
 import (
 	"context"
-	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
+	v1alpha11 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -131,6 +132,80 @@ func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	return nil
 }
 
+// ResolveReferences of this ListenerV2.
+func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientCATLSContainerRef),
+		Extract:      resource.ExtractParamPath("secret_ref", true),
+		Reference:    mg.Spec.ForProvider.ClientCATLSContainerRefRef,
+		Selector:     mg.Spec.ForProvider.ClientCATLSContainerRefSelector,
+		To: reference.To{
+			List:    &v1alpha1.SecretV1List{},
+			Managed: &v1alpha1.SecretV1{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ClientCATLSContainerRef")
+	}
+	mg.Spec.ForProvider.ClientCATLSContainerRef = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClientCATLSContainerRefRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoadbalancerID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.ForProvider.LoadbalancerIDRef,
+		Selector:     mg.Spec.ForProvider.LoadbalancerIDSelector,
+		To: reference.To{
+			List:    &LoadbalancerV2List{},
+			Managed: &LoadbalancerV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.LoadbalancerID")
+	}
+	mg.Spec.ForProvider.LoadbalancerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.LoadbalancerIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientCATLSContainerRef),
+		Extract:      resource.ExtractParamPath("secret_ref", true),
+		Reference:    mg.Spec.InitProvider.ClientCATLSContainerRefRef,
+		Selector:     mg.Spec.InitProvider.ClientCATLSContainerRefSelector,
+		To: reference.To{
+			List:    &v1alpha1.SecretV1List{},
+			Managed: &v1alpha1.SecretV1{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClientCATLSContainerRef")
+	}
+	mg.Spec.InitProvider.ClientCATLSContainerRef = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClientCATLSContainerRefRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LoadbalancerID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.LoadbalancerIDRef,
+		Selector:     mg.Spec.InitProvider.LoadbalancerIDSelector,
+		To: reference.To{
+			List:    &LoadbalancerV2List{},
+			Managed: &LoadbalancerV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.LoadbalancerID")
+	}
+	mg.Spec.InitProvider.LoadbalancerID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.LoadbalancerIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this MonitorV2.
 func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -186,8 +261,8 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.ProjectV3List{},
-			Managed: &v1alpha1.ProjectV3{},
+			List:    &v1alpha11.ProjectV3List{},
+			Managed: &v1alpha11.ProjectV3{},
 		},
 	})
 	if err != nil {
@@ -202,8 +277,8 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.ProjectV3List{},
-			Managed: &v1alpha1.ProjectV3{},
+			List:    &v1alpha11.ProjectV3List{},
+			Managed: &v1alpha11.ProjectV3{},
 		},
 	})
 	if err != nil {

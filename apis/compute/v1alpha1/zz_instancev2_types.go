@@ -271,8 +271,6 @@ type InstanceV2InitParameters struct {
 	// desired flavor for the server. Changing this resizes the existing server.
 	FlavorName *string `json:"flavorName,omitempty" tf:"flavor_name,omitempty"`
 
-	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
-
 	// Whether to force the OpenStack instance to be
 	// forcefully deleted. This is useful for environments that have reclaim / soft
 	// deletion enabled.
@@ -324,9 +322,9 @@ type InstanceV2InitParameters struct {
 	// is described below. Changing this rebuilds the existing server.
 	Personality []PersonalityInitParameters `json:"personality,omitempty" tf:"personality,omitempty"`
 
-	// Provide the VM state. Only 'active', 'shutoff'
+	// Provide the VM state. Only 'active', 'shutoff', 'paused'
 	// and 'shelved_offloaded' are supported values.
-	// Note: If the initial power_state is the shutoff
+	// Note: If the initial power_state is the shutoff or paused
 	// the VM will be stopped immediately after build and the provisioners like
 	// remote-exec or files are not supported.
 	PowerState *string `json:"powerState,omitempty" tf:"power_state,omitempty"`
@@ -375,8 +373,6 @@ type InstanceV2InitParameters struct {
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	VendorOptions *VendorOptionsInitParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
-
-	Volume []VolumeInitParameters `json:"volume,omitempty" tf:"volume,omitempty"`
 }
 
 type InstanceV2Observation struct {
@@ -431,8 +427,6 @@ type InstanceV2Observation struct {
 	// desired flavor for the server. Changing this resizes the existing server.
 	FlavorName *string `json:"flavorName,omitempty" tf:"flavor_name,omitempty"`
 
-	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
-
 	// Whether to force the OpenStack instance to be
 	// forcefully deleted. This is useful for environments that have reclaim / soft
 	// deletion enabled.
@@ -477,9 +471,9 @@ type InstanceV2Observation struct {
 	// is described below. Changing this rebuilds the existing server.
 	Personality []PersonalityObservation `json:"personality,omitempty" tf:"personality,omitempty"`
 
-	// Provide the VM state. Only 'active', 'shutoff'
+	// Provide the VM state. Only 'active', 'shutoff', 'paused'
 	// and 'shelved_offloaded' are supported values.
-	// Note: If the initial power_state is the shutoff
+	// Note: If the initial power_state is the shutoff or paused
 	// the VM will be stopped immediately after build and the provisioners like
 	// remote-exec or files are not supported.
 	PowerState *string `json:"powerState,omitempty" tf:"power_state,omitempty"`
@@ -522,8 +516,6 @@ type InstanceV2Observation struct {
 	// Map of additional vendor-specific options.
 	// Supported options are described below.
 	VendorOptions *VendorOptionsObservation `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
-
-	Volume []VolumeObservation `json:"volume,omitempty" tf:"volume,omitempty"`
 }
 
 type InstanceV2Parameters struct {
@@ -590,9 +582,6 @@ type InstanceV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	FlavorName *string `json:"flavorName,omitempty" tf:"flavor_name,omitempty"`
 
-	// +kubebuilder:validation:Optional
-	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
-
 	// Whether to force the OpenStack instance to be
 	// forcefully deleted. This is useful for environments that have reclaim / soft
 	// deletion enabled.
@@ -653,9 +642,9 @@ type InstanceV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Personality []PersonalityParameters `json:"personality,omitempty" tf:"personality,omitempty"`
 
-	// Provide the VM state. Only 'active', 'shutoff'
+	// Provide the VM state. Only 'active', 'shutoff', 'paused'
 	// and 'shelved_offloaded' are supported values.
-	// Note: If the initial power_state is the shutoff
+	// Note: If the initial power_state is the shutoff or paused
 	// the VM will be stopped immediately after build and the provisioners like
 	// remote-exec or files are not supported.
 	// +kubebuilder:validation:Optional
@@ -712,9 +701,6 @@ type InstanceV2Parameters struct {
 	// Supported options are described below.
 	// +kubebuilder:validation:Optional
 	VendorOptions *VendorOptionsParameters `json:"vendorOptions,omitempty" tf:"vendor_options,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	Volume []VolumeParameters `json:"volume,omitempty" tf:"volume,omitempty"`
 }
 
 type NetworkInitParameters struct {
@@ -728,8 +714,6 @@ type NetworkInitParameters struct {
 	FixedIPV4 *string `json:"fixedIpV4,omitempty" tf:"fixed_ip_v4,omitempty"`
 
 	FixedIPV6 *string `json:"fixedIpV6,omitempty" tf:"fixed_ip_v6,omitempty"`
-
-	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
 
 	// The human-readable
 	// name of the network. Changing this creates a new server.
@@ -766,8 +750,6 @@ type NetworkObservation struct {
 
 	FixedIPV6 *string `json:"fixedIpV6,omitempty" tf:"fixed_ip_v6,omitempty"`
 
-	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
-
 	Mac *string `json:"mac,omitempty" tf:"mac,omitempty"`
 
 	// The human-readable
@@ -797,9 +779,6 @@ type NetworkParameters struct {
 
 	// +kubebuilder:validation:Optional
 	FixedIPV6 *string `json:"fixedIpV6,omitempty" tf:"fixed_ip_v6,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
 
 	// The human-readable
 	// name of the network. Changing this creates a new server.
@@ -875,7 +854,8 @@ type SchedulerHintsInitParameters struct {
 	DifferentHost []*string `json:"differentHost,omitempty" tf:"different_host,omitempty"`
 
 	// A UUID of a Server Group. The instance will be placed
-	// into that group.
+	// into that group. See reference
+	// for details on managing servergroup resources
 	Group *string `json:"group,omitempty" tf:"group,omitempty"`
 
 	// A conditional query that a compute node must pass in
@@ -913,7 +893,8 @@ type SchedulerHintsObservation struct {
 	DifferentHost []*string `json:"differentHost,omitempty" tf:"different_host,omitempty"`
 
 	// A UUID of a Server Group. The instance will be placed
-	// into that group.
+	// into that group. See reference
+	// for details on managing servergroup resources
 	Group *string `json:"group,omitempty" tf:"group,omitempty"`
 
 	// A conditional query that a compute node must pass in
@@ -955,7 +936,8 @@ type SchedulerHintsParameters struct {
 	DifferentHost []*string `json:"differentHost,omitempty" tf:"different_host,omitempty"`
 
 	// A UUID of a Server Group. The instance will be placed
-	// into that group.
+	// into that group. See reference
+	// for details on managing servergroup resources
 	// +kubebuilder:validation:Optional
 	Group *string `json:"group,omitempty" tf:"group,omitempty"`
 
@@ -1020,34 +1002,6 @@ type VendorOptionsParameters struct {
 	// instances after some timeout.
 	// +kubebuilder:validation:Optional
 	IgnoreResizeConfirmation *bool `json:"ignoreResizeConfirmation,omitempty" tf:"ignore_resize_confirmation,omitempty"`
-}
-
-type VolumeInitParameters struct {
-	Device *string `json:"device,omitempty" tf:"device,omitempty"`
-
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
-}
-
-type VolumeObservation struct {
-	Device *string `json:"device,omitempty" tf:"device,omitempty"`
-
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
-}
-
-type VolumeParameters struct {
-
-	// +kubebuilder:validation:Optional
-	Device *string `json:"device,omitempty" tf:"device,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	VolumeID *string `json:"volumeId" tf:"volume_id,omitempty"`
 }
 
 // InstanceV2Spec defines the desired state of InstanceV2

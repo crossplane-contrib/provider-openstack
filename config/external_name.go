@@ -15,18 +15,15 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	"openstack_blockstorage_volume_v3":             config.IdentifierFromProvider,
 
 	// Compute / Nova
-	"openstack_compute_aggregate_v2":            config.IdentifierFromProvider,
-	"openstack_compute_flavor_access_v2":        config.IdentifierFromProvider,
-	"openstack_compute_flavor_v2":               config.IdentifierFromProvider,
-	"openstack_compute_floatingip_associate_v2": config.IdentifierFromProvider,
-	"openstack_compute_floatingip_v2":           config.IdentifierFromProvider,
-	"openstack_compute_instance_v2":             config.IdentifierFromProvider,
-	"openstack_compute_interface_attach_v2":     config.IdentifierFromProvider,
-	"openstack_compute_keypair_v2":              config.IdentifierFromProvider,
-	"openstack_compute_quotaset_v2":             config.IdentifierFromProvider,
-	"openstack_compute_secgroup_v2":             config.IdentifierFromProvider,
-	"openstack_compute_servergroup_v2":          config.IdentifierFromProvider,
-	"openstack_compute_volume_attach_v2":        config.IdentifierFromProvider,
+	"openstack_compute_aggregate_v2":        config.IdentifierFromProvider,
+	"openstack_compute_flavor_access_v2":    config.IdentifierFromProvider,
+	"openstack_compute_flavor_v2":           config.IdentifierFromProvider,
+	"openstack_compute_instance_v2":         config.IdentifierFromProvider,
+	"openstack_compute_interface_attach_v2": config.IdentifierFromProvider,
+	"openstack_compute_keypair_v2":          config.IdentifierFromProvider,
+	"openstack_compute_quotaset_v2":         config.IdentifierFromProvider,
+	"openstack_compute_servergroup_v2":      config.IdentifierFromProvider,
+	"openstack_compute_volume_attach_v2":    config.IdentifierFromProvider,
 
 	// Container Infra / Magnum
 	"openstack_containerinfra_cluster_v1":         config.IdentifierFromProvider,

@@ -51,59 +51,115 @@ type PersistenceParameters struct {
 
 type PoolV2InitParameters struct {
 
-	// The administrative state of the pool.
-	// A valid value is true (UP) or false (DOWN).
+	// The administrative state of the pool. A valid
+	// value is true (UP) or false (DOWN).
 	AdminStateUp *bool `json:"adminStateUp,omitempty" tf:"admin_state_up,omitempty"`
+
+	// A list of ALPN protocols. Available protocols:
+	// http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+	// 2.24.
+	// +listType=set
+	AlpnProtocols []*string `json:"alpnProtocols,omitempty" tf:"alpn_protocols,omitempty"`
+
+	// The reference of the key manager service
+	// secret containing a PEM format CA certificate bundle for tls_enabled pools.
+	// Supported only in Octavia minor version >= 2.8.
+	CATLSContainerRef *string `json:"caTlsContainerRef,omitempty" tf:"ca_tls_container_ref,omitempty"`
+
+	// The reference of the key manager service
+	// secret containing a PEM format CA revocation list file for tls_enabled
+	// pools. Supported only in Octavia minor version >= 2.8.
+	CrlContainerRef *string `json:"crlContainerRef,omitempty" tf:"crl_container_ref,omitempty"`
 
 	// Human-readable description for the pool.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The load balancing algorithm to
-	// distribute traffic to the pool's members. Must be one of
-	// ROUND_ROBIN, LEAST_CONNECTIONS, SOURCE_IP, or SOURCE_IP_PORT (supported only
-	// in Octavia).
+	// The load balancing algorithm to distribute traffic
+	// to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+	// SOURCE_IP, or SOURCE_IP_PORT.
 	LBMethod *string `json:"lbMethod,omitempty" tf:"lb_method,omitempty"`
 
-	// The Listener on which the members of the pool
-	// will be associated with. Changing this creates a new pool.
-	// Note:  One of LoadbalancerID or ListenerID must be provided.
+	// The Listener on which the members of the pool will
+	// be associated with. Changing this creates a new pool. Note: One of
+	// LoadbalancerID or ListenerID must be provided.
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
 
 	// The load balancer on which to provision this
-	// pool. Changing this creates a new pool.
-	// Note:  One of LoadbalancerID or ListenerID must be provided.
+	// pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+	// ListenerID must be provided.
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
 	// Human-readable name for the pool.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Omit this field to prevent session persistence.  Indicates
-	// whether connections in the same session will be processed by the same Pool
-	// member or not. Changing this creates a new pool.
+	// Omit this field to prevent session persistence.
+	// Indicates whether connections in the same session will be processed by the
+	// same Pool member or not. Changing this creates a new pool.
 	Persistence *PersistenceInitParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
-	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
-	// or SCTP (Octavia minor version >= 2.23). Changing this creates a new pool.
+	// UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+	// version >= 2.23). Changing this creates a new pool.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
-	// region argument of the provider is used. Changing this creates a new
-	// pool.
+	// A Networking client is needed to create a pool. If omitted, the region
+	// argument of the provider is used. Changing this creates a new pool.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// List of ciphers in OpenSSL format
+	// (colon-separated). See
+	// https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+	// Supported only in Octavia minor version >= 2.15.
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// The reference to the key manager service
+	// secret containing a PKCS12 format certificate/key bundle for tls_enabled
+	// pools for TLS client authentication to the member servers. Supported only in
+	// Octavia minor version >= 2.8.
+	TLSContainerRef *string `json:"tlsContainerRef,omitempty" tf:"tls_container_ref,omitempty"`
+
+	// When true connections to backend member servers
+	// will use TLS encryption. Default is false. Supported only in Octavia minor
+	// version >= 2.8.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+
+	// A list of TLS protocol versions. Available
+	// versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+	// Octavia minor version >= 2.17.
+	// +listType=set
+	TLSVersions []*string `json:"tlsVersions,omitempty" tf:"tls_versions,omitempty"`
+
+	// +listType=set
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Required for admins. The UUID of the tenant who owns
-	// the pool.  Only administrative users can specify a tenant UUID
-	// other than their own. Changing this creates a new pool.
+	// the pool.  Only administrative users can specify a tenant UUID other than
+	// their own. Changing this creates a new pool.
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 }
 
 type PoolV2Observation struct {
 
-	// The administrative state of the pool.
-	// A valid value is true (UP) or false (DOWN).
+	// The administrative state of the pool. A valid
+	// value is true (UP) or false (DOWN).
 	AdminStateUp *bool `json:"adminStateUp,omitempty" tf:"admin_state_up,omitempty"`
+
+	// A list of ALPN protocols. Available protocols:
+	// http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+	// 2.24.
+	// +listType=set
+	AlpnProtocols []*string `json:"alpnProtocols,omitempty" tf:"alpn_protocols,omitempty"`
+
+	// The reference of the key manager service
+	// secret containing a PEM format CA certificate bundle for tls_enabled pools.
+	// Supported only in Octavia minor version >= 2.8.
+	CATLSContainerRef *string `json:"caTlsContainerRef,omitempty" tf:"ca_tls_container_ref,omitempty"`
+
+	// The reference of the key manager service
+	// secret containing a PEM format CA revocation list file for tls_enabled
+	// pools. Supported only in Octavia minor version >= 2.8.
+	CrlContainerRef *string `json:"crlContainerRef,omitempty" tf:"crl_container_ref,omitempty"`
 
 	// Human-readable description for the pool.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -111,74 +167,116 @@ type PoolV2Observation struct {
 	// The unique ID for the pool.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The load balancing algorithm to
-	// distribute traffic to the pool's members. Must be one of
-	// ROUND_ROBIN, LEAST_CONNECTIONS, SOURCE_IP, or SOURCE_IP_PORT (supported only
-	// in Octavia).
+	// The load balancing algorithm to distribute traffic
+	// to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+	// SOURCE_IP, or SOURCE_IP_PORT.
 	LBMethod *string `json:"lbMethod,omitempty" tf:"lb_method,omitempty"`
 
-	// The Listener on which the members of the pool
-	// will be associated with. Changing this creates a new pool.
-	// Note:  One of LoadbalancerID or ListenerID must be provided.
+	// The Listener on which the members of the pool will
+	// be associated with. Changing this creates a new pool. Note: One of
+	// LoadbalancerID or ListenerID must be provided.
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
 
 	// The load balancer on which to provision this
-	// pool. Changing this creates a new pool.
-	// Note:  One of LoadbalancerID or ListenerID must be provided.
+	// pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+	// ListenerID must be provided.
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
 	// Human-readable name for the pool.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Omit this field to prevent session persistence.  Indicates
-	// whether connections in the same session will be processed by the same Pool
-	// member or not. Changing this creates a new pool.
+	// Omit this field to prevent session persistence.
+	// Indicates whether connections in the same session will be processed by the
+	// same Pool member or not. Changing this creates a new pool.
 	Persistence *PersistenceObservation `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
-	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
-	// or SCTP (Octavia minor version >= 2.23). Changing this creates a new pool.
+	// UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+	// version >= 2.23). Changing this creates a new pool.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
-	// region argument of the provider is used. Changing this creates a new
-	// pool.
+	// A Networking client is needed to create a pool. If omitted, the region
+	// argument of the provider is used. Changing this creates a new pool.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// List of ciphers in OpenSSL format
+	// (colon-separated). See
+	// https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+	// Supported only in Octavia minor version >= 2.15.
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// The reference to the key manager service
+	// secret containing a PKCS12 format certificate/key bundle for tls_enabled
+	// pools for TLS client authentication to the member servers. Supported only in
+	// Octavia minor version >= 2.8.
+	TLSContainerRef *string `json:"tlsContainerRef,omitempty" tf:"tls_container_ref,omitempty"`
+
+	// When true connections to backend member servers
+	// will use TLS encryption. Default is false. Supported only in Octavia minor
+	// version >= 2.8.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+
+	// A list of TLS protocol versions. Available
+	// versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+	// Octavia minor version >= 2.17.
+	// +listType=set
+	TLSVersions []*string `json:"tlsVersions,omitempty" tf:"tls_versions,omitempty"`
+
+	// +listType=set
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Required for admins. The UUID of the tenant who owns
-	// the pool.  Only administrative users can specify a tenant UUID
-	// other than their own. Changing this creates a new pool.
+	// the pool.  Only administrative users can specify a tenant UUID other than
+	// their own. Changing this creates a new pool.
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 }
 
 type PoolV2Parameters struct {
 
-	// The administrative state of the pool.
-	// A valid value is true (UP) or false (DOWN).
+	// The administrative state of the pool. A valid
+	// value is true (UP) or false (DOWN).
 	// +kubebuilder:validation:Optional
 	AdminStateUp *bool `json:"adminStateUp,omitempty" tf:"admin_state_up,omitempty"`
+
+	// A list of ALPN protocols. Available protocols:
+	// http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+	// 2.24.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	AlpnProtocols []*string `json:"alpnProtocols,omitempty" tf:"alpn_protocols,omitempty"`
+
+	// The reference of the key manager service
+	// secret containing a PEM format CA certificate bundle for tls_enabled pools.
+	// Supported only in Octavia minor version >= 2.8.
+	// +kubebuilder:validation:Optional
+	CATLSContainerRef *string `json:"caTlsContainerRef,omitempty" tf:"ca_tls_container_ref,omitempty"`
+
+	// The reference of the key manager service
+	// secret containing a PEM format CA revocation list file for tls_enabled
+	// pools. Supported only in Octavia minor version >= 2.8.
+	// +kubebuilder:validation:Optional
+	CrlContainerRef *string `json:"crlContainerRef,omitempty" tf:"crl_container_ref,omitempty"`
 
 	// Human-readable description for the pool.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The load balancing algorithm to
-	// distribute traffic to the pool's members. Must be one of
-	// ROUND_ROBIN, LEAST_CONNECTIONS, SOURCE_IP, or SOURCE_IP_PORT (supported only
-	// in Octavia).
+	// The load balancing algorithm to distribute traffic
+	// to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+	// SOURCE_IP, or SOURCE_IP_PORT.
 	// +kubebuilder:validation:Optional
 	LBMethod *string `json:"lbMethod,omitempty" tf:"lb_method,omitempty"`
 
-	// The Listener on which the members of the pool
-	// will be associated with. Changing this creates a new pool.
-	// Note:  One of LoadbalancerID or ListenerID must be provided.
+	// The Listener on which the members of the pool will
+	// be associated with. Changing this creates a new pool. Note: One of
+	// LoadbalancerID or ListenerID must be provided.
 	// +kubebuilder:validation:Optional
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
 
 	// The load balancer on which to provision this
-	// pool. Changing this creates a new pool.
-	// Note:  One of LoadbalancerID or ListenerID must be provided.
+	// pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+	// ListenerID must be provided.
 	// +kubebuilder:validation:Optional
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
@@ -186,28 +284,58 @@ type PoolV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Omit this field to prevent session persistence.  Indicates
-	// whether connections in the same session will be processed by the same Pool
-	// member or not. Changing this creates a new pool.
+	// Omit this field to prevent session persistence.
+	// Indicates whether connections in the same session will be processed by the
+	// same Pool member or not. Changing this creates a new pool.
 	// +kubebuilder:validation:Optional
 	Persistence *PersistenceParameters `json:"persistence,omitempty" tf:"persistence,omitempty"`
 
 	// The protocol - can either be TCP, HTTP, HTTPS, PROXY,
-	// UDP (supported only in Octavia), PROXYV2 (Octavia minor version >= 2.22)
-	// or SCTP (Octavia minor version >= 2.23). Changing this creates a new pool.
+	// UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+	// version >= 2.23). Changing this creates a new pool.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
-	// A Networking client is needed to create an . If omitted, the
-	// region argument of the provider is used. Changing this creates a new
-	// pool.
+	// A Networking client is needed to create a pool. If omitted, the region
+	// argument of the provider is used. Changing this creates a new pool.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// List of ciphers in OpenSSL format
+	// (colon-separated). See
+	// https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+	// Supported only in Octavia minor version >= 2.15.
+	// +kubebuilder:validation:Optional
+	TLSCiphers *string `json:"tlsCiphers,omitempty" tf:"tls_ciphers,omitempty"`
+
+	// The reference to the key manager service
+	// secret containing a PKCS12 format certificate/key bundle for tls_enabled
+	// pools for TLS client authentication to the member servers. Supported only in
+	// Octavia minor version >= 2.8.
+	// +kubebuilder:validation:Optional
+	TLSContainerRef *string `json:"tlsContainerRef,omitempty" tf:"tls_container_ref,omitempty"`
+
+	// When true connections to backend member servers
+	// will use TLS encryption. Default is false. Supported only in Octavia minor
+	// version >= 2.8.
+	// +kubebuilder:validation:Optional
+	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+
+	// A list of TLS protocol versions. Available
+	// versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+	// Octavia minor version >= 2.17.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	TLSVersions []*string `json:"tlsVersions,omitempty" tf:"tls_versions,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Required for admins. The UUID of the tenant who owns
-	// the pool.  Only administrative users can specify a tenant UUID
-	// other than their own. Changing this creates a new pool.
+	// the pool.  Only administrative users can specify a tenant UUID other than
+	// their own. Changing this creates a new pool.
 	// +kubebuilder:validation:Optional
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 }

@@ -83,36 +83,3 @@ spec:
       name: example-secret
       namespace: upbound-system
     secretType: private
-
----
-
-apiVersion: lb.openstack.crossplane.io/v1alpha1
-kind: ListenerV2
-metadata:
-  annotations:
-    meta.upbound.io/example-id: keymanager/v1alpha1/containerv1
-  labels:
-    testing.upbound.io/example-name: listener_1
-  name: listener-1
-spec:
-  forProvider:
-    defaultTlsContainerRef: ${openstack_keymanager_container_v1.tls_1.container_ref}
-    loadbalancerId: ${openstack_lb_loadbalancer_v2.lb_1.id}
-    name: https
-    protocol: TERMINATED_HTTPS
-    protocolPort: 443
-
----
-
-apiVersion: lb.openstack.crossplane.io/v1alpha1
-kind: LoadbalancerV2
-metadata:
-  annotations:
-    meta.upbound.io/example-id: keymanager/v1alpha1/containerv1
-  labels:
-    testing.upbound.io/example-name: lb_1
-  name: lb-1
-spec:
-  forProvider:
-    name: loadbalancer
-    vipSubnetId: ${data.openstack_networking_subnet_v2.subnet_1.id}

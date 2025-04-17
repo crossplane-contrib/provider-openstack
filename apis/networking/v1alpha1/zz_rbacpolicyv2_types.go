@@ -37,7 +37,7 @@ type RbacPolicyV2InitParameters struct {
 
 	// The type of the object that the RBAC policy
 	// affects. Can be one of the following: address_scope, address_group,
-	// network, qos_policy, security_group or subnetpool.
+	// network, qos_policy, security_group, subnetpool or bgpvpn.
 	ObjectType *string `json:"objectType,omitempty" tf:"object_type,omitempty"`
 
 	// The region in which to obtain the V2 networking client.
@@ -66,7 +66,7 @@ type RbacPolicyV2Observation struct {
 
 	// The type of the object that the RBAC policy
 	// affects. Can be one of the following: address_scope, address_group,
-	// network, qos_policy, security_group or subnetpool.
+	// network, qos_policy, security_group, subnetpool or bgpvpn.
 	ObjectType *string `json:"objectType,omitempty" tf:"object_type,omitempty"`
 
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
@@ -107,7 +107,7 @@ type RbacPolicyV2Parameters struct {
 
 	// The type of the object that the RBAC policy
 	// affects. Can be one of the following: address_scope, address_group,
-	// network, qos_policy, security_group or subnetpool.
+	// network, qos_policy, security_group, subnetpool or bgpvpn.
 	// +kubebuilder:validation:Optional
 	ObjectType *string `json:"objectType,omitempty" tf:"object_type,omitempty"`
 
