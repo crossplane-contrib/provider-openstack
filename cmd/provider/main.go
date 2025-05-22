@@ -206,7 +206,7 @@ func main() {
 		})), "cannot create default store config")
 	}
 
-	kingpin.FatalIfError(conversion.RegisterConversions(o.Provider), "Cannot initialize the webhook conversion registry")
+	kingpin.FatalIfError(conversion.RegisterConversions(o.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Azuread controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }

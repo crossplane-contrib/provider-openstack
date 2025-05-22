@@ -104,6 +104,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -138,6 +139,22 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.NeutronSubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NeutronSubnetIDRef = rsp.ResolvedReference
 
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityServiceIds),
+		Extract:       resource.ExtractResourceID(),
+		References:    mg.Spec.ForProvider.SecurityServiceIdsRefs,
+		Selector:      mg.Spec.ForProvider.SecurityServiceIdsSelector,
+		To: reference.To{
+			List:    &SecurityserviceV2List{},
+			Managed: &SecurityserviceV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityServiceIds")
+	}
+	mg.Spec.ForProvider.SecurityServiceIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityServiceIdsRefs = mrsp.ResolvedReferences
+
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NeutronNetID),
 		Extract:      resource.ExtractResourceID(),
@@ -169,6 +186,22 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.InitProvider.NeutronSubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NeutronSubnetIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.SecurityServiceIds),
+		Extract:       resource.ExtractResourceID(),
+		References:    mg.Spec.InitProvider.SecurityServiceIdsRefs,
+		Selector:      mg.Spec.InitProvider.SecurityServiceIdsSelector,
+		To: reference.To{
+			List:    &SecurityserviceV2List{},
+			Managed: &SecurityserviceV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityServiceIds")
+	}
+	mg.Spec.InitProvider.SecurityServiceIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.SecurityServiceIdsRefs = mrsp.ResolvedReferences
 
 	return nil
 }

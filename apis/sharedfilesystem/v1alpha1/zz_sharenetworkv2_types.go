@@ -62,8 +62,18 @@ type SharenetworkV2InitParameters struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SecurityserviceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
+
+	// References to SecurityserviceV2 in sharedfilesystem to populate securityServiceIds.
+	// +kubebuilder:validation:Optional
+	SecurityServiceIdsRefs []v1.Reference `json:"securityServiceIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityserviceV2 in sharedfilesystem to populate securityServiceIds.
+	// +kubebuilder:validation:Optional
+	SecurityServiceIdsSelector *v1.Selector `json:"securityServiceIdsSelector,omitempty" tf:"-"`
 }
 
 type SharenetworkV2Observation struct {
@@ -169,9 +179,19 @@ type SharenetworkV2Parameters struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SecurityserviceV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
+
+	// References to SecurityserviceV2 in sharedfilesystem to populate securityServiceIds.
+	// +kubebuilder:validation:Optional
+	SecurityServiceIdsRefs []v1.Reference `json:"securityServiceIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityserviceV2 in sharedfilesystem to populate securityServiceIds.
+	// +kubebuilder:validation:Optional
+	SecurityServiceIdsSelector *v1.Selector `json:"securityServiceIdsSelector,omitempty" tf:"-"`
 }
 
 // SharenetworkV2Spec defines the desired state of SharenetworkV2
