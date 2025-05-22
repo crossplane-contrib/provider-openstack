@@ -20,6 +20,6 @@ jobs:
       version: ${{ github.event.inputs.version }}
       go-version: ${{ github.event.inputs.go-version }}
       cleanup-disk: true
+      mirror-to-upbound-registry: false
     secrets:
       GHCR_PAT: ${{ secrets.GITHUB_TOKEN }}
-      XPKG_UPBOUND_TOKEN: ${{ secrets.XPKG_UPBOUND_TOKEN }}
