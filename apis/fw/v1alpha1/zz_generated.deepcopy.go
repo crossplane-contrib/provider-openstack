@@ -437,6 +437,18 @@ func (in *PolicyV2InitParameters) DeepCopyInto(out *PolicyV2InitParameters) {
 			}
 		}
 	}
+	if in.RulesRefs != nil {
+		in, out := &in.RulesRefs, &out.RulesRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RulesSelector != nil {
+		in, out := &in.RulesSelector, &out.RulesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Shared != nil {
 		in, out := &in.Shared, &out.Shared
 		*out = new(bool)
@@ -595,6 +607,18 @@ func (in *PolicyV2Parameters) DeepCopyInto(out *PolicyV2Parameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.RulesRefs != nil {
+		in, out := &in.RulesRefs, &out.RulesRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RulesSelector != nil {
+		in, out := &in.RulesSelector, &out.RulesSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Shared != nil {
 		in, out := &in.Shared, &out.Shared

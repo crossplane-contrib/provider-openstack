@@ -87,3 +87,45 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 
 	return nil
 }
+
+// ResolveReferences of this PolicyV2.
+func (mg *PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Rules),
+		Extract:       resource.ExtractResourceID(),
+		References:    mg.Spec.ForProvider.RulesRefs,
+		Selector:      mg.Spec.ForProvider.RulesSelector,
+		To: reference.To{
+			List:    &RuleV2List{},
+			Managed: &RuleV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Rules")
+	}
+	mg.Spec.ForProvider.Rules = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.RulesRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Rules),
+		Extract:       resource.ExtractResourceID(),
+		References:    mg.Spec.InitProvider.RulesRefs,
+		Selector:      mg.Spec.InitProvider.RulesSelector,
+		To: reference.To{
+			List:    &RuleV2List{},
+			Managed: &RuleV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Rules")
+	}
+	mg.Spec.InitProvider.Rules = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.RulesRefs = mrsp.ResolvedReferences
+
+	return nil
+}

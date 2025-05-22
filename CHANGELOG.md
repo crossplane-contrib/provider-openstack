@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update golang dependencies
+- Update to golang `v1.23.9`
+
+### Fixed
+
+- Use correct sdk for terraform-provider-openstack `v3.0.0`
+
 ## [0.6.0] - 2025-04-17
 
 This release upgrades the internally used terraform-provider-openstack from v1 to v3. This includes removals of many fields that were previously deprecated. If you didn't use any deprecated fields, this upgrade should break non of your workloads.

@@ -29,8 +29,8 @@ metadata:
 spec:
   forProvider:
     name: firewall_ingress_policy
-    rules:
-    - ${openstack_fw_rule_v2.rule_1.id}
+    rulesRefs:
+    - name: rule_1
 
 ---
 
@@ -45,8 +45,8 @@ metadata:
 spec:
   forProvider:
     name: firewall_egress_policy
-    rules:
-    - ${openstack_fw_rule_v2.rule_2.id}
+    rulesRefs:
+    - name: rule_2
 
 ---
 
