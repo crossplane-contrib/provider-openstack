@@ -1,6 +1,6 @@
 module github.com/crossplane-contrib/provider-openstack
 
-go 1.23.9
+go 1.24.4
 
 require (
 	dario.cat/mergo v1.0.0
