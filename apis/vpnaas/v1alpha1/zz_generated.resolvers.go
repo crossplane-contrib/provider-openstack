@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
+	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -22,7 +23,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IkepolicyID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.IkepolicyID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.IkepolicyIDRef,
 		Selector:     mg.Spec.ForProvider.IkepolicyIDSelector,
@@ -34,11 +35,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.IkepolicyID")
 	}
-	mg.Spec.ForProvider.IkepolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.IkepolicyID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.IkepolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IpsecpolicyID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.IpsecpolicyID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.IpsecpolicyIDRef,
 		Selector:     mg.Spec.ForProvider.IpsecpolicyIDSelector,
@@ -50,11 +51,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.IpsecpolicyID")
 	}
-	mg.Spec.ForProvider.IpsecpolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.IpsecpolicyID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.IpsecpolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LocalEpGroupID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.LocalEpGroupID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.LocalEpGroupIDRef,
 		Selector:     mg.Spec.ForProvider.LocalEpGroupIDSelector,
@@ -66,11 +67,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.LocalEpGroupID")
 	}
-	mg.Spec.ForProvider.LocalEpGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.LocalEpGroupID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.LocalEpGroupIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PeerEpGroupID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.PeerEpGroupID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.PeerEpGroupIDRef,
 		Selector:     mg.Spec.ForProvider.PeerEpGroupIDSelector,
@@ -82,11 +83,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.PeerEpGroupID")
 	}
-	mg.Spec.ForProvider.PeerEpGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PeerEpGroupID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PeerEpGroupIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.VpnserviceID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.VpnserviceID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.VpnserviceIDRef,
 		Selector:     mg.Spec.ForProvider.VpnserviceIDSelector,
@@ -98,11 +99,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.VpnserviceID")
 	}
-	mg.Spec.ForProvider.VpnserviceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.VpnserviceID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VpnserviceIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IkepolicyID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.IkepolicyID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.IkepolicyIDRef,
 		Selector:     mg.Spec.InitProvider.IkepolicyIDSelector,
@@ -114,11 +115,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.IkepolicyID")
 	}
-	mg.Spec.InitProvider.IkepolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.IkepolicyID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.IkepolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IpsecpolicyID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.IpsecpolicyID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.IpsecpolicyIDRef,
 		Selector:     mg.Spec.InitProvider.IpsecpolicyIDSelector,
@@ -130,11 +131,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.IpsecpolicyID")
 	}
-	mg.Spec.InitProvider.IpsecpolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.IpsecpolicyID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.IpsecpolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LocalEpGroupID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.LocalEpGroupID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.LocalEpGroupIDRef,
 		Selector:     mg.Spec.InitProvider.LocalEpGroupIDSelector,
@@ -146,11 +147,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.LocalEpGroupID")
 	}
-	mg.Spec.InitProvider.LocalEpGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.LocalEpGroupID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.LocalEpGroupIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PeerEpGroupID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.PeerEpGroupID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.PeerEpGroupIDRef,
 		Selector:     mg.Spec.InitProvider.PeerEpGroupIDSelector,
@@ -162,11 +163,11 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.PeerEpGroupID")
 	}
-	mg.Spec.InitProvider.PeerEpGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PeerEpGroupID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.PeerEpGroupIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VpnserviceID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.VpnserviceID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.VpnserviceIDRef,
 		Selector:     mg.Spec.InitProvider.VpnserviceIDSelector,
@@ -178,7 +179,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.VpnserviceID")
 	}
-	mg.Spec.InitProvider.VpnserviceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VpnserviceID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.VpnserviceIDRef = rsp.ResolvedReference
 
 	return nil

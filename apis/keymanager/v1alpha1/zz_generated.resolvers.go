@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
+	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -23,7 +24,7 @@ func (mg *ContainerV1) ResolveReferences(ctx context.Context, c client.Reader) e
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.SecretRefs); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecretRefs[i3].SecretRef),
+			CurrentValue: ptr.Deref(mg.Spec.ForProvider.SecretRefs[i3].SecretRef, ""),
 			Extract:      resource.ExtractParamPath("secret_ref", true),
 			Reference:    mg.Spec.ForProvider.SecretRefs[i3].SecretRefRef,
 			Selector:     mg.Spec.ForProvider.SecretRefs[i3].SecretRefSelector,
@@ -35,13 +36,13 @@ func (mg *ContainerV1) ResolveReferences(ctx context.Context, c client.Reader) e
 		if err != nil {
 			return errors.Wrap(err, "mg.Spec.ForProvider.SecretRefs[i3].SecretRef")
 		}
-		mg.Spec.ForProvider.SecretRefs[i3].SecretRef = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SecretRefs[i3].SecretRef = ptr.To(rsp.ResolvedValue)
 		mg.Spec.ForProvider.SecretRefs[i3].SecretRefRef = rsp.ResolvedReference
 
 	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.SecretRefs); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecretRefs[i3].SecretRef),
+			CurrentValue: ptr.Deref(mg.Spec.InitProvider.SecretRefs[i3].SecretRef, ""),
 			Extract:      resource.ExtractParamPath("secret_ref", true),
 			Reference:    mg.Spec.InitProvider.SecretRefs[i3].SecretRefRef,
 			Selector:     mg.Spec.InitProvider.SecretRefs[i3].SecretRefSelector,
@@ -53,7 +54,7 @@ func (mg *ContainerV1) ResolveReferences(ctx context.Context, c client.Reader) e
 		if err != nil {
 			return errors.Wrap(err, "mg.Spec.InitProvider.SecretRefs[i3].SecretRef")
 		}
-		mg.Spec.InitProvider.SecretRefs[i3].SecretRef = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SecretRefs[i3].SecretRef = ptr.To(rsp.ResolvedValue)
 		mg.Spec.InitProvider.SecretRefs[i3].SecretRefRef = rsp.ResolvedReference
 
 	}

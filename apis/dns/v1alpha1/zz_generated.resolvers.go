@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
+	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -22,7 +23,7 @@ func (mg *RecordsetV2) ResolveReferences(ctx context.Context, c client.Reader) e
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ZoneID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ZoneID, ""),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.ZoneIDRef,
 		Selector:     mg.Spec.ForProvider.ZoneIDSelector,
@@ -34,11 +35,11 @@ func (mg *RecordsetV2) ResolveReferences(ctx context.Context, c client.Reader) e
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ZoneID")
 	}
-	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ZoneID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ZoneID, ""),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.ZoneIDRef,
 		Selector:     mg.Spec.InitProvider.ZoneIDSelector,
@@ -50,7 +51,7 @@ func (mg *RecordsetV2) ResolveReferences(ctx context.Context, c client.Reader) e
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
 	}
-	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
 
 	return nil
@@ -64,7 +65,7 @@ func (mg *TransferAcceptV2) ResolveReferences(ctx context.Context, c client.Read
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Key),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.Key, ""),
 		Extract:      resource.ExtractParamPath("key", false),
 		Reference:    mg.Spec.ForProvider.KeyRef,
 		Selector:     mg.Spec.ForProvider.KeySelector,
@@ -76,11 +77,11 @@ func (mg *TransferAcceptV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.Key")
 	}
-	mg.Spec.ForProvider.Key = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.Key = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.KeyRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ZoneTransferRequestID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ZoneTransferRequestID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ZoneTransferRequestIDRef,
 		Selector:     mg.Spec.ForProvider.ZoneTransferRequestIDSelector,
@@ -92,11 +93,11 @@ func (mg *TransferAcceptV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ZoneTransferRequestID")
 	}
-	mg.Spec.ForProvider.ZoneTransferRequestID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ZoneTransferRequestID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneTransferRequestIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Key),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.Key, ""),
 		Extract:      resource.ExtractParamPath("key", false),
 		Reference:    mg.Spec.InitProvider.KeyRef,
 		Selector:     mg.Spec.InitProvider.KeySelector,
@@ -108,11 +109,11 @@ func (mg *TransferAcceptV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.Key")
 	}
-	mg.Spec.InitProvider.Key = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.Key = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.KeyRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneTransferRequestID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ZoneTransferRequestID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ZoneTransferRequestIDRef,
 		Selector:     mg.Spec.InitProvider.ZoneTransferRequestIDSelector,
@@ -124,7 +125,7 @@ func (mg *TransferAcceptV2) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneTransferRequestID")
 	}
-	mg.Spec.InitProvider.ZoneTransferRequestID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneTransferRequestID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ZoneTransferRequestIDRef = rsp.ResolvedReference
 
 	return nil
@@ -138,7 +139,7 @@ func (mg *TransferRequestV2) ResolveReferences(ctx context.Context, c client.Rea
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ZoneID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ZoneID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ZoneIDRef,
 		Selector:     mg.Spec.ForProvider.ZoneIDSelector,
@@ -150,11 +151,11 @@ func (mg *TransferRequestV2) ResolveReferences(ctx context.Context, c client.Rea
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ZoneID")
 	}
-	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ZoneID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ZoneID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ZoneIDRef,
 		Selector:     mg.Spec.InitProvider.ZoneIDSelector,
@@ -166,7 +167,7 @@ func (mg *TransferRequestV2) ResolveReferences(ctx context.Context, c client.Rea
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
 	}
-	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
 
 	return nil

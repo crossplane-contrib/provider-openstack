@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
+	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -22,7 +23,7 @@ func (mg *ImageAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ImageID),
+		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ImageID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ImageIDRef,
 		Selector:     mg.Spec.ForProvider.ImageIDSelector,
@@ -34,11 +35,11 @@ func (mg *ImageAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ImageID")
 	}
-	mg.Spec.ForProvider.ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ImageID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ImageIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ImageID),
+		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ImageID, ""),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ImageIDRef,
 		Selector:     mg.Spec.InitProvider.ImageIDSelector,
@@ -50,7 +51,7 @@ func (mg *ImageAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ImageID")
 	}
-	mg.Spec.InitProvider.ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ImageID = ptr.To(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ImageIDRef = rsp.ResolvedReference
 
 	return nil
