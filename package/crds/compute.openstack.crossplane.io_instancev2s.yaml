@@ -73,12 +73,6 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  accessIpV4:
-                    description: The first detected Fixed IPv4 address.
-                    type: string
-                  accessIpV6:
-                    description: The first detected Fixed IPv6 address.
-                    type: string
                   adminPassSecretRef:
                     description: |-
                       The administrative password to assign to the server.
@@ -361,6 +355,15 @@ spec:
                       forcefully deleted. This is useful for environments that have reclaim / soft
                       deletion enabled.
                     type: boolean
+                  hypervisorHostname:
+                    description: |-
+                      Specifies the exact hypervisor hostname on
+                      which to create the instance. When provided, this parameter is included in
+                      the request to Nova, directing the scheduler to launch the instance on the
+                      specified host. Note: This option requires administrative privileges and a
+                      Nova microversion of 2.74 or later. Conflicts with personality. Changing
+                      this value forces a new instance to be created.
+                    type: string
                   imageId:
                     description: |-
                       The image ID of
@@ -584,8 +587,9 @@ spec:
                   personality:
                     description: |-
                       Customize the personality of an instance by
-                      defining one or more files and their contents. The personality structure
-                      is described below. Changing this rebuilds the existing server.
+                      defining one or more files and their contents. The personality structure is
+                      described below. Conflicts with hypervisor_hostname. Changing this rebuilds
+                      the existing server.
                     items:
                       properties:
                         content:
@@ -813,12 +817,6 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  accessIpV4:
-                    description: The first detected Fixed IPv4 address.
-                    type: string
-                  accessIpV6:
-                    description: The first detected Fixed IPv6 address.
-                    type: string
                   adminPassSecretRef:
                     description: |-
                       The administrative password to assign to the server.
@@ -1101,6 +1099,15 @@ spec:
                       forcefully deleted. This is useful for environments that have reclaim / soft
                       deletion enabled.
                     type: boolean
+                  hypervisorHostname:
+                    description: |-
+                      Specifies the exact hypervisor hostname on
+                      which to create the instance. When provided, this parameter is included in
+                      the request to Nova, directing the scheduler to launch the instance on the
+                      specified host. Note: This option requires administrative privileges and a
+                      Nova microversion of 2.74 or later. Conflicts with personality. Changing
+                      this value forces a new instance to be created.
+                    type: string
                   imageId:
                     description: |-
                       The image ID of
@@ -1324,8 +1331,9 @@ spec:
                   personality:
                     description: |-
                       Customize the personality of an instance by
-                      defining one or more files and their contents. The personality structure
-                      is described below. Changing this rebuilds the existing server.
+                      defining one or more files and their contents. The personality structure is
+                      described below. Conflicts with hypervisor_hostname. Changing this rebuilds
+                      the existing server.
                     items:
                       properties:
                         content:
@@ -1852,6 +1860,15 @@ spec:
                       forcefully deleted. This is useful for environments that have reclaim / soft
                       deletion enabled.
                     type: boolean
+                  hypervisorHostname:
+                    description: |-
+                      Specifies the exact hypervisor hostname on
+                      which to create the instance. When provided, this parameter is included in
+                      the request to Nova, directing the scheduler to launch the instance on the
+                      specified host. Note: This option requires administrative privileges and a
+                      Nova microversion of 2.74 or later. Conflicts with personality. Changing
+                      this value forces a new instance to be created.
+                    type: string
                   id:
                     type: string
                   imageId:
@@ -1929,8 +1946,9 @@ spec:
                   personality:
                     description: |-
                       Customize the personality of an instance by
-                      defining one or more files and their contents. The personality structure
-                      is described below. Changing this rebuilds the existing server.
+                      defining one or more files and their contents. The personality structure is
+                      described below. Conflicts with hypervisor_hostname. Changing this rebuilds
+                      the existing server.
                     items:
                       properties:
                         content:

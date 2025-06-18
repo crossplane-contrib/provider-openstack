@@ -128,6 +128,12 @@ spec:
                       compute instances or load balancers will be using floating IPs. Changing
                       this updates the external gateway of the router.
                     type: string
+                  externalQosPolicyId:
+                    description: |-
+                      The QoS policy UUID that will be applied
+                      on the external gateway for the router. Changing this updates the external
+                      gateway of the router.
+                    type: string
                   externalSubnetIds:
                     description: |-
                       A list of external subnet IDs to try over
@@ -246,6 +252,12 @@ spec:
                       for the router. A router with an external gateway is required if any
                       compute instances or load balancers will be using floating IPs. Changing
                       this updates the external gateway of the router.
+                    type: string
+                  externalQosPolicyId:
+                    description: |-
+                      The QoS policy UUID that will be applied
+                      on the external gateway for the router. Changing this updates the external
+                      gateway of the router.
                     type: string
                   externalSubnetIds:
                     description: |-
@@ -532,6 +544,12 @@ spec:
                       for the router. A router with an external gateway is required if any
                       compute instances or load balancers will be using floating IPs. Changing
                       this updates the external gateway of the router.
+                    type: string
+                  externalQosPolicyId:
+                    description: |-
+                      The QoS policy UUID that will be applied
+                      on the external gateway for the router. Changing this updates the external
+                      gateway of the router.
                     type: string
                   externalSubnetIds:
                     description: |-

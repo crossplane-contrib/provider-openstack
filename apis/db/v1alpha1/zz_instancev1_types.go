@@ -130,6 +130,11 @@ type InstanceV1InitParameters struct {
 	// An array of username, password, host and databases. The user
 	// object structure is documented below.
 	User []UserInitParameters `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Specifies the volume type to use. If you want to
+	// specify a volume type, you must also specify a volume size. Changing this
+	// creates new instance.
+	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }
 
 type InstanceV1Observation struct {
@@ -173,6 +178,11 @@ type InstanceV1Observation struct {
 	// An array of username, password, host and databases. The user
 	// object structure is documented below.
 	User []UserObservation `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Specifies the volume type to use. If you want to
+	// specify a volume type, you must also specify a volume size. Changing this
+	// creates new instance.
+	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }
 
 type InstanceV1Parameters struct {
@@ -220,6 +230,12 @@ type InstanceV1Parameters struct {
 	// object structure is documented below.
 	// +kubebuilder:validation:Optional
 	User []UserParameters `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Specifies the volume type to use. If you want to
+	// specify a volume type, you must also specify a volume size. Changing this
+	// creates new instance.
+	// +kubebuilder:validation:Optional
+	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }
 
 type NetworkInitParameters struct {

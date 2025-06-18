@@ -112,6 +112,13 @@ spec:
                       region argument of the provider is used. Changing this creates a new
                       security group rule.
                     type: string
+                  remoteAddressGroupId:
+                    description: |-
+                      The remote address group id, the value
+                      needs to be an OpenStack ID of an address group in the same tenant. Changing
+                      this creates a new security group rule. This argument is mutually exclusive
+                      with remote_ip_prefix and remote_group_id.
+                    type: string
                   remoteGroupId:
                     description: |-
                       The remote group id, the value needs to be an
@@ -263,6 +270,13 @@ spec:
                       A networking client is needed to create a port. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       security group rule.
+                    type: string
+                  remoteAddressGroupId:
+                    description: |-
+                      The remote address group id, the value
+                      needs to be an OpenStack ID of an address group in the same tenant. Changing
+                      this creates a new security group rule. This argument is mutually exclusive
+                      with remote_ip_prefix and remote_group_id.
                     type: string
                   remoteGroupId:
                     description: |-
@@ -585,6 +599,13 @@ spec:
                       A networking client is needed to create a port. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       security group rule.
+                    type: string
+                  remoteAddressGroupId:
+                    description: |-
+                      The remote address group id, the value
+                      needs to be an OpenStack ID of an address group in the same tenant. Changing
+                      this creates a new security group rule. This argument is mutually exclusive
+                      with remote_ip_prefix and remote_group_id.
                     type: string
                   remoteGroupId:
                     description: |-

@@ -104,9 +104,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share. Changing this
-                      creates a new share.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share. Changing
+                      this creates a new share.
                     type: string
                   shareNetworkId:
                     description: |-
@@ -255,9 +255,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share. Changing this
-                      creates a new share.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share. Changing
+                      this creates a new share.
                     type: string
                   shareNetworkId:
                     description: |-
@@ -610,9 +610,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share. Changing this
-                      creates a new share.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share. Changing
+                      this creates a new share.
                     type: string
                   replicationType:
                     description: The share replication type.

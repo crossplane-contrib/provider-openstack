@@ -43,12 +43,11 @@ type ZoneV2InitParameters struct {
 
 	// The ID of the project DNS zone is created
 	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
-	// user role in target project)
+	// user role in target project).
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
 	// Changing this creates a new DNS zone.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
@@ -96,12 +95,11 @@ type ZoneV2Observation struct {
 
 	// The ID of the project DNS zone is created
 	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
-	// user role in target project)
+	// user role in target project).
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
 	// Changing this creates a new DNS zone.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
@@ -153,13 +151,12 @@ type ZoneV2Parameters struct {
 
 	// The ID of the project DNS zone is created
 	// for, sets X-Auth-Sudo-Tenant-ID header (requires an assigned
-	// user role in target project)
+	// user role in target project).
 	// +kubebuilder:validation:Optional
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
 	// Changing this creates a new DNS zone.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`

@@ -16,15 +16,17 @@ import (
 
 type IkePolicyV2InitParameters struct {
 
-	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-	// Default is sha1. Changing this updates the algorithm of the existing policy.
+	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+	// aes-xcbc, aes-cmac. Default is sha1.
+	// Changing this updates the algorithm of the existing policy.
 	AuthAlgorithm *string `json:"authAlgorithm,omitempty" tf:"auth_algorithm,omitempty"`
 
 	// The human-readable description for the policy.
 	// Changing this updates the description of the existing policy.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+	// The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+	// aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
 	// The default value is aes-128. Changing this updates the existing policy.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
@@ -39,8 +41,8 @@ type IkePolicyV2InitParameters struct {
 	// the existing policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-	// Changing this updates the existing policy.
+	// The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+	// Default is group5. Changing this updates the existing policy.
 	Pfs *string `json:"pfs,omitempty" tf:"pfs,omitempty"`
 
 	// The IKE mode. A valid value is main, which is the default.
@@ -64,15 +66,17 @@ type IkePolicyV2InitParameters struct {
 
 type IkePolicyV2Observation struct {
 
-	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-	// Default is sha1. Changing this updates the algorithm of the existing policy.
+	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+	// aes-xcbc, aes-cmac. Default is sha1.
+	// Changing this updates the algorithm of the existing policy.
 	AuthAlgorithm *string `json:"authAlgorithm,omitempty" tf:"auth_algorithm,omitempty"`
 
 	// The human-readable description for the policy.
 	// Changing this updates the description of the existing policy.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+	// The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+	// aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
 	// The default value is aes-128. Changing this updates the existing policy.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
@@ -89,8 +93,8 @@ type IkePolicyV2Observation struct {
 	// the existing policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-	// Changing this updates the existing policy.
+	// The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+	// Default is group5. Changing this updates the existing policy.
 	Pfs *string `json:"pfs,omitempty" tf:"pfs,omitempty"`
 
 	// The IKE mode. A valid value is main, which is the default.
@@ -114,8 +118,9 @@ type IkePolicyV2Observation struct {
 
 type IkePolicyV2Parameters struct {
 
-	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-	// Default is sha1. Changing this updates the algorithm of the existing policy.
+	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+	// aes-xcbc, aes-cmac. Default is sha1.
+	// Changing this updates the algorithm of the existing policy.
 	// +kubebuilder:validation:Optional
 	AuthAlgorithm *string `json:"authAlgorithm,omitempty" tf:"auth_algorithm,omitempty"`
 
@@ -124,7 +129,8 @@ type IkePolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+	// The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+	// aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
 	// The default value is aes-128. Changing this updates the existing policy.
 	// +kubebuilder:validation:Optional
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
@@ -143,8 +149,8 @@ type IkePolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-	// Changing this updates the existing policy.
+	// The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+	// Default is group5. Changing this updates the existing policy.
 	// +kubebuilder:validation:Optional
 	Pfs *string `json:"pfs,omitempty" tf:"pfs,omitempty"`
 

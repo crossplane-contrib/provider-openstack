@@ -207,6 +207,12 @@ spec:
                           type: object
                       type: object
                     type: array
+                  volumeType:
+                    description: |-
+                      Specifies the volume type to use. If you want to
+                      specify a volume type, you must also specify a volume size. Changing this
+                      creates new instance.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -355,6 +361,12 @@ spec:
                           type: object
                       type: object
                     type: array
+                  volumeType:
+                    description: |-
+                      Specifies the volume type to use. If you want to
+                      specify a volume type, you must also specify a volume size. Changing this
+                      creates new instance.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -663,6 +675,12 @@ spec:
                           type: string
                       type: object
                     type: array
+                  volumeType:
+                    description: |-
+                      Specifies the volume type to use. If you want to
+                      specify a volume type, you must also specify a volume size. Changing this
+                      creates new instance.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

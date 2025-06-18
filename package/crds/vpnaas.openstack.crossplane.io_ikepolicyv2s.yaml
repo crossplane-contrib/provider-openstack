@@ -75,8 +75,9 @@ spec:
                 properties:
                   authAlgorithm:
                     description: |-
-                      The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-                      Default is sha1. Changing this updates the algorithm of the existing policy.
+                      The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+                      aes-xcbc, aes-cmac. Default is sha1.
+                      Changing this updates the algorithm of the existing policy.
                     type: string
                   description:
                     description: |-
@@ -85,7 +86,8 @@ spec:
                     type: string
                   encryptionAlgorithm:
                     description: |-
-                      The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+                      The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+                      aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
                       The default value is aes-128. Changing this updates the existing policy.
                     type: string
                   ikeVersion:
@@ -114,8 +116,8 @@ spec:
                     type: string
                   pfs:
                     description: |-
-                      The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-                      Changing this updates the existing policy.
+                      The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+                      Default is group5. Changing this updates the existing policy.
                     type: string
                   phase1NegotiationMode:
                     description: |-
@@ -156,8 +158,9 @@ spec:
                 properties:
                   authAlgorithm:
                     description: |-
-                      The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-                      Default is sha1. Changing this updates the algorithm of the existing policy.
+                      The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+                      aes-xcbc, aes-cmac. Default is sha1.
+                      Changing this updates the algorithm of the existing policy.
                     type: string
                   description:
                     description: |-
@@ -166,7 +169,8 @@ spec:
                     type: string
                   encryptionAlgorithm:
                     description: |-
-                      The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+                      The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+                      aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
                       The default value is aes-128. Changing this updates the existing policy.
                     type: string
                   ikeVersion:
@@ -195,8 +199,8 @@ spec:
                     type: string
                   pfs:
                     description: |-
-                      The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-                      Changing this updates the existing policy.
+                      The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+                      Default is group5. Changing this updates the existing policy.
                     type: string
                   phase1NegotiationMode:
                     description: |-
@@ -396,8 +400,9 @@ spec:
                 properties:
                   authAlgorithm:
                     description: |-
-                      The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-                      Default is sha1. Changing this updates the algorithm of the existing policy.
+                      The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+                      aes-xcbc, aes-cmac. Default is sha1.
+                      Changing this updates the algorithm of the existing policy.
                     type: string
                   description:
                     description: |-
@@ -406,7 +411,8 @@ spec:
                     type: string
                   encryptionAlgorithm:
                     description: |-
-                      The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+                      The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+                      aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
                       The default value is aes-128. Changing this updates the existing policy.
                     type: string
                   id:
@@ -437,8 +443,8 @@ spec:
                     type: string
                   pfs:
                     description: |-
-                      The perfect forward secrecy mode. Valid values are Group2, Group5 and Group14. Default is Group5.
-                      Changing this updates the existing policy.
+                      The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+                      Default is group5. Changing this updates the existing policy.
                     type: string
                   phase1NegotiationMode:
                     description: |-

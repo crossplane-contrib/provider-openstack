@@ -83,6 +83,11 @@ type RouterV2InitParameters struct {
 	// this updates the external gateway of the router.
 	ExternalNetworkID *string `json:"externalNetworkId,omitempty" tf:"external_network_id,omitempty"`
 
+	// The QoS policy UUID that will be applied
+	// on the external gateway for the router. Changing this updates the external
+	// gateway of the router.
+	ExternalQosPolicyID *string `json:"externalQosPolicyId,omitempty" tf:"external_qos_policy_id,omitempty"`
+
 	// A list of external subnet IDs to try over
 	// each to obtain a fixed IP for the router. If a subnet ID in a list has
 	// exhausted floating IP pool, the next subnet ID will be tried. This argument is
@@ -161,6 +166,11 @@ type RouterV2Observation struct {
 	// compute instances or load balancers will be using floating IPs. Changing
 	// this updates the external gateway of the router.
 	ExternalNetworkID *string `json:"externalNetworkId,omitempty" tf:"external_network_id,omitempty"`
+
+	// The QoS policy UUID that will be applied
+	// on the external gateway for the router. Changing this updates the external
+	// gateway of the router.
+	ExternalQosPolicyID *string `json:"externalQosPolicyId,omitempty" tf:"external_qos_policy_id,omitempty"`
 
 	// A list of external subnet IDs to try over
 	// each to obtain a fixed IP for the router. If a subnet ID in a list has
@@ -245,6 +255,12 @@ type RouterV2Parameters struct {
 	// this updates the external gateway of the router.
 	// +kubebuilder:validation:Optional
 	ExternalNetworkID *string `json:"externalNetworkId,omitempty" tf:"external_network_id,omitempty"`
+
+	// The QoS policy UUID that will be applied
+	// on the external gateway for the router. Changing this updates the external
+	// gateway of the router.
+	// +kubebuilder:validation:Optional
+	ExternalQosPolicyID *string `json:"externalQosPolicyId,omitempty" tf:"external_qos_policy_id,omitempty"`
 
 	// A list of external subnet IDs to try over
 	// each to obtain a fixed IP for the router. If a subnet ID in a list has

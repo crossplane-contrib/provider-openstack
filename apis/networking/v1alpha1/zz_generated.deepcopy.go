@@ -5127,6 +5127,11 @@ func (in *RouterV2InitParameters) DeepCopyInto(out *RouterV2InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ExternalQosPolicyID != nil {
+		in, out := &in.ExternalQosPolicyID, &out.ExternalQosPolicyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExternalSubnetIds != nil {
 		in, out := &in.ExternalSubnetIds, &out.ExternalSubnetIds
 		*out = make([]*string, len(*in))
@@ -5286,6 +5291,11 @@ func (in *RouterV2Observation) DeepCopyInto(out *RouterV2Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ExternalQosPolicyID != nil {
+		in, out := &in.ExternalQosPolicyID, &out.ExternalQosPolicyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExternalSubnetIds != nil {
 		in, out := &in.ExternalSubnetIds, &out.ExternalSubnetIds
 		*out = make([]*string, len(*in))
@@ -5404,6 +5414,11 @@ func (in *RouterV2Parameters) DeepCopyInto(out *RouterV2Parameters) {
 	}
 	if in.ExternalNetworkID != nil {
 		in, out := &in.ExternalNetworkID, &out.ExternalNetworkID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExternalQosPolicyID != nil {
+		in, out := &in.ExternalQosPolicyID, &out.ExternalQosPolicyID
 		*out = new(string)
 		**out = **in
 	}
@@ -5577,6 +5592,11 @@ func (in *SecgroupRuleV2InitParameters) DeepCopyInto(out *SecgroupRuleV2InitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAddressGroupID != nil {
+		in, out := &in.RemoteAddressGroupID, &out.RemoteAddressGroupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RemoteGroupID != nil {
 		in, out := &in.RemoteGroupID, &out.RemoteGroupID
 		*out = new(string)
@@ -5694,6 +5714,11 @@ func (in *SecgroupRuleV2Observation) DeepCopyInto(out *SecgroupRuleV2Observation
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAddressGroupID != nil {
+		in, out := &in.RemoteAddressGroupID, &out.RemoteAddressGroupID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RemoteGroupID != nil {
 		in, out := &in.RemoteGroupID, &out.RemoteGroupID
 		*out = new(string)
@@ -5761,6 +5786,11 @@ func (in *SecgroupRuleV2Parameters) DeepCopyInto(out *SecgroupRuleV2Parameters) 
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
+		*out = new(string)
+		**out = **in
+	}
+	if in.RemoteAddressGroupID != nil {
+		in, out := &in.RemoteAddressGroupID, &out.RemoteAddressGroupID
 		*out = new(string)
 		**out = **in
 	}
@@ -6666,6 +6696,11 @@ func (in *SubnetV2InitParameters) DeepCopyInto(out *SubnetV2InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SegmentID != nil {
+		in, out := &in.SegmentID, &out.SegmentID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ServiceTypes != nil {
 		in, out := &in.ServiceTypes, &out.ServiceTypes
 		*out = make([]*string, len(*in))
@@ -6860,6 +6895,11 @@ func (in *SubnetV2Observation) DeepCopyInto(out *SubnetV2Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SegmentID != nil {
+		in, out := &in.SegmentID, &out.SegmentID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ServiceTypes != nil {
 		in, out := &in.ServiceTypes, &out.ServiceTypes
 		*out = make([]*string, len(*in))
@@ -7013,6 +7053,11 @@ func (in *SubnetV2Parameters) DeepCopyInto(out *SubnetV2Parameters) {
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
+		*out = new(string)
+		**out = **in
+	}
+	if in.SegmentID != nil {
+		in, out := &in.SegmentID, &out.SegmentID
 		*out = new(string)
 		**out = **in
 	}

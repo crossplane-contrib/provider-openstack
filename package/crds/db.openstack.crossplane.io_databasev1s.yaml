@@ -154,7 +154,9 @@ spec:
                     description: A unique name for the resource.
                     type: string
                   region:
-                    description: Openstack region resource is created in.
+                    description: |-
+                      The region in which to create the database. Changing
+                      this creates a new database.
                     type: string
                 type: object
               initProvider:
@@ -251,7 +253,9 @@ spec:
                     description: A unique name for the resource.
                     type: string
                   region:
-                    description: Openstack region resource is created in.
+                    description: |-
+                      The region in which to create the database. Changing
+                      this creates a new database.
                     type: string
                 type: object
               managementPolicies:
@@ -440,7 +444,9 @@ spec:
                     description: A unique name for the resource.
                     type: string
                   region:
-                    description: Openstack region resource is created in.
+                    description: |-
+                      The region in which to create the database. Changing
+                      this creates a new database.
                     type: string
                 type: object
               conditions:

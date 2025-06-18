@@ -34,10 +34,9 @@ type TransferAcceptV2InitParameters struct {
 	// +kubebuilder:validation:Optional
 	KeySelector *v1.Selector `json:"keySelector,omitempty" tf:"-"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
-	// Changing this creates a new DNS zone.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone zone transfer accept.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// Map of additional options. Changing this creates a
@@ -71,10 +70,9 @@ type TransferAcceptV2Observation struct {
 	// The transfer key.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
-	// Changing this creates a new DNS zone.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone zone transfer accept.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// Map of additional options. Changing this creates a
@@ -108,10 +106,9 @@ type TransferAcceptV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	KeySelector *v1.Selector `json:"keySelector,omitempty" tf:"-"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
-	// Changing this creates a new DNS zone.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone zone transfer accept.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 

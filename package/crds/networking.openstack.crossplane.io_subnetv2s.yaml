@@ -248,6 +248,12 @@ spec:
                       region argument of the provider is used. Changing this creates a new
                       subnet.
                     type: string
+                  segmentId:
+                    description: |-
+                      The segment ID of the subnet. This is used to
+                      specify which segment the subnet belongs to when using Neutron's routed
+                      provider networks. Available when neutron segment extension is enabled.
+                    type: string
                   serviceTypes:
                     description: |-
                       An array of service types used by the subnet.
@@ -463,6 +469,12 @@ spec:
                       A Networking client is needed to create a Neutron subnet. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       subnet.
+                    type: string
+                  segmentId:
+                    description: |-
+                      The segment ID of the subnet. This is used to
+                      specify which segment the subnet belongs to when using Neutron's routed
+                      provider networks. Available when neutron segment extension is enabled.
                     type: string
                   serviceTypes:
                     description: |-
@@ -772,6 +784,12 @@ spec:
                       A Networking client is needed to create a Neutron subnet. If omitted, the
                       region argument of the provider is used. Changing this creates a new
                       subnet.
+                    type: string
+                  segmentId:
+                    description: |-
+                      The segment ID of the subnet. This is used to
+                      specify which segment the subnet belongs to when using Neutron's routed
+                      provider networks. Available when neutron segment extension is enabled.
                     type: string
                   serviceTypes:
                     description: |-
