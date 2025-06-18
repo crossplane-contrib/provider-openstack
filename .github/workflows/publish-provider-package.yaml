@@ -14,12 +14,12 @@ on:
 
 jobs:
   publish-provider-package:
-    uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@main
+    uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@9a2125b3ec67a41a24913ada8212b9359f104c8c
     with:
       repository: provider-openstack
       version: ${{ github.event.inputs.version }}
       go-version: ${{ github.event.inputs.go-version }}
       cleanup-disk: true
+      mirror-to-upbound-registry: false
     secrets:
       GHCR_PAT: ${{ secrets.GITHUB_TOKEN }}
-      XPKG_UPBOUND_TOKEN: ${{ secrets.XPKG_UPBOUND_TOKEN }}
