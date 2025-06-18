@@ -15,7 +15,7 @@ import (
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
-	"github.com/terraform-provider-openstack/terraform-provider-openstack/openstack"
+	"github.com/terraform-provider-openstack/terraform-provider-openstack/v3/openstack"
 
 	"github.com/crossplane-contrib/provider-openstack/config/blockstorage"
 	"github.com/crossplane-contrib/provider-openstack/config/compute"
