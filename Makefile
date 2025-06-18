@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.5.5
 export TERRAFORM_PROVIDER_SOURCE := terraform-provider-openstack/openstack
 export TERRAFORM_DOCS_PATH := docs/resources
 export TERRAFORM_PROVIDER_REPO := https://github.com/terraform-provider-openstack/terraform-provider-openstack
-export TERRAFORM_PROVIDER_VERSION := 3.0.0
+export TERRAFORM_PROVIDER_VERSION := 3.2.0
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -35,10 +35,10 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.23
+GO_REQUIRED_VERSION ?= 1.24
 # GOLANGCILINT_VERSION is inherited from build submodule by default.
 # Uncomment below if you need to override the version.
-# GOLANGCILINT_VERSION ?= 1.54.0
+GOLANGCILINT_VERSION ?= 1.64.8
 
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
@@ -133,6 +133,7 @@ $(TERRAFORM):
 $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(INFO) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 	@mkdir -p $(TERRAFORM_WORKDIR)
+	@rm -f ${TERRAFORM_WORKDIR}/.terraform.lock.hcl
 	@echo '{"terraform":[{"required_providers":[{"provider":{"source":"'"$(TERRAFORM_PROVIDER_SOURCE)"'","version":"'"$(TERRAFORM_PROVIDER_VERSION)"'"}}],"required_version":"'"$(TERRAFORM_VERSION)"'"}]}' > $(TERRAFORM_WORKDIR)/main.tf.json
 	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) init > $(TERRAFORM_WORKDIR)/terraform-logs.txt 2>&1
 	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) providers schema -json=true > $(TERRAFORM_PROVIDER_SCHEMA) 2>> $(TERRAFORM_WORKDIR)/terraform-logs.txt

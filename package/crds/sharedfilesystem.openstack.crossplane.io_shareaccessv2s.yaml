@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: shareaccessv2s.sharedfilesystem.openstack.crossplane.io
 spec:
   group: sharedfilesystem.openstack.crossplane.io
@@ -90,9 +90,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share access. Changing this
-                      creates a new share access.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share access.
+                      Changing this creates a new share access.
                     type: string
                   shareId:
                     description: The UUID of the share to which you are granted access.
@@ -204,9 +204,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share access. Changing this
-                      creates a new share access.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share access.
+                      Changing this creates a new share access.
                     type: string
                   shareId:
                     description: The UUID of the share to which you are granted access.
@@ -493,9 +493,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share access. Changing this
-                      creates a new share access.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share access.
+                      Changing this creates a new share access.
                     type: string
                   shareId:
                     description: The UUID of the share to which you are granted access.

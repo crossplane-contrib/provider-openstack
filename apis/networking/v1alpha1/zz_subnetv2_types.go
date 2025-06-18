@@ -127,6 +127,11 @@ type SubnetV2InitParameters struct {
 	// subnet.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// The segment ID of the subnet. This is used to
+	// specify which segment the subnet belongs to when using Neutron's routed
+	// provider networks. Available when neutron segment extension is enabled.
+	SegmentID *string `json:"segmentId,omitempty" tf:"segment_id,omitempty"`
+
 	// An array of service types used by the subnet.
 	// Changing this updates the service types for the existing subnet.
 	ServiceTypes []*string `json:"serviceTypes,omitempty" tf:"service_types,omitempty"`
@@ -228,6 +233,11 @@ type SubnetV2Observation struct {
 	// region argument of the provider is used. Changing this creates a new
 	// subnet.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The segment ID of the subnet. This is used to
+	// specify which segment the subnet belongs to when using Neutron's routed
+	// provider networks. Available when neutron segment extension is enabled.
+	SegmentID *string `json:"segmentId,omitempty" tf:"segment_id,omitempty"`
 
 	// An array of service types used by the subnet.
 	// Changing this updates the service types for the existing subnet.
@@ -347,6 +357,12 @@ type SubnetV2Parameters struct {
 	// subnet.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The segment ID of the subnet. This is used to
+	// specify which segment the subnet belongs to when using Neutron's routed
+	// provider networks. Available when neutron segment extension is enabled.
+	// +kubebuilder:validation:Optional
+	SegmentID *string `json:"segmentId,omitempty" tf:"segment_id,omitempty"`
 
 	// An array of service types used by the subnet.
 	// Changing this updates the service types for the existing subnet.

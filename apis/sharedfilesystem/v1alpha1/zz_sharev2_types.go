@@ -50,9 +50,9 @@ type ShareV2InitParameters struct {
 	// of the existing share.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The region in which to obtain the V2 Shared File System client.
-	// A Shared File System client is needed to create a share. Changing this
-	// creates a new share.
+	// The region in which to obtain the V2 Shared File System
+	// client. A Shared File System client is needed to create a share. Changing
+	// this creates a new share.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of a share network where the share server exists
@@ -132,9 +132,9 @@ type ShareV2Observation struct {
 	// The owner of the Share.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// The region in which to obtain the V2 Shared File System client.
-	// A Shared File System client is needed to create a share. Changing this
-	// creates a new share.
+	// The region in which to obtain the V2 Shared File System
+	// client. A Shared File System client is needed to create a share. Changing
+	// this creates a new share.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The share replication type.
@@ -194,9 +194,9 @@ type ShareV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The region in which to obtain the V2 Shared File System client.
-	// A Shared File System client is needed to create a share. Changing this
-	// creates a new share.
+	// The region in which to obtain the V2 Shared File System
+	// client. A Shared File System client is needed to create a share. Changing
+	// this creates a new share.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 

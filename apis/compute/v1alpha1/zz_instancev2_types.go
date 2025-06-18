@@ -218,12 +218,6 @@ type BlockDeviceParameters struct {
 
 type InstanceV2InitParameters struct {
 
-	// The first detected Fixed IPv4 address.
-	AccessIPV4 *string `json:"accessIpV4,omitempty" tf:"access_ip_v4,omitempty"`
-
-	// The first detected Fixed IPv6 address.
-	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
-
 	// The administrative password to assign to the server.
 	// Changing this changes the root password on the existing server.
 	AdminPassSecretRef *v1.SecretKeySelector `json:"adminPassSecretRef,omitempty" tf:"-"`
@@ -276,6 +270,14 @@ type InstanceV2InitParameters struct {
 	// deletion enabled.
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
+	// Specifies the exact hypervisor hostname on
+	// which to create the instance. When provided, this parameter is included in
+	// the request to Nova, directing the scheduler to launch the instance on the
+	// specified host. Note: This option requires administrative privileges and a
+	// Nova microversion of 2.74 or later. Conflicts with personality. Changing
+	// this value forces a new instance to be created.
+	HypervisorHostname *string `json:"hypervisorHostname,omitempty" tf:"hypervisor_hostname,omitempty"`
+
 	// The image ID of
 	// the desired image for the server. Changing this rebuilds the existing
 	// server.
@@ -318,8 +320,9 @@ type InstanceV2InitParameters struct {
 	NetworkMode *string `json:"networkMode,omitempty" tf:"network_mode,omitempty"`
 
 	// Customize the personality of an instance by
-	// defining one or more files and their contents. The personality structure
-	// is described below. Changing this rebuilds the existing server.
+	// defining one or more files and their contents. The personality structure is
+	// described below. Conflicts with hypervisor_hostname. Changing this rebuilds
+	// the existing server.
 	Personality []PersonalityInitParameters `json:"personality,omitempty" tf:"personality,omitempty"`
 
 	// Provide the VM state. Only 'active', 'shutoff', 'paused'
@@ -432,6 +435,14 @@ type InstanceV2Observation struct {
 	// deletion enabled.
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
+	// Specifies the exact hypervisor hostname on
+	// which to create the instance. When provided, this parameter is included in
+	// the request to Nova, directing the scheduler to launch the instance on the
+	// specified host. Note: This option requires administrative privileges and a
+	// Nova microversion of 2.74 or later. Conflicts with personality. Changing
+	// this value forces a new instance to be created.
+	HypervisorHostname *string `json:"hypervisorHostname,omitempty" tf:"hypervisor_hostname,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The image ID of
@@ -467,8 +478,9 @@ type InstanceV2Observation struct {
 	NetworkMode *string `json:"networkMode,omitempty" tf:"network_mode,omitempty"`
 
 	// Customize the personality of an instance by
-	// defining one or more files and their contents. The personality structure
-	// is described below. Changing this rebuilds the existing server.
+	// defining one or more files and their contents. The personality structure is
+	// described below. Conflicts with hypervisor_hostname. Changing this rebuilds
+	// the existing server.
 	Personality []PersonalityObservation `json:"personality,omitempty" tf:"personality,omitempty"`
 
 	// Provide the VM state. Only 'active', 'shutoff', 'paused'
@@ -519,14 +531,6 @@ type InstanceV2Observation struct {
 }
 
 type InstanceV2Parameters struct {
-
-	// The first detected Fixed IPv4 address.
-	// +kubebuilder:validation:Optional
-	AccessIPV4 *string `json:"accessIpV4,omitempty" tf:"access_ip_v4,omitempty"`
-
-	// The first detected Fixed IPv6 address.
-	// +kubebuilder:validation:Optional
-	AccessIPV6 *string `json:"accessIpV6,omitempty" tf:"access_ip_v6,omitempty"`
 
 	// The administrative password to assign to the server.
 	// Changing this changes the root password on the existing server.
@@ -588,6 +592,15 @@ type InstanceV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	ForceDelete *bool `json:"forceDelete,omitempty" tf:"force_delete,omitempty"`
 
+	// Specifies the exact hypervisor hostname on
+	// which to create the instance. When provided, this parameter is included in
+	// the request to Nova, directing the scheduler to launch the instance on the
+	// specified host. Note: This option requires administrative privileges and a
+	// Nova microversion of 2.74 or later. Conflicts with personality. Changing
+	// this value forces a new instance to be created.
+	// +kubebuilder:validation:Optional
+	HypervisorHostname *string `json:"hypervisorHostname,omitempty" tf:"hypervisor_hostname,omitempty"`
+
 	// The image ID of
 	// the desired image for the server. Changing this rebuilds the existing
 	// server.
@@ -637,8 +650,9 @@ type InstanceV2Parameters struct {
 	NetworkMode *string `json:"networkMode,omitempty" tf:"network_mode,omitempty"`
 
 	// Customize the personality of an instance by
-	// defining one or more files and their contents. The personality structure
-	// is described below. Changing this rebuilds the existing server.
+	// defining one or more files and their contents. The personality structure is
+	// described below. Conflicts with hypervisor_hostname. Changing this rebuilds
+	// the existing server.
 	// +kubebuilder:validation:Optional
 	Personality []PersonalityParameters `json:"personality,omitempty" tf:"personality,omitempty"`
 

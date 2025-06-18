@@ -28,9 +28,9 @@ type ShareAccessV2InitParameters struct {
 	// Shared Filesystem microversion 2.13 (Mitaka) or later.
 	AccessType *string `json:"accessType,omitempty" tf:"access_type,omitempty"`
 
-	// The region in which to obtain the V2 Shared File System client.
-	// A Shared File System client is needed to create a share access. Changing this
-	// creates a new share access.
+	// The region in which to obtain the V2 Shared File System
+	// client. A Shared File System client is needed to create a share access.
+	// Changing this creates a new share access.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of the share to which you are granted access.
@@ -64,9 +64,9 @@ type ShareAccessV2Observation struct {
 	// The unique ID for the Share Access.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The region in which to obtain the V2 Shared File System client.
-	// A Shared File System client is needed to create a share access. Changing this
-	// creates a new share access.
+	// The region in which to obtain the V2 Shared File System
+	// client. A Shared File System client is needed to create a share access.
+	// Changing this creates a new share access.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of the share to which you are granted access.
@@ -93,9 +93,9 @@ type ShareAccessV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	AccessType *string `json:"accessType,omitempty" tf:"access_type,omitempty"`
 
-	// The region in which to obtain the V2 Shared File System client.
-	// A Shared File System client is needed to create a share access. Changing this
-	// creates a new share access.
+	// The region in which to obtain the V2 Shared File System
+	// client. A Shared File System client is needed to create a share access.
+	// Changing this creates a new share access.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 

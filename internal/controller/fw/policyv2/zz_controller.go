@@ -12,6 +12,7 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/pkg/connection"
 	"github.com/crossplane/crossplane-runtime/pkg/event"
+	xpfeature "github.com/crossplane/crossplane-runtime/pkg/feature"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
@@ -79,6 +80,10 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 		if err := mgr.Add(stateMetricsRecorder); err != nil {
 			return errors.Wrap(err, "cannot register MR state metrics recorder for kind v1alpha1.PolicyV2List")
 		}
+	}
+
+	if o.Features.Enabled(xpfeature.EnableAlphaChangeLogs) {
+		opts = append(opts, managed.WithChangeLogger(o.ChangeLogOptions.ChangeLogger))
 	}
 
 	r := managed.NewReconciler(mgr, xpresource.ManagedKind(v1alpha1.PolicyV2_GroupVersionKind), opts...)

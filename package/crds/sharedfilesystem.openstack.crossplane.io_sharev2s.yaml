@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: sharev2s.sharedfilesystem.openstack.crossplane.io
 spec:
   group: sharedfilesystem.openstack.crossplane.io
@@ -104,9 +104,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share. Changing this
-                      creates a new share.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share. Changing
+                      this creates a new share.
                     type: string
                   shareNetworkId:
                     description: |-
@@ -255,9 +255,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share. Changing this
-                      creates a new share.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share. Changing
+                      this creates a new share.
                     type: string
                   shareNetworkId:
                     description: |-
@@ -610,9 +610,9 @@ spec:
                     type: string
                   region:
                     description: |-
-                      The region in which to obtain the V2 Shared File System client.
-                      A Shared File System client is needed to create a share. Changing this
-                      creates a new share.
+                      The region in which to obtain the V2 Shared File System
+                      client. A Shared File System client is needed to create a share. Changing
+                      this creates a new share.
                     type: string
                   replicationType:
                     description: The share replication type.

@@ -48,6 +48,12 @@ type SecgroupRuleV2InitParameters struct {
 	// security group rule.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// The remote address group id, the value
+	// needs to be an OpenStack ID of an address group in the same tenant. Changing
+	// this creates a new security group rule. This argument is mutually exclusive
+	// with remote_ip_prefix and remote_group_id.
+	RemoteAddressGroupID *string `json:"remoteAddressGroupId,omitempty" tf:"remote_address_group_id,omitempty"`
+
 	// The remote group id, the value needs to be an
 	// Openstack ID of a security group in the same tenant. Changing this creates
 	// a new security group rule.
@@ -114,6 +120,12 @@ type SecgroupRuleV2Observation struct {
 	// security group rule.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// The remote address group id, the value
+	// needs to be an OpenStack ID of an address group in the same tenant. Changing
+	// this creates a new security group rule. This argument is mutually exclusive
+	// with remote_ip_prefix and remote_group_id.
+	RemoteAddressGroupID *string `json:"remoteAddressGroupId,omitempty" tf:"remote_address_group_id,omitempty"`
+
 	// The remote group id, the value needs to be an
 	// Openstack ID of a security group in the same tenant. Changing this creates
 	// a new security group rule.
@@ -174,6 +186,13 @@ type SecgroupRuleV2Parameters struct {
 	// security group rule.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The remote address group id, the value
+	// needs to be an OpenStack ID of an address group in the same tenant. Changing
+	// this creates a new security group rule. This argument is mutually exclusive
+	// with remote_ip_prefix and remote_group_id.
+	// +kubebuilder:validation:Optional
+	RemoteAddressGroupID *string `json:"remoteAddressGroupId,omitempty" tf:"remote_address_group_id,omitempty"`
 
 	// The remote group id, the value needs to be an
 	// Openstack ID of a security group in the same tenant. Changing this creates

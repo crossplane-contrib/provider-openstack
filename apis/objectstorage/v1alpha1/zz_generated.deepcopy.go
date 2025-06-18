@@ -100,6 +100,11 @@ func (in *ContainerV1InitParameters) DeepCopyInto(out *ContainerV1InitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.StorageClass != nil {
+		in, out := &in.StorageClass, &out.StorageClass
+		*out = new(string)
+		**out = **in
+	}
 	if in.StoragePolicy != nil {
 		in, out := &in.StoragePolicy, &out.StoragePolicy
 		*out = new(string)
@@ -223,6 +228,11 @@ func (in *ContainerV1Observation) DeepCopyInto(out *ContainerV1Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.StorageClass != nil {
+		in, out := &in.StorageClass, &out.StorageClass
+		*out = new(string)
+		**out = **in
+	}
 	if in.StoragePolicy != nil {
 		in, out := &in.StoragePolicy, &out.StoragePolicy
 		*out = new(string)
@@ -306,6 +316,11 @@ func (in *ContainerV1Parameters) DeepCopyInto(out *ContainerV1Parameters) {
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
+		*out = new(string)
+		**out = **in
+	}
+	if in.StorageClass != nil {
+		in, out := &in.StorageClass, &out.StorageClass
 		*out = new(string)
 		**out = **in
 	}

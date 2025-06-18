@@ -17,32 +17,34 @@ import (
 type ContainerV1InitParameters struct {
 
 	// Sets an access control list (ACL) that grants
-	// read access. This header can contain a comma-delimited list of users that
-	// can read the container (allows the GET method for all objects in the
-	// container). Changing this updates the access control list read access.
+	// read access. This header can contain a comma-delimited list of users that can
+	// read the container (allows the GET method for all objects in the container).
+	// Changing this updates the access control list read access.
 	ContainerRead *string `json:"containerRead,omitempty" tf:"container_read,omitempty"`
 
-	// The secret key for container synchronization.
-	// Changing this updates container synchronization.
+	// The secret key for container
+	// synchronization. Changing this updates container synchronization.
 	ContainerSyncKey *string `json:"containerSyncKey,omitempty" tf:"container_sync_key,omitempty"`
 
-	// The destination for container synchronization.
-	// Changing this updates container synchronization.
+	// The destination for container
+	// synchronization. Changing this updates container synchronization.
 	ContainerSyncTo *string `json:"containerSyncTo,omitempty" tf:"container_sync_to,omitempty"`
 
-	// Sets an ACL that grants write access.
-	// Changing this updates the access control list write access.
+	// Sets an ACL that grants write access. Changing
+	// this updates the access control list write access.
 	ContainerWrite *string `json:"containerWrite,omitempty" tf:"container_write,omitempty"`
 
 	// The MIME type for the container. Changing this
 	// updates the MIME type.
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// A boolean that indicates all objects should be deleted from the container so that the container can be destroyed without error. These objects are not recoverable.
+	// A boolean that indicates all
+	// objects should be deleted from the container so that the container can be
+	// destroyed without error. These objects are not recoverable.
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
-	// Custom key/value pairs to associate with the container.
-	// Changing this updates the existing container metadata.
+	// Custom key/value pairs to associate with the
+	// container. Changing this updates the existing container metadata.
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
@@ -51,57 +53,67 @@ type ContainerV1InitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The region in which to create the container. If
-	// omitted, the region argument of the provider is used. Changing this
-	// creates a new container.
+	// omitted, the region argument of the provider is used. Changing this creates
+	// a new container.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// The storage policy to be used for the container.
-	// Changing this creates a new container.
+	// The storage class to be used for the container.
+	// Changing this creates a new container. This option is only available in Ceph
+	// RGW Swift API implementation.
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
+
+	// The storage policy to be used for the
+	// container. Changing this creates a new container.
 	StoragePolicy *string `json:"storagePolicy,omitempty" tf:"storage_policy,omitempty"`
 
 	// A boolean that can enable or disable object
 	// versioning. The default value is false. To use this feature, your Swift
-	// version must be 2.24 or higher (as described in the OpenStack Swift Ussuri release notes),
+	// version must be 2.24 or higher (as described in the OpenStack Swift Ussuri
+	// release
+	// notes),
 	// and a cloud administrator must have set the allow_object_versioning = true
-	// configuration option in Swift. If you cannot set this versioning type, you may
-	// want to consider using versioning_legacy instead.
+	// configuration option in Swift. If you cannot set this versioning type, you
+	// may want to consider using versioning_legacy instead.
 	Versioning *bool `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
-	// (Deprecated) Enable legacy object versioning. The structure is described below.
+	// (Deprecated) Enable legacy object versioning. The
+	// structure is described below.
 	VersioningLegacy *VersioningLegacyInitParameters `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
 }
 
 type ContainerV1Observation struct {
 
 	// Sets an access control list (ACL) that grants
-	// read access. This header can contain a comma-delimited list of users that
-	// can read the container (allows the GET method for all objects in the
-	// container). Changing this updates the access control list read access.
+	// read access. This header can contain a comma-delimited list of users that can
+	// read the container (allows the GET method for all objects in the container).
+	// Changing this updates the access control list read access.
 	ContainerRead *string `json:"containerRead,omitempty" tf:"container_read,omitempty"`
 
-	// The secret key for container synchronization.
-	// Changing this updates container synchronization.
+	// The secret key for container
+	// synchronization. Changing this updates container synchronization.
 	ContainerSyncKey *string `json:"containerSyncKey,omitempty" tf:"container_sync_key,omitempty"`
 
-	// The destination for container synchronization.
-	// Changing this updates container synchronization.
+	// The destination for container
+	// synchronization. Changing this updates container synchronization.
 	ContainerSyncTo *string `json:"containerSyncTo,omitempty" tf:"container_sync_to,omitempty"`
 
-	// Sets an ACL that grants write access.
-	// Changing this updates the access control list write access.
+	// Sets an ACL that grants write access. Changing
+	// this updates the access control list write access.
 	ContainerWrite *string `json:"containerWrite,omitempty" tf:"container_write,omitempty"`
 
 	// The MIME type for the container. Changing this
 	// updates the MIME type.
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// A boolean that indicates all objects should be deleted from the container so that the container can be destroyed without error. These objects are not recoverable.
+	// A boolean that indicates all
+	// objects should be deleted from the container so that the container can be
+	// destroyed without error. These objects are not recoverable.
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Custom key/value pairs to associate with the container.
-	// Changing this updates the existing container metadata.
+	// Custom key/value pairs to associate with the
+	// container. Changing this updates the existing container metadata.
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
@@ -110,47 +122,55 @@ type ContainerV1Observation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The region in which to create the container. If
-	// omitted, the region argument of the provider is used. Changing this
-	// creates a new container.
+	// omitted, the region argument of the provider is used. Changing this creates
+	// a new container.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// The storage policy to be used for the container.
-	// Changing this creates a new container.
+	// The storage class to be used for the container.
+	// Changing this creates a new container. This option is only available in Ceph
+	// RGW Swift API implementation.
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
+
+	// The storage policy to be used for the
+	// container. Changing this creates a new container.
 	StoragePolicy *string `json:"storagePolicy,omitempty" tf:"storage_policy,omitempty"`
 
 	// A boolean that can enable or disable object
 	// versioning. The default value is false. To use this feature, your Swift
-	// version must be 2.24 or higher (as described in the OpenStack Swift Ussuri release notes),
+	// version must be 2.24 or higher (as described in the OpenStack Swift Ussuri
+	// release
+	// notes),
 	// and a cloud administrator must have set the allow_object_versioning = true
-	// configuration option in Swift. If you cannot set this versioning type, you may
-	// want to consider using versioning_legacy instead.
+	// configuration option in Swift. If you cannot set this versioning type, you
+	// may want to consider using versioning_legacy instead.
 	Versioning *bool `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
-	// (Deprecated) Enable legacy object versioning. The structure is described below.
+	// (Deprecated) Enable legacy object versioning. The
+	// structure is described below.
 	VersioningLegacy *VersioningLegacyObservation `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
 }
 
 type ContainerV1Parameters struct {
 
 	// Sets an access control list (ACL) that grants
-	// read access. This header can contain a comma-delimited list of users that
-	// can read the container (allows the GET method for all objects in the
-	// container). Changing this updates the access control list read access.
+	// read access. This header can contain a comma-delimited list of users that can
+	// read the container (allows the GET method for all objects in the container).
+	// Changing this updates the access control list read access.
 	// +kubebuilder:validation:Optional
 	ContainerRead *string `json:"containerRead,omitempty" tf:"container_read,omitempty"`
 
-	// The secret key for container synchronization.
-	// Changing this updates container synchronization.
+	// The secret key for container
+	// synchronization. Changing this updates container synchronization.
 	// +kubebuilder:validation:Optional
 	ContainerSyncKey *string `json:"containerSyncKey,omitempty" tf:"container_sync_key,omitempty"`
 
-	// The destination for container synchronization.
-	// Changing this updates container synchronization.
+	// The destination for container
+	// synchronization. Changing this updates container synchronization.
 	// +kubebuilder:validation:Optional
 	ContainerSyncTo *string `json:"containerSyncTo,omitempty" tf:"container_sync_to,omitempty"`
 
-	// Sets an ACL that grants write access.
-	// Changing this updates the access control list write access.
+	// Sets an ACL that grants write access. Changing
+	// this updates the access control list write access.
 	// +kubebuilder:validation:Optional
 	ContainerWrite *string `json:"containerWrite,omitempty" tf:"container_write,omitempty"`
 
@@ -159,12 +179,14 @@ type ContainerV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// A boolean that indicates all objects should be deleted from the container so that the container can be destroyed without error. These objects are not recoverable.
+	// A boolean that indicates all
+	// objects should be deleted from the container so that the container can be
+	// destroyed without error. These objects are not recoverable.
 	// +kubebuilder:validation:Optional
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
-	// Custom key/value pairs to associate with the container.
-	// Changing this updates the existing container metadata.
+	// Custom key/value pairs to associate with the
+	// container. Changing this updates the existing container metadata.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
@@ -175,26 +197,35 @@ type ContainerV1Parameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The region in which to create the container. If
-	// omitted, the region argument of the provider is used. Changing this
-	// creates a new container.
+	// omitted, the region argument of the provider is used. Changing this creates
+	// a new container.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// The storage policy to be used for the container.
-	// Changing this creates a new container.
+	// The storage class to be used for the container.
+	// Changing this creates a new container. This option is only available in Ceph
+	// RGW Swift API implementation.
+	// +kubebuilder:validation:Optional
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
+
+	// The storage policy to be used for the
+	// container. Changing this creates a new container.
 	// +kubebuilder:validation:Optional
 	StoragePolicy *string `json:"storagePolicy,omitempty" tf:"storage_policy,omitempty"`
 
 	// A boolean that can enable or disable object
 	// versioning. The default value is false. To use this feature, your Swift
-	// version must be 2.24 or higher (as described in the OpenStack Swift Ussuri release notes),
+	// version must be 2.24 or higher (as described in the OpenStack Swift Ussuri
+	// release
+	// notes),
 	// and a cloud administrator must have set the allow_object_versioning = true
-	// configuration option in Swift. If you cannot set this versioning type, you may
-	// want to consider using versioning_legacy instead.
+	// configuration option in Swift. If you cannot set this versioning type, you
+	// may want to consider using versioning_legacy instead.
 	// +kubebuilder:validation:Optional
 	Versioning *bool `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
-	// (Deprecated) Enable legacy object versioning. The structure is described below.
+	// (Deprecated) Enable legacy object versioning. The
+	// structure is described below.
 	// +kubebuilder:validation:Optional
 	VersioningLegacy *VersioningLegacyParameters `json:"versioningLegacy,omitempty" tf:"versioning_legacy,omitempty"`
 }
@@ -204,7 +235,9 @@ type VersioningLegacyInitParameters struct {
 	// Container in which versions will be stored.
 	Location *string `json:"location,omitempty" tf:"location,omitempty"`
 
-	// Versioning type which can be versions or history according to Openstack documentation.
+	// Versioning type which can be versions or history
+	// according to OpenStack
+	// documentation.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -213,7 +246,9 @@ type VersioningLegacyObservation struct {
 	// Container in which versions will be stored.
 	Location *string `json:"location,omitempty" tf:"location,omitempty"`
 
-	// Versioning type which can be versions or history according to Openstack documentation.
+	// Versioning type which can be versions or history
+	// according to OpenStack
+	// documentation.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -223,7 +258,9 @@ type VersioningLegacyParameters struct {
 	// +kubebuilder:validation:Optional
 	Location *string `json:"location" tf:"location,omitempty"`
 
-	// Versioning type which can be versions or history according to Openstack documentation.
+	// Versioning type which can be versions or history
+	// according to OpenStack
+	// documentation.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }

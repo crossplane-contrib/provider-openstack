@@ -41,7 +41,8 @@ type UserV1InitParameters struct {
 	// User's password.
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Openstack region resource is created in.
+	// The region in which to create the db user. Changing
+	// this creates a new user.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -61,7 +62,8 @@ type UserV1Observation struct {
 	// A unique name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Openstack region resource is created in.
+	// The region in which to create the db user. Changing
+	// this creates a new user.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -97,7 +99,8 @@ type UserV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Openstack region resource is created in.
+	// The region in which to create the db user. Changing
+	// this creates a new user.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }

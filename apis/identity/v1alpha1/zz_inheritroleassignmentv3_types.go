@@ -26,6 +26,9 @@ type InheritRoleAssignmentV3InitParameters struct {
 	// The project should be able to containt child projects.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new inherit role assignment.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
@@ -69,6 +72,9 @@ type InheritRoleAssignmentV3Observation struct {
 	// The project should be able to containt child projects.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new inherit role assignment.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
@@ -93,6 +99,9 @@ type InheritRoleAssignmentV3Parameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new inherit role assignment.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
