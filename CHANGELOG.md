@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix wrong reference from Neutron Subnets to Networks (#137)
+
 ## [0.7.0] - 2025-05-22
 
 ### Changed

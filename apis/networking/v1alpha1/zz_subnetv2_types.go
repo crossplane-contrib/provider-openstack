@@ -100,14 +100,14 @@ type SubnetV2InitParameters struct {
 
 	// The UUID of the parent network. Changing this
 	// creates a new subnet.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Reference to a SubnetV2 in networking to populate networkId.
+	// Reference to a NetworkV2 in networking to populate networkId.
 	// +kubebuilder:validation:Optional
 	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
 
-	// Selector for a SubnetV2 in networking to populate networkId.
+	// Selector for a NetworkV2 in networking to populate networkId.
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
@@ -317,15 +317,15 @@ type SubnetV2Parameters struct {
 
 	// The UUID of the parent network. Changing this
 	// creates a new subnet.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Reference to a SubnetV2 in networking to populate networkId.
+	// Reference to a NetworkV2 in networking to populate networkId.
 	// +kubebuilder:validation:Optional
 	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
 
-	// Selector for a SubnetV2 in networking to populate networkId.
+	// Selector for a NetworkV2 in networking to populate networkId.
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 

@@ -6,7 +6,7 @@ import "github.com/crossplane/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("openstack_networking_subnet_v2", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
-			TerraformName: "openstack_networking_subnet_v2",
+			TerraformName: "openstack_networking_network_v2",
 		}
 		r.LateInitializer = config.LateInitializer{
 			IgnoredFields: []string{"allocation_pools"},
