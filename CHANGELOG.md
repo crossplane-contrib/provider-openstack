@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.7.1] - 2025-06-18
+
 ### Fixed
 
-- Use correct sdk for terraform-provider-openstack `v3.0.0`
+- Fix wrong reference from Neutron Subnets to Networks (#137)
+- Use correct sdk for terraform-provider-openstack `v3.0.0` (Fix in 0.7.0 was not enough)
 
 ## [0.7.0] - 2025-05-22
 
