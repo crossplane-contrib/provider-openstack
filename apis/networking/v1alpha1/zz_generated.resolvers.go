@@ -12,7 +12,6 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -24,7 +23,7 @@ func (mg *FloatingipAssociateV2) ResolveReferences(ctx context.Context, c client
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.PortID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PortID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.PortIDRef,
 		Selector:     mg.Spec.ForProvider.PortIDSelector,
@@ -36,11 +35,11 @@ func (mg *FloatingipAssociateV2) ResolveReferences(ctx context.Context, c client
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.PortID")
 	}
-	mg.Spec.ForProvider.PortID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PortID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PortIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.PortID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PortID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.PortIDRef,
 		Selector:     mg.Spec.InitProvider.PortIDSelector,
@@ -52,7 +51,7 @@ func (mg *FloatingipAssociateV2) ResolveReferences(ctx context.Context, c client
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.PortID")
 	}
-	mg.Spec.InitProvider.PortID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PortID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.PortIDRef = rsp.ResolvedReference
 
 	return nil
@@ -67,7 +66,7 @@ func (mg *PortV2) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.FixedIP); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: ptr.Deref(mg.Spec.ForProvider.FixedIP[i3].SubnetID, ""),
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FixedIP[i3].SubnetID),
 			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.FixedIP[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.FixedIP[i3].SubnetIDSelector,
@@ -79,12 +78,12 @@ func (mg *PortV2) ResolveReferences(ctx context.Context, c client.Reader) error 
 		if err != nil {
 			return errors.Wrap(err, "mg.Spec.ForProvider.FixedIP[i3].SubnetID")
 		}
-		mg.Spec.ForProvider.FixedIP[i3].SubnetID = ptr.To(rsp.ResolvedValue)
+		mg.Spec.ForProvider.FixedIP[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.FixedIP[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.NetworkID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
@@ -96,12 +95,12 @@ func (mg *PortV2) ResolveReferences(ctx context.Context, c client.Reader) error 
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkID")
 	}
-	mg.Spec.ForProvider.NetworkID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.FixedIP); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: ptr.Deref(mg.Spec.InitProvider.FixedIP[i3].SubnetID, ""),
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FixedIP[i3].SubnetID),
 			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.FixedIP[i3].SubnetIDRef,
 			Selector:     mg.Spec.InitProvider.FixedIP[i3].SubnetIDSelector,
@@ -113,12 +112,12 @@ func (mg *PortV2) ResolveReferences(ctx context.Context, c client.Reader) error 
 		if err != nil {
 			return errors.Wrap(err, "mg.Spec.InitProvider.FixedIP[i3].SubnetID")
 		}
-		mg.Spec.InitProvider.FixedIP[i3].SubnetID = ptr.To(rsp.ResolvedValue)
+		mg.Spec.InitProvider.FixedIP[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.FixedIP[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.NetworkID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.NetworkIDRef,
 		Selector:     mg.Spec.InitProvider.NetworkIDSelector,
@@ -130,7 +129,7 @@ func (mg *PortV2) ResolveReferences(ctx context.Context, c client.Reader) error 
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkID")
 	}
-	mg.Spec.InitProvider.NetworkID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NetworkIDRef = rsp.ResolvedReference
 
 	return nil
@@ -144,7 +143,7 @@ func (mg *QosBandwidthLimitRuleV2) ResolveReferences(ctx context.Context, c clie
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.QosPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.QosPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.QosPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.QosPolicyIDSelector,
@@ -156,11 +155,11 @@ func (mg *QosBandwidthLimitRuleV2) ResolveReferences(ctx context.Context, c clie
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.QosPolicyID")
 	}
-	mg.Spec.ForProvider.QosPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.QosPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.QosPolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.QosPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.QosPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.QosPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.QosPolicyIDSelector,
@@ -172,7 +171,7 @@ func (mg *QosBandwidthLimitRuleV2) ResolveReferences(ctx context.Context, c clie
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.QosPolicyID")
 	}
-	mg.Spec.InitProvider.QosPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.QosPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.QosPolicyIDRef = rsp.ResolvedReference
 
 	return nil
@@ -186,7 +185,7 @@ func (mg *QosDscpMarkingRuleV2) ResolveReferences(ctx context.Context, c client.
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.QosPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.QosPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.QosPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.QosPolicyIDSelector,
@@ -198,11 +197,11 @@ func (mg *QosDscpMarkingRuleV2) ResolveReferences(ctx context.Context, c client.
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.QosPolicyID")
 	}
-	mg.Spec.ForProvider.QosPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.QosPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.QosPolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.QosPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.QosPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.QosPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.QosPolicyIDSelector,
@@ -214,7 +213,7 @@ func (mg *QosDscpMarkingRuleV2) ResolveReferences(ctx context.Context, c client.
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.QosPolicyID")
 	}
-	mg.Spec.InitProvider.QosPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.QosPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.QosPolicyIDRef = rsp.ResolvedReference
 
 	return nil
@@ -228,7 +227,7 @@ func (mg *QosMinimumBandwidthRuleV2) ResolveReferences(ctx context.Context, c cl
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.QosPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.QosPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.QosPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.QosPolicyIDSelector,
@@ -240,11 +239,11 @@ func (mg *QosMinimumBandwidthRuleV2) ResolveReferences(ctx context.Context, c cl
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.QosPolicyID")
 	}
-	mg.Spec.ForProvider.QosPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.QosPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.QosPolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.QosPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.QosPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.QosPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.QosPolicyIDSelector,
@@ -256,7 +255,7 @@ func (mg *QosMinimumBandwidthRuleV2) ResolveReferences(ctx context.Context, c cl
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.QosPolicyID")
 	}
-	mg.Spec.InitProvider.QosPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.QosPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.QosPolicyIDRef = rsp.ResolvedReference
 
 	return nil
@@ -270,7 +269,7 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
@@ -282,11 +281,11 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectID")
 	}
-	mg.Spec.ForProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
@@ -298,7 +297,7 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectID")
 	}
-	mg.Spec.InitProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ProjectIDRef = rsp.ResolvedReference
 
 	return nil
@@ -312,7 +311,7 @@ func (mg *RbacPolicyV2) ResolveReferences(ctx context.Context, c client.Reader) 
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ObjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ObjectID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ObjectIDRef,
 		Selector:     mg.Spec.ForProvider.ObjectIDSelector,
@@ -324,11 +323,11 @@ func (mg *RbacPolicyV2) ResolveReferences(ctx context.Context, c client.Reader) 
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ObjectID")
 	}
-	mg.Spec.ForProvider.ObjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ObjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ObjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ObjectID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ObjectIDRef,
 		Selector:     mg.Spec.InitProvider.ObjectIDSelector,
@@ -340,7 +339,7 @@ func (mg *RbacPolicyV2) ResolveReferences(ctx context.Context, c client.Reader) 
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ObjectID")
 	}
-	mg.Spec.InitProvider.ObjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ObjectIDRef = rsp.ResolvedReference
 
 	return nil
@@ -354,7 +353,7 @@ func (mg *RouterInterfaceV2) ResolveReferences(ctx context.Context, c client.Rea
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.RouterID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RouterID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.RouterIDRef,
 		Selector:     mg.Spec.ForProvider.RouterIDSelector,
@@ -366,11 +365,11 @@ func (mg *RouterInterfaceV2) ResolveReferences(ctx context.Context, c client.Rea
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.RouterID")
 	}
-	mg.Spec.ForProvider.RouterID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RouterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RouterIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.SubnetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubnetID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.SubnetIDRef,
 		Selector:     mg.Spec.ForProvider.SubnetIDSelector,
@@ -382,11 +381,11 @@ func (mg *RouterInterfaceV2) ResolveReferences(ctx context.Context, c client.Rea
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.SubnetID")
 	}
-	mg.Spec.ForProvider.SubnetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SubnetIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.RouterID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouterID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.RouterIDRef,
 		Selector:     mg.Spec.InitProvider.RouterIDSelector,
@@ -398,11 +397,11 @@ func (mg *RouterInterfaceV2) ResolveReferences(ctx context.Context, c client.Rea
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.RouterID")
 	}
-	mg.Spec.InitProvider.RouterID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.RouterIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.SubnetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.SubnetIDRef,
 		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
@@ -414,7 +413,7 @@ func (mg *RouterInterfaceV2) ResolveReferences(ctx context.Context, c client.Rea
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
 	}
-	mg.Spec.InitProvider.SubnetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
 
 	return nil
@@ -428,7 +427,7 @@ func (mg *RouterRouteV2) ResolveReferences(ctx context.Context, c client.Reader)
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.RouterID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RouterID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.RouterIDRef,
 		Selector:     mg.Spec.ForProvider.RouterIDSelector,
@@ -440,11 +439,11 @@ func (mg *RouterRouteV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.RouterID")
 	}
-	mg.Spec.ForProvider.RouterID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RouterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RouterIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.RouterID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RouterID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.RouterIDRef,
 		Selector:     mg.Spec.InitProvider.RouterIDSelector,
@@ -456,7 +455,7 @@ func (mg *RouterRouteV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.RouterID")
 	}
-	mg.Spec.InitProvider.RouterID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RouterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.RouterIDRef = rsp.ResolvedReference
 
 	return nil
@@ -470,7 +469,7 @@ func (mg *SecgroupRuleV2) ResolveReferences(ctx context.Context, c client.Reader
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.SecurityGroupID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecurityGroupID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SecurityGroupIDRef,
 		Selector:     mg.Spec.ForProvider.SecurityGroupIDSelector,
@@ -482,11 +481,11 @@ func (mg *SecgroupRuleV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityGroupID")
 	}
-	mg.Spec.ForProvider.SecurityGroupID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SecurityGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SecurityGroupIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.SecurityGroupID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecurityGroupID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.SecurityGroupIDRef,
 		Selector:     mg.Spec.InitProvider.SecurityGroupIDSelector,
@@ -498,7 +497,7 @@ func (mg *SecgroupRuleV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityGroupID")
 	}
-	mg.Spec.InitProvider.SecurityGroupID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SecurityGroupID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.SecurityGroupIDRef = rsp.ResolvedReference
 
 	return nil
@@ -512,7 +511,7 @@ func (mg *SubnetRouteV2) ResolveReferences(ctx context.Context, c client.Reader)
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.SubnetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubnetID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SubnetIDRef,
 		Selector:     mg.Spec.ForProvider.SubnetIDSelector,
@@ -524,11 +523,11 @@ func (mg *SubnetRouteV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.SubnetID")
 	}
-	mg.Spec.ForProvider.SubnetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SubnetIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.SubnetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.SubnetIDRef,
 		Selector:     mg.Spec.InitProvider.SubnetIDSelector,
@@ -540,7 +539,7 @@ func (mg *SubnetRouteV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.SubnetID")
 	}
-	mg.Spec.InitProvider.SubnetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.SubnetIDRef = rsp.ResolvedReference
 
 	return nil
@@ -554,7 +553,7 @@ func (mg *SubnetV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.NetworkID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
@@ -566,11 +565,11 @@ func (mg *SubnetV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkID")
 	}
-	mg.Spec.ForProvider.NetworkID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.NetworkID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.NetworkIDRef,
 		Selector:     mg.Spec.InitProvider.NetworkIDSelector,
@@ -582,7 +581,7 @@ func (mg *SubnetV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkID")
 	}
-	mg.Spec.InitProvider.NetworkID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NetworkIDRef = rsp.ResolvedReference
 
 	return nil
@@ -596,7 +595,7 @@ func (mg *TrunkV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.PortID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PortID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.PortIDRef,
 		Selector:     mg.Spec.ForProvider.PortIDSelector,
@@ -608,12 +607,12 @@ func (mg *TrunkV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.PortID")
 	}
-	mg.Spec.ForProvider.PortID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PortID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PortIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.SubPort); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: ptr.Deref(mg.Spec.ForProvider.SubPort[i3].PortID, ""),
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubPort[i3].PortID),
 			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.SubPort[i3].PortIDRef,
 			Selector:     mg.Spec.ForProvider.SubPort[i3].PortIDSelector,
@@ -625,12 +624,12 @@ func (mg *TrunkV2) ResolveReferences(ctx context.Context, c client.Reader) error
 		if err != nil {
 			return errors.Wrap(err, "mg.Spec.ForProvider.SubPort[i3].PortID")
 		}
-		mg.Spec.ForProvider.SubPort[i3].PortID = ptr.To(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SubPort[i3].PortID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.SubPort[i3].PortIDRef = rsp.ResolvedReference
 
 	}
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.PortID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PortID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.PortIDRef,
 		Selector:     mg.Spec.InitProvider.PortIDSelector,
@@ -642,12 +641,12 @@ func (mg *TrunkV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.PortID")
 	}
-	mg.Spec.InitProvider.PortID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PortID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.PortIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.SubPort); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: ptr.Deref(mg.Spec.InitProvider.SubPort[i3].PortID, ""),
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubPort[i3].PortID),
 			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.SubPort[i3].PortIDRef,
 			Selector:     mg.Spec.InitProvider.SubPort[i3].PortIDSelector,
@@ -659,7 +658,7 @@ func (mg *TrunkV2) ResolveReferences(ctx context.Context, c client.Reader) error
 		if err != nil {
 			return errors.Wrap(err, "mg.Spec.InitProvider.SubPort[i3].PortID")
 		}
-		mg.Spec.InitProvider.SubPort[i3].PortID = ptr.To(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SubPort[i3].PortID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.SubPort[i3].PortIDRef = rsp.ResolvedReference
 
 	}

@@ -12,7 +12,6 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -24,7 +23,7 @@ func (mg *QosAssociationV3) ResolveReferences(ctx context.Context, c client.Read
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.QosID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.QosID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.QosIDRef,
 		Selector:     mg.Spec.ForProvider.QosIDSelector,
@@ -36,11 +35,11 @@ func (mg *QosAssociationV3) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.QosID")
 	}
-	mg.Spec.ForProvider.QosID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.QosID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.QosIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.VolumeTypeID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.VolumeTypeID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.VolumeTypeIDRef,
 		Selector:     mg.Spec.ForProvider.VolumeTypeIDSelector,
@@ -52,11 +51,11 @@ func (mg *QosAssociationV3) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.VolumeTypeID")
 	}
-	mg.Spec.ForProvider.VolumeTypeID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.VolumeTypeID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VolumeTypeIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.QosID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.QosID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.QosIDRef,
 		Selector:     mg.Spec.InitProvider.QosIDSelector,
@@ -68,11 +67,11 @@ func (mg *QosAssociationV3) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.QosID")
 	}
-	mg.Spec.InitProvider.QosID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.QosID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.QosIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.VolumeTypeID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VolumeTypeID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.VolumeTypeIDRef,
 		Selector:     mg.Spec.InitProvider.VolumeTypeIDSelector,
@@ -84,7 +83,7 @@ func (mg *QosAssociationV3) ResolveReferences(ctx context.Context, c client.Read
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.VolumeTypeID")
 	}
-	mg.Spec.InitProvider.VolumeTypeID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VolumeTypeID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.VolumeTypeIDRef = rsp.ResolvedReference
 
 	return nil
@@ -98,7 +97,7 @@ func (mg *QuotasetV3) ResolveReferences(ctx context.Context, c client.Reader) er
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
@@ -110,11 +109,11 @@ func (mg *QuotasetV3) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectID")
 	}
-	mg.Spec.ForProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
@@ -126,7 +125,7 @@ func (mg *QuotasetV3) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectID")
 	}
-	mg.Spec.InitProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ProjectIDRef = rsp.ResolvedReference
 
 	return nil
@@ -140,7 +139,7 @@ func (mg *VolumeAttachV3) ResolveReferences(ctx context.Context, c client.Reader
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.VolumeID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.VolumeID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.VolumeIDRef,
 		Selector:     mg.Spec.ForProvider.VolumeIDSelector,
@@ -152,11 +151,11 @@ func (mg *VolumeAttachV3) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.VolumeID")
 	}
-	mg.Spec.ForProvider.VolumeID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VolumeIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.VolumeID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VolumeID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.VolumeIDRef,
 		Selector:     mg.Spec.InitProvider.VolumeIDSelector,
@@ -168,7 +167,7 @@ func (mg *VolumeAttachV3) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.VolumeID")
 	}
-	mg.Spec.InitProvider.VolumeID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.VolumeIDRef = rsp.ResolvedReference
 
 	return nil
@@ -182,7 +181,7 @@ func (mg *VolumeTypeAccessV3) ResolveReferences(ctx context.Context, c client.Re
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
@@ -194,11 +193,11 @@ func (mg *VolumeTypeAccessV3) ResolveReferences(ctx context.Context, c client.Re
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectID")
 	}
-	mg.Spec.ForProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.VolumeTypeID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.VolumeTypeID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.VolumeTypeIDRef,
 		Selector:     mg.Spec.ForProvider.VolumeTypeIDSelector,
@@ -210,11 +209,11 @@ func (mg *VolumeTypeAccessV3) ResolveReferences(ctx context.Context, c client.Re
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.VolumeTypeID")
 	}
-	mg.Spec.ForProvider.VolumeTypeID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.VolumeTypeID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.VolumeTypeIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
@@ -226,11 +225,11 @@ func (mg *VolumeTypeAccessV3) ResolveReferences(ctx context.Context, c client.Re
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectID")
 	}
-	mg.Spec.InitProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ProjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.VolumeTypeID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VolumeTypeID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.VolumeTypeIDRef,
 		Selector:     mg.Spec.InitProvider.VolumeTypeIDSelector,
@@ -242,7 +241,7 @@ func (mg *VolumeTypeAccessV3) ResolveReferences(ctx context.Context, c client.Re
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.VolumeTypeID")
 	}
-	mg.Spec.InitProvider.VolumeTypeID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VolumeTypeID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.VolumeTypeIDRef = rsp.ResolvedReference
 
 	return nil

@@ -9,10 +9,8 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
-	convert "github.com/crossplane/crossplane-tools/pkg/convert"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -24,7 +22,7 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.EgressFirewallPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EgressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.EgressFirewallPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.EgressFirewallPolicyIDSelector,
@@ -36,11 +34,11 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.EgressFirewallPolicyID")
 	}
-	mg.Spec.ForProvider.EgressFirewallPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.EgressFirewallPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.EgressFirewallPolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.IngressFirewallPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IngressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.IngressFirewallPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.IngressFirewallPolicyIDSelector,
@@ -52,11 +50,11 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.IngressFirewallPolicyID")
 	}
-	mg.Spec.ForProvider.IngressFirewallPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.IngressFirewallPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.IngressFirewallPolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.EgressFirewallPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EgressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.EgressFirewallPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.EgressFirewallPolicyIDSelector,
@@ -68,11 +66,11 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.EgressFirewallPolicyID")
 	}
-	mg.Spec.InitProvider.EgressFirewallPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.EgressFirewallPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.EgressFirewallPolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.IngressFirewallPolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IngressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.IngressFirewallPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.IngressFirewallPolicyIDSelector,
@@ -84,7 +82,7 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.IngressFirewallPolicyID")
 	}
-	mg.Spec.InitProvider.IngressFirewallPolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.IngressFirewallPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.IngressFirewallPolicyIDRef = rsp.ResolvedReference
 
 	return nil
@@ -98,7 +96,7 @@ func (mg *PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var err error
 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
-		CurrentValues: convert.FromPtrValues(mg.Spec.ForProvider.Rules),
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Rules),
 		Extract:       resource.ExtractResourceID(),
 		References:    mg.Spec.ForProvider.RulesRefs,
 		Selector:      mg.Spec.ForProvider.RulesSelector,
@@ -110,11 +108,11 @@ func (mg *PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.Rules")
 	}
-	mg.Spec.ForProvider.Rules = convert.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.Rules = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.RulesRefs = mrsp.ResolvedReferences
 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
-		CurrentValues: convert.FromPtrValues(mg.Spec.InitProvider.Rules),
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Rules),
 		Extract:       resource.ExtractResourceID(),
 		References:    mg.Spec.InitProvider.RulesRefs,
 		Selector:      mg.Spec.InitProvider.RulesSelector,
@@ -126,7 +124,7 @@ func (mg *PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.Rules")
 	}
-	mg.Spec.InitProvider.Rules = convert.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.Rules = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.InitProvider.RulesRefs = mrsp.ResolvedReferences
 
 	return nil

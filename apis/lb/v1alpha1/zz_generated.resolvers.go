@@ -13,7 +13,6 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -25,7 +24,7 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ListenerID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ListenerID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ListenerIDRef,
 		Selector:     mg.Spec.ForProvider.ListenerIDSelector,
@@ -37,11 +36,11 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ListenerID")
 	}
-	mg.Spec.ForProvider.ListenerID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ListenerIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.RedirectPoolID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RedirectPoolID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.RedirectPoolIDRef,
 		Selector:     mg.Spec.ForProvider.RedirectPoolIDSelector,
@@ -53,11 +52,11 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.RedirectPoolID")
 	}
-	mg.Spec.ForProvider.RedirectPoolID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RedirectPoolID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RedirectPoolIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ListenerID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ListenerIDRef,
 		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
@@ -69,11 +68,11 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ListenerID")
 	}
-	mg.Spec.InitProvider.ListenerID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ListenerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ListenerIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.RedirectPoolID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RedirectPoolID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.RedirectPoolIDRef,
 		Selector:     mg.Spec.InitProvider.RedirectPoolIDSelector,
@@ -85,7 +84,7 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.RedirectPoolID")
 	}
-	mg.Spec.InitProvider.RedirectPoolID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RedirectPoolID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.RedirectPoolIDRef = rsp.ResolvedReference
 
 	return nil
@@ -99,7 +98,7 @@ func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.L7PolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.L7PolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.L7PolicyIDRef,
 		Selector:     mg.Spec.ForProvider.L7PolicyIDSelector,
@@ -111,11 +110,11 @@ func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.L7PolicyID")
 	}
-	mg.Spec.ForProvider.L7PolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.L7PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.L7PolicyIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.L7PolicyID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.L7PolicyID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.L7PolicyIDRef,
 		Selector:     mg.Spec.InitProvider.L7PolicyIDSelector,
@@ -127,7 +126,7 @@ func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.L7PolicyID")
 	}
-	mg.Spec.InitProvider.L7PolicyID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.L7PolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.L7PolicyIDRef = rsp.ResolvedReference
 
 	return nil
@@ -141,7 +140,7 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ClientCATLSContainerRef, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientCATLSContainerRef),
 		Extract:      resource.ExtractParamPath("secret_ref", true),
 		Reference:    mg.Spec.ForProvider.ClientCATLSContainerRefRef,
 		Selector:     mg.Spec.ForProvider.ClientCATLSContainerRefSelector,
@@ -153,11 +152,11 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ClientCATLSContainerRef")
 	}
-	mg.Spec.ForProvider.ClientCATLSContainerRef = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClientCATLSContainerRef = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClientCATLSContainerRefRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.LoadbalancerID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoadbalancerID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.LoadbalancerIDRef,
 		Selector:     mg.Spec.ForProvider.LoadbalancerIDSelector,
@@ -169,11 +168,11 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.LoadbalancerID")
 	}
-	mg.Spec.ForProvider.LoadbalancerID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.LoadbalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.LoadbalancerIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ClientCATLSContainerRef, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientCATLSContainerRef),
 		Extract:      resource.ExtractParamPath("secret_ref", true),
 		Reference:    mg.Spec.InitProvider.ClientCATLSContainerRefRef,
 		Selector:     mg.Spec.InitProvider.ClientCATLSContainerRefSelector,
@@ -185,11 +184,11 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ClientCATLSContainerRef")
 	}
-	mg.Spec.InitProvider.ClientCATLSContainerRef = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClientCATLSContainerRef = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ClientCATLSContainerRefRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.LoadbalancerID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LoadbalancerID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.LoadbalancerIDRef,
 		Selector:     mg.Spec.InitProvider.LoadbalancerIDSelector,
@@ -201,7 +200,7 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.LoadbalancerID")
 	}
-	mg.Spec.InitProvider.LoadbalancerID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.LoadbalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.LoadbalancerIDRef = rsp.ResolvedReference
 
 	return nil
@@ -215,7 +214,7 @@ func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) err
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.PoolID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PoolID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.PoolIDRef,
 		Selector:     mg.Spec.ForProvider.PoolIDSelector,
@@ -227,11 +226,11 @@ func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) err
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.PoolID")
 	}
-	mg.Spec.ForProvider.PoolID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PoolID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PoolIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.PoolID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PoolID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.PoolIDRef,
 		Selector:     mg.Spec.InitProvider.PoolIDSelector,
@@ -243,7 +242,7 @@ func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) err
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.PoolID")
 	}
-	mg.Spec.InitProvider.PoolID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PoolID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.PoolIDRef = rsp.ResolvedReference
 
 	return nil
@@ -257,7 +256,7 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
@@ -269,11 +268,11 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ProjectID")
 	}
-	mg.Spec.ForProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ProjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ProjectID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
@@ -285,7 +284,7 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ProjectID")
 	}
-	mg.Spec.InitProvider.ProjectID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ProjectIDRef = rsp.ResolvedReference
 
 	return nil

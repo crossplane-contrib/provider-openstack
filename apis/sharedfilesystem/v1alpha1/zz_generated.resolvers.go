@@ -10,10 +10,8 @@ import (
 	"context"
 	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
-	convert "github.com/crossplane/crossplane-tools/pkg/convert"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -25,7 +23,7 @@ func (mg *ShareAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ShareID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ShareID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ShareIDRef,
 		Selector:     mg.Spec.ForProvider.ShareIDSelector,
@@ -37,11 +35,11 @@ func (mg *ShareAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ShareID")
 	}
-	mg.Spec.ForProvider.ShareID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ShareID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ShareIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ShareID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ShareID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ShareIDRef,
 		Selector:     mg.Spec.InitProvider.ShareIDSelector,
@@ -53,7 +51,7 @@ func (mg *ShareAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ShareID")
 	}
-	mg.Spec.InitProvider.ShareID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ShareID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ShareIDRef = rsp.ResolvedReference
 
 	return nil
@@ -67,7 +65,7 @@ func (mg *ShareV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ShareNetworkID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ShareNetworkID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.ShareNetworkIDRef,
 		Selector:     mg.Spec.ForProvider.ShareNetworkIDSelector,
@@ -79,11 +77,11 @@ func (mg *ShareV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ShareNetworkID")
 	}
-	mg.Spec.ForProvider.ShareNetworkID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ShareNetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ShareNetworkIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ShareNetworkID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ShareNetworkID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.ShareNetworkIDRef,
 		Selector:     mg.Spec.InitProvider.ShareNetworkIDSelector,
@@ -95,7 +93,7 @@ func (mg *ShareV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ShareNetworkID")
 	}
-	mg.Spec.InitProvider.ShareNetworkID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ShareNetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ShareNetworkIDRef = rsp.ResolvedReference
 
 	return nil
@@ -110,7 +108,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.NeutronNetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NeutronNetID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.NeutronNetIDRef,
 		Selector:     mg.Spec.ForProvider.NeutronNetIDSelector,
@@ -122,11 +120,11 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.NeutronNetID")
 	}
-	mg.Spec.ForProvider.NeutronNetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NeutronNetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NeutronNetIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.NeutronSubnetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NeutronSubnetID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.NeutronSubnetIDRef,
 		Selector:     mg.Spec.ForProvider.NeutronSubnetIDSelector,
@@ -138,11 +136,11 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.NeutronSubnetID")
 	}
-	mg.Spec.ForProvider.NeutronSubnetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NeutronSubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NeutronSubnetIDRef = rsp.ResolvedReference
 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
-		CurrentValues: convert.FromPtrValues(mg.Spec.ForProvider.SecurityServiceIds),
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityServiceIds),
 		Extract:       resource.ExtractResourceID(),
 		References:    mg.Spec.ForProvider.SecurityServiceIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityServiceIdsSelector,
@@ -154,11 +152,11 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityServiceIds")
 	}
-	mg.Spec.ForProvider.SecurityServiceIds = convert.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityServiceIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.SecurityServiceIdsRefs = mrsp.ResolvedReferences
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.NeutronNetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NeutronNetID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.NeutronNetIDRef,
 		Selector:     mg.Spec.InitProvider.NeutronNetIDSelector,
@@ -170,11 +168,11 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.NeutronNetID")
 	}
-	mg.Spec.InitProvider.NeutronNetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NeutronNetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NeutronNetIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.NeutronSubnetID, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NeutronSubnetID),
 		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.NeutronSubnetIDRef,
 		Selector:     mg.Spec.InitProvider.NeutronSubnetIDSelector,
@@ -186,11 +184,11 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.NeutronSubnetID")
 	}
-	mg.Spec.InitProvider.NeutronSubnetID = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NeutronSubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NeutronSubnetIDRef = rsp.ResolvedReference
 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
-		CurrentValues: convert.FromPtrValues(mg.Spec.InitProvider.SecurityServiceIds),
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.SecurityServiceIds),
 		Extract:       resource.ExtractResourceID(),
 		References:    mg.Spec.InitProvider.SecurityServiceIdsRefs,
 		Selector:      mg.Spec.InitProvider.SecurityServiceIdsSelector,
@@ -202,7 +200,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityServiceIds")
 	}
-	mg.Spec.InitProvider.SecurityServiceIds = convert.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.SecurityServiceIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.InitProvider.SecurityServiceIdsRefs = mrsp.ResolvedReferences
 
 	return nil

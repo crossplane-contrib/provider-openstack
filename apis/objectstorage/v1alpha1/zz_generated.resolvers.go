@@ -11,7 +11,6 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	resource "github.com/crossplane/upjet/pkg/resource"
 	errors "github.com/pkg/errors"
-	ptr "k8s.io/utils/ptr"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -23,7 +22,7 @@ func (mg *ObjectV1) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.ContainerName, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ContainerName),
 		Extract:      resource.ExtractParamPath("name", false),
 		Reference:    mg.Spec.ForProvider.ContainerNameRef,
 		Selector:     mg.Spec.ForProvider.ContainerNameSelector,
@@ -35,11 +34,11 @@ func (mg *ObjectV1) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.ContainerName")
 	}
-	mg.Spec.ForProvider.ContainerName = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ContainerName = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ContainerNameRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.ContainerName, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ContainerName),
 		Extract:      resource.ExtractParamPath("name", false),
 		Reference:    mg.Spec.InitProvider.ContainerNameRef,
 		Selector:     mg.Spec.InitProvider.ContainerNameSelector,
@@ -51,7 +50,7 @@ func (mg *ObjectV1) ResolveReferences(ctx context.Context, c client.Reader) erro
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.ContainerName")
 	}
-	mg.Spec.InitProvider.ContainerName = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ContainerName = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ContainerNameRef = rsp.ResolvedReference
 
 	return nil
@@ -65,7 +64,7 @@ func (mg *TempurlV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.Container, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Container),
 		Extract:      resource.ExtractParamPath("name", false),
 		Reference:    mg.Spec.ForProvider.ContainerRef,
 		Selector:     mg.Spec.ForProvider.ContainerSelector,
@@ -77,11 +76,11 @@ func (mg *TempurlV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.Container")
 	}
-	mg.Spec.ForProvider.Container = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.Container = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ContainerRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.ForProvider.Object, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Object),
 		Extract:      resource.ExtractParamPath("name", false),
 		Reference:    mg.Spec.ForProvider.ObjectRef,
 		Selector:     mg.Spec.ForProvider.ObjectSelector,
@@ -93,11 +92,11 @@ func (mg *TempurlV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.Object")
 	}
-	mg.Spec.ForProvider.Object = ptr.To(rsp.ResolvedValue)
+	mg.Spec.ForProvider.Object = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ObjectRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.Container, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Container),
 		Extract:      resource.ExtractParamPath("name", false),
 		Reference:    mg.Spec.InitProvider.ContainerRef,
 		Selector:     mg.Spec.InitProvider.ContainerSelector,
@@ -109,11 +108,11 @@ func (mg *TempurlV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.Container")
 	}
-	mg.Spec.InitProvider.Container = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.Container = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ContainerRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: ptr.Deref(mg.Spec.InitProvider.Object, ""),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Object),
 		Extract:      resource.ExtractParamPath("name", false),
 		Reference:    mg.Spec.InitProvider.ObjectRef,
 		Selector:     mg.Spec.InitProvider.ObjectSelector,
@@ -125,7 +124,7 @@ func (mg *TempurlV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.InitProvider.Object")
 	}
-	mg.Spec.InitProvider.Object = ptr.To(rsp.ResolvedValue)
+	mg.Spec.InitProvider.Object = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ObjectRef = rsp.ResolvedReference
 
 	return nil
