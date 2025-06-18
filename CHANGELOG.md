@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update terraform-provider-openstack to `v3.2.0`
 - Update to golang `v1.24.4`
+- Update to upjet `v1.9.0`
 - Update golang dependencies
 
 ## [0.7.1] - 2025-06-18

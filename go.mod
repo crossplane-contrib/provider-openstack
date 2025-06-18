@@ -6,8 +6,8 @@ toolchain go1.24.4
 
 require (
 	dario.cat/mergo v1.0.1
-	github.com/crossplane/crossplane-runtime v1.20.0-rc.0.0.20250509113121-26da25aff65f
-	github.com/crossplane/crossplane-tools v0.0.0-20250424174524-de0e5107ea45
+	github.com/crossplane/crossplane-runtime v1.20.0
+	github.com/crossplane/crossplane-tools v0.0.0-20250603090330-889cfb100517
 	github.com/crossplane/upjet v1.9.0
 	github.com/hashicorp/terraform-json v0.25.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
@@ -65,7 +65,7 @@ require (
 	github.com/hashicorp/go-version v1.7.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.23.0 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
-	github.com/hashicorp/terraform-plugin-framework v1.4.1 // indirect
+	github.com/hashicorp/terraform-plugin-framework v1.15.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.27.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/hashicorp/terraform-registry-address v0.2.5 // indirect
