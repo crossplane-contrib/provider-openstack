@@ -16,8 +16,9 @@ import (
 
 type IpsecPolicyV2InitParameters struct {
 
-	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-	// Default is sha1. Changing this updates the algorithm of the existing policy.
+	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+	// aes-xcbc, aes-cmac. Default is sha1.
+	// Changing this updates the algorithm of the existing policy.
 	AuthAlgorithm *string `json:"authAlgorithm,omitempty" tf:"auth_algorithm,omitempty"`
 
 	// The human-readable description for the policy.
@@ -28,7 +29,8 @@ type IpsecPolicyV2InitParameters struct {
 	// Changing this updates the existing policy.
 	EncapsulationMode *string `json:"encapsulationMode,omitempty" tf:"encapsulation_mode,omitempty"`
 
-	// The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+	// The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+	// aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
 	// The default value is aes-128. Changing this updates the existing policy.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
@@ -39,8 +41,8 @@ type IpsecPolicyV2InitParameters struct {
 	// the existing policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The perfect forward secrecy mode. Valid values are group2, group5 and group14. Default
-	// is group5. Changing this updates the existing policy.
+	// The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+	// Default is group5. Changing this updates the existing policy.
 	Pfs *string `json:"pfs,omitempty" tf:"pfs,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
@@ -91,8 +93,9 @@ type IpsecPolicyV2LifetimeParameters struct {
 
 type IpsecPolicyV2Observation struct {
 
-	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-	// Default is sha1. Changing this updates the algorithm of the existing policy.
+	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+	// aes-xcbc, aes-cmac. Default is sha1.
+	// Changing this updates the algorithm of the existing policy.
 	AuthAlgorithm *string `json:"authAlgorithm,omitempty" tf:"auth_algorithm,omitempty"`
 
 	// The human-readable description for the policy.
@@ -103,7 +106,8 @@ type IpsecPolicyV2Observation struct {
 	// Changing this updates the existing policy.
 	EncapsulationMode *string `json:"encapsulationMode,omitempty" tf:"encapsulation_mode,omitempty"`
 
-	// The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+	// The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+	// aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
 	// The default value is aes-128. Changing this updates the existing policy.
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
 
@@ -116,8 +120,8 @@ type IpsecPolicyV2Observation struct {
 	// the existing policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The perfect forward secrecy mode. Valid values are group2, group5 and group14. Default
-	// is group5. Changing this updates the existing policy.
+	// The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+	// Default is group5. Changing this updates the existing policy.
 	Pfs *string `json:"pfs,omitempty" tf:"pfs,omitempty"`
 
 	// The region in which to obtain the V2 Networking client.
@@ -141,8 +145,9 @@ type IpsecPolicyV2Observation struct {
 
 type IpsecPolicyV2Parameters struct {
 
-	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512.
-	// Default is sha1. Changing this updates the algorithm of the existing policy.
+	// The authentication hash algorithm. Valid values are sha1, sha256, sha384, sha512,
+	// aes-xcbc, aes-cmac. Default is sha1.
+	// Changing this updates the algorithm of the existing policy.
 	// +kubebuilder:validation:Optional
 	AuthAlgorithm *string `json:"authAlgorithm,omitempty" tf:"auth_algorithm,omitempty"`
 
@@ -156,7 +161,8 @@ type IpsecPolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	EncapsulationMode *string `json:"encapsulationMode,omitempty" tf:"encapsulation_mode,omitempty"`
 
-	// The encryption algorithm. Valid values are 3des, aes-128, aes-192 and so on.
+	// The encryption algorithm. Valid values are 3des, aes-128, aes-192, aes-256,
+	// aes-KKK-ctr, aes-KKK-ccm-II, aes-KKK-gcm-II (with KKK = 128/192/256 bits key size and II = 8/12/16 octets ICV).
 	// The default value is aes-128. Changing this updates the existing policy.
 	// +kubebuilder:validation:Optional
 	EncryptionAlgorithm *string `json:"encryptionAlgorithm,omitempty" tf:"encryption_algorithm,omitempty"`
@@ -170,8 +176,8 @@ type IpsecPolicyV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The perfect forward secrecy mode. Valid values are group2, group5 and group14. Default
-	// is group5. Changing this updates the existing policy.
+	// The perfect forward secrecy mode. Valid values are group2, group5 and group14 to group31.
+	// Default is group5. Changing this updates the existing policy.
 	// +kubebuilder:validation:Optional
 	Pfs *string `json:"pfs,omitempty" tf:"pfs,omitempty"`
 

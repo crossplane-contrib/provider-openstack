@@ -26,10 +26,9 @@ type TransferRequestV2InitParameters struct {
 
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
-	// Changing this creates a new DNS zone.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone zone transfer accept.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The target Project ID to transfer to.
@@ -69,10 +68,9 @@ type TransferRequestV2Observation struct {
 
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
-	// Changing this creates a new DNS zone.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone zone transfer accept.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The target Project ID to transfer to.
@@ -103,10 +101,9 @@ type TransferRequestV2Parameters struct {
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// The region in which to obtain the V2 Compute client.
-	// Keypairs are associated with accounts, but a Compute client is needed to
-	// create one. If omitted, the region argument of the provider is used.
-	// Changing this creates a new DNS zone.
+	// The region in which to obtain the V2 DNS client.
+	// If omitted, the region argument of the provider is used.
+	// Changing this creates a new DNS zone zone transfer accept.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 

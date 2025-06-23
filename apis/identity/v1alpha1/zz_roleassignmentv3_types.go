@@ -34,6 +34,9 @@ type RoleAssignmentV3InitParameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
 
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new role assignment.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
@@ -76,6 +79,9 @@ type RoleAssignmentV3Observation struct {
 	// The project to assign the role in.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new role assignment.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
@@ -108,6 +114,9 @@ type RoleAssignmentV3Parameters struct {
 	// +kubebuilder:validation:Optional
 	ProjectIDSelector *v1.Selector `json:"projectIdSelector,omitempty" tf:"-"`
 
+	// The region in which to obtain the V3 Keystone client.
+	// If omitted, the region argument of the provider is used. Changing this
+	// creates a new role assignment.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 

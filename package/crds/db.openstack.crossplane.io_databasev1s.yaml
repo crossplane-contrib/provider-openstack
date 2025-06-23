@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: databasev1s.db.openstack.crossplane.io
 spec:
   group: db.openstack.crossplane.io
@@ -154,7 +154,9 @@ spec:
                     description: A unique name for the resource.
                     type: string
                   region:
-                    description: Openstack region resource is created in.
+                    description: |-
+                      The region in which to create the database. Changing
+                      this creates a new database.
                     type: string
                 type: object
               initProvider:
@@ -251,7 +253,9 @@ spec:
                     description: A unique name for the resource.
                     type: string
                   region:
-                    description: Openstack region resource is created in.
+                    description: |-
+                      The region in which to create the database. Changing
+                      this creates a new database.
                     type: string
                 type: object
               managementPolicies:
@@ -440,7 +444,9 @@ spec:
                     description: A unique name for the resource.
                     type: string
                   region:
-                    description: Openstack region resource is created in.
+                    description: |-
+                      The region in which to create the database. Changing
+                      this creates a new database.
                     type: string
                 type: object
               conditions:

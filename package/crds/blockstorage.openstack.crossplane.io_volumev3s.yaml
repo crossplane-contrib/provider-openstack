@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: volumev3s.blockstorage.openstack.crossplane.io
 spec:
   group: blockstorage.openstack.crossplane.io
@@ -187,10 +187,16 @@ spec:
                       Conflicts with snapshot_id, image_id, backup_id. Changing this
                       creates a new volume.
                     type: string
+                  volumeRetypePolicy:
+                    description: |-
+                      Migration policy when changing volume_type.
+                      "never" (default) prevents migration to another storage backend, while "on-demand"
+                      allows migration if needed. Applicable only when updating volume_type.
+                    type: string
                   volumeType:
                     description: |-
-                      The type of volume to create.
-                      Changing this creates a new volume.
+                      The type of volume to create or update.
+                      Changing this will attempt an in-place retype operation; migration depends on volume_retype_policy.
                     type: string
                 type: object
               initProvider:
@@ -320,10 +326,16 @@ spec:
                       Conflicts with snapshot_id, image_id, backup_id. Changing this
                       creates a new volume.
                     type: string
+                  volumeRetypePolicy:
+                    description: |-
+                      Migration policy when changing volume_type.
+                      "never" (default) prevents migration to another storage backend, while "on-demand"
+                      allows migration if needed. Applicable only when updating volume_type.
+                    type: string
                   volumeType:
                     description: |-
-                      The type of volume to create.
-                      Changing this creates a new volume.
+                      The type of volume to create or update.
+                      Changing this will attempt an in-place retype operation; migration depends on volume_retype_policy.
                     type: string
                 type: object
               managementPolicies:
@@ -634,10 +646,16 @@ spec:
                       Conflicts with snapshot_id, image_id, backup_id. Changing this
                       creates a new volume.
                     type: string
+                  volumeRetypePolicy:
+                    description: |-
+                      Migration policy when changing volume_type.
+                      "never" (default) prevents migration to another storage backend, while "on-demand"
+                      allows migration if needed. Applicable only when updating volume_type.
+                    type: string
                   volumeType:
                     description: |-
-                      The type of volume to create.
-                      Changing this creates a new volume.
+                      The type of volume to create or update.
+                      Changing this will attempt an in-place retype operation; migration depends on volume_retype_policy.
                     type: string
                 type: object
               conditions:

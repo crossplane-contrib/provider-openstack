@@ -180,8 +180,13 @@ type VolumeV3InitParameters struct {
 	// creates a new volume.
 	SourceVolID *string `json:"sourceVolId,omitempty" tf:"source_vol_id,omitempty"`
 
-	// The type of volume to create.
-	// Changing this creates a new volume.
+	// Migration policy when changing volume_type.
+	// "never" (default) prevents migration to another storage backend, while "on-demand"
+	// allows migration if needed. Applicable only when updating volume_type.
+	VolumeRetypePolicy *string `json:"volumeRetypePolicy,omitempty" tf:"volume_retype_policy,omitempty"`
+
+	// The type of volume to create or update.
+	// Changing this will attempt an in-place retype operation; migration depends on volume_retype_policy.
 	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }
 
@@ -255,8 +260,13 @@ type VolumeV3Observation struct {
 	// creates a new volume.
 	SourceVolID *string `json:"sourceVolId,omitempty" tf:"source_vol_id,omitempty"`
 
-	// The type of volume to create.
-	// Changing this creates a new volume.
+	// Migration policy when changing volume_type.
+	// "never" (default) prevents migration to another storage backend, while "on-demand"
+	// allows migration if needed. Applicable only when updating volume_type.
+	VolumeRetypePolicy *string `json:"volumeRetypePolicy,omitempty" tf:"volume_retype_policy,omitempty"`
+
+	// The type of volume to create or update.
+	// Changing this will attempt an in-place retype operation; migration depends on volume_retype_policy.
 	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }
 
@@ -337,8 +347,14 @@ type VolumeV3Parameters struct {
 	// +kubebuilder:validation:Optional
 	SourceVolID *string `json:"sourceVolId,omitempty" tf:"source_vol_id,omitempty"`
 
-	// The type of volume to create.
-	// Changing this creates a new volume.
+	// Migration policy when changing volume_type.
+	// "never" (default) prevents migration to another storage backend, while "on-demand"
+	// allows migration if needed. Applicable only when updating volume_type.
+	// +kubebuilder:validation:Optional
+	VolumeRetypePolicy *string `json:"volumeRetypePolicy,omitempty" tf:"volume_retype_policy,omitempty"`
+
+	// The type of volume to create or update.
+	// Changing this will attempt an in-place retype operation; migration depends on volume_retype_policy.
 	// +kubebuilder:validation:Optional
 	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
 }

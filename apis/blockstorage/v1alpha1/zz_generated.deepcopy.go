@@ -2042,6 +2042,11 @@ func (in *VolumeV3InitParameters) DeepCopyInto(out *VolumeV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VolumeRetypePolicy != nil {
+		in, out := &in.VolumeRetypePolicy, &out.VolumeRetypePolicy
+		*out = new(string)
+		**out = **in
+	}
 	if in.VolumeType != nil {
 		in, out := &in.VolumeType, &out.VolumeType
 		*out = new(string)
@@ -2189,6 +2194,11 @@ func (in *VolumeV3Observation) DeepCopyInto(out *VolumeV3Observation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VolumeRetypePolicy != nil {
+		in, out := &in.VolumeRetypePolicy, &out.VolumeRetypePolicy
+		*out = new(string)
+		**out = **in
+	}
 	if in.VolumeType != nil {
 		in, out := &in.VolumeType, &out.VolumeType
 		*out = new(string)
@@ -2289,6 +2299,11 @@ func (in *VolumeV3Parameters) DeepCopyInto(out *VolumeV3Parameters) {
 	}
 	if in.SourceVolID != nil {
 		in, out := &in.SourceVolID, &out.SourceVolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VolumeRetypePolicy != nil {
+		in, out := &in.VolumeRetypePolicy, &out.VolumeRetypePolicy
 		*out = new(string)
 		**out = **in
 	}

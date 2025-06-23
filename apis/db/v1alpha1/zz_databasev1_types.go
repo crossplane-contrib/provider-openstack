@@ -32,7 +32,8 @@ type DatabaseV1InitParameters struct {
 	// A unique name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Openstack region resource is created in.
+	// The region in which to create the database. Changing
+	// this creates a new database.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -45,7 +46,8 @@ type DatabaseV1Observation struct {
 	// A unique name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Openstack region resource is created in.
+	// The region in which to create the database. Changing
+	// this creates a new database.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -69,7 +71,8 @@ type DatabaseV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Openstack region resource is created in.
+	// The region in which to create the database. Changing
+	// this creates a new database.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
