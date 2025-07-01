@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  GO_VERSION: "1.23"
+  GO_VERSION: "1.23" # Keep in sync with the go-version input in publish-provider-package job
 
 jobs:
   detect-noop:
@@ -214,7 +214,7 @@ jobs:
     uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@9a2125b3ec67a41a24913ada8212b9359f104c8c
     with:
       repository: provider-openstack
-      go-version: ${{ env.GO_VERSION }}
+      go-version: "1.23"  # Keep in sync with env.GO_VERSION above
       cleanup-disk: true
       mirror-to-upbound-registry: false
     secrets:
