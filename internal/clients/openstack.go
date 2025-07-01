@@ -82,9 +82,7 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 }
 
 func configureNoForkOpenstackClient(ctx context.Context, ps *terraform.Setup, p schema.Provider) error {
-	diag := p.Configure(context.WithoutCancel(ctx), &tfsdk.ResourceConfig{
-		Config: ps.Configuration,
-	})
+	diag := p.Configure(context.WithoutCancel(ctx), tfsdk.NewResourceConfigRaw(ps.Configuration))
 	if diag != nil && diag.HasError() {
 		return errors.Errorf("failed to configure the provider: %v", diag)
 	}
