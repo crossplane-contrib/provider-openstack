@@ -71,6 +71,7 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 			"delayed_auth", "allow_reauth", "max_retries", "enable_logging"}
 
 		ps.Configuration = map[string]any{}
+		// Provide default values for specific fields. They are the same as in the upstream provider.
 		ps.Configuration["insecure"] = "false"
 
 		// ensures only the provided fields are set in the config
@@ -84,8 +85,12 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 }
 
 func configureNoForkOpenstackClient(ctx context.Context, ps *terraform.Setup, p schema.Provider) error {
+	// Populate the config, as well as the raw config for compatibility.
 	config := tfsdk.NewResourceConfigRaw(ps.Configuration)
 
+	// The insecure flag is checked using getOkExists, which uses the CtyType instead of config/rawconfig.
+	// See https://github.com/terraform-provider-openstack/terraform-provider-openstack/blob/v3.0.0/openstack/provider.go#L577
+	// To ensure compatibility with the upstream provider, we need to set the insecure flag in the cty.Value format.
 	insecure, err := strconv.ParseBool(ps.Configuration["insecure"].(string))
 	if err != nil {
 		return errors.Wrap(err, "failed to parse 'insecure' configuration")

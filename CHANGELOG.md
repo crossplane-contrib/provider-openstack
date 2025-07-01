@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix reoncile issues related to handling the insecure flag in the OpenStack provider configuration.
+
 ## [0.7.1] - 2025-06-18
 
 ### Fixed
