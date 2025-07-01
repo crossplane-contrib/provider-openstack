@@ -214,7 +214,7 @@ jobs:
     uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@9a2125b3ec67a41a24913ada8212b9359f104c8c
     with:
       repository: provider-openstack
-      go-version: "1.23"  # Keep in sync with env.GO_VERSION above
+      go-version: "1.23" # Keep in sync with env.GO_VERSION above
       cleanup-disk: true
       mirror-to-upbound-registry: false
     secrets:

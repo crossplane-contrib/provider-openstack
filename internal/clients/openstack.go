@@ -3,7 +3,9 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"strconv"
 
+	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	tfsdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
@@ -82,7 +84,18 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 }
 
 func configureNoForkOpenstackClient(ctx context.Context, ps *terraform.Setup, p schema.Provider) error {
-	diag := p.Configure(context.WithoutCancel(ctx), tfsdk.NewResourceConfigRaw(ps.Configuration))
+	config := tfsdk.NewResourceConfigRaw(ps.Configuration)
+
+	insecure, err := strconv.ParseBool(ps.Configuration["insecure"].(string))
+	if err != nil {
+		return errors.Wrap(err, "failed to parse 'insecure' configuration")
+	}
+
+	config.CtyValue = cty.ObjectVal(map[string]cty.Value{
+		"insecure": cty.BoolVal(insecure),
+	})
+
+	diag := p.Configure(context.WithoutCancel(ctx), config)
 	if diag != nil && diag.HasError() {
 		return errors.Errorf("failed to configure the provider: %v", diag)
 	}
