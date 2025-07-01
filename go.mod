@@ -54,7 +54,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gophercloud/gophercloud/v2 v2.1.2-0.20240924171548-1737ff4518d5 // indirect
 	github.com/gophercloud/utils/v2 v2.0.0-20240705071316-780b64d153e3 // indirect
-	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320 // indirect
+	github.com/hashicorp/go-cty v1.5.0 // indirect
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/hashicorp/go-plugin v1.5.1 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
