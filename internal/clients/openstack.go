@@ -69,7 +69,7 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 			"delayed_auth", "allow_reauth", "max_retries", "enable_logging"}
 
 		ps.Configuration = map[string]any{}
-		ps.Configuration["insecure"] = false
+		ps.Configuration["insecure"] = "false"
 
 		// ensures only the provided fields are set in the config
 		for _, credField := range credFields {
