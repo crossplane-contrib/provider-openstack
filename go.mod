@@ -9,6 +9,7 @@ require (
 	github.com/crossplane/crossplane-runtime v1.20.0
 	github.com/crossplane/crossplane-tools v0.0.0-20250603090330-889cfb100517
 	github.com/crossplane/upjet v1.9.0
+	github.com/hashicorp/go-cty v1.5.0
 	github.com/hashicorp/terraform-json v0.25.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
 	github.com/pkg/errors v0.9.1
@@ -57,7 +58,6 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gophercloud/gophercloud/v2 v2.7.1-0.20250602133909-0c4819a8e5d3 // indirect
 	github.com/gophercloud/utils/v2 v2.0.0-20250212084022-725b94822eeb // indirect
-	github.com/hashicorp/go-cty v1.5.0 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-plugin v1.6.3 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect

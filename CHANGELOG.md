@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update to upjet `v1.9.0`
 - Update golang dependencies
 
+## [0.7.2] - 2025-07-02
+
+### Fixed
+
+- Fix reconcile issues related to handling the insecure flag in the OpenStack provider configuration.
+
 ## [0.7.1] - 2025-06-18
 
 ### Fixed
