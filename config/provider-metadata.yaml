@@ -2367,6 +2367,47 @@ resources:
                 - (Optional) The region in which to create the db user. Changing
                 this creates a new user.
         importStatements: []
+    openstack_dns_quota_v2:
+        subCategory: DNS / Designate
+        description: Manages DNS quota in OpenStack DNS Service.
+        name: openstack_dns_quota_v2
+        title: openstack_dns_quota_v2
+        examples:
+            - name: quota_1
+              manifest: |-
+                {
+                  "api_export_size": 4,
+                  "project_id": "${openstack_identity_project_v3.project_1.id}",
+                  "recordset_records": 10,
+                  "zone_records": 100,
+                  "zone_recordsets": 8,
+                  "zones": 2
+                }
+              references:
+                project_id: openstack_identity_project_v3.project_1.id
+              dependencies:
+                openstack_identity_project_v3.project_1: |-
+                    {
+                      "name": "${project_1}"
+                    }
+        argumentDocs:
+            api_export_size: |-
+                - (Optional) The maximum number of zones that can be
+                exported via the API.
+            project_id: |-
+                - (Required) ID of the project to manage quota. Changing this
+                creates new quota.
+            recordset_records: |-
+                - (Optional) The maximum number of records in a
+                recordset.
+            region: |-
+                - (Optional) The region in which to obtain the V2 DNS client. If
+                omitted, the region argument of the provider is used. Changing this creates
+                a new DNS quota.
+            zone_records: '- (Optional) The maximum number of records in a zone.'
+            zone_recordsets: '- (Optional) The maximum number of recordsets in a zone.'
+            zones: '- (Optional) The maximum number of zones that can be created.'
+        importStatements: []
     openstack_dns_recordset_v2:
         subCategory: DNS / Designate
         description: Manages a DNS record set in the OpenStack DNS Service
@@ -4772,6 +4813,115 @@ resources:
                 all projects. Changing this updates the shared status of the existing
                 address-scope.
         importStatements: []
+    openstack_networking_bgp_peer_v2:
+        subCategory: Networking / Neutron
+        description: Manages a V2 Neutron BGP Peer resource within OpenStack.
+        name: openstack_networking_bgp_peer_v2
+        title: openstack_networking_bgp_peer_v2
+        examples:
+            - name: peer_1
+              manifest: |-
+                {
+                  "auth_type": "md5",
+                  "name": "bgp_peer_1",
+                  "password": "supersecret",
+                  "peer_ip": "192.0.2.10",
+                  "remote_as": 65001
+                }
+        argumentDocs:
+            auth_type: |-
+                – (Optional) The authentication type to use. Can be one of none
+                or md5. Defaults to none. If set to not none, the password argument
+                must also be provided. Changing this creates a new BGP peer.
+            id: – The ID of the BGP peer.
+            name: – (Optional) A name for the BGP peer.
+            password: |-
+                – (Optional) The password used for MD5 authentication. Must be set
+                only when auth_type is not none.
+            peer_ip: |-
+                – (Required) The IP address of the BGP peer. Must be a valid IP
+                address. Changing this creates a new BGP peer.
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a Neutron network. If omitted, the
+                region argument of the provider is used. Changing this creates a new BGP
+                peer.
+            remote_as: |-
+                – (Required) The AS number of the BGP peer. Changing this
+                creates a new BGP peer.
+            tenant_id: |-
+                – (Optional) The tenant/project ID. Required if admin privileges
+                are used. Changing this creates a new BGP peer.
+        importStatements:
+            - $ terraform import openstack_networking_bgp_peer_v2.peer1 a1b2c3d4-e5f6-7890-abcd-1234567890ef
+    openstack_networking_bgp_speaker_v2:
+        subCategory: Networking / Neutron
+        description: Manages a V2 Neutron BGP Speaker resource within OpenStack.
+        name: openstack_networking_bgp_speaker_v2
+        title: openstack_networking_bgp_speaker_v2
+        examples:
+            - name: speaker_1
+              manifest: |-
+                {
+                  "ip_version": 4,
+                  "local_as": 65000,
+                  "name": "bgp_speaker_1",
+                  "networks": [
+                    "${openstack_networking_network_v2.network1.id}"
+                  ],
+                  "peers": [
+                    "${opestack_networking_bgp_peer_v2.peer1.id}"
+                  ]
+                }
+              references:
+                networks: openstack_networking_network_v2.network1.id
+                peers: opestack_networking_bgp_peer_v2.peer1.id
+              dependencies:
+                openstack_networking_bgp_peer_v2.peer_1: |-
+                    {
+                      "auth_type": "md5",
+                      "name": "bgp_peer_1",
+                      "password": "supersecret",
+                      "peer_ip": "192.0.2.10",
+                      "remote_as": 65001
+                    }
+                openstack_networking_network_v2.network1: |-
+                    {
+                      "name": "network1"
+                    }
+        argumentDocs:
+            advertise_floating_ip_host_routes: |-
+                – (Optional) A boolean value indicating
+                whether to advertise floating IP host routes. Defaults to true.
+            advertise_tenant_networks: |-
+                - (Optional) A boolean value indicating whether to
+                advertise tenant networks. Defaults to true.
+            advertised_routes: |-
+                – A list of dictionaries containing the destination and
+                next_hop for each route advertised by the BGP speaker. This attribute is
+                only populated after the BGP speaker has been created and has established BGP
+                sessions with its peers.
+            id: – The ID of the BGP speaker.
+            ip_version: |-
+                – (Required) The IP version of the BGP speaker. Valid values are
+                4 or 6. Defaults to 4. Changing this creates a new BGP speaker.
+            local_as: |-
+                – (Required) The local autonomous system number (ASN) for the BGP
+                speaker. This is a mandatory field and must be specified. Changing this
+                creates a new BGP speaker.
+            name: – (Optional) A name for the BGP speaker.
+            networks: '- (Optional) A list of network IDs to associate with the BGP speaker.'
+            peers: '- (Optional) A list of BGP peer IDs to associate with the BGP speaker.'
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a Neutron network. If omitted, the
+                region argument of the provider is used. Changing this creates a new BGP
+                speaker.
+            tenant_id: |-
+                – (Optional) The tenant/project ID. Required if admin privileges
+                are used. Changing this creates a new BGP speaker.
+        importStatements:
+            - $ terraform import openstack_networking_bgp_speaker_v2.speaker_1 8a2ad402-b805-46bf-a60b-008573ca2844
     openstack_networking_floatingip_associate_v2:
         subCategory: Networking / Neutron
         description: Associates a Floating IP to a Port
@@ -5646,6 +5796,66 @@ resources:
                 - (Required) ID of the router this routing entry belongs to. Changing
                 this creates a new routing entry.
         importStatements: []
+    openstack_networking_router_routes_v2:
+        subCategory: Networking / Neutron
+        description: Creates routing entries on a OpenStack V2 router.
+        name: openstack_networking_router_routes_v2
+        title: openstack_networking_router_routes_v2
+        examples:
+            - name: router_routes_1
+              manifest: |-
+                {
+                  "router_id": "${openstack_networking_router_interface_v2.int_1.router_id}",
+                  "routes": [
+                    {
+                      "destination_cidr": "10.0.1.0/24",
+                      "next_hop": "192.168.199.254"
+                    },
+                    {
+                      "destination_cidr": "10.0.2.0/24",
+                      "next_hop": "192.168.199.254"
+                    }
+                  ]
+                }
+              references:
+                router_id: openstack_networking_router_interface_v2.int_1.router_id
+              dependencies:
+                openstack_networking_network_v2.network_1: |-
+                    {
+                      "admin_state_up": "true",
+                      "name": "network_1"
+                    }
+                openstack_networking_router_interface_v2.int_1: |-
+                    {
+                      "router_id": "${openstack_networking_router_v2.router_1.id}",
+                      "subnet_id": "${openstack_networking_subnet_v2.subnet_1.id}"
+                    }
+                openstack_networking_router_v2.router_1: |-
+                    {
+                      "admin_state_up": "true",
+                      "name": "router_1"
+                    }
+                openstack_networking_subnet_v2.subnet_1: |-
+                    {
+                      "cidr": "192.168.199.0/24",
+                      "ip_version": 4,
+                      "network_id": "${openstack_networking_network_v2.network_1.id}"
+                    }
+        argumentDocs:
+            region: |-
+                - (Optional) The region in which to obtain the V2 networking client.
+                A networking client is needed to configure routing entres on a router. If
+                omitted, the region argument of the provider is used. Changing this creates
+                new routing entries.
+            router_id: |-
+                - (Required) ID of the router these routing entries belong to.
+                Changing this creates new routing entries.
+            routes: '- (Optional) A set of routing entries to add to the router.'
+            routes.destination_cidr: |-
+                - (Required) CIDR block to match on the packet’s
+                destination IP.
+            routes.next_hop: '- (Required) IP address of the next hop gateway.'
+        importStatements: []
     openstack_networking_router_v2:
         subCategory: Networking / Neutron
         description: Manages a V2 router resource within OpenStack.
@@ -5835,6 +6045,55 @@ resources:
                 wants to create a port for another tenant. Changing this creates a new
                 security group.
         importStatements: []
+    openstack_networking_segment_v2:
+        subCategory: Networking / Neutron
+        description: Manages a Neutron network segment resource within OpenStack.
+        name: openstack_networking_segment_v2
+        title: openstack_networking_segment_v2
+        examples:
+            - name: segment_1
+              manifest: |-
+                {
+                  "description": "Example flat segment",
+                  "name": "flat-segment",
+                  "network_id": "${openstack_networking_network_v2.net_1.id}",
+                  "network_type": "flat",
+                  "physical_network": "public"
+                }
+              references:
+                network_id: openstack_networking_network_v2.net_1.id
+              dependencies:
+                openstack_networking_network_v2.net_1: |-
+                    {
+                      "name": "demo-net"
+                    }
+        argumentDocs:
+            created_at: – Creation timestamp (RFC3339 format).
+            description: – (Optional) A description for the segment.
+            id: – The ID of the segment.
+            name: – (Optional) A name for the segment.
+            network_id: |-
+                – (Required) The UUID of the network this segment belongs to.
+                Changing this will create a new segment.
+            network_type: |-
+                – (Required) The network type. Valid values depend on the
+                backend (e.g., vlan, vxlan, flat, gre, geneve, local). Changing
+                this will create a new segment.
+            physical_network: |-
+                – (Optional) The name of the physical network. Changing this
+                will create a new segment.
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create a Neutron network. If omitted, the
+                region argument of the provider is used. Changing this creates a new
+                segment.
+            revision_number: – The revision number of the segment.
+            segmentation_id: |-
+                – (Optional) A segmentation identifier. Changing is allowed
+                only for vlan.
+            updated_at: – Last update timestamp (RFC3339 format).
+        importStatements:
+            - $ terraform import openstack_networking_segment_v2.segment1 a5e3a494-26ee-4fde-ad26-2d846c47072e
     openstack_networking_subnet_route_v2:
         subCategory: Networking / Neutron
         description: Creates a routing entry on a OpenStack V2 subnet.
