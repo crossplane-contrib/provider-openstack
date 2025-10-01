@@ -1,6 +1,7 @@
 /*
 Copyright 2022 Upbound Inc.
 Copyright 2023 Jakob Schlagenhaufer, Jan Dittrich
+Copyright 2025 Yannick Schlosser, Jan Dittrich
 */
 
 package controller
