@@ -7,7 +7,6 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	"github.com/crossplane/upjet/pkg/config"
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/registry/reference"
 	"github.com/crossplane/upjet/pkg/schema/traverser"
@@ -169,8 +168,8 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 			// with the converted API (with embedded objects in place of
 			// singleton lists), so we need the appropriate Terraform
 			// converter in this case.
-			r.TerraformConversions = []config.TerraformConversion{
-				config.NewTFSingletonConversion(),
+			r.TerraformConversions = []ujconfig.TerraformConversion{
+				ujconfig.NewTFSingletonConversion(),
 			}
 		}
 		pc.Resources[name] = r
