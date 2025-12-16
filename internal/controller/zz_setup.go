@@ -9,7 +9,7 @@ package controller
 import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	qosassociationv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/blockstorage/qosassociationv3"
 	qosv3 "github.com/crossplane-contrib/provider-openstack/internal/controller/blockstorage/qosv3"
