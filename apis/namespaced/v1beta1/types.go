@@ -82,38 +82,25 @@ type ProviderConfigUsageList struct {
 
 // +kubebuilder:object:root=true
 
-// A ClusterProviderConfig configures the AzureAD provider.
-
+// A ProviderConfig configures a OpenStack provider.
 // +kubebuilder:subresource:status
-
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-
 // +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1
-
 // +kubebuilder:resource:scope=Cluster
-
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,azuread}
-
-// +kubebuilder:storageversion
-
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,openstack}
 type ClusterProviderConfig struct {
-	metav1.TypeMeta `json:",inline"`
-
+	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec ProviderConfigSpec `json:"spec"`
-
+	Spec   ProviderConfigSpec   `json:"spec"`
 	Status ProviderConfigStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ClusterProviderConfigList contains a list of ProviderConfig.
-
+// ProviderConfigList contains a list of ProviderConfig.
 type ClusterProviderConfigList struct {
 	metav1.TypeMeta `json:",inline"`
-
 	metav1.ListMeta `json:"metadata,omitempty"`
-
-	Items []ClusterProviderConfig `json:"items"`
+	Items           []ClusterProviderConfig `json:"items"`
 }
