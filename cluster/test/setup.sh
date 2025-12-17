@@ -24,3 +24,19 @@ spec:
       name: provider-secret
       namespace: upbound-system
       key: credentials
+EOF
+
+echo "Creating a default provider config..."
+cat <<EOF | ${KUBECTL} apply -f -
+apiVersion: openstack.m.crossplane.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: provider-secret
+      namespace: upbound-system
+      key: credentials
+EOF
