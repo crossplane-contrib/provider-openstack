@@ -150,7 +150,7 @@ type FixedIPInitParameters struct {
 
 	// Subnet in which to allocate IP address for
 	// this port.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SubnetV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -189,7 +189,7 @@ type FixedIPParameters struct {
 
 	// Subnet in which to allocate IP address for
 	// this port.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SubnetV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -254,7 +254,7 @@ type PortV2InitParameters struct {
 
 	// The ID of the network to attach the port to. Changing
 	// this creates a new port.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -498,7 +498,7 @@ type PortV2Parameters struct {
 
 	// The ID of the network to attach the port to. Changing
 	// this creates a new port.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`

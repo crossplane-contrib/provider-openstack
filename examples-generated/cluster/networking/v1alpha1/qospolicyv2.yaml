@@ -1,0 +1,12 @@
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: QosPolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/qospolicyv2
+  labels:
+    testing.upbound.io/example-name: qos_policy_1
+  name: qos-policy-1
+spec:
+  forProvider:
+    description: bw_limit
+    name: qos_policy_1

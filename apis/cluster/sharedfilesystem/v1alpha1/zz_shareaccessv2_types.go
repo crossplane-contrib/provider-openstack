@@ -35,7 +35,7 @@ type ShareAccessV2InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of the share to which you are granted access.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.ShareV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/sharedfilesystem/v1alpha1.ShareV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ShareID *string `json:"shareId,omitempty" tf:"share_id,omitempty"`
 
@@ -101,7 +101,7 @@ type ShareAccessV2Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The UUID of the share to which you are granted access.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.ShareV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/sharedfilesystem/v1alpha1.ShareV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ShareID *string `json:"shareId,omitempty" tf:"share_id,omitempty"`

@@ -23,7 +23,7 @@ type TransferAcceptV2InitParameters struct {
 	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
 
 	// The transfer key.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/dns/v1alpha1.TransferRequestV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("key",false)
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
@@ -46,7 +46,7 @@ type TransferAcceptV2InitParameters struct {
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone transfer request.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/dns/v1alpha1.TransferRequestV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ZoneTransferRequestID *string `json:"zoneTransferRequestId,omitempty" tf:"zone_transfer_request_id,omitempty"`
 
@@ -94,7 +94,7 @@ type TransferAcceptV2Parameters struct {
 	DisableStatusCheck *bool `json:"disableStatusCheck,omitempty" tf:"disable_status_check,omitempty"`
 
 	// The transfer key.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/dns/v1alpha1.TransferRequestV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("key",false)
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
@@ -120,7 +120,7 @@ type TransferAcceptV2Parameters struct {
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the zone transfer request.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.TransferRequestV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/dns/v1alpha1.TransferRequestV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ZoneTransferRequestID *string `json:"zoneTransferRequestId,omitempty" tf:"zone_transfer_request_id,omitempty"`

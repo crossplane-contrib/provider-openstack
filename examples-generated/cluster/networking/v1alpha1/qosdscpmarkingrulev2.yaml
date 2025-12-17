@@ -1,0 +1,29 @@
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: QosDscpMarkingRuleV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/qosdscpmarkingrulev2
+  labels:
+    testing.upbound.io/example-name: dscp_marking_rule_1
+  name: dscp-marking-rule-1
+spec:
+  forProvider:
+    dscpMark: 26
+    qosPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: qos_policy_1
+
+---
+
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: QosPolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/qosdscpmarkingrulev2
+  labels:
+    testing.upbound.io/example-name: qos_policy_1
+  name: qos-policy-1
+spec:
+  forProvider:
+    description: dscp_mark
+    name: qos_policy_1

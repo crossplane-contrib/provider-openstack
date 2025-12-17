@@ -28,7 +28,7 @@ type SharenetworkV2InitParameters struct {
 	// The UUID of a neutron network when setting up or updating
 	// a share network. Changing this updates the existing share network if it's not used by
 	// shares.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	NeutronNetID *string `json:"neutronNetId,omitempty" tf:"neutron_net_id,omitempty"`
 
@@ -43,7 +43,7 @@ type SharenetworkV2InitParameters struct {
 	// The UUID of the neutron subnet when setting up or
 	// updating a share network. Changing this updates the existing share network if it's
 	// not used by shares.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SubnetV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	NeutronSubnetID *string `json:"neutronSubnetId,omitempty" tf:"neutron_subnet_id,omitempty"`
 
@@ -63,7 +63,7 @@ type SharenetworkV2InitParameters struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SecurityserviceV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/sharedfilesystem/v1alpha1.SecurityserviceV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +listType=set
 	SecurityServiceIds []*string `json:"securityServiceIds,omitempty" tf:"security_service_ids,omitempty"`
@@ -142,7 +142,7 @@ type SharenetworkV2Parameters struct {
 	// The UUID of a neutron network when setting up or updating
 	// a share network. Changing this updates the existing share network if it's not used by
 	// shares.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NeutronNetID *string `json:"neutronNetId,omitempty" tf:"neutron_net_id,omitempty"`
@@ -158,7 +158,7 @@ type SharenetworkV2Parameters struct {
 	// The UUID of the neutron subnet when setting up or
 	// updating a share network. Changing this updates the existing share network if it's
 	// not used by shares.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SubnetV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NeutronSubnetID *string `json:"neutronSubnetId,omitempty" tf:"neutron_subnet_id,omitempty"`
@@ -180,7 +180,7 @@ type SharenetworkV2Parameters struct {
 
 	// The list of security service IDs to associate with
 	// the share network. The security service must be specified by ID and not name.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SecurityserviceV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/sharedfilesystem/v1alpha1.SecurityserviceV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	// +listType=set

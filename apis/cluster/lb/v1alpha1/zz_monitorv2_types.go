@@ -58,7 +58,7 @@ type MonitorV2InitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The id of the pool that this monitor will be assigned to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.PoolV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`
 
@@ -222,7 +222,7 @@ type MonitorV2Parameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The id of the pool that this monitor will be assigned to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.PoolV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`

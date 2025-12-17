@@ -1,0 +1,545 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: routerv2s.networking.openstack.m.crossplane.io
+spec:
+  group: networking.openstack.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - openstack
+    kind: RouterV2
+    listKind: RouterV2List
+    plural: routerv2s
+    singular: routerv2
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RouterV2 is the Schema for the RouterV2s API. Manages a V2 router
+          resource within OpenStack.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RouterV2Spec defines the desired state of RouterV2
+            properties:
+              forProvider:
+                properties:
+                  adminStateUp:
+                    description: |-
+                      Administrative up/down status for the router
+                      (must be "true" or "false" if provided). Changing this updates the
+                      admin_state_up of an existing router.
+                    type: boolean
+                  availabilityZoneHints:
+                    description: |-
+                      An availability zone is used to make
+                      network resources highly available. Used for resources with high availability
+                      so that they are scheduled on different availability zones. Changing this
+                      creates a new router.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Human-readable description for the router.
+                    type: string
+                  distributed:
+                    description: |-
+                      Indicates whether or not to create a
+                      distributed router. The default policy setting in Neutron restricts
+                      usage of this property to administrative users only.
+                    type: boolean
+                  enableSnat:
+                    description: |-
+                      Enable Source NAT for the router. Valid values are
+                      "true" or "false". An external_network_id has to be set in order to
+                      set this property. Changing this updates the enable_snat of the router.
+                      Setting this value requires an ext-gw-mode extension to be enabled
+                      in OpenStack Neutron.
+                    type: boolean
+                  externalFixedIp:
+                    description: |-
+                      An external fixed IP for the router. This
+                      can be repeated. The structure is described below. An external_network_id
+                      has to be set in order to set this property. Changing this updates the
+                      external fixed IPs of the router.
+                    items:
+                      properties:
+                        ipAddress:
+                          description: The IP address to set on the router.
+                          type: string
+                        subnetId:
+                          description: Subnet in which the fixed IP belongs to.
+                          type: string
+                      type: object
+                    type: array
+                  externalNetworkId:
+                    description: |-
+                      The network UUID of an external gateway
+                      for the router. A router with an external gateway is required if any
+                      compute instances or load balancers will be using floating IPs. Changing
+                      this updates the external gateway of the router.
+                    type: string
+                  externalQosPolicyId:
+                    description: |-
+                      The QoS policy UUID that will be applied
+                      on the external gateway for the router. Changing this updates the external
+                      gateway of the router.
+                    type: string
+                  externalSubnetIds:
+                    description: |-
+                      A list of external subnet IDs to try over
+                      each to obtain a fixed IP for the router. If a subnet ID in a list has
+                      exhausted floating IP pool, the next subnet ID will be tried. This argument is
+                      used only during the router creation and allows to set only one external fixed
+                      IP. Conflicts with an external_fixed_ip argument.
+                    items:
+                      type: string
+                    type: array
+                  name:
+                    description: |-
+                      A unique name for the router. Changing this
+                      updates the name of an existing router.
+                    type: string
+                  region:
+                    description: |-
+                      The region in which to obtain the V2 networking client.
+                      A networking client is needed to create a router. If omitted, the
+                      region argument of the provider is used. Changing this creates a new
+                      router.
+                    type: string
+                  tags:
+                    description: A set of string tags for the router.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tenantId:
+                    description: |-
+                      The owner of the floating IP. Required if admin wants
+                      to create a router for another tenant. Changing this creates a new router.
+                    type: string
+                  valueSpecs:
+                    additionalProperties:
+                      type: string
+                    description: Map of additional driver-specific options.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  vendorOptions:
+                    description: |-
+                      Map of additional vendor-specific options.
+                      Supported options are described below.
+                    properties:
+                      setRouterGatewayAfterCreate:
+                        description: |-
+                          Boolean to control whether
+                          the Router gateway is assigned during creation or updated after creation.
+                        type: boolean
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  adminStateUp:
+                    description: |-
+                      Administrative up/down status for the router
+                      (must be "true" or "false" if provided). Changing this updates the
+                      admin_state_up of an existing router.
+                    type: boolean
+                  availabilityZoneHints:
+                    description: |-
+                      An availability zone is used to make
+                      network resources highly available. Used for resources with high availability
+                      so that they are scheduled on different availability zones. Changing this
+                      creates a new router.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Human-readable description for the router.
+                    type: string
+                  distributed:
+                    description: |-
+                      Indicates whether or not to create a
+                      distributed router. The default policy setting in Neutron restricts
+                      usage of this property to administrative users only.
+                    type: boolean
+                  enableSnat:
+                    description: |-
+                      Enable Source NAT for the router. Valid values are
+                      "true" or "false". An external_network_id has to be set in order to
+                      set this property. Changing this updates the enable_snat of the router.
+                      Setting this value requires an ext-gw-mode extension to be enabled
+                      in OpenStack Neutron.
+                    type: boolean
+                  externalFixedIp:
+                    description: |-
+                      An external fixed IP for the router. This
+                      can be repeated. The structure is described below. An external_network_id
+                      has to be set in order to set this property. Changing this updates the
+                      external fixed IPs of the router.
+                    items:
+                      properties:
+                        ipAddress:
+                          description: The IP address to set on the router.
+                          type: string
+                        subnetId:
+                          description: Subnet in which the fixed IP belongs to.
+                          type: string
+                      type: object
+                    type: array
+                  externalNetworkId:
+                    description: |-
+                      The network UUID of an external gateway
+                      for the router. A router with an external gateway is required if any
+                      compute instances or load balancers will be using floating IPs. Changing
+                      this updates the external gateway of the router.
+                    type: string
+                  externalQosPolicyId:
+                    description: |-
+                      The QoS policy UUID that will be applied
+                      on the external gateway for the router. Changing this updates the external
+                      gateway of the router.
+                    type: string
+                  externalSubnetIds:
+                    description: |-
+                      A list of external subnet IDs to try over
+                      each to obtain a fixed IP for the router. If a subnet ID in a list has
+                      exhausted floating IP pool, the next subnet ID will be tried. This argument is
+                      used only during the router creation and allows to set only one external fixed
+                      IP. Conflicts with an external_fixed_ip argument.
+                    items:
+                      type: string
+                    type: array
+                  name:
+                    description: |-
+                      A unique name for the router. Changing this
+                      updates the name of an existing router.
+                    type: string
+                  region:
+                    description: |-
+                      The region in which to obtain the V2 networking client.
+                      A networking client is needed to create a router. If omitted, the
+                      region argument of the provider is used. Changing this creates a new
+                      router.
+                    type: string
+                  tags:
+                    description: A set of string tags for the router.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tenantId:
+                    description: |-
+                      The owner of the floating IP. Required if admin wants
+                      to create a router for another tenant. Changing this creates a new router.
+                    type: string
+                  valueSpecs:
+                    additionalProperties:
+                      type: string
+                    description: Map of additional driver-specific options.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  vendorOptions:
+                    description: |-
+                      Map of additional vendor-specific options.
+                      Supported options are described below.
+                    properties:
+                      setRouterGatewayAfterCreate:
+                        description: |-
+                          Boolean to control whether
+                          the Router gateway is assigned during creation or updated after creation.
+                        type: boolean
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: RouterV2Status defines the observed state of RouterV2.
+            properties:
+              atProvider:
+                properties:
+                  adminStateUp:
+                    description: |-
+                      Administrative up/down status for the router
+                      (must be "true" or "false" if provided). Changing this updates the
+                      admin_state_up of an existing router.
+                    type: boolean
+                  allTags:
+                    description: |-
+                      The collection of tags assigned on the router, which have been
+                      explicitly and implicitly added.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  availabilityZoneHints:
+                    description: |-
+                      An availability zone is used to make
+                      network resources highly available. Used for resources with high availability
+                      so that they are scheduled on different availability zones. Changing this
+                      creates a new router.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: Human-readable description for the router.
+                    type: string
+                  distributed:
+                    description: |-
+                      Indicates whether or not to create a
+                      distributed router. The default policy setting in Neutron restricts
+                      usage of this property to administrative users only.
+                    type: boolean
+                  enableSnat:
+                    description: |-
+                      Enable Source NAT for the router. Valid values are
+                      "true" or "false". An external_network_id has to be set in order to
+                      set this property. Changing this updates the enable_snat of the router.
+                      Setting this value requires an ext-gw-mode extension to be enabled
+                      in OpenStack Neutron.
+                    type: boolean
+                  externalFixedIp:
+                    description: |-
+                      An external fixed IP for the router. This
+                      can be repeated. The structure is described below. An external_network_id
+                      has to be set in order to set this property. Changing this updates the
+                      external fixed IPs of the router.
+                    items:
+                      properties:
+                        ipAddress:
+                          description: The IP address to set on the router.
+                          type: string
+                        subnetId:
+                          description: Subnet in which the fixed IP belongs to.
+                          type: string
+                      type: object
+                    type: array
+                  externalNetworkId:
+                    description: |-
+                      The network UUID of an external gateway
+                      for the router. A router with an external gateway is required if any
+                      compute instances or load balancers will be using floating IPs. Changing
+                      this updates the external gateway of the router.
+                    type: string
+                  externalQosPolicyId:
+                    description: |-
+                      The QoS policy UUID that will be applied
+                      on the external gateway for the router. Changing this updates the external
+                      gateway of the router.
+                    type: string
+                  externalSubnetIds:
+                    description: |-
+                      A list of external subnet IDs to try over
+                      each to obtain a fixed IP for the router. If a subnet ID in a list has
+                      exhausted floating IP pool, the next subnet ID will be tried. This argument is
+                      used only during the router creation and allows to set only one external fixed
+                      IP. Conflicts with an external_fixed_ip argument.
+                    items:
+                      type: string
+                    type: array
+                  id:
+                    description: ID of the router.
+                    type: string
+                  name:
+                    description: |-
+                      A unique name for the router. Changing this
+                      updates the name of an existing router.
+                    type: string
+                  region:
+                    description: |-
+                      The region in which to obtain the V2 networking client.
+                      A networking client is needed to create a router. If omitted, the
+                      region argument of the provider is used. Changing this creates a new
+                      router.
+                    type: string
+                  tags:
+                    description: A set of string tags for the router.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tenantId:
+                    description: |-
+                      The owner of the floating IP. Required if admin wants
+                      to create a router for another tenant. Changing this creates a new router.
+                    type: string
+                  valueSpecs:
+                    additionalProperties:
+                      type: string
+                    description: Map of additional driver-specific options.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  vendorOptions:
+                    description: |-
+                      Map of additional vendor-specific options.
+                      Supported options are described below.
+                    properties:
+                      setRouterGatewayAfterCreate:
+                        description: |-
+                          Boolean to control whether
+                          the Router gateway is assigned during creation or updated after creation.
+                        type: boolean
+                    type: object
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

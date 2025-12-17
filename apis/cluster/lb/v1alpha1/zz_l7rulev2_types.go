@@ -35,7 +35,7 @@ type L7RuleV2InitParameters struct {
 
 	// The ID of the L7 Policy to query. Changing this creates a new
 	// L7 Rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.L7PolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.L7PolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	L7PolicyID *string `json:"l7policyId,omitempty" tf:"l7policy_id,omitempty"`
 
@@ -139,7 +139,7 @@ type L7RuleV2Parameters struct {
 
 	// The ID of the L7 Policy to query. Changing this creates a new
 	// L7 Rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.L7PolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.L7PolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	L7PolicyID *string `json:"l7policyId,omitempty" tf:"l7policy_id,omitempty"`

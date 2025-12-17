@@ -1,0 +1,64 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleAssignmentV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: role_assignment_1
+  name: role-assignment-1
+spec:
+  forProvider:
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
+    roleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: role_1
+    userIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: user_1
+
+---
+
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-1
+spec:
+  forProvider:
+    name: project_1
+
+---
+
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: role_1
+  name: role-1
+spec:
+  forProvider:
+    name: role_1
+
+---
+
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: UserV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/roleassignmentv3
+  labels:
+    testing.upbound.io/example-name: user_1
+  name: user-1
+spec:
+  forProvider:
+    defaultProjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
+    name: user_1

@@ -67,7 +67,7 @@ type SecgroupRuleV2InitParameters struct {
 	// The security group id the rule should belong
 	// to, the value needs to be an Openstack ID of a security group in the same
 	// tenant. Changing this creates a new security group rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SecgroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SecgroupV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
@@ -209,7 +209,7 @@ type SecgroupRuleV2Parameters struct {
 	// The security group id the rule should belong
 	// to, the value needs to be an Openstack ID of a security group in the same
 	// tenant. Changing this creates a new security group rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SecgroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SecgroupV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`

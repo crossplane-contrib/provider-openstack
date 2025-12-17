@@ -1,0 +1,28 @@
+apiVersion: containerinfra.openstack.crossplane.io/v1alpha1
+kind: ClustertemplateV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinfra/v1alpha1/clustertemplatev1
+  labels:
+    testing.upbound.io/example-name: clustertemplate_1
+  name: clustertemplate-1
+spec:
+  forProvider:
+    coe: kubernetes
+    dnsNameserver: 1.1.1.1
+    dockerStorageDriver: devicemapper
+    dockerVolumeSize: 10
+    flavor: m1.small
+    floatingIpEnabled: false
+    image: Fedora-Atomic-27
+    labels:
+      influx_grafana_dashboard_enabled: "true"
+      kube_dashboard_enabled: "true"
+      kube_tag: 1.11.1
+      prometheus_monitoring: "true"
+    masterFlavor: m1.medium
+    masterLbEnabled: true
+    name: clustertemplate_1
+    networkDriver: flannel
+    serverType: vm
+    volumeDriver: cinder

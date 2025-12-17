@@ -11,7 +11,6 @@ package l7rulev2
 import (
 	"time"
 
-	"github.com/crossplane/crossplane-runtime/v2/pkg/connection"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
 	xpfeature "github.com/crossplane/crossplane-runtime/v2/pkg/feature"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
@@ -24,18 +23,24 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1"
 	features "github.com/crossplane-contrib/provider-openstack/internal/features"
 )
+
+// SetupGated adds a controller that reconciles L7RuleV2 managed resources.
+func SetupGated(mgr ctrl.Manager, o tjcontroller.Options) error {
+	o.Options.Gate.Register(func() {
+		if err := Setup(mgr, o); err != nil {
+			mgr.GetLogger().Error(err, "unable to setup reconciler", "gvk", v1alpha1.L7RuleV2_GroupVersionKind.String())
+		}
+	}, v1alpha1.L7RuleV2_GroupVersionKind)
+	return nil
+}
 
 // Setup adds a controller that reconciles L7RuleV2 managed resources.
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	name := managed.ControllerName(v1alpha1.L7RuleV2_GroupVersionKind.String())
 	var initializers managed.InitializerChain
-	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
-	if o.SecretStoreConfigGVK != nil {
-		cps = append(cps, connection.NewDetailsManager(mgr.GetClient(), *o.SecretStoreConfigGVK, connection.WithTLSConfig(o.ESSOptions.TLSConfig)))
-	}
 	eventHandler := handler.NewEventHandler(handler.WithLogger(o.Logger.WithValues("gvk", v1alpha1.L7RuleV2_GroupVersionKind)))
 	ac := tjcontroller.NewAPICallbacks(mgr, xpresource.ManagedKind(v1alpha1.L7RuleV2_GroupVersionKind), tjcontroller.WithEventHandler(eventHandler), tjcontroller.WithStatusUpdates(false))
 	opts := []managed.ReconcilerOption{
@@ -51,7 +56,6 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 		managed.WithFinalizer(tjcontroller.NewOperationTrackerFinalizer(o.OperationTrackerStore, xpresource.NewAPIFinalizer(mgr.GetClient(), managed.FinalizerName))),
 		managed.WithTimeout(3 * time.Minute),
 		managed.WithInitializers(initializers),
-		managed.WithConnectionPublishers(cps...),
 		managed.WithPollInterval(o.PollInterval),
 	}
 	if o.PollJitter != 0 {

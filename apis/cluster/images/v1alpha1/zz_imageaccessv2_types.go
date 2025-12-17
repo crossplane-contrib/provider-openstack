@@ -18,7 +18,7 @@ import (
 type ImageAccessV2InitParameters struct {
 
 	// The image ID.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/images/v1alpha1.ImageV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/images/v1alpha1.ImageV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
@@ -77,7 +77,7 @@ type ImageAccessV2Observation struct {
 type ImageAccessV2Parameters struct {
 
 	// The image ID.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/images/v1alpha1.ImageV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/images/v1alpha1.ImageV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`

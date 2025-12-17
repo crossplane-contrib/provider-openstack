@@ -19,7 +19,7 @@ type QosAssociationV3InitParameters struct {
 
 	// ID of the qos to associate. Changing this creates
 	// a new qos association.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.QosV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.QosV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	QosID *string `json:"qosId,omitempty" tf:"qos_id,omitempty"`
 
@@ -38,7 +38,7 @@ type QosAssociationV3InitParameters struct {
 
 	// ID of the volume_type to associate.
 	// Changing this creates a new qos association.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeTypeV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.VolumeTypeV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	VolumeTypeID *string `json:"volumeTypeId,omitempty" tf:"volume_type_id,omitempty"`
 
@@ -72,7 +72,7 @@ type QosAssociationV3Parameters struct {
 
 	// ID of the qos to associate. Changing this creates
 	// a new qos association.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.QosV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.QosV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	QosID *string `json:"qosId,omitempty" tf:"qos_id,omitempty"`
@@ -93,7 +93,7 @@ type QosAssociationV3Parameters struct {
 
 	// ID of the volume_type to associate.
 	// Changing this creates a new qos association.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeTypeV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.VolumeTypeV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VolumeTypeID *string `json:"volumeTypeId,omitempty" tf:"volume_type_id,omitempty"`

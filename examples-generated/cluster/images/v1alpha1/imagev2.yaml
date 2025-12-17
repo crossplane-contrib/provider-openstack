@@ -1,0 +1,16 @@
+apiVersion: images.openstack.crossplane.io/v1alpha1
+kind: ImageV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: images/v1alpha1/imagev2
+  labels:
+    testing.upbound.io/example-name: rancheros
+  name: rancheros
+spec:
+  forProvider:
+    containerFormat: bare
+    diskFormat: qcow2
+    imageSourceUrl: https://releases.rancher.com/os/latest/rancheros-openstack.img
+    name: RancherOS
+    properties:
+      key: value

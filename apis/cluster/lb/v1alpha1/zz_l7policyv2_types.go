@@ -30,7 +30,7 @@ type L7PolicyV2InitParameters struct {
 
 	// The Listener on which the L7 Policy will be associated with.
 	// Changing this creates a new L7 Policy.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.ListenerV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.ListenerV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
 
@@ -57,7 +57,7 @@ type L7PolicyV2InitParameters struct {
 
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.PoolV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	RedirectPoolID *string `json:"redirectPoolId,omitempty" tf:"redirect_pool_id,omitempty"`
 
@@ -164,7 +164,7 @@ type L7PolicyV2Parameters struct {
 
 	// The Listener on which the L7 Policy will be associated with.
 	// Changing this creates a new L7 Policy.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.ListenerV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.ListenerV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ListenerID *string `json:"listenerId,omitempty" tf:"listener_id,omitempty"`
@@ -195,7 +195,7 @@ type L7PolicyV2Parameters struct {
 
 	// Requests matching this policy will be redirected to the
 	// pool with this ID. Only valid if action is REDIRECT_TO_POOL.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.PoolV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.PoolV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RedirectPoolID *string `json:"redirectPoolId,omitempty" tf:"redirect_pool_id,omitempty"`

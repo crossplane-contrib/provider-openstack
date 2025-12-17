@@ -1,0 +1,33 @@
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: RbacPolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/rbacpolicyv2
+  labels:
+    testing.upbound.io/example-name: rbac_policy_1
+  name: rbac-policy-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    action: access_as_shared
+    objectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1
+    objectType: network
+    targetTenant: 20415a973c9e45d3917f078950644697
+
+---
+
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: NetworkV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/rbacpolicyv2
+  labels:
+    testing.upbound.io/example-name: network_1
+  name: network-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    adminStateUp: "true"
+    name: network_1

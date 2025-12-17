@@ -9,8 +9,8 @@ package v1alpha1
 
 import (
 	"context"
-	v1alpha11 "github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1"
-	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1"
+	v1alpha11 "github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/cluster/keymanager/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -27,6 +27,7 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ListenerID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ListenerIDRef,
 		Selector:     mg.Spec.ForProvider.ListenerIDSelector,
 		To: reference.To{
@@ -43,6 +44,7 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RedirectPoolID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.RedirectPoolIDRef,
 		Selector:     mg.Spec.ForProvider.RedirectPoolIDSelector,
 		To: reference.To{
@@ -59,6 +61,7 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ListenerID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ListenerIDRef,
 		Selector:     mg.Spec.InitProvider.ListenerIDSelector,
 		To: reference.To{
@@ -75,6 +78,7 @@ func (mg *L7PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RedirectPoolID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.RedirectPoolIDRef,
 		Selector:     mg.Spec.InitProvider.RedirectPoolIDSelector,
 		To: reference.To{
@@ -101,6 +105,7 @@ func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.L7PolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.L7PolicyIDRef,
 		Selector:     mg.Spec.ForProvider.L7PolicyIDSelector,
 		To: reference.To{
@@ -117,6 +122,7 @@ func (mg *L7RuleV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.L7PolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.L7PolicyIDRef,
 		Selector:     mg.Spec.InitProvider.L7PolicyIDSelector,
 		To: reference.To{
@@ -143,6 +149,7 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientCATLSContainerRef),
 		Extract:      resource.ExtractParamPath("secret_ref", true),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ClientCATLSContainerRefRef,
 		Selector:     mg.Spec.ForProvider.ClientCATLSContainerRefSelector,
 		To: reference.To{
@@ -159,6 +166,7 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoadbalancerID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.LoadbalancerIDRef,
 		Selector:     mg.Spec.ForProvider.LoadbalancerIDSelector,
 		To: reference.To{
@@ -175,6 +183,7 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientCATLSContainerRef),
 		Extract:      resource.ExtractParamPath("secret_ref", true),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ClientCATLSContainerRefRef,
 		Selector:     mg.Spec.InitProvider.ClientCATLSContainerRefSelector,
 		To: reference.To{
@@ -191,6 +200,7 @@ func (mg *ListenerV2) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LoadbalancerID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.LoadbalancerIDRef,
 		Selector:     mg.Spec.InitProvider.LoadbalancerIDSelector,
 		To: reference.To{
@@ -217,6 +227,7 @@ func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PoolID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.PoolIDRef,
 		Selector:     mg.Spec.ForProvider.PoolIDSelector,
 		To: reference.To{
@@ -233,6 +244,7 @@ func (mg *MonitorV2) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PoolID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.PoolIDRef,
 		Selector:     mg.Spec.InitProvider.PoolIDSelector,
 		To: reference.To{
@@ -259,6 +271,7 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ProjectIDRef,
 		Selector:     mg.Spec.ForProvider.ProjectIDSelector,
 		To: reference.To{
@@ -275,6 +288,7 @@ func (mg *QuotaV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ProjectIDRef,
 		Selector:     mg.Spec.InitProvider.ProjectIDSelector,
 		To: reference.To{

@@ -33,7 +33,7 @@ type InheritRoleAssignmentV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.RoleV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.RoleV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
@@ -46,7 +46,7 @@ type InheritRoleAssignmentV3InitParameters struct {
 	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
 
 	// The user to assign the role to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.UserV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.UserV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
 
@@ -107,7 +107,7 @@ type InheritRoleAssignmentV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The role to assign.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.RoleV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.RoleV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
@@ -121,7 +121,7 @@ type InheritRoleAssignmentV3Parameters struct {
 	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
 
 	// The user to assign the role to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.UserV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.UserV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`

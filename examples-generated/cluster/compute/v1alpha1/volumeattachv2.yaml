@@ -1,0 +1,47 @@
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: VolumeAttachV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/volumeattachv2
+  labels:
+    testing.upbound.io/example-name: va_1
+  name: va-1
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_1
+    volumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_1
+
+---
+
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: VolumeV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/volumeattachv2
+  labels:
+    testing.upbound.io/example-name: volume_1
+  name: volume-1
+spec:
+  forProvider:
+    name: volume_1
+    size: 1
+
+---
+
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: InstanceV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/volumeattachv2
+  labels:
+    testing.upbound.io/example-name: instance_1
+  name: instance-1
+spec:
+  forProvider:
+    name: instance_1
+    securityGroupsRefs:
+    - name: example

@@ -18,7 +18,7 @@ import (
 type TempurlV1InitParameters struct {
 
 	// The container name the object belongs to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/objectstorage/v1alpha1.ContainerV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
@@ -43,7 +43,7 @@ type TempurlV1InitParameters struct {
 	Method *string `json:"method,omitempty" tf:"method,omitempty"`
 
 	// The object name the tempurl is for.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ObjectV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/objectstorage/v1alpha1.ObjectV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
 
@@ -111,7 +111,7 @@ type TempurlV1Observation struct {
 type TempurlV1Parameters struct {
 
 	// The container name the object belongs to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/objectstorage/v1alpha1.ContainerV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
@@ -140,7 +140,7 @@ type TempurlV1Parameters struct {
 	Method *string `json:"method,omitempty" tf:"method,omitempty"`
 
 	// The object name the tempurl is for.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ObjectV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/objectstorage/v1alpha1.ObjectV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`

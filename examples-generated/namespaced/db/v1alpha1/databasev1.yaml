@@ -1,0 +1,15 @@
+apiVersion: db.openstack.m.crossplane.io/v1alpha1
+kind: DatabaseV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: db/v1alpha1/databasev1
+  labels:
+    testing.upbound.io/example-name: mydb
+  name: mydb
+  namespace: upbound-system
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: basic
+    name: mydb

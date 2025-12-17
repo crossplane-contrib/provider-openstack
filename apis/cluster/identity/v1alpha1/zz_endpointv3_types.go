@@ -19,7 +19,7 @@ type EndpointV3InitParameters struct {
 
 	// The endpoint region. The region and
 	// endpoint_region can be different.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ServiceV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("region",false)
 	EndpointRegion *string `json:"endpointRegion,omitempty" tf:"endpoint_region,omitempty"`
 
@@ -43,7 +43,7 @@ type EndpointV3InitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The endpoint service ID.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ServiceV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
 
@@ -95,7 +95,7 @@ type EndpointV3Parameters struct {
 
 	// The endpoint region. The region and
 	// endpoint_region can be different.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ServiceV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("region",false)
 	// +kubebuilder:validation:Optional
 	EndpointRegion *string `json:"endpointRegion,omitempty" tf:"endpoint_region,omitempty"`
@@ -123,7 +123,7 @@ type EndpointV3Parameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// The endpoint service ID.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ServiceV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ServiceV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`

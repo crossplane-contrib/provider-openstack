@@ -1,0 +1,12 @@
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: FloatingipV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/floatingipv2
+  labels:
+    testing.upbound.io/example-name: floatip_1
+  name: floatip-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    pool: public

@@ -23,7 +23,7 @@ type ObjectV1InitParameters struct {
 	// The container name cannot contain a slash (/) character because this
 	// character delimits the container and object name. For example, the path
 	// /v1/account/www/pages specifies the www container, not the www/pages container.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/objectstorage/v1alpha1.ContainerV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	ContainerName *string `json:"containerName,omitempty" tf:"container_name,omitempty"`
 
@@ -202,7 +202,7 @@ type ObjectV1Parameters struct {
 	// The container name cannot contain a slash (/) character because this
 	// character delimits the container and object name. For example, the path
 	// /v1/account/www/pages specifies the www container, not the www/pages container.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/objectstorage/v1alpha1.ContainerV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/objectstorage/v1alpha1.ContainerV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	ContainerName *string `json:"containerName,omitempty" tf:"container_name,omitempty"`

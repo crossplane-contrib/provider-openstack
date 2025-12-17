@@ -1,0 +1,55 @@
+apiVersion: objectstorage.openstack.m.crossplane.io/v1alpha1
+kind: TempurlV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/tempurlv1
+  labels:
+    testing.upbound.io/example-name: obj_tempurl
+  name: obj-tempurl
+  namespace: upbound-system
+spec:
+  forProvider:
+    containerSelector:
+      matchLabels:
+        testing.upbound.io/example-name: container_1
+    method: post
+    objectSelector:
+      matchLabels:
+        testing.upbound.io/example-name: object_1
+    ttl: 20
+
+---
+
+apiVersion: objectstorage.openstack.m.crossplane.io/v1alpha1
+kind: ContainerV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/tempurlv1
+  labels:
+    testing.upbound.io/example-name: container_1
+  name: container-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    metadata:
+      Temp-URL-Key: testkey
+    name: test
+
+---
+
+apiVersion: objectstorage.openstack.m.crossplane.io/v1alpha1
+kind: ObjectV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/tempurlv1
+  labels:
+    testing.upbound.io/example-name: object_1
+  name: object-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    containerNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    content: Hello, world!
+    name: test

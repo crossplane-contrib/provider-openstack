@@ -1,0 +1,87 @@
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: RouterRouteV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routerroutev2
+  labels:
+    testing.upbound.io/example-name: router_route_1
+  name: router-route-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    destinationCidr: 10.0.1.0/24
+    nextHop: 192.168.199.254
+    routerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: router_1
+
+---
+
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: NetworkV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routerroutev2
+  labels:
+    testing.upbound.io/example-name: network_1
+  name: network-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    adminStateUp: "true"
+    name: network_1
+
+---
+
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: RouterInterfaceV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routerroutev2
+  labels:
+    testing.upbound.io/example-name: int_1
+  name: int-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    routerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: router_1
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_1
+
+---
+
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: RouterV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routerroutev2
+  labels:
+    testing.upbound.io/example-name: router_1
+  name: router-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    adminStateUp: "true"
+    name: router_1
+
+---
+
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: SubnetV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routerroutev2
+  labels:
+    testing.upbound.io/example-name: subnet_1
+  name: subnet-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    cidr: 192.168.199.0/24
+    ipVersion: 4
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: network_1

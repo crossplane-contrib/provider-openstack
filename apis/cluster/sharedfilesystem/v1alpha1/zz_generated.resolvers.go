@@ -9,7 +9,7 @@ package v1alpha1
 
 import (
 	"context"
-	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -26,6 +26,7 @@ func (mg *ShareAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ShareID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ShareIDRef,
 		Selector:     mg.Spec.ForProvider.ShareIDSelector,
 		To: reference.To{
@@ -42,6 +43,7 @@ func (mg *ShareAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ShareID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ShareIDRef,
 		Selector:     mg.Spec.InitProvider.ShareIDSelector,
 		To: reference.To{
@@ -68,6 +70,7 @@ func (mg *ShareV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ShareNetworkID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ShareNetworkIDRef,
 		Selector:     mg.Spec.ForProvider.ShareNetworkIDSelector,
 		To: reference.To{
@@ -84,6 +87,7 @@ func (mg *ShareV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ShareNetworkID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ShareNetworkIDRef,
 		Selector:     mg.Spec.InitProvider.ShareNetworkIDSelector,
 		To: reference.To{
@@ -111,6 +115,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NeutronNetID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.NeutronNetIDRef,
 		Selector:     mg.Spec.ForProvider.NeutronNetIDSelector,
 		To: reference.To{
@@ -127,6 +132,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NeutronSubnetID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.NeutronSubnetIDRef,
 		Selector:     mg.Spec.ForProvider.NeutronSubnetIDSelector,
 		To: reference.To{
@@ -143,6 +149,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityServiceIds),
 		Extract:       resource.ExtractResourceID(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.SecurityServiceIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityServiceIdsSelector,
 		To: reference.To{
@@ -159,6 +166,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NeutronNetID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.NeutronNetIDRef,
 		Selector:     mg.Spec.InitProvider.NeutronNetIDSelector,
 		To: reference.To{
@@ -175,6 +183,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NeutronSubnetID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.NeutronSubnetIDRef,
 		Selector:     mg.Spec.InitProvider.NeutronSubnetIDSelector,
 		To: reference.To{
@@ -191,6 +200,7 @@ func (mg *SharenetworkV2) ResolveReferences(ctx context.Context, c client.Reader
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.SecurityServiceIds),
 		Extract:       resource.ExtractResourceID(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.SecurityServiceIdsRefs,
 		Selector:      mg.Spec.InitProvider.SecurityServiceIdsSelector,
 		To: reference.To{

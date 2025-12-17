@@ -29,11 +29,6 @@ func (mg *QosAssociationV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this QosAssociationV3.
-func (mg *QosAssociationV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this QosAssociationV3.
 func (mg *QosAssociationV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -57,11 +52,6 @@ func (mg *QosAssociationV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this QosAssociationV3.
 func (mg *QosAssociationV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this QosAssociationV3.
-func (mg *QosAssociationV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this QosAssociationV3.
@@ -89,11 +79,6 @@ func (mg *QosV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this QosV3.
-func (mg *QosV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this QosV3.
 func (mg *QosV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -117,11 +102,6 @@ func (mg *QosV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this QosV3.
 func (mg *QosV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this QosV3.
-func (mg *QosV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this QosV3.
@@ -149,11 +129,6 @@ func (mg *QuotasetV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this QuotasetV3.
-func (mg *QuotasetV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this QuotasetV3.
 func (mg *QuotasetV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -177,11 +152,6 @@ func (mg *QuotasetV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this QuotasetV3.
 func (mg *QuotasetV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this QuotasetV3.
-func (mg *QuotasetV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this QuotasetV3.
@@ -209,11 +179,6 @@ func (mg *VolumeAttachV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this VolumeAttachV3.
-func (mg *VolumeAttachV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this VolumeAttachV3.
 func (mg *VolumeAttachV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -237,11 +202,6 @@ func (mg *VolumeAttachV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this VolumeAttachV3.
 func (mg *VolumeAttachV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this VolumeAttachV3.
-func (mg *VolumeAttachV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this VolumeAttachV3.
@@ -269,11 +229,6 @@ func (mg *VolumeTypeAccessV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this VolumeTypeAccessV3.
-func (mg *VolumeTypeAccessV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this VolumeTypeAccessV3.
 func (mg *VolumeTypeAccessV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -297,11 +252,6 @@ func (mg *VolumeTypeAccessV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this VolumeTypeAccessV3.
 func (mg *VolumeTypeAccessV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this VolumeTypeAccessV3.
-func (mg *VolumeTypeAccessV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this VolumeTypeAccessV3.
@@ -329,11 +279,6 @@ func (mg *VolumeTypeV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this VolumeTypeV3.
-func (mg *VolumeTypeV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this VolumeTypeV3.
 func (mg *VolumeTypeV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -357,11 +302,6 @@ func (mg *VolumeTypeV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this VolumeTypeV3.
 func (mg *VolumeTypeV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this VolumeTypeV3.
-func (mg *VolumeTypeV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this VolumeTypeV3.
@@ -389,11 +329,6 @@ func (mg *VolumeV3) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this VolumeV3.
-func (mg *VolumeV3) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this VolumeV3.
 func (mg *VolumeV3) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -417,11 +352,6 @@ func (mg *VolumeV3) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this VolumeV3.
 func (mg *VolumeV3) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this VolumeV3.
-func (mg *VolumeV3) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this VolumeV3.

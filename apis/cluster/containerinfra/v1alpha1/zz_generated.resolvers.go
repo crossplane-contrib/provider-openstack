@@ -9,8 +9,7 @@ package v1alpha1
 
 import (
 	"context"
-
-	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -26,6 +25,7 @@ func (mg *ClusterV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FixedNetwork),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.FixedNetworkRef,
 		Selector:     mg.Spec.ForProvider.FixedNetworkSelector,
 		To: reference.To{
@@ -42,6 +42,7 @@ func (mg *ClusterV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FixedSubnet),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.FixedSubnetRef,
 		Selector:     mg.Spec.ForProvider.FixedSubnetSelector,
 		To: reference.To{
@@ -58,6 +59,7 @@ func (mg *ClusterV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FixedNetwork),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.FixedNetworkRef,
 		Selector:     mg.Spec.InitProvider.FixedNetworkSelector,
 		To: reference.To{
@@ -74,6 +76,7 @@ func (mg *ClusterV1) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FixedSubnet),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.FixedSubnetRef,
 		Selector:     mg.Spec.InitProvider.FixedSubnetSelector,
 		To: reference.To{

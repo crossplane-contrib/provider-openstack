@@ -1,0 +1,33 @@
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: QuotasetV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/quotasetv2
+  labels:
+    testing.upbound.io/example-name: quotaset_1
+  name: quotaset-1
+spec:
+  forProvider:
+    cores: 32
+    instances: 20
+    keyPairs: 10
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
+    ram: 40960
+    serverGroupMembers: 8
+    serverGroups: 4
+
+---
+
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/quotasetv2
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-1
+spec:
+  forProvider:
+    name: ${project_1}

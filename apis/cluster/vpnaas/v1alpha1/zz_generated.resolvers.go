@@ -25,6 +25,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IkepolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.IkepolicyIDRef,
 		Selector:     mg.Spec.ForProvider.IkepolicyIDSelector,
 		To: reference.To{
@@ -41,6 +42,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IpsecpolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.IpsecpolicyIDRef,
 		Selector:     mg.Spec.ForProvider.IpsecpolicyIDSelector,
 		To: reference.To{
@@ -57,6 +59,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LocalEpGroupID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.LocalEpGroupIDRef,
 		Selector:     mg.Spec.ForProvider.LocalEpGroupIDSelector,
 		To: reference.To{
@@ -73,6 +76,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PeerEpGroupID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.PeerEpGroupIDRef,
 		Selector:     mg.Spec.ForProvider.PeerEpGroupIDSelector,
 		To: reference.To{
@@ -89,6 +93,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.VpnserviceID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.VpnserviceIDRef,
 		Selector:     mg.Spec.ForProvider.VpnserviceIDSelector,
 		To: reference.To{
@@ -105,6 +110,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IkepolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.IkepolicyIDRef,
 		Selector:     mg.Spec.InitProvider.IkepolicyIDSelector,
 		To: reference.To{
@@ -121,6 +127,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IpsecpolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.IpsecpolicyIDRef,
 		Selector:     mg.Spec.InitProvider.IpsecpolicyIDSelector,
 		To: reference.To{
@@ -137,6 +144,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LocalEpGroupID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.LocalEpGroupIDRef,
 		Selector:     mg.Spec.InitProvider.LocalEpGroupIDSelector,
 		To: reference.To{
@@ -153,6 +161,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PeerEpGroupID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.PeerEpGroupIDRef,
 		Selector:     mg.Spec.InitProvider.PeerEpGroupIDSelector,
 		To: reference.To{
@@ -169,6 +178,7 @@ func (mg *SiteConnectionV2) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VpnserviceID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.VpnserviceIDRef,
 		Selector:     mg.Spec.InitProvider.VpnserviceIDSelector,
 		To: reference.To{

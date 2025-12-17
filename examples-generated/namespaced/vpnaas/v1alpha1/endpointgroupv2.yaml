@@ -1,0 +1,16 @@
+apiVersion: vpnaas.openstack.m.crossplane.io/v1alpha1
+kind: EndpointGroupV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpnaas/v1alpha1/endpointgroupv2
+  labels:
+    testing.upbound.io/example-name: group_1
+  name: group-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    endpoints:
+    - 10.2.0.0/24
+    - 10.3.0.0/24
+    name: Group 1
+    type: cidr

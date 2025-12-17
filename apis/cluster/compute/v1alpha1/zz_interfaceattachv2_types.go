@@ -22,7 +22,7 @@ type InterfaceAttachV2InitParameters struct {
 	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
 
 	// The ID of the Instance to attach the Port or Network to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.InstanceV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.InstanceV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
@@ -36,7 +36,7 @@ type InterfaceAttachV2InitParameters struct {
 
 	// The ID of the Network to attach to an Instance. A port will be created automatically.
 	// NOTE: This option and port_id are mutually exclusive.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -50,7 +50,7 @@ type InterfaceAttachV2InitParameters struct {
 
 	// The ID of the Port to attach to an Instance.
 	// NOTE: This option and network_id are mutually exclusive.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.PortV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
 
@@ -101,7 +101,7 @@ type InterfaceAttachV2Parameters struct {
 	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
 
 	// The ID of the Instance to attach the Port or Network to.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.InstanceV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.InstanceV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
@@ -116,7 +116,7 @@ type InterfaceAttachV2Parameters struct {
 
 	// The ID of the Network to attach to an Instance. A port will be created automatically.
 	// NOTE: This option and port_id are mutually exclusive.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -131,7 +131,7 @@ type InterfaceAttachV2Parameters struct {
 
 	// The ID of the Port to attach to an Instance.
 	// NOTE: This option and network_id are mutually exclusive.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.PortV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`

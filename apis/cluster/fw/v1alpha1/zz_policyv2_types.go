@@ -47,7 +47,7 @@ type PolicyV2InitParameters struct {
 	// An array of one or more firewall rules that comprise
 	// the policy. Changing this results in adding/removing rules from the
 	// existing firewall policy.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.RuleV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/fw/v1alpha1.RuleV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	Rules []*string `json:"rules,omitempty" tf:"rules,omitempty"`
 
@@ -160,7 +160,7 @@ type PolicyV2Parameters struct {
 	// An array of one or more firewall rules that comprise
 	// the policy. Changing this results in adding/removing rules from the
 	// existing firewall policy.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.RuleV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/fw/v1alpha1.RuleV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	Rules []*string `json:"rules,omitempty" tf:"rules,omitempty"`

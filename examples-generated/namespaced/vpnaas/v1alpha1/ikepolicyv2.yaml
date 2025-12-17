@@ -1,0 +1,12 @@
+apiVersion: vpnaas.openstack.m.crossplane.io/v1alpha1
+kind: IkePolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpnaas/v1alpha1/ikepolicyv2
+  labels:
+    testing.upbound.io/example-name: policy_1
+  name: policy-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: my_policy

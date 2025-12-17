@@ -1,0 +1,15 @@
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: VolumeTypeV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumetypev3
+  labels:
+    testing.upbound.io/example-name: volume_type_1
+  name: volume-type-1
+spec:
+  forProvider:
+    description: Volume type 1
+    extraSpecs:
+      capabilities: gpu
+      volume_backend_name: ssd
+    name: volume_type_1

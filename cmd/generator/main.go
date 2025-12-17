@@ -31,8 +31,10 @@ func main() {
 	}
 	providerCluster, err := config.GetProvider(context.Background(), true)
 	kingpin.FatalIfError(err, "Cannot initialize the cluster-scoped provider configuration")
-	providerNamespaced, err = config.GetProviderNamespaced(context.Background(), true)
+	providerNamespaced, err := config.GetProviderNamespaced(context.Background(), true)
 	kingpin.FatalIfError(err, "Cannot initialize the namespace-scoped provider configuration")
+
+	// Generated resources and Skipped Resources only need to be created for one of the both providers
 	dumpGeneratedResourceList(providerCluster, generatedResourceList)
 	dumpSkippedResourcesCSV(providerCluster, skippedResourcesCSV)
 	pipeline.Run(providerCluster, providerNamespaced, absRootDir)

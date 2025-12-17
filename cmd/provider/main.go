@@ -10,8 +10,6 @@ import (
 	"time"
 
 	"github.com/alecthomas/kingpin/v2"
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/certificates"
 	xpcontroller "github.com/crossplane/crossplane-runtime/v2/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/feature"
@@ -19,13 +17,10 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/gate"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/statemetrics"
 	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
 	"github.com/crossplane/upjet/v2/pkg/controller/conversion"
-	kerrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -45,7 +40,6 @@ import (
 	controllerCluster "github.com/crossplane-contrib/provider-openstack/internal/controller/cluster"
 	controllerNamespaced "github.com/crossplane-contrib/provider-openstack/internal/controller/namespaced"
 	"github.com/crossplane-contrib/provider-openstack/internal/features"
-	"github.com/crossplane-contrib/provider-openstack/internal/version"
 )
 
 const (
@@ -230,7 +224,7 @@ func main() {
 		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, optionsNamespaced), "Cannot setup namespace-scoped Template controllers")
 	} else {
 		logr.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
-		kingpin.FatalIfError(conversion.RegisterConversions(optionsCluster.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
+		kingpin.FatalIfError(conversion.RegisterConversions(optionsCluster.Provider, optionsNamespaced.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
 		kingpin.FatalIfError(controllerCluster.Setup(mgr, optionsCluster), "Cannot setup cluster-scoped OpenStack controllers")
 		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, optionsNamespaced), "Cannot setup namespace-scoped OpenStack controllers")
 		kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")

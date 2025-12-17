@@ -24,7 +24,7 @@ type RbacPolicyV2InitParameters struct {
 	// The ID of the object_type resource. An
 	// object_type of network returns a network ID and an object_type of
 	// qos_policy returns a QoS ID.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
 
@@ -93,7 +93,7 @@ type RbacPolicyV2Parameters struct {
 	// The ID of the object_type resource. An
 	// object_type of network returns a network ID and an object_type of
 	// qos_policy returns a QoS ID.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`

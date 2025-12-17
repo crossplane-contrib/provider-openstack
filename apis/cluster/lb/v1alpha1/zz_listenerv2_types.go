@@ -43,7 +43,7 @@ type ListenerV2InitParameters struct {
 	// TERMINATED_HTTPS listeners. Required if client_authentication is
 	// OPTIONAL or MANDATORY. Supported only in Octavia minor version >=
 	// 2.8.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/keymanager/v1alpha1.SecretV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("secret_ref",true)
 	ClientCATLSContainerRef *string `json:"clientCaTlsContainerRef,omitempty" tf:"client_ca_tls_container_ref,omitempty"`
 
@@ -108,7 +108,7 @@ type ListenerV2InitParameters struct {
 
 	// The load balancer on which to provision this
 	// Listener. Changing this creates a new Listener.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.LoadbalancerV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.LoadbalancerV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`
 
@@ -366,7 +366,7 @@ type ListenerV2Parameters struct {
 	// TERMINATED_HTTPS listeners. Required if client_authentication is
 	// OPTIONAL or MANDATORY. Supported only in Octavia minor version >=
 	// 2.8.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/keymanager/v1alpha1.SecretV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("secret_ref",true)
 	// +kubebuilder:validation:Optional
 	ClientCATLSContainerRef *string `json:"clientCaTlsContainerRef,omitempty" tf:"client_ca_tls_container_ref,omitempty"`
@@ -441,7 +441,7 @@ type ListenerV2Parameters struct {
 
 	// The load balancer on which to provision this
 	// Listener. Changing this creates a new Listener.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/lb/v1alpha1.LoadbalancerV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/lb/v1alpha1.LoadbalancerV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	LoadbalancerID *string `json:"loadbalancerId,omitempty" tf:"loadbalancer_id,omitempty"`

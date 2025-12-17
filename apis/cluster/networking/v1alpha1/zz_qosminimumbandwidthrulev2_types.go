@@ -26,7 +26,7 @@ type QosMinimumBandwidthRuleV2InitParameters struct {
 	MinKbps *float64 `json:"minKbps,omitempty" tf:"min_kbps,omitempty"`
 
 	// The QoS policy reference. Changing this creates a new QoS minimum bandwidth rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.QosPolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.QosPolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	QosPolicyID *string `json:"qosPolicyId,omitempty" tf:"qos_policy_id,omitempty"`
 
@@ -78,7 +78,7 @@ type QosMinimumBandwidthRuleV2Parameters struct {
 	MinKbps *float64 `json:"minKbps,omitempty" tf:"min_kbps,omitempty"`
 
 	// The QoS policy reference. Changing this creates a new QoS minimum bandwidth rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.QosPolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.QosPolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	QosPolicyID *string `json:"qosPolicyId,omitempty" tf:"qos_policy_id,omitempty"`

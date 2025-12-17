@@ -18,7 +18,7 @@ import (
 type FlavorAccessV2InitParameters struct {
 
 	// The UUID of flavor to use. Changing this creates a new flavor access.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.FlavorV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
 
@@ -37,7 +37,7 @@ type FlavorAccessV2InitParameters struct {
 
 	// The UUID of tenant which is allowed to use the flavor.
 	// Changing this creates a new flavor access.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ProjectV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
@@ -70,7 +70,7 @@ type FlavorAccessV2Observation struct {
 type FlavorAccessV2Parameters struct {
 
 	// The UUID of flavor to use. Changing this creates a new flavor access.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.FlavorV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
@@ -91,7 +91,7 @@ type FlavorAccessV2Parameters struct {
 
 	// The UUID of tenant which is allowed to use the flavor.
 	// Changing this creates a new flavor access.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ProjectV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`

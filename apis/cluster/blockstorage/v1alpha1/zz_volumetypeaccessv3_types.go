@@ -19,7 +19,7 @@ type VolumeTypeAccessV3InitParameters struct {
 
 	// ID of the project to give access to. Changing this
 	// creates a new resource.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ProjectV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
@@ -38,7 +38,7 @@ type VolumeTypeAccessV3InitParameters struct {
 
 	// ID of the volume type to give access to. Changing
 	// this creates a new resource.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeTypeV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.VolumeTypeV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	VolumeTypeID *string `json:"volumeTypeId,omitempty" tf:"volume_type_id,omitempty"`
 
@@ -72,7 +72,7 @@ type VolumeTypeAccessV3Parameters struct {
 
 	// ID of the project to give access to. Changing this
 	// creates a new resource.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ProjectV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
@@ -93,7 +93,7 @@ type VolumeTypeAccessV3Parameters struct {
 
 	// ID of the volume type to give access to. Changing
 	// this creates a new resource.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeTypeV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.VolumeTypeV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VolumeTypeID *string `json:"volumeTypeId,omitempty" tf:"volume_type_id,omitempty"`

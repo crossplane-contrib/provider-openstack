@@ -25,6 +25,7 @@ func (mg *ImageAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ImageID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ImageIDRef,
 		Selector:     mg.Spec.ForProvider.ImageIDSelector,
 		To: reference.To{
@@ -41,6 +42,7 @@ func (mg *ImageAccessV2) ResolveReferences(ctx context.Context, c client.Reader)
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ImageID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ImageIDRef,
 		Selector:     mg.Spec.InitProvider.ImageIDSelector,
 		To: reference.To{

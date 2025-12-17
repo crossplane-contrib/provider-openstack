@@ -1,0 +1,17 @@
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: FlavorV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/flavorv2
+  labels:
+    testing.upbound.io/example-name: test-flavor
+  name: test-flavor
+spec:
+  forProvider:
+    disk: "20"
+    extraSpecs:
+      hw:cpu_policy: CPU-POLICY
+      hw:cpu_thread_policy: CPU-THREAD-POLICY
+    name: my-flavor
+    ram: "8096"
+    vcpus: "2"

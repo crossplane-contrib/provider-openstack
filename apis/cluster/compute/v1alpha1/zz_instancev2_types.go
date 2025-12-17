@@ -57,7 +57,7 @@ type BlockDeviceInitParameters struct {
 
 	// The UUID of
 	// the image, volume, or snapshot. Changing this creates a new server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.VolumeV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
 
@@ -189,7 +189,7 @@ type BlockDeviceParameters struct {
 
 	// The UUID of
 	// the image, volume, or snapshot. Changing this creates a new server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/blockstorage/v1alpha1.VolumeV3
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/blockstorage/v1alpha1.VolumeV3
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
@@ -250,7 +250,7 @@ type InstanceV2InitParameters struct {
 
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.FlavorV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
 
@@ -291,7 +291,7 @@ type InstanceV2InitParameters struct {
 	// The name of a key pair to put on the server. The key
 	// pair must already be created and associated with the tenant's account.
 	// Changing this creates a new server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.KeypairV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.KeypairV2
 	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
 
 	// Reference to a KeypairV2 in compute to populate keyPair.
@@ -348,7 +348,7 @@ type InstanceV2InitParameters struct {
 	// instance to networks using Ports, place the security groups on the Port
 	// and not the instance. Note: Names should be used and not ids, as ids
 	// trigger unnecessary updates.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SecgroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SecgroupV2
 	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
@@ -569,7 +569,7 @@ type InstanceV2Parameters struct {
 
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.FlavorV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.FlavorV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FlavorID *string `json:"flavorId,omitempty" tf:"flavor_id,omitempty"`
@@ -616,7 +616,7 @@ type InstanceV2Parameters struct {
 	// The name of a key pair to put on the server. The key
 	// pair must already be created and associated with the tenant's account.
 	// Changing this creates a new server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/compute/v1alpha1.KeypairV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/compute/v1alpha1.KeypairV2
 	// +kubebuilder:validation:Optional
 	KeyPair *string `json:"keyPair,omitempty" tf:"key_pair,omitempty"`
 
@@ -682,7 +682,7 @@ type InstanceV2Parameters struct {
 	// instance to networks using Ports, place the security groups on the Port
 	// and not the instance. Note: Names should be used and not ids, as ids
 	// trigger unnecessary updates.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SecgroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SecgroupV2
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
@@ -736,7 +736,7 @@ type NetworkInitParameters struct {
 
 	// The port UUID of a
 	// network to attach to the server. Changing this creates a new server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.PortV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	Port *string `json:"port,omitempty" tf:"port,omitempty"`
 
@@ -802,7 +802,7 @@ type NetworkParameters struct {
 
 	// The port UUID of a
 	// network to attach to the server. Changing this creates a new server.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.PortV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.PortV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	Port *string `json:"port,omitempty" tf:"port,omitempty"`

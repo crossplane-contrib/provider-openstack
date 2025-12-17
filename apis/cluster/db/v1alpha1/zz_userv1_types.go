@@ -24,7 +24,7 @@ type UserV1InitParameters struct {
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// The ID for the database instance.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/db/v1alpha1.InstanceV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/db/v1alpha1.InstanceV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
@@ -79,7 +79,7 @@ type UserV1Parameters struct {
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// The ID for the database instance.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/db/v1alpha1.InstanceV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/db/v1alpha1.InstanceV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`

@@ -26,6 +26,7 @@ func (mg *ContainerV1) ResolveReferences(ctx context.Context, c client.Reader) e
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecretRefs[i3].SecretRef),
 			Extract:      resource.ExtractParamPath("secret_ref", true),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.SecretRefs[i3].SecretRefRef,
 			Selector:     mg.Spec.ForProvider.SecretRefs[i3].SecretRefSelector,
 			To: reference.To{
@@ -44,6 +45,7 @@ func (mg *ContainerV1) ResolveReferences(ctx context.Context, c client.Reader) e
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecretRefs[i3].SecretRef),
 			Extract:      resource.ExtractParamPath("secret_ref", true),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.InitProvider.SecretRefs[i3].SecretRefRef,
 			Selector:     mg.Spec.InitProvider.SecretRefs[i3].SecretRefSelector,
 			To: reference.To{

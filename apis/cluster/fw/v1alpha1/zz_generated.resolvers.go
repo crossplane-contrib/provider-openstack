@@ -25,6 +25,7 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EgressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.EgressFirewallPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.EgressFirewallPolicyIDSelector,
 		To: reference.To{
@@ -41,6 +42,7 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IngressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.IngressFirewallPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.IngressFirewallPolicyIDSelector,
 		To: reference.To{
@@ -57,6 +59,7 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EgressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.EgressFirewallPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.EgressFirewallPolicyIDSelector,
 		To: reference.To{
@@ -73,6 +76,7 @@ func (mg *GroupV2) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IngressFirewallPolicyID),
 		Extract:      resource.ExtractResourceID(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.IngressFirewallPolicyIDRef,
 		Selector:     mg.Spec.InitProvider.IngressFirewallPolicyIDSelector,
 		To: reference.To{
@@ -99,6 +103,7 @@ func (mg *PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Rules),
 		Extract:       resource.ExtractResourceID(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.RulesRefs,
 		Selector:      mg.Spec.ForProvider.RulesSelector,
 		To: reference.To{
@@ -115,6 +120,7 @@ func (mg *PolicyV2) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Rules),
 		Extract:       resource.ExtractResourceID(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.InitProvider.RulesRefs,
 		Selector:      mg.Spec.InitProvider.RulesSelector,
 		To: reference.To{

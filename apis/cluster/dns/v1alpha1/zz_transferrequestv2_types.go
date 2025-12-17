@@ -42,7 +42,7 @@ type TransferRequestV2InitParameters struct {
 
 	// The ID of the zone for which to create the transfer
 	// request.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.ZoneV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/dns/v1alpha1.ZoneV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 
@@ -120,7 +120,7 @@ type TransferRequestV2Parameters struct {
 
 	// The ID of the zone for which to create the transfer
 	// request.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/dns/v1alpha1.ZoneV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/dns/v1alpha1.ZoneV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`

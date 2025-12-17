@@ -1,0 +1,52 @@
+apiVersion: fw.openstack.crossplane.io/v1alpha1
+kind: PolicyV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fw/v1alpha1/policyv2
+  labels:
+    testing.upbound.io/example-name: policy_1
+  name: policy-1
+spec:
+  forProvider:
+    name: firewall_policy
+    rulesRefs:
+    - name: rule_1
+    - name: rule_2
+
+---
+
+apiVersion: fw.openstack.crossplane.io/v1alpha1
+kind: RuleV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fw/v1alpha1/policyv2
+  labels:
+    testing.upbound.io/example-name: rule_1
+  name: rule-1
+spec:
+  forProvider:
+    action: deny
+    description: drop TELNET traffic
+    destinationPort: "23"
+    enabled: "true"
+    name: firewall_rule_1
+    protocol: tcp
+
+---
+
+apiVersion: fw.openstack.crossplane.io/v1alpha1
+kind: RuleV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fw/v1alpha1/policyv2
+  labels:
+    testing.upbound.io/example-name: rule_2
+  name: rule-2
+spec:
+  forProvider:
+    action: deny
+    description: drop NTP traffic
+    destinationPort: "123"
+    enabled: "false"
+    name: firewall_rule_2
+    protocol: udp

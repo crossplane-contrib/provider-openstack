@@ -1,0 +1,16 @@
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: SubnetpoolV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/subnetpoolv2
+  labels:
+    testing.upbound.io/example-name: subnetpool_1
+  name: subnetpool-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    ipVersion: 6
+    name: subnetpool_1
+    prefixes:
+    - fdf7:b13d:dead:beef::/64
+    - fd65:86cc:a334:39b7::/64

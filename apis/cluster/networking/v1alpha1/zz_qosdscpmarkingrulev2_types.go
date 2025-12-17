@@ -22,7 +22,7 @@ type QosDscpMarkingRuleV2InitParameters struct {
 	DscpMark *float64 `json:"dscpMark,omitempty" tf:"dscp_mark,omitempty"`
 
 	// The QoS policy reference. Changing this creates a new QoS DSCP marking rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.QosPolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.QosPolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	QosPolicyID *string `json:"qosPolicyId,omitempty" tf:"qos_policy_id,omitempty"`
 
@@ -65,7 +65,7 @@ type QosDscpMarkingRuleV2Parameters struct {
 	DscpMark *float64 `json:"dscpMark,omitempty" tf:"dscp_mark,omitempty"`
 
 	// The QoS policy reference. Changing this creates a new QoS DSCP marking rule.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.QosPolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.QosPolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	QosPolicyID *string `json:"qosPolicyId,omitempty" tf:"qos_policy_id,omitempty"`

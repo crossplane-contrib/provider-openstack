@@ -29,7 +29,7 @@ type GroupV2InitParameters struct {
 	// The egress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// egress_firewall_policy_id of an existing firewall group.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/fw/v1alpha1.PolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	EgressFirewallPolicyID *string `json:"egressFirewallPolicyId,omitempty" tf:"egress_firewall_policy_id,omitempty"`
 
@@ -44,7 +44,7 @@ type GroupV2InitParameters struct {
 	// The ingress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// ingress_firewall_policy_id of an existing firewall group.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/fw/v1alpha1.PolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	IngressFirewallPolicyID *string `json:"ingressFirewallPolicyId,omitempty" tf:"ingress_firewall_policy_id,omitempty"`
 
@@ -170,7 +170,7 @@ type GroupV2Parameters struct {
 	// The egress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// egress_firewall_policy_id of an existing firewall group.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/fw/v1alpha1.PolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	EgressFirewallPolicyID *string `json:"egressFirewallPolicyId,omitempty" tf:"egress_firewall_policy_id,omitempty"`
@@ -186,7 +186,7 @@ type GroupV2Parameters struct {
 	// The ingress firewall policy resource
 	// id for the firewall group. Changing this updates the
 	// ingress_firewall_policy_id of an existing firewall group.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/fw/v1alpha1.PolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/fw/v1alpha1.PolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IngressFirewallPolicyID *string `json:"ingressFirewallPolicyId,omitempty" tf:"ingress_firewall_policy_id,omitempty"`

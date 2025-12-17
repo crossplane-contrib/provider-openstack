@@ -1,0 +1,51 @@
+apiVersion: compute.openstack.m.crossplane.io/v1alpha1
+kind: FlavorAccessV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/flavoraccessv2
+  labels:
+    testing.upbound.io/example-name: access_1
+  name: access-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    flavorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: flavor_1
+    tenantIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
+
+---
+
+apiVersion: compute.openstack.m.crossplane.io/v1alpha1
+kind: FlavorV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/flavoraccessv2
+  labels:
+    testing.upbound.io/example-name: flavor_1
+  name: flavor-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    disk: "20"
+    isPublic: false
+    name: my-flavor
+    ram: "8096"
+    vcpus: "2"
+
+---
+
+apiVersion: identity.openstack.m.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/flavoraccessv2
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: my-project

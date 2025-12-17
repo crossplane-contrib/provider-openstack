@@ -194,7 +194,7 @@ type SecretRefsInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The secret reference / where to find the secret, URL.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/keymanager/v1alpha1.SecretV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("secret_ref",true)
 	SecretRef *string `json:"secretRef,omitempty" tf:"secret_ref,omitempty"`
 
@@ -223,7 +223,7 @@ type SecretRefsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The secret reference / where to find the secret, URL.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/keymanager/v1alpha1.SecretV1
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/keymanager/v1alpha1.SecretV1
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("secret_ref",true)
 	// +kubebuilder:validation:Optional
 	SecretRef *string `json:"secretRef,omitempty" tf:"secret_ref,omitempty"`

@@ -86,7 +86,7 @@ type SiteConnectionV2InitParameters struct {
 	Dpd []DpdInitParameters `json:"dpd,omitempty" tf:"dpd,omitempty"`
 
 	// The ID of the IKE policy. Changing this creates a new connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IkePolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.IkePolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	IkepolicyID *string `json:"ikepolicyId,omitempty" tf:"ikepolicy_id,omitempty"`
 
@@ -102,7 +102,7 @@ type SiteConnectionV2InitParameters struct {
 	Initiator *string `json:"initiator,omitempty" tf:"initiator,omitempty"`
 
 	// The ID of the IPsec policy. Changing this creates a new connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IpsecPolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.IpsecPolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	IpsecpolicyID *string `json:"ipsecpolicyId,omitempty" tf:"ipsecpolicy_id,omitempty"`
 
@@ -118,7 +118,7 @@ type SiteConnectionV2InitParameters struct {
 	// You must specify this parameter with the peer_ep_group_id parameter unless
 	// in backward- compatible mode where peer_cidrs is provided with a subnet_id for the VPN service.
 	// Changing this updates the existing connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.EndpointGroupV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	LocalEpGroupID *string `json:"localEpGroupId,omitempty" tf:"local_ep_group_id,omitempty"`
 
@@ -152,7 +152,7 @@ type SiteConnectionV2InitParameters struct {
 	// The ID for the endpoint group that contains private CIDRs in the form < net_address > / < prefix > for the peer side of the connection.
 	// You must specify this parameter with the local_ep_group_id parameter unless in backward-compatible mode
 	// where peer_cidrs is provided with a subnet_id for the VPN service.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.EndpointGroupV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	PeerEpGroupID *string `json:"peerEpGroupId,omitempty" tf:"peer_ep_group_id,omitempty"`
 
@@ -187,7 +187,7 @@ type SiteConnectionV2InitParameters struct {
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the VPN service. Changing this creates a new connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.ServiceV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.ServiceV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	VpnserviceID *string `json:"vpnserviceId,omitempty" tf:"vpnservice_id,omitempty"`
 
@@ -297,7 +297,7 @@ type SiteConnectionV2Parameters struct {
 	Dpd []DpdParameters `json:"dpd,omitempty" tf:"dpd,omitempty"`
 
 	// The ID of the IKE policy. Changing this creates a new connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IkePolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.IkePolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IkepolicyID *string `json:"ikepolicyId,omitempty" tf:"ikepolicy_id,omitempty"`
@@ -315,7 +315,7 @@ type SiteConnectionV2Parameters struct {
 	Initiator *string `json:"initiator,omitempty" tf:"initiator,omitempty"`
 
 	// The ID of the IPsec policy. Changing this creates a new connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.IpsecPolicyV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.IpsecPolicyV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IpsecpolicyID *string `json:"ipsecpolicyId,omitempty" tf:"ipsecpolicy_id,omitempty"`
@@ -332,7 +332,7 @@ type SiteConnectionV2Parameters struct {
 	// You must specify this parameter with the peer_ep_group_id parameter unless
 	// in backward- compatible mode where peer_cidrs is provided with a subnet_id for the VPN service.
 	// Changing this updates the existing connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.EndpointGroupV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	LocalEpGroupID *string `json:"localEpGroupId,omitempty" tf:"local_ep_group_id,omitempty"`
@@ -372,7 +372,7 @@ type SiteConnectionV2Parameters struct {
 	// The ID for the endpoint group that contains private CIDRs in the form < net_address > / < prefix > for the peer side of the connection.
 	// You must specify this parameter with the local_ep_group_id parameter unless in backward-compatible mode
 	// where peer_cidrs is provided with a subnet_id for the VPN service.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.EndpointGroupV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.EndpointGroupV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerEpGroupID *string `json:"peerEpGroupId,omitempty" tf:"peer_ep_group_id,omitempty"`
@@ -413,7 +413,7 @@ type SiteConnectionV2Parameters struct {
 	ValueSpecs map[string]*string `json:"valueSpecs,omitempty" tf:"value_specs,omitempty"`
 
 	// The ID of the VPN service. Changing this creates a new connection.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/vpnaas/v1alpha1.ServiceV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/vpnaas/v1alpha1.ServiceV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VpnserviceID *string `json:"vpnserviceId,omitempty" tf:"vpnservice_id,omitempty"`

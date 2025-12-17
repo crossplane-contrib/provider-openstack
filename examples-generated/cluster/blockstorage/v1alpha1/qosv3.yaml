@@ -1,0 +1,15 @@
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QosV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/qosv3
+  labels:
+    testing.upbound.io/example-name: qos
+  name: qos
+spec:
+  forProvider:
+    consumer: back-end
+    name: foo
+    specs:
+      read_iops_sec: "40000"
+      write_iops_sec: "40000"

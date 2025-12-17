@@ -59,7 +59,7 @@ type ShareV2InitParameters struct {
 	// The UUID of a share network where the share server exists
 	// or will be created. If share_network_id is not set and you provide a snapshot_id,
 	// the share_network_id value from the snapshot is used. Changing this creates a new share.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SharenetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/sharedfilesystem/v1alpha1.SharenetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	ShareNetworkID *string `json:"shareNetworkId,omitempty" tf:"share_network_id,omitempty"`
 
@@ -204,7 +204,7 @@ type ShareV2Parameters struct {
 	// The UUID of a share network where the share server exists
 	// or will be created. If share_network_id is not set and you provide a snapshot_id,
 	// the share_network_id value from the snapshot is used. Changing this creates a new share.
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/sharedfilesystem/v1alpha1.SharenetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/sharedfilesystem/v1alpha1.SharenetworkV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ShareNetworkID *string `json:"shareNetworkId,omitempty" tf:"share_network_id,omitempty"`

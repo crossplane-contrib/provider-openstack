@@ -26,7 +26,7 @@ type ClusterV1InitParameters struct {
 	// Changing this creates a new node group.
 	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
 
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	FixedNetwork *string `json:"fixedNetwork,omitempty" tf:"fixed_network,omitempty"`
 
 	// Reference to a NetworkV2 in networking to populate fixedNetwork.
@@ -37,7 +37,7 @@ type ClusterV1InitParameters struct {
 	// +kubebuilder:validation:Optional
 	FixedNetworkSelector *v1.Selector `json:"fixedNetworkSelector,omitempty" tf:"-"`
 
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SubnetV2
 	FixedSubnet *string `json:"fixedSubnet,omitempty" tf:"fixed_subnet,omitempty"`
 
 	// Reference to a SubnetV2 in networking to populate fixedSubnet.
@@ -178,7 +178,7 @@ type ClusterV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	DockerVolumeSize *float64 `json:"dockerVolumeSize,omitempty" tf:"docker_volume_size,omitempty"`
 
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.NetworkV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.NetworkV2
 	// +kubebuilder:validation:Optional
 	FixedNetwork *string `json:"fixedNetwork,omitempty" tf:"fixed_network,omitempty"`
 
@@ -190,7 +190,7 @@ type ClusterV1Parameters struct {
 	// +kubebuilder:validation:Optional
 	FixedNetworkSelector *v1.Selector `json:"fixedNetworkSelector,omitempty" tf:"-"`
 
-	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/networking/v1alpha1.SubnetV2
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/networking/v1alpha1.SubnetV2
 	// +kubebuilder:validation:Optional
 	FixedSubnet *string `json:"fixedSubnet,omitempty" tf:"fixed_subnet,omitempty"`
 
