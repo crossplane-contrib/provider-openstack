@@ -16,13 +16,20 @@ import (
 	"github.com/pkg/errors"
 	"github.com/terraform-provider-openstack/terraform-provider-openstack/v3/openstack"
 
-	"github.com/crossplane-contrib/provider-openstack/config/blockstorage"
-	"github.com/crossplane-contrib/provider-openstack/config/compute"
-	"github.com/crossplane-contrib/provider-openstack/config/containerinfra"
-	"github.com/crossplane-contrib/provider-openstack/config/dns"
-	"github.com/crossplane-contrib/provider-openstack/config/identity"
-	"github.com/crossplane-contrib/provider-openstack/config/lb"
-	"github.com/crossplane-contrib/provider-openstack/config/networking"
+	blockstorageCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/blockstorage"
+	blockstorageNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/blockstorage"
+	computeCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/compute"
+	computeNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/compute"
+	containerinfraCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/containerinfra"
+	containerinfraNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/containerinfra"
+	dnsCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/dns"
+	dnsNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/dns"
+	identityCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/identity"
+	identityNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/identity"
+	lbCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/lb"
+	lbNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/lb"
+	networkingCluster "github.com/crossplane-contrib/provider-openstack/config/cluster/networking"
+	networkingNamespaced "github.com/crossplane-contrib/provider-openstack/config/namespaced/networking"
 )
 
 const (
@@ -112,13 +119,62 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 	bumpVersionsWithEmbeddedLists(pc)
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		blockstorage.Configure,
-		compute.Configure,
-		containerinfra.Configure,
-		dns.Configure,
-		identity.Configure,
-		lb.Configure,
-		networking.Configure,
+		blockstorageCluster.Configure,
+		computeCluster.Configure,
+		containerinfraCluster.Configure,
+		dnsCluster.Configure,
+		identityCluster.Configure,
+		lbCluster.Configure,
+		networkingCluster.Configure,
+	} {
+		configure(pc)
+	}
+
+	pc.ConfigureResources()
+	return pc, nil
+}
+
+func GetProviderNamespaced(ctx context.Context, generationProvider bool) (*ujconfig.Provider, error) {
+	sdkProvider := openstack.Provider()
+
+	if generationProvider {
+		p, err := getProviderSchema(providerSchema)
+		if err != nil {
+			return nil, errors.Wrap(err, "cannot read the Terraform SDK provider from the JSON schema for code generation")
+		}
+		if err := traverser.TFResourceSchema(sdkProvider.ResourcesMap).Traverse(traverser.NewMaxItemsSync(p.ResourcesMap)); err != nil {
+			return nil, errors.Wrap(err, "cannot sync the MaxItems constraints between the Go schema and the JSON schema")
+		}
+		// use the JSON schema to temporarily prevent float64->int64
+		// conversions in the CRD APIs.
+		// We would like to convert to int64s with the next major release of
+		// the provider.
+		sdkProvider = p
+	}
+
+	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
+		ujconfig.WithRootGroup("openstack.m.crossplane.io"),
+		ujconfig.WithIncludeList(resourceList(cliReconciledExternalNameConfigs)),
+		ujconfig.WithTerraformPluginSDKIncludeList(resourceList(terraformPluginSDKExternalNameConfigs)),
+		ujconfig.WithDefaultResourceOptions(
+			resourceConfigurator(),
+		),
+		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
+		ujconfig.WithFeaturesPackage("internal/features"),
+		ujconfig.WithTerraformProvider(sdkProvider),
+		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
+	)
+
+	bumpVersionsWithEmbeddedLists(pc)
+	for _, configure := range []func(provider *ujconfig.Provider){
+		// add custom config functions
+		blockstorageNamespaced.Configure,
+		computeNamespaced.Configure,
+		containerinfraNamespaced.Configure,
+		dnsNamespaced.Configure,
+		identityNamespaced.Configure,
+		lbNamespaced.Configure,
+		networkingNamespaced.Configure,
 	} {
 		configure(pc)
 	}
