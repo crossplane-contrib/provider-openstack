@@ -134,45 +134,6 @@ spec:
     name: provider-openstack
 ```
 
-## Developing
-
-Install the required submodules to build and run:
-
-```bash
-make submodules
-```
-
-Apply the Current CRDs and a providerConfig:
-
-```bash
-kubectl apply -f package/crds
-kubectl apply -f examples/providerconfig/providerconfig.yaml
-```
-
-Run against a Kubernetes cluster: (make sure to apply CRDs and providerConfig)
-
-```bash
-make run
-```
-
-Run a testbuild with linting:
-
-```bash
-make reviewable
-```
-
-Build binary:
-
-```bash
-make build
-```
-
-## Release a new version (Maintainer)
-
-- Update Changelog (Add new Version & Date)
-- Create or merge to existing release branch (release-v(major).(minor))
-- Run Release pipeline on release branch, using specific version as parameter
-
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
