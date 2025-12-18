@@ -202,6 +202,7 @@ func main() {
 		StartWebhooks:         *certsDir != "",
 	}
 
+	// https://docs.crossplane.io/latest/managed-resources/managed-resources/#managementpolicies
 	if *enableManagementPolicies {
 		optionsCluster.Features.Enable(features.EnableBetaManagementPolicies)
 		optionsNamespaced.Features.Enable(features.EnableBetaManagementPolicies)
@@ -210,6 +211,7 @@ func main() {
 
 	canSafeStart, err := canWatchCRD(context.TODO(), mgr)
 	kingpin.FatalIfError(err, "SafeStart precheck failed")
+	kingpin.FatalIfError(conversion.RegisterConversions(optionsCluster.Provider, optionsNamespaced.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
 	if canSafeStart {
 		crdGate := new(gate.Gate[schema.GroupVersionKind])
 		optionsCluster.Gate = crdGate
@@ -223,12 +225,10 @@ func main() {
 		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, optionsNamespaced), "Cannot setup namespace-scoped Template controllers")
 	} else {
 		logr.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
-		kingpin.FatalIfError(conversion.RegisterConversions(optionsCluster.Provider, optionsNamespaced.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
 		kingpin.FatalIfError(controllerCluster.Setup(mgr, optionsCluster), "Cannot setup cluster-scoped OpenStack controllers")
 		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, optionsNamespaced), "Cannot setup namespace-scoped OpenStack controllers")
-		kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 	}
-
+	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
 
 func canWatchCRD(ctx context.Context, mgr manager.Manager) (bool, error) {
