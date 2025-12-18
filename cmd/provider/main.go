@@ -159,7 +159,7 @@ func main() {
 
 	providerCluster, err := config.GetProvider(ctx, false)
 	kingpin.FatalIfError(err, "Cannot initialize the cluster-scoped provider configuration")
-	providerNamespaced, err := config.GetProviderNamespaced(ctx, true)
+	providerNamespaced, err := config.GetProviderNamespaced(ctx, false)
 	kingpin.FatalIfError(err, "Cannot initialize the namespace-scoped provider configuration")
 
 	optionsCluster := tjcontroller.Options{
