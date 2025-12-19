@@ -1,0 +1,11 @@
+apiVersion: openstack.m.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+  namespace: crossplane-system
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: openstack-provider-config
+      key: config
