@@ -1,0 +1,13 @@
+apiVersion: identity.openstack.m.crossplane.io/v1alpha1
+kind: GroupV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/groupv3
+  labels:
+    testing.upbound.io/example-name: group_1
+  name: group-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: group 1
+    name: group_1

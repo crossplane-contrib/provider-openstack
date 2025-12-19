@@ -12,3 +12,6 @@ metadata:
       [OpenStack](https://openstack.org/).
       If you encounter an issue please reach out via GitHub issues!
     friendly-name.meta.crossplane.io: Provider OpenStack
+spec:
+  capabilities:
+    - SafeStart

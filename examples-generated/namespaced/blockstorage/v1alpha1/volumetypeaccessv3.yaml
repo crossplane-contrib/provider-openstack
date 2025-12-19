@@ -1,0 +1,48 @@
+apiVersion: blockstorage.openstack.m.crossplane.io/v1alpha1
+kind: VolumeTypeAccessV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumetypeaccessv3
+  labels:
+    testing.upbound.io/example-name: volume_type_access
+  name: volume-type-access
+  namespace: upbound-system
+spec:
+  forProvider:
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project_1
+    volumeTypeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_type_1
+
+---
+
+apiVersion: blockstorage.openstack.m.crossplane.io/v1alpha1
+kind: VolumeTypeV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumetypeaccessv3
+  labels:
+    testing.upbound.io/example-name: volume_type_1
+  name: volume-type-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    isPublic: false
+    name: volume_type_1
+
+---
+
+apiVersion: identity.openstack.m.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumetypeaccessv3
+  labels:
+    testing.upbound.io/example-name: project_1
+  name: project-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: project_1

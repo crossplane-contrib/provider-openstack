@@ -1,0 +1,13 @@
+apiVersion: images.openstack.m.crossplane.io/v1alpha1
+kind: ImageAccessAcceptV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: images/v1alpha1/imageaccessacceptv2
+  labels:
+    testing.upbound.io/example-name: rancheros_member
+  name: rancheros-member
+  namespace: upbound-system
+spec:
+  forProvider:
+    imageId: ${data.openstack_images_image_v2.rancheros.id}
+    status: accepted

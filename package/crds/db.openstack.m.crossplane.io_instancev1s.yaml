@@ -1,0 +1,612 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: instancev1s.db.openstack.m.crossplane.io
+spec:
+  group: db.openstack.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - openstack
+    kind: InstanceV1
+    listKind: InstanceV1List
+    plural: instancev1s
+    singular: instancev1
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: InstanceV1 is the Schema for the InstanceV1s API. Manages a V1
+          DB instance resource within OpenStack.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InstanceV1Spec defines the desired state of InstanceV1
+            properties:
+              forProvider:
+                properties:
+                  configurationId:
+                    description: |-
+                      Configuration ID to be attached to the instance. Database instance
+                      will be rebooted when configuration is detached.
+                    type: string
+                  database:
+                    description: |-
+                      An array of database name, charset and collate. The database
+                      object structure is documented below.
+                    items:
+                      properties:
+                        charset:
+                          description: |-
+                            Database character set. Changing this creates a
+                            new instance.
+                          type: string
+                        collate:
+                          description: Database collation. Changing this creates a
+                            new instance.
+                          type: string
+                        name:
+                          description: |-
+                            Database to be created on new instance. Changing this creates a
+                            new instance.
+                          type: string
+                      type: object
+                    type: array
+                  datastore:
+                    description: |-
+                      An array of database engine type and version. The datastore
+                      object structure is documented below. Changing this creates a new instance.
+                    properties:
+                      type:
+                        description: |-
+                          Database engine type to be used in new instance. Changing this
+                          creates a new instance.
+                        type: string
+                      version:
+                        description: |-
+                          Version of database engine type to be used in new instance.
+                          Changing this creates a new instance.
+                        type: string
+                    type: object
+                  flavorId:
+                    description: |-
+                      The flavor ID of the desired flavor for the instance.
+                      Changing this creates new instance.
+                    type: string
+                  name:
+                    description: A unique name for the resource.
+                    type: string
+                  network:
+                    description: |-
+                      An array of one or more networks to attach to the
+                      instance. The network object structure is documented below. Changing this
+                      creates a new instance.
+                    items:
+                      properties:
+                        fixedIpV4:
+                          description: |-
+                            Specifies a fixed IPv4 address to be used on this
+                            network. Changing this creates a new instance.
+                          type: string
+                        fixedIpV6:
+                          description: |-
+                            Specifies a fixed IPv6 address to be used on this
+                            network. Changing this creates a new instance.
+                          type: string
+                        port:
+                          description: |-
+                            The port UUID of a
+                            network to attach to the instance. Changing this creates a new instance.
+                          type: string
+                        uuid:
+                          description: |-
+                            The network UUID to
+                            attach to the instance. Changing this creates a new instance.
+                          type: string
+                      type: object
+                    type: array
+                  region:
+                    description: |-
+                      The region in which to create the db instance. Changing this
+                      creates a new instance.
+                    type: string
+                  size:
+                    description: Specifies the volume size in GB. Changing this creates
+                      new instance.
+                    type: number
+                  user:
+                    description: |-
+                      An array of username, password, host and databases. The user
+                      object structure is documented below.
+                    items:
+                      properties:
+                        databases:
+                          description: |-
+                            A list of databases that user will have access to. If not specified,
+                            user has access to all databases on th einstance. Changing this creates a new instance.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        host:
+                          description: |-
+                            An ip address or % sign indicating what ip addresses can connect with
+                            this user credentials. Changing this creates a new instance.
+                          type: string
+                        name:
+                          description: |-
+                            Username to be created on new instance. Changing this creates a
+                            new instance.
+                          type: string
+                        passwordSecretRef:
+                          description: |-
+                            User's password. Changing this creates a
+                            new instance.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                      type: object
+                    type: array
+                  volumeType:
+                    description: |-
+                      Specifies the volume type to use. If you want to
+                      specify a volume type, you must also specify a volume size. Changing this
+                      creates new instance.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  configurationId:
+                    description: |-
+                      Configuration ID to be attached to the instance. Database instance
+                      will be rebooted when configuration is detached.
+                    type: string
+                  database:
+                    description: |-
+                      An array of database name, charset and collate. The database
+                      object structure is documented below.
+                    items:
+                      properties:
+                        charset:
+                          description: |-
+                            Database character set. Changing this creates a
+                            new instance.
+                          type: string
+                        collate:
+                          description: Database collation. Changing this creates a
+                            new instance.
+                          type: string
+                        name:
+                          description: |-
+                            Database to be created on new instance. Changing this creates a
+                            new instance.
+                          type: string
+                      type: object
+                    type: array
+                  datastore:
+                    description: |-
+                      An array of database engine type and version. The datastore
+                      object structure is documented below. Changing this creates a new instance.
+                    properties:
+                      type:
+                        description: |-
+                          Database engine type to be used in new instance. Changing this
+                          creates a new instance.
+                        type: string
+                      version:
+                        description: |-
+                          Version of database engine type to be used in new instance.
+                          Changing this creates a new instance.
+                        type: string
+                    type: object
+                  flavorId:
+                    description: |-
+                      The flavor ID of the desired flavor for the instance.
+                      Changing this creates new instance.
+                    type: string
+                  name:
+                    description: A unique name for the resource.
+                    type: string
+                  network:
+                    description: |-
+                      An array of one or more networks to attach to the
+                      instance. The network object structure is documented below. Changing this
+                      creates a new instance.
+                    items:
+                      properties:
+                        fixedIpV4:
+                          description: |-
+                            Specifies a fixed IPv4 address to be used on this
+                            network. Changing this creates a new instance.
+                          type: string
+                        fixedIpV6:
+                          description: |-
+                            Specifies a fixed IPv6 address to be used on this
+                            network. Changing this creates a new instance.
+                          type: string
+                        port:
+                          description: |-
+                            The port UUID of a
+                            network to attach to the instance. Changing this creates a new instance.
+                          type: string
+                        uuid:
+                          description: |-
+                            The network UUID to
+                            attach to the instance. Changing this creates a new instance.
+                          type: string
+                      type: object
+                    type: array
+                  region:
+                    description: |-
+                      The region in which to create the db instance. Changing this
+                      creates a new instance.
+                    type: string
+                  size:
+                    description: Specifies the volume size in GB. Changing this creates
+                      new instance.
+                    type: number
+                  user:
+                    description: |-
+                      An array of username, password, host and databases. The user
+                      object structure is documented below.
+                    items:
+                      properties:
+                        databases:
+                          description: |-
+                            A list of databases that user will have access to. If not specified,
+                            user has access to all databases on th einstance. Changing this creates a new instance.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        host:
+                          description: |-
+                            An ip address or % sign indicating what ip addresses can connect with
+                            this user credentials. Changing this creates a new instance.
+                          type: string
+                        name:
+                          description: |-
+                            Username to be created on new instance. Changing this creates a
+                            new instance.
+                          type: string
+                        passwordSecretRef:
+                          description: |-
+                            User's password. Changing this creates a
+                            new instance.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                      type: object
+                    type: array
+                  volumeType:
+                    description: |-
+                      Specifies the volume type to use. If you want to
+                      specify a volume type, you must also specify a volume size. Changing this
+                      creates new instance.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.datastore is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.datastore)
+                || (has(self.initProvider) && has(self.initProvider.datastore))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.size is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.size)
+                || (has(self.initProvider) && has(self.initProvider.size))'
+          status:
+            description: InstanceV1Status defines the observed state of InstanceV1.
+            properties:
+              atProvider:
+                properties:
+                  addresses:
+                    description: A list of IP addresses assigned to the instance.
+                    items:
+                      type: string
+                    type: array
+                  configurationId:
+                    description: |-
+                      Configuration ID to be attached to the instance. Database instance
+                      will be rebooted when configuration is detached.
+                    type: string
+                  database:
+                    description: |-
+                      An array of database name, charset and collate. The database
+                      object structure is documented below.
+                    items:
+                      properties:
+                        charset:
+                          description: |-
+                            Database character set. Changing this creates a
+                            new instance.
+                          type: string
+                        collate:
+                          description: Database collation. Changing this creates a
+                            new instance.
+                          type: string
+                        name:
+                          description: |-
+                            Database to be created on new instance. Changing this creates a
+                            new instance.
+                          type: string
+                      type: object
+                    type: array
+                  datastore:
+                    description: |-
+                      An array of database engine type and version. The datastore
+                      object structure is documented below. Changing this creates a new instance.
+                    properties:
+                      type:
+                        description: |-
+                          Database engine type to be used in new instance. Changing this
+                          creates a new instance.
+                        type: string
+                      version:
+                        description: |-
+                          Version of database engine type to be used in new instance.
+                          Changing this creates a new instance.
+                        type: string
+                    type: object
+                  flavorId:
+                    description: |-
+                      The flavor ID of the desired flavor for the instance.
+                      Changing this creates new instance.
+                    type: string
+                  id:
+                    type: string
+                  name:
+                    description: A unique name for the resource.
+                    type: string
+                  network:
+                    description: |-
+                      An array of one or more networks to attach to the
+                      instance. The network object structure is documented below. Changing this
+                      creates a new instance.
+                    items:
+                      properties:
+                        fixedIpV4:
+                          description: |-
+                            Specifies a fixed IPv4 address to be used on this
+                            network. Changing this creates a new instance.
+                          type: string
+                        fixedIpV6:
+                          description: |-
+                            Specifies a fixed IPv6 address to be used on this
+                            network. Changing this creates a new instance.
+                          type: string
+                        port:
+                          description: |-
+                            The port UUID of a
+                            network to attach to the instance. Changing this creates a new instance.
+                          type: string
+                        uuid:
+                          description: |-
+                            The network UUID to
+                            attach to the instance. Changing this creates a new instance.
+                          type: string
+                      type: object
+                    type: array
+                  region:
+                    description: |-
+                      The region in which to create the db instance. Changing this
+                      creates a new instance.
+                    type: string
+                  size:
+                    description: Specifies the volume size in GB. Changing this creates
+                      new instance.
+                    type: number
+                  user:
+                    description: |-
+                      An array of username, password, host and databases. The user
+                      object structure is documented below.
+                    items:
+                      properties:
+                        databases:
+                          description: |-
+                            A list of databases that user will have access to. If not specified,
+                            user has access to all databases on th einstance. Changing this creates a new instance.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        host:
+                          description: |-
+                            An ip address or % sign indicating what ip addresses can connect with
+                            this user credentials. Changing this creates a new instance.
+                          type: string
+                        name:
+                          description: |-
+                            Username to be created on new instance. Changing this creates a
+                            new instance.
+                          type: string
+                      type: object
+                    type: array
+                  volumeType:
+                    description: |-
+                      Specifies the volume type to use. If you want to
+                      specify a volume type, you must also specify a volume size. Changing this
+                      creates new instance.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

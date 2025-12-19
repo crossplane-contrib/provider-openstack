@@ -1,0 +1,15 @@
+apiVersion: blockstorage.openstack.m.crossplane.io/v1alpha1
+kind: VolumeV3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumev3
+  labels:
+    testing.upbound.io/example-name: volume_1
+  name: volume-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: first test volume
+    name: volume_1
+    region: RegionOne
+    size: 3

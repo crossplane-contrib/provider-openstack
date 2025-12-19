@@ -1,0 +1,54 @@
+apiVersion: dns.openstack.m.crossplane.io/v1alpha1
+kind: TransferAcceptV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/transferacceptv2
+  labels:
+    testing.upbound.io/example-name: accept_1
+  name: accept-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    keySelector:
+      matchLabels:
+        testing.upbound.io/example-name: request_1
+    zoneTransferRequestIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: request_1
+
+---
+
+apiVersion: dns.openstack.m.crossplane.io/v1alpha1
+kind: TransferRequestV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/transferacceptv2
+  labels:
+    testing.upbound.io/example-name: request_1
+  name: request-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: a transfer accept
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_zone
+
+---
+
+apiVersion: dns.openstack.m.crossplane.io/v1alpha1
+kind: ZoneV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/transferacceptv2
+  labels:
+    testing.upbound.io/example-name: example_zone
+  name: example-zone
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: An example zone
+    email: jdoe@example.com
+    name: example.com.
+    ttl: 3000
+    type: PRIMARY

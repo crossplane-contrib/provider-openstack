@@ -1,0 +1,570 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: poolv2s.lb.openstack.m.crossplane.io
+spec:
+  group: lb.openstack.m.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - openstack
+    kind: PoolV2
+    listKind: PoolV2List
+    plural: poolv2s
+    singular: poolv2
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PoolV2 is the Schema for the PoolV2s API. Manages a V2 pool resource
+          within OpenStack.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PoolV2Spec defines the desired state of PoolV2
+            properties:
+              forProvider:
+                properties:
+                  adminStateUp:
+                    description: |-
+                      The administrative state of the pool. A valid
+                      value is true (UP) or false (DOWN).
+                    type: boolean
+                  alpnProtocols:
+                    description: |-
+                      A list of ALPN protocols. Available protocols:
+                      http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+                      2.24.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  caTlsContainerRef:
+                    description: |-
+                      The reference of the key manager service
+                      secret containing a PEM format CA certificate bundle for tls_enabled pools.
+                      Supported only in Octavia minor version >= 2.8.
+                    type: string
+                  crlContainerRef:
+                    description: |-
+                      The reference of the key manager service
+                      secret containing a PEM format CA revocation list file for tls_enabled
+                      pools. Supported only in Octavia minor version >= 2.8.
+                    type: string
+                  description:
+                    description: Human-readable description for the pool.
+                    type: string
+                  lbMethod:
+                    description: |-
+                      The load balancing algorithm to distribute traffic
+                      to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+                      SOURCE_IP, or SOURCE_IP_PORT.
+                    type: string
+                  listenerId:
+                    description: |-
+                      The Listener on which the members of the pool will
+                      be associated with. Changing this creates a new pool. Note: One of
+                      LoadbalancerID or ListenerID must be provided.
+                    type: string
+                  loadbalancerId:
+                    description: |-
+                      The load balancer on which to provision this
+                      pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+                      ListenerID must be provided.
+                    type: string
+                  name:
+                    description: Human-readable name for the pool.
+                    type: string
+                  persistence:
+                    description: |-
+                      Omit this field to prevent session persistence.
+                      Indicates whether connections in the same session will be processed by the
+                      same Pool member or not. Changing this creates a new pool.
+                    properties:
+                      cookieName:
+                        description: |-
+                          The name of the cookie if persistence mode is set
+                          appropriately. Required if type = APP_COOKIE.
+                        type: string
+                      type:
+                        description: |-
+                          The type of persistence mode. The current specification
+                          supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
+                        type: string
+                    type: object
+                  protocol:
+                    description: |-
+                      The protocol - can either be TCP, HTTP, HTTPS, PROXY,
+                      UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+                      version >= 2.23). Changing this creates a new pool.
+                    type: string
+                  region:
+                    description: |-
+                      The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a pool. If omitted, the region
+                      argument of the provider is used. Changing this creates a new pool.
+                    type: string
+                  tags:
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tenantId:
+                    description: |-
+                      Required for admins. The UUID of the tenant who owns
+                      the pool.  Only administrative users can specify a tenant UUID other than
+                      their own. Changing this creates a new pool.
+                    type: string
+                  tlsCiphers:
+                    description: |-
+                      List of ciphers in OpenSSL format
+                      (colon-separated). See
+                      https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+                      Supported only in Octavia minor version >= 2.15.
+                    type: string
+                  tlsContainerRef:
+                    description: |-
+                      The reference to the key manager service
+                      secret containing a PKCS12 format certificate/key bundle for tls_enabled
+                      pools for TLS client authentication to the member servers. Supported only in
+                      Octavia minor version >= 2.8.
+                    type: string
+                  tlsEnabled:
+                    description: |-
+                      When true connections to backend member servers
+                      will use TLS encryption. Default is false. Supported only in Octavia minor
+                      version >= 2.8.
+                    type: boolean
+                  tlsVersions:
+                    description: |-
+                      A list of TLS protocol versions. Available
+                      versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+                      Octavia minor version >= 2.17.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  adminStateUp:
+                    description: |-
+                      The administrative state of the pool. A valid
+                      value is true (UP) or false (DOWN).
+                    type: boolean
+                  alpnProtocols:
+                    description: |-
+                      A list of ALPN protocols. Available protocols:
+                      http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+                      2.24.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  caTlsContainerRef:
+                    description: |-
+                      The reference of the key manager service
+                      secret containing a PEM format CA certificate bundle for tls_enabled pools.
+                      Supported only in Octavia minor version >= 2.8.
+                    type: string
+                  crlContainerRef:
+                    description: |-
+                      The reference of the key manager service
+                      secret containing a PEM format CA revocation list file for tls_enabled
+                      pools. Supported only in Octavia minor version >= 2.8.
+                    type: string
+                  description:
+                    description: Human-readable description for the pool.
+                    type: string
+                  lbMethod:
+                    description: |-
+                      The load balancing algorithm to distribute traffic
+                      to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+                      SOURCE_IP, or SOURCE_IP_PORT.
+                    type: string
+                  listenerId:
+                    description: |-
+                      The Listener on which the members of the pool will
+                      be associated with. Changing this creates a new pool. Note: One of
+                      LoadbalancerID or ListenerID must be provided.
+                    type: string
+                  loadbalancerId:
+                    description: |-
+                      The load balancer on which to provision this
+                      pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+                      ListenerID must be provided.
+                    type: string
+                  name:
+                    description: Human-readable name for the pool.
+                    type: string
+                  persistence:
+                    description: |-
+                      Omit this field to prevent session persistence.
+                      Indicates whether connections in the same session will be processed by the
+                      same Pool member or not. Changing this creates a new pool.
+                    properties:
+                      cookieName:
+                        description: |-
+                          The name of the cookie if persistence mode is set
+                          appropriately. Required if type = APP_COOKIE.
+                        type: string
+                      type:
+                        description: |-
+                          The type of persistence mode. The current specification
+                          supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
+                        type: string
+                    type: object
+                  protocol:
+                    description: |-
+                      The protocol - can either be TCP, HTTP, HTTPS, PROXY,
+                      UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+                      version >= 2.23). Changing this creates a new pool.
+                    type: string
+                  region:
+                    description: |-
+                      The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a pool. If omitted, the region
+                      argument of the provider is used. Changing this creates a new pool.
+                    type: string
+                  tags:
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tenantId:
+                    description: |-
+                      Required for admins. The UUID of the tenant who owns
+                      the pool.  Only administrative users can specify a tenant UUID other than
+                      their own. Changing this creates a new pool.
+                    type: string
+                  tlsCiphers:
+                    description: |-
+                      List of ciphers in OpenSSL format
+                      (colon-separated). See
+                      https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+                      Supported only in Octavia minor version >= 2.15.
+                    type: string
+                  tlsContainerRef:
+                    description: |-
+                      The reference to the key manager service
+                      secret containing a PKCS12 format certificate/key bundle for tls_enabled
+                      pools for TLS client authentication to the member servers. Supported only in
+                      Octavia minor version >= 2.8.
+                    type: string
+                  tlsEnabled:
+                    description: |-
+                      When true connections to backend member servers
+                      will use TLS encryption. Default is false. Supported only in Octavia minor
+                      version >= 2.8.
+                    type: boolean
+                  tlsVersions:
+                    description: |-
+                      A list of TLS protocol versions. Available
+                      versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+                      Octavia minor version >= 2.17.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.lbMethod is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.lbMethod)
+                || (has(self.initProvider) && has(self.initProvider.lbMethod))'
+            - message: spec.forProvider.protocol is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.protocol)
+                || (has(self.initProvider) && has(self.initProvider.protocol))'
+          status:
+            description: PoolV2Status defines the observed state of PoolV2.
+            properties:
+              atProvider:
+                properties:
+                  adminStateUp:
+                    description: |-
+                      The administrative state of the pool. A valid
+                      value is true (UP) or false (DOWN).
+                    type: boolean
+                  alpnProtocols:
+                    description: |-
+                      A list of ALPN protocols. Available protocols:
+                      http/1.0, http/1.1, h2. Supported only in Octavia minor version >=
+                      2.24.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  caTlsContainerRef:
+                    description: |-
+                      The reference of the key manager service
+                      secret containing a PEM format CA certificate bundle for tls_enabled pools.
+                      Supported only in Octavia minor version >= 2.8.
+                    type: string
+                  crlContainerRef:
+                    description: |-
+                      The reference of the key manager service
+                      secret containing a PEM format CA revocation list file for tls_enabled
+                      pools. Supported only in Octavia minor version >= 2.8.
+                    type: string
+                  description:
+                    description: Human-readable description for the pool.
+                    type: string
+                  id:
+                    description: The unique ID for the pool.
+                    type: string
+                  lbMethod:
+                    description: |-
+                      The load balancing algorithm to distribute traffic
+                      to the pool's members. Must be one of ROUND_ROBIN, LEAST_CONNECTIONS,
+                      SOURCE_IP, or SOURCE_IP_PORT.
+                    type: string
+                  listenerId:
+                    description: |-
+                      The Listener on which the members of the pool will
+                      be associated with. Changing this creates a new pool. Note: One of
+                      LoadbalancerID or ListenerID must be provided.
+                    type: string
+                  loadbalancerId:
+                    description: |-
+                      The load balancer on which to provision this
+                      pool. Changing this creates a new pool. Note: One of LoadbalancerID or
+                      ListenerID must be provided.
+                    type: string
+                  name:
+                    description: Human-readable name for the pool.
+                    type: string
+                  persistence:
+                    description: |-
+                      Omit this field to prevent session persistence.
+                      Indicates whether connections in the same session will be processed by the
+                      same Pool member or not. Changing this creates a new pool.
+                    properties:
+                      cookieName:
+                        description: |-
+                          The name of the cookie if persistence mode is set
+                          appropriately. Required if type = APP_COOKIE.
+                        type: string
+                      type:
+                        description: |-
+                          The type of persistence mode. The current specification
+                          supports SOURCE_IP, HTTP_COOKIE, and APP_COOKIE.
+                        type: string
+                    type: object
+                  protocol:
+                    description: |-
+                      The protocol - can either be TCP, HTTP, HTTPS, PROXY,
+                      UDP, PROXYV2 (Octavia minor version >= 2.22) or SCTP (Octavia minor
+                      version >= 2.23). Changing this creates a new pool.
+                    type: string
+                  region:
+                    description: |-
+                      The region in which to obtain the V2 Networking client.
+                      A Networking client is needed to create a pool. If omitted, the region
+                      argument of the provider is used. Changing this creates a new pool.
+                    type: string
+                  tags:
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tenantId:
+                    description: |-
+                      Required for admins. The UUID of the tenant who owns
+                      the pool.  Only administrative users can specify a tenant UUID other than
+                      their own. Changing this creates a new pool.
+                    type: string
+                  tlsCiphers:
+                    description: |-
+                      List of ciphers in OpenSSL format
+                      (colon-separated). See
+                      https://www.openssl.org/docs/man1.1.1/man1/ciphers.html for more information.
+                      Supported only in Octavia minor version >= 2.15.
+                    type: string
+                  tlsContainerRef:
+                    description: |-
+                      The reference to the key manager service
+                      secret containing a PKCS12 format certificate/key bundle for tls_enabled
+                      pools for TLS client authentication to the member servers. Supported only in
+                      Octavia minor version >= 2.8.
+                    type: string
+                  tlsEnabled:
+                    description: |-
+                      When true connections to backend member servers
+                      will use TLS encryption. Default is false. Supported only in Octavia minor
+                      version >= 2.8.
+                    type: boolean
+                  tlsVersions:
+                    description: |-
+                      A list of TLS protocol versions. Available
+                      versions: TLSv1, TLSv1.1, TLSv1.2, TLSv1.3. Supported only in
+                      Octavia minor version >= 2.17.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

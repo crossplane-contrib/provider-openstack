@@ -1,0 +1,86 @@
+apiVersion: keymanager.openstack.m.crossplane.io/v1alpha1
+kind: ContainerV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: keymanager/v1alpha1/containerv1
+  labels:
+    testing.upbound.io/example-name: tls_1
+  name: tls-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: tls
+    secretRefs:
+    - name: certificate
+      secretRefSelector:
+        matchLabels:
+          testing.upbound.io/example-name: certificate_1
+    - name: private_key
+      secretRefSelector:
+        matchLabels:
+          testing.upbound.io/example-name: private_key_1
+    - name: intermediates
+      secretRefSelector:
+        matchLabels:
+          testing.upbound.io/example-name: intermediate_1
+    type: certificate
+
+---
+
+apiVersion: keymanager.openstack.m.crossplane.io/v1alpha1
+kind: SecretV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: keymanager/v1alpha1/containerv1
+  labels:
+    testing.upbound.io/example-name: certificate_1
+  name: certificate-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: certificate
+    payloadContentType: text/plain
+    payloadSecretRef:
+      key: attribute.cert.pem
+      name: example-secret
+    secretType: certificate
+
+---
+
+apiVersion: keymanager.openstack.m.crossplane.io/v1alpha1
+kind: SecretV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: keymanager/v1alpha1/containerv1
+  labels:
+    testing.upbound.io/example-name: intermediate_1
+  name: intermediate-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: intermediate
+    payloadContentType: text/plain
+    payloadSecretRef:
+      key: attribute.intermediate-ca.pem
+      name: example-secret
+    secretType: certificate
+
+---
+
+apiVersion: keymanager.openstack.m.crossplane.io/v1alpha1
+kind: SecretV1
+metadata:
+  annotations:
+    meta.upbound.io/example-id: keymanager/v1alpha1/containerv1
+  labels:
+    testing.upbound.io/example-name: private_key_1
+  name: private-key-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: private_key
+    payloadContentType: text/plain
+    payloadSecretRef:
+      key: attribute.cert-key.pem
+      name: example-secret
+    secretType: private

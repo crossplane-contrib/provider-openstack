@@ -3,6 +3,7 @@
 <div align="center">
 
 [![GitHub release](https://img.shields.io/github/release/crossplane-contrib/provider-openstack/all.svg)](https://github.com/crossplane-contrib/provider-openstack/releases)
+![Go Version](https://img.shields.io/github/go-mod/go-version/crossplane-contrib/provider-openstack)
 
 </div>
 
@@ -10,6 +11,20 @@
 is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 OpenStack API.
+
+## Features
+
+The provider is compatible with Crossplane 1.x and 2.x
+
+| Feature                     | Status        |
+|-----------------------------|---------------|
+| [Cluster Scoped Managed Resources](./examples-generated/cluster) | ✅ Supported     |
+| [Namespace Scoped Managed Resources](./examples-generated/namespace) | ✅ Supported (Crossplane 2+)     |
+| [Management Policies (Beta)](https://docs.crossplane.io/latest/managed-resources/managed-resources/#managementpolicies)   | ✅ Supported     |
+| [Init Providers (Beta)](https://docs.crossplane.io/latest/managed-resources/managed-resources/#initprovider)               | ✅ Supported     |
+| [Safe Start/MRDs (Alpha)](https://docs.crossplane.io/latest/guides/implementing-safe-start/)          | ✅ Supported (Crossplane 2+)     |
+| [Change Logs (Alpha)](https://docs.crossplane.io/latest/guides/change-logs/)               | ❌ Planned, see [#141](https://github.com/crossplane-contrib/provider-openstack/issues/141)     |
+| [External Secret Stores (Alpha)](https://docs.crossplane.io/latest/guides/upgrade-to-crossplane-v2/#external-secret-stores) | ❌ Not Planned     |
 
 ## Getting Started
 
@@ -23,10 +38,11 @@ kind: Provider
 metadata:
   name: provider-openstack
 spec:
+  # Replace by the latest version
   package: xpkg.crossplane.io/crossplane-contrib/provider-openstack:vX.Y.Z
 ```
 
-You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-openstack).
+You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-openstack) as well as examples of managed resources in the [examples-generated](./examples-generated) folder.
 
 ### Configuration
 
@@ -117,45 +133,6 @@ spec:
     kind: DeploymentRuntimeConfig
     name: provider-openstack
 ```
-
-## Developing
-
-Install the required submodules to build and run:
-
-```bash
-make submodules
-```
-
-Apply the Current CRDs and a providerConfig:
-
-```bash
-kubectl apply -f package/crds
-kubectl apply -f examples/providerconfig/providerconfig.yaml
-```
-
-Run against a Kubernetes cluster: (make sure to apply CRDs and providerConfig)
-
-```bash
-make run
-```
-
-Run a testbuild with linting:
-
-```bash
-make reviewable
-```
-
-Build binary:
-
-```bash
-make build
-```
-
-## Release a new version (Maintainer)
-
-- Update Changelog (Add new Version & Date)
-- Create or merge to existing release branch (release-v(major).(minor))
-- Run Release pipeline on release branch, using specific version as parameter
 
 ## Report a Bug
 

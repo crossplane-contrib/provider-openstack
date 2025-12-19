@@ -1,0 +1,16 @@
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: PortforwardingV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/portforwardingv2
+  labels:
+    testing.upbound.io/example-name: pf_1
+  name: pf-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    externalPort: 7233
+    floatingipId: 7a52eb59-7d47-415d-a884-046666a6fbae
+    internalPort: 25
+    internalPortId: b930d7f6-ceb7-40a0-8b81-a425dd994ccf
+    protocol: tcp

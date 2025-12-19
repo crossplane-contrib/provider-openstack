@@ -15,7 +15,7 @@
 //go:generate rm -rf ../examples-generated
 
 // Generate documentation from Terraform docs.
-//go:generate go run github.com/crossplane/upjet/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-openstack/${TERRAFORM_DOCS_PATH} -o ../config/provider-metadata.yaml --prelude-xpath "//text()[contains(., \"subcategory\")]"
+//go:generate go run github.com/crossplane/upjet/v2/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-openstack/${TERRAFORM_DOCS_PATH} -o ../config/provider-metadata.yaml --prelude-xpath "//text()[contains(., \"subcategory\")]"
 
 // Run Upjet generator
 //go:generate go run ../cmd/generator/main.go ..
@@ -29,7 +29,7 @@
 // TODO: Reenable with a more recent upjet version
 // Run upjet's transformer for the generated resolvers to get rid of the cross
 // API-group imports and to prevent import cycles
-//go:disabled:generate go run github.com/crossplane/upjet/cmd/resolver -g openstack.crossplane.io -a github.com/upbound/provider-openstack/internal/apis -s
+//go:disabled:generate go run github.com/crossplane/upjet/v2/cmd/resolver -g openstack.crossplane.io -a github.com/upbound/provider-openstack/internal/apis -s
 
 package apis
 
@@ -38,5 +38,5 @@ import (
 
 	_ "github.com/crossplane/crossplane-tools/cmd/angryjet" //nolint:typecheck
 
-	_ "github.com/crossplane/upjet/cmd/scraper"
+	_ "github.com/crossplane/upjet/v2/cmd/scraper"
 )

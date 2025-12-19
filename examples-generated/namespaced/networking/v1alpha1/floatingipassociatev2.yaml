@@ -1,0 +1,32 @@
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: FloatingipAssociateV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/floatingipassociatev2
+  labels:
+    testing.upbound.io/example-name: fip_1
+  name: fip-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    floatingIp: 1.2.3.4
+    portIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: port_1
+
+---
+
+apiVersion: networking.openstack.m.crossplane.io/v1alpha1
+kind: PortV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/floatingipassociatev2
+  labels:
+    testing.upbound.io/example-name: port_1
+  name: port-1
+  namespace: upbound-system
+spec:
+  forProvider:
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -68,7 +68,7 @@ View the [upstream changelogs](https://github.com/terraform-provider-openstack/t
 - Made it easier to configure authentication by not requiring so many fields.
 - Migrated to Upjets new No-Fork/Provider v2 SDK Architecture. The provider now does not ship with Terraform CLI anymore.
 - Added many cross resource references (autmatically generated from Terraform provider schema)
-- Add native metrics for managed resources (see [Upjet 1.3.0](https://github.com/crossplane/upjet/releases/tag/v1.3.0) for more details)
+- Add native metrics for managed resources (see [Upjet 1.3.0](https://github.com/crossplane/upjet/v2/releases/tag/v1.3.0) for more details)
 
 ### Changed
 
