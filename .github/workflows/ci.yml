@@ -211,6 +211,7 @@ jobs:
         run: make local-deploy
 
   publish-provider-package:
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release-')
     uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@9a2125b3ec67a41a24913ada8212b9359f104c8c
     with:
       repository: provider-openstack
