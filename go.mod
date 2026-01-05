@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/terraform-json v0.27.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
 	github.com/pkg/errors v0.9.1
-	github.com/terraform-provider-openstack/terraform-provider-openstack/v3 v3.3.2
+	github.com/terraform-provider-openstack/terraform-provider-openstack/v3 v3.4.0
 	k8s.io/api v0.34.1
 	k8s.io/apiextensions-apiserver v0.34.1
 	k8s.io/apimachinery v0.34.1
@@ -56,7 +56,7 @@ require (
 	github.com/google/gnostic-models v0.7.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/gophercloud/gophercloud/v2 v2.7.1-0.20250709163744-323818108b46 // indirect
+	github.com/gophercloud/gophercloud/v2 v2.8.0 // indirect
 	github.com/gophercloud/utils/v2 v2.0.0-20250710092215-8f6f0255f600 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-plugin v1.7.0 // indirect
@@ -74,7 +74,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.18.0 // indirect
+	github.com/klauspost/compress v1.18.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
@@ -98,9 +98,9 @@ require (
 	github.com/spf13/afero v1.12.0 // indirect
 	github.com/spf13/cobra v1.9.1 // indirect
 	github.com/spf13/pflag v1.0.7 // indirect
-	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717163156-83cd74412d2e // indirect
+	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20251008071556-6ca14d74255d // indirect
 	github.com/tmccombs/hcl2json v0.3.3 // indirect
-	github.com/ulikunitz/xz v0.5.12 // indirect
+	github.com/ulikunitz/xz v0.5.15 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
