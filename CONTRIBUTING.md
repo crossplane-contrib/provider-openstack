@@ -50,7 +50,9 @@ make build
 
 - Update Changelog (Add new Version & Date)
 - Create or merge to existing release branch (release-v(major).(minor))
-- Run Release pipeline on release branch, using specific version as parameter
+- Ensure that all tests pass (CI pipeline is okay)
+- Run Tag pipeline on the release branch
+- Run Release Provider Package pipeline on the tag
 
 ## Environment Speicific Notes
 
