@@ -8,13 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0-rc.1] - 2026-01-05
+
+### Added
+- Support Crossplane 2.x
+- Add SafeStart Capability for all managed resources
+- Add support for namespaced managed resources (`*.openstack.m.crossplane.io`)
+
 ### Changed
 
-- Update terraform-provider-openstack to `v3.2.0`
-- Update to golang `v1.24.4`
-- Update to upjet `v1.9.0`
+- Update terraform-provider-openstack to `v3.3.2`
+- Update to golang `v1.24.7`
+- Update to upjet `v2.2.0`
+- Update crossplane runtime to `v2.1.0`
 - Update golang dependencies
 - Update golangci-lint to `2.6.1`
+
+### Removed
+
+- Dropped support for external secret stores, as removed upstream by Crossplane
 
 ## [0.7.2] - 2025-07-02
 
