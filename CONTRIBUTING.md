@@ -54,7 +54,7 @@ make build
 - Run Tag pipeline on the release branch
 - Run Release Provider Package pipeline on the tag
 
-## Environment Speicific Notes
+## Environment Specific Notes
 
 ### Apple Silicon (ARM64)
 
