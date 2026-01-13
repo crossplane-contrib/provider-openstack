@@ -216,9 +216,7 @@ jobs:
     with:
       registry_org: crossplane-contrib
       repository: provider-openstack
-      mirror-registry: xpkg.upbound.io
+      mirror: false # do not mirror unreleased packages to upbound registry
       go-version: "1.24" # Keep in sync with env.GO_VERSION above
     secrets:
       GHCR_PAT: ${{ secrets.GITHUB_TOKEN }}
-      XPKG_MIRROR_ACCESS_ID: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_USR }}
-      XPKG_MIRROR_TOKEN: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_PSW }}
