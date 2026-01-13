@@ -14,12 +14,14 @@ on:
 
 jobs:
   publish-provider-package:
-    uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@9a2125b3ec67a41a24913ada8212b9359f104c8c
+    uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@681e900dec4e5a5d84bae078add34b33a7871111
     with:
-      repository: provider-openstack
       version: ${{ github.event.inputs.version }}
-      go-version: ${{ github.event.inputs.go-version }}
-      cleanup-disk: true
-      mirror-to-upbound-registry: false
+      registry_org: crossplane-contrib
+      repository: provider-openstack
+      mirror-registry: xpkg.upbound.io
+      go-version: "1.24" # Keep in sync with env.GO_VERSION above
     secrets:
       GHCR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      XPKG_MIRROR_ACCESS_ID: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_USR }}
+      XPKG_MIRROR_TOKEN: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_PSW }}
