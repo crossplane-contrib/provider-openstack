@@ -7250,6 +7250,66 @@ resources:
                 the share network. The security service must be specified by ID and not name.
             segmentation_id: '- The share network segmentation ID.'
         importStatements: []
+    openstack_taas_tap_mirror_v2:
+        subCategory: TaaS / Neutron
+        description: Manages a V2 Neutron Tap Mirror resource within OpenStack tap-as-a-service extension.
+        name: openstack_taas_tap_mirror_v2
+        title: openstack_taas_tap_mirror_v2
+        examples:
+            - name: tap_mirror_1
+              manifest: |-
+                {
+                  "directions": [
+                    {
+                      "in": 1000,
+                      "out": 1001
+                    }
+                  ],
+                  "mirror_type": "erspanv1",
+                  "port_id": "a25290e9-1a54-4c26-a5b3-34458d122acc",
+                  "remote_ip": "172.18.1.15"
+                }
+        argumentDocs:
+            description: |-
+                - (Optional) The human-readable description for the Tap Mirror.
+                Changing this updates the description of the existing Tap Mirror.
+            directions: |-
+                - (Required) A block declaring the directions to be mirrored and their
+                identifiers. One block has to be declared with at least one direction. Changing
+                this creates a new Tap Mirror.
+            directions.in: |-
+                - (Optional) Declares ingress traffic to the port will be mirrored. The value
+                is the identifier of the ERSPAN or GRE session between the source and destination,
+                this must be unique within the project.
+            directions.out: |-
+                - (Optional) Declares egress traffic will be mirrored. The value is the
+                identifier of the ERSPAN or GRE session between the source and destination,
+                this must be unique within the project.
+            id: '- Id of the Tap Mirror.'
+            mirror_type: |-
+                - (Required) The type of the mirroring, can be gre or erspanv1.
+                Changing this creates a new Tap Mirror.
+            name: |-
+                - (Optional) The name of the Tap Mirror. Changing this updates the name of
+                the existing Tap Mirror.
+            port_id: |-
+                - (Required) The Port ID of the Tap Mirror, this will be the source of
+                the mirrored traffic, and this traffic will be tunneled into the GRE or ERSPAN
+                v1 tunnel. The tunnel itself is not starting from this port. Changing this
+                creates a new Tap Mirror.
+            project_id: '- Id of the OpenStack project.'
+            region: |-
+                - (Optional) The region in which to obtain the V2 Networking client.
+                A Networking client is needed to create an endpoint group. If omitted, the
+                region argument of the provider is used. Changing this creates a new
+                group.
+            remote_ip: |-
+                - (Required) The remote IP of the Tap Mirror, this will be the remote
+                end of the GRE or ERSPAN v1 tunnel. Changing this creates a new Tap Mirror.
+            tenant_id: |-
+                - (Optional) The owner of the Tap Mirror. Required if admin wants to
+                create a Tap Mirror for another project. Changing this creates a new Tap Mirror.
+        importStatements: []
     openstack_vpnaas_endpoint_group_v2:
         subCategory: VPNaaS / Neutron
         description: Manages a V2 Neutron Endpoint Group resource within OpenStack.

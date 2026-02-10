@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  GO_VERSION: "1.24"
+  GO_VERSION: "1.25"
 
 jobs:
   detect-noop:
@@ -217,6 +217,6 @@ jobs:
       registry_org: crossplane-contrib
       repository: provider-openstack
       mirror: false # do not mirror unreleased packages to upbound registry
-      go-version: "1.24" # Keep in sync with env.GO_VERSION above
+      go-version: "1.25" # Keep in sync with env.GO_VERSION above
     secrets:
       GHCR_PAT: ${{ secrets.GITHUB_TOKEN }}

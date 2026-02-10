@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Remove concurrency limit for golangci-lint in CI pipeline
+- Update to golang v1.25.0
+- Update to k8s.io v0.35.0
+- Update to terraform-json v0.27.2
+- Update to terraform-provider-openstack v3.4.0
 
 ## [0.8.0] - 2026-01-13
 
