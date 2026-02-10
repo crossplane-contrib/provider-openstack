@@ -218,9 +218,9 @@ func main() {
 	}
 
 	if *enableChangelogs {
-    optionsCluster.Features.Enable(features.EnableAlphaChangeLogs)
-    optionsNamespaced.Features.Enable(features.EnableAlphaChangeLogs)
-    logr.Info("Alpha feature enabled", "flag", features.EnableAlphaChangeLogs)
+		optionsCluster.Features.Enable(features.EnableAlphaChangeLogs)
+		optionsNamespaced.Features.Enable(features.EnableAlphaChangeLogs)
+		logr.Info("Alpha feature enabled", "flag", features.EnableAlphaChangeLogs)
 
 		conn, err := grpc.NewClient("unix://"+*changelogsSocketPath, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		kingpin.FatalIfError(err, "failed to create change logs client connection at %s", *changelogsSocketPath)
@@ -234,7 +234,6 @@ func main() {
 		optionsNamespaced.ChangeLogOptions = &clo
 
 	}
-
 
 	canSafeStart, err := canWatchCRD(context.TODO(), mgr)
 	kingpin.FatalIfError(err, "SafeStart precheck failed")
