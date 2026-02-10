@@ -23,7 +23,7 @@ The provider is compatible with Crossplane 1.x and 2.x
 | [Management Policies (Beta)](https://docs.crossplane.io/latest/managed-resources/managed-resources/#managementpolicies)   | ✅ Supported     |
 | [Init Providers (Beta)](https://docs.crossplane.io/latest/managed-resources/managed-resources/#initprovider)               | ✅ Supported     |
 | [Safe Start/MRDs (Alpha)](https://docs.crossplane.io/latest/guides/implementing-safe-start/)          | ✅ Supported (Crossplane 2+)     |
-| [Change Logs (Alpha)](https://docs.crossplane.io/latest/guides/change-logs/)               | ❌ Planned, see [#141](https://github.com/crossplane-contrib/provider-openstack/issues/141)     |
+| [Change Logs (Alpha)](https://docs.crossplane.io/latest/guides/change-logs/)               | ✅ Supported     |
 | [External Secret Stores (Alpha)](https://docs.crossplane.io/latest/guides/upgrade-to-crossplane-v2/#external-secret-stores) | ❌ Not Planned     |
 
 ## Getting Started
