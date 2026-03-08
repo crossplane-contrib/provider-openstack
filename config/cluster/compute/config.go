@@ -11,11 +11,11 @@ func Configure(p *config.Provider) {
 		// r.ExternalName = config.ExternalName{}
 		// r.ShortGroup = "openstack"
 		// r.Version = "v1alpha22"
-		// Terraform state always has flavor_name populated. If flavor_id is managed,
-		// late initialization of flavor_name can introduce conflicting desired state
-		// and cause resize loops during reconciliation.
+		// Terraform state always has both flavor_id and flavor_name populated.
+		// Late initialization of the counterpart field can introduce conflicting
+		// desired state and cause resize loops during reconciliation.
 		r.LateInitializer = config.LateInitializer{
-			IgnoredFields: []string{"flavor_name"},
+			IgnoredFields: []string{"flavor_id", "flavor_name"},
 		}
 		r.References["key_pair"] = config.Reference{
 			TerraformName: "openstack_compute_keypair_v2",
