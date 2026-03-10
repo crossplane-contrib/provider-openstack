@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update to terraform-json v0.27.2
 - Update to terraform-provider-openstack v3.4.0
 
+### Fixed
+- Fix Resizeloop when changing flavor of compute instance (#101)
+
 ## [0.8.0] - 2026-01-13
 
 ### Added
