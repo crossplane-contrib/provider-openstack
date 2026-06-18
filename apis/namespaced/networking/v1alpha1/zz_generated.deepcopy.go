@@ -4612,6 +4612,16 @@ func (in *RouterInterfaceV2InitParameters) DeepCopyInto(out *RouterInterfaceV2In
 		*out = new(string)
 		**out = **in
 	}
+	if in.PortIDRef != nil {
+		in, out := &in.PortIDRef, &out.PortIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PortIDSelector != nil {
+		in, out := &in.PortIDSelector, &out.PortIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -4748,6 +4758,16 @@ func (in *RouterInterfaceV2Parameters) DeepCopyInto(out *RouterInterfaceV2Parame
 		in, out := &in.PortID, &out.PortID
 		*out = new(string)
 		**out = **in
+	}
+	if in.PortIDRef != nil {
+		in, out := &in.PortIDRef, &out.PortIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.PortIDSelector != nil {
+		in, out := &in.PortIDSelector, &out.PortIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
