@@ -25,7 +25,16 @@ type RouterInterfaceV2InitParameters struct {
 
 	// ID of the port this interface connects to. Changing
 	// this creates a new router interface.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.PortV2
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.NamespacedReference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.NamespacedSelector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 networking client.
 	// A networking client is needed to create a router. If omitted, the
@@ -98,8 +107,17 @@ type RouterInterfaceV2Parameters struct {
 
 	// ID of the port this interface connects to. Changing
 	// this creates a new router interface.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.PortV2
 	// +kubebuilder:validation:Optional
 	PortID *string `json:"portId,omitempty" tf:"port_id,omitempty"`
+
+	// Reference to a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDRef *v1.NamespacedReference `json:"portIdRef,omitempty" tf:"-"`
+
+	// Selector for a PortV2 in networking to populate portId.
+	// +kubebuilder:validation:Optional
+	PortIDSelector *v1.NamespacedSelector `json:"portIdSelector,omitempty" tf:"-"`
 
 	// The region in which to obtain the V2 networking client.
 	// A networking client is needed to create a router. If omitted, the

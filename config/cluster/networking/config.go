@@ -19,6 +19,9 @@ func Configure(p *config.Provider) {
 		r.References["subnet_id"] = config.Reference{
 			TerraformName: "openstack_networking_subnet_v2",
 		}
+		r.References["port_id"] = config.Reference{
+			TerraformName: "openstack_networking_port_v2",
+		}
 	})
 	p.AddResourceConfigurator("openstack_networking_router_v2", func(r *config.Resource) {
 		r.LateInitializer = config.LateInitializer{
