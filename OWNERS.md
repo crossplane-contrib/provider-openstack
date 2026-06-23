@@ -8,6 +8,5 @@ organization](https://github.com/upbound/) will list their repository maintainer
 ## Maintainers
 
 * Yannick Schlosser <yannick.schlosser@cgm.com> ([Avatos](https://github.com/Avatos))
-* Jan Dittrich <jan.dittrich@cgm.com> ([jan-di](https://github.com/jan-di))
 
 See [CODEOWNERS](./CODEOWNERS) for automatic PR assignment.
