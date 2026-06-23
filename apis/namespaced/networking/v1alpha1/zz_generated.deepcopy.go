@@ -796,6 +796,16 @@ func (in *FloatingipAssociateV2InitParameters) DeepCopyInto(out *FloatingipAssoc
 		*out = new(string)
 		**out = **in
 	}
+	if in.FloatingIPRef != nil {
+		in, out := &in.FloatingIPRef, &out.FloatingIPRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FloatingIPSelector != nil {
+		in, out := &in.FloatingIPSelector, &out.FloatingIPSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PortID != nil {
 		in, out := &in.PortID, &out.PortID
 		*out = new(string)
@@ -912,6 +922,16 @@ func (in *FloatingipAssociateV2Parameters) DeepCopyInto(out *FloatingipAssociate
 		in, out := &in.FloatingIP, &out.FloatingIP
 		*out = new(string)
 		**out = **in
+	}
+	if in.FloatingIPRef != nil {
+		in, out := &in.FloatingIPRef, &out.FloatingIPRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FloatingIPSelector != nil {
+		in, out := &in.FloatingIPSelector, &out.FloatingIPSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PortID != nil {
 		in, out := &in.PortID, &out.PortID

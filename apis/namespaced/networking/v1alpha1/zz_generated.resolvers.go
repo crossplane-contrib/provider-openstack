@@ -25,6 +25,23 @@ func (mg *FloatingipAssociateV2) ResolveReferences(ctx context.Context, c client
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FloatingIP),
+		Extract:      ExtractFloatingIPAddress(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.FloatingIPRef,
+		Selector:     mg.Spec.ForProvider.FloatingIPSelector,
+		To: reference.To{
+			List:    &FloatingipV2List{},
+			Managed: &FloatingipV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.FloatingIP")
+	}
+	mg.Spec.ForProvider.FloatingIP = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.FloatingIPRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PortID),
 		Extract:      resource.ExtractResourceID(),
 		Namespace:    mg.GetNamespace(),
@@ -40,6 +57,23 @@ func (mg *FloatingipAssociateV2) ResolveReferences(ctx context.Context, c client
 	}
 	mg.Spec.ForProvider.PortID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PortIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FloatingIP),
+		Extract:      ExtractFloatingIPAddress(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.FloatingIPRef,
+		Selector:     mg.Spec.InitProvider.FloatingIPSelector,
+		To: reference.To{
+			List:    &FloatingipV2List{},
+			Managed: &FloatingipV2{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.FloatingIP")
+	}
+	mg.Spec.InitProvider.FloatingIP = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.FloatingIPRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PortID),

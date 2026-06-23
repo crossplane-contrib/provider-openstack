@@ -21,7 +21,17 @@ type FloatingipAssociateV2InitParameters struct {
 	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
 
 	// IP Address of an existing floating IP.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.FloatingipV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.ExtractFloatingIPAddress()
 	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
+
+	// Reference to a FloatingipV2 in networking to populate floatingIp.
+	// +kubebuilder:validation:Optional
+	FloatingIPRef *v1.NamespacedReference `json:"floatingIpRef,omitempty" tf:"-"`
+
+	// Selector for a FloatingipV2 in networking to populate floatingIp.
+	// +kubebuilder:validation:Optional
+	FloatingIPSelector *v1.NamespacedSelector `json:"floatingIpSelector,omitempty" tf:"-"`
 
 	// ID of an existing port with at least one IP address to
 	// associate with this floating IP.
@@ -71,8 +81,18 @@ type FloatingipAssociateV2Parameters struct {
 	FixedIP *string `json:"fixedIp,omitempty" tf:"fixed_ip,omitempty"`
 
 	// IP Address of an existing floating IP.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.FloatingipV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.ExtractFloatingIPAddress()
 	// +kubebuilder:validation:Optional
 	FloatingIP *string `json:"floatingIp,omitempty" tf:"floating_ip,omitempty"`
+
+	// Reference to a FloatingipV2 in networking to populate floatingIp.
+	// +kubebuilder:validation:Optional
+	FloatingIPRef *v1.NamespacedReference `json:"floatingIpRef,omitempty" tf:"-"`
+
+	// Selector for a FloatingipV2 in networking to populate floatingIp.
+	// +kubebuilder:validation:Optional
+	FloatingIPSelector *v1.NamespacedSelector `json:"floatingIpSelector,omitempty" tf:"-"`
 
 	// ID of an existing port with at least one IP address to
 	// associate with this floating IP.
@@ -134,9 +154,8 @@ type FloatingipAssociateV2Status struct {
 type FloatingipAssociateV2 struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.floatingIp) || (has(self.initProvider) && has(self.initProvider.floatingIp))",message="spec.forProvider.floatingIp is a required parameter"
-	Spec   FloatingipAssociateV2Spec   `json:"spec"`
-	Status FloatingipAssociateV2Status `json:"status,omitempty"`
+	Spec              FloatingipAssociateV2Spec   `json:"spec"`
+	Status            FloatingipAssociateV2Status `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
