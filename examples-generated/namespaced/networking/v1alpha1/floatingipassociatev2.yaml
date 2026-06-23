@@ -9,7 +9,9 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    floatingIp: 1.2.3.4
+    floatingIpSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     portIdSelector:
       matchLabels:
         testing.upbound.io/example-name: port_1

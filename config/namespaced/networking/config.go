@@ -12,6 +12,12 @@ func Configure(p *config.Provider) {
 			IgnoredFields: []string{"allocation_pools"},
 		}
 	})
+	p.AddResourceConfigurator("openstack_networking_floatingip_associate_v2", func(r *config.Resource) {
+		r.References["floating_ip"] = config.Reference{
+			TerraformName: "openstack_networking_floatingip_v2",
+			Extractor:     "github.com/crossplane-contrib/provider-openstack/apis/namespaced/networking/v1alpha1.ExtractFloatingIPAddress()",
+		}
+	})
 	p.AddResourceConfigurator("openstack_networking_router_interface_v2", func(r *config.Resource) {
 		r.References["router_id"] = config.Reference{
 			TerraformName: "openstack_networking_router_v2",
