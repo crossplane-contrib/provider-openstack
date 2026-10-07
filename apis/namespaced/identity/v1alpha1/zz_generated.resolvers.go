@@ -94,12 +94,73 @@ func (mg *EndpointV3) ResolveReferences(ctx context.Context, c client.Reader) er
 	return nil
 }
 
+// ResolveReferences of this GroupV3.
+func (mg *GroupV3) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.DomainIDRef,
+		Selector:     mg.Spec.ForProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DomainID")
+	}
+	mg.Spec.ForProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DomainIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.DomainIDRef,
+		Selector:     mg.Spec.InitProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DomainID")
+	}
+	mg.Spec.InitProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DomainIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this InheritRoleAssignmentV3.
 func (mg *InheritRoleAssignmentV3) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)
 
 	var rsp reference.NamespacedResolutionResponse
 	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.DomainIDRef,
+		Selector:     mg.Spec.ForProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DomainID")
+	}
+	mg.Spec.ForProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DomainIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleID),
@@ -134,6 +195,23 @@ func (mg *InheritRoleAssignmentV3) ResolveReferences(ctx context.Context, c clie
 	}
 	mg.Spec.ForProvider.UserID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.UserIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.DomainIDRef,
+		Selector:     mg.Spec.InitProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DomainID")
+	}
+	mg.Spec.InitProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DomainIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RoleID),
@@ -172,12 +250,73 @@ func (mg *InheritRoleAssignmentV3) ResolveReferences(ctx context.Context, c clie
 	return nil
 }
 
+// ResolveReferences of this ProjectV3.
+func (mg *ProjectV3) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.DomainIDRef,
+		Selector:     mg.Spec.ForProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DomainID")
+	}
+	mg.Spec.ForProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DomainIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.DomainIDRef,
+		Selector:     mg.Spec.InitProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DomainID")
+	}
+	mg.Spec.InitProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DomainIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this RoleAssignmentV3.
 func (mg *RoleAssignmentV3) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)
 
 	var rsp reference.NamespacedResolutionResponse
 	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.DomainIDRef,
+		Selector:     mg.Spec.ForProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DomainID")
+	}
+	mg.Spec.ForProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DomainIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ProjectID),
@@ -231,6 +370,23 @@ func (mg *RoleAssignmentV3) ResolveReferences(ctx context.Context, c client.Read
 	mg.Spec.ForProvider.UserIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.DomainIDRef,
+		Selector:     mg.Spec.InitProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DomainID")
+	}
+	mg.Spec.InitProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DomainIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ProjectID),
 		Extract:      reference.ExternalName(),
 		Namespace:    mg.GetNamespace(),
@@ -280,6 +436,50 @@ func (mg *RoleAssignmentV3) ResolveReferences(ctx context.Context, c client.Read
 	}
 	mg.Spec.InitProvider.UserID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.UserIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this RoleV3.
+func (mg *RoleV3) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.DomainIDRef,
+		Selector:     mg.Spec.ForProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DomainID")
+	}
+	mg.Spec.ForProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DomainIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.DomainIDRef,
+		Selector:     mg.Spec.InitProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DomainID")
+	}
+	mg.Spec.InitProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DomainIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -387,6 +587,23 @@ func (mg *UserV3) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.DefaultProjectIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.DomainIDRef,
+		Selector:     mg.Spec.ForProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DomainID")
+	}
+	mg.Spec.ForProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DomainIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DefaultProjectID),
 		Extract:      resource.ExtractResourceID(),
 		Namespace:    mg.GetNamespace(),
@@ -402,6 +619,23 @@ func (mg *UserV3) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.InitProvider.DefaultProjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DefaultProjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DomainID),
+		Extract:      ExtractDomainID(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.DomainIDRef,
+		Selector:     mg.Spec.InitProvider.DomainIDSelector,
+		To: reference.To{
+			List:    &ProjectV3List{},
+			Managed: &ProjectV3{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DomainID")
+	}
+	mg.Spec.InitProvider.DomainID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DomainIDRef = rsp.ResolvedReference
 
 	return nil
 }

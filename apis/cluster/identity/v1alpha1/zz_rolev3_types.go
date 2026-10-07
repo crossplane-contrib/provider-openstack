@@ -19,7 +19,17 @@ import (
 type RoleV3InitParameters struct {
 
 	// The domain the role belongs to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ExtractDomainID()
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDRef *v1.Reference `json:"domainIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDSelector *v1.Selector `json:"domainIdSelector,omitempty" tf:"-"`
 
 	// The name of the role.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -49,8 +59,18 @@ type RoleV3Observation struct {
 type RoleV3Parameters struct {
 
 	// The domain the role belongs to.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane-contrib/provider-openstack/apis/cluster/identity/v1alpha1.ExtractDomainID()
 	// +kubebuilder:validation:Optional
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDRef *v1.Reference `json:"domainIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDSelector *v1.Selector `json:"domainIdSelector,omitempty" tf:"-"`
 
 	// The name of the role.
 	// +kubebuilder:validation:Optional

@@ -9,7 +9,9 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    domainId: default
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     roleIdSelector:
       matchLabels:
         testing.upbound.io/example-name: role_1
@@ -30,7 +32,9 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    domainId: default
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     name: role_1
 
 ---
@@ -46,5 +50,7 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    domainId: default
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     name: user_1

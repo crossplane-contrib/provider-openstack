@@ -1,0 +1,113 @@
+---
+# Step 1: Create a Domain (ProjectV3 with isDomain: true)
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: example-domain
+spec:
+  forProvider:
+    isDomain: true
+    name: example-domain
+    description: "Domain created by Crossplane"
+    tags:
+      - "crossplane"
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+# Step 2: Create a Project in that Domain using domainIdRef
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: project-in-domain
+spec:
+  forProvider:
+    name: project-in-domain
+    description: "Project inside example-domain"
+    domainIdRef:
+      name: example-domain
+    tags:
+      - "crossplane"
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+# Step 3: Create a User in that Domain using domainIdRef
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: UserV3
+metadata:
+  name: user-in-domain
+spec:
+  forProvider:
+    name: user-in-domain
+    domainIdRef:
+      name: example-domain
+    passwordSecretRef:
+      key: password
+      name: user-password-secret
+      namespace: crossplane-system
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+# Step 4: Create a Group in that Domain using domainIdRef
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: GroupV3
+metadata:
+  name: group-in-domain
+spec:
+  forProvider:
+    name: group-in-domain
+    description: "Group inside example-domain"
+    domainIdRef:
+      name: example-domain
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+# Step 5: Create a Role scoped to that Domain using domainIdRef
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleV3
+metadata:
+  name: role-in-domain
+spec:
+  forProvider:
+    name: role-in-domain
+    domainIdRef:
+      name: example-domain
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+# Step 6: Assign a role at domain level using domainIdRef
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleAssignmentV3
+metadata:
+  name: domain-role-assignment
+spec:
+  forProvider:
+    domainIdRef:
+      name: example-domain
+    userIdRef:
+      name: user-in-domain
+    roleIdRef:
+      name: role-in-domain
+  providerConfigRef:
+    name: openstack-admin-provider-config
+
+---
+# Step 7: Inherit role assignment at domain level using domainIdRef
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: InheritRoleAssignmentV3
+metadata:
+  name: domain-inherit-role-assignment
+spec:
+  forProvider:
+    domainIdRef:
+      name: example-domain
+    userIdRef:
+      name: user-in-domain
+    roleIdRef:
+      name: role-in-domain
+  providerConfigRef:
+    name: openstack-admin-provider-config

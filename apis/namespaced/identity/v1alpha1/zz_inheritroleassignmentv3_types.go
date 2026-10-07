@@ -20,7 +20,17 @@ import (
 type InheritRoleAssignmentV3InitParameters struct {
 
 	// The domain to assign the role in.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane-contrib/provider-openstack/apis/namespaced/identity/v1alpha1.ExtractDomainID()
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDRef *v1.NamespacedReference `json:"domainIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDSelector *v1.NamespacedSelector `json:"domainIdSelector,omitempty" tf:"-"`
 
 	// The group to assign the role to.
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
@@ -90,8 +100,18 @@ type InheritRoleAssignmentV3Observation struct {
 type InheritRoleAssignmentV3Parameters struct {
 
 	// The domain to assign the role in.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/identity/v1alpha1.ProjectV3
+	// +crossplane:generate:reference:extractor=github.com/crossplane-contrib/provider-openstack/apis/namespaced/identity/v1alpha1.ExtractDomainID()
 	// +kubebuilder:validation:Optional
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
+
+	// Reference to a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDRef *v1.NamespacedReference `json:"domainIdRef,omitempty" tf:"-"`
+
+	// Selector for a ProjectV3 in identity to populate domainId.
+	// +kubebuilder:validation:Optional
+	DomainIDSelector *v1.NamespacedSelector `json:"domainIdSelector,omitempty" tf:"-"`
 
 	// The group to assign the role to.
 	// +kubebuilder:validation:Optional

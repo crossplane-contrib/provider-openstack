@@ -8,7 +8,9 @@ metadata:
   name: role-assignment-1
 spec:
   forProvider:
-    domainId: default
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     roleIdSelector:
       matchLabels:
         testing.upbound.io/example-name: role_1
@@ -28,7 +30,9 @@ metadata:
   name: role-1
 spec:
   forProvider:
-    domainId: default
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     name: role_1
 
 ---
@@ -43,5 +47,7 @@ metadata:
   name: user-1
 spec:
   forProvider:
-    domainId: default
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     name: user_1

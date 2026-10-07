@@ -922,6 +922,16 @@ func (in *GroupV3InitParameters) DeepCopyInto(out *GroupV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1029,6 +1039,16 @@ func (in *GroupV3Parameters) DeepCopyInto(out *GroupV3Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1120,6 +1140,16 @@ func (in *InheritRoleAssignmentV3InitParameters) DeepCopyInto(out *InheritRoleAs
 		in, out := &in.DomainID, &out.DomainID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.GroupID != nil {
 		in, out := &in.GroupID, &out.GroupID
@@ -1267,6 +1297,16 @@ func (in *InheritRoleAssignmentV3Parameters) DeepCopyInto(out *InheritRoleAssign
 		in, out := &in.DomainID, &out.DomainID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.GroupID != nil {
 		in, out := &in.GroupID, &out.GroupID
@@ -1478,6 +1518,16 @@ func (in *ProjectV3InitParameters) DeepCopyInto(out *ProjectV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -1637,6 +1687,16 @@ func (in *ProjectV3Parameters) DeepCopyInto(out *ProjectV3Parameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -1754,6 +1814,16 @@ func (in *RoleAssignmentV3InitParameters) DeepCopyInto(out *RoleAssignmentV3Init
 		in, out := &in.DomainID, &out.DomainID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.GroupID != nil {
 		in, out := &in.GroupID, &out.GroupID
@@ -1912,6 +1982,16 @@ func (in *RoleAssignmentV3Parameters) DeepCopyInto(out *RoleAssignmentV3Paramete
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.GroupID != nil {
 		in, out := &in.GroupID, &out.GroupID
 		*out = new(string)
@@ -2049,6 +2129,16 @@ func (in *RoleV3InitParameters) DeepCopyInto(out *RoleV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -2145,6 +2235,16 @@ func (in *RoleV3Parameters) DeepCopyInto(out *RoleV3Parameters) {
 		in, out := &in.DomainID, &out.DomainID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
@@ -2706,6 +2806,16 @@ func (in *UserV3InitParameters) DeepCopyInto(out *UserV3InitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -2933,6 +3043,16 @@ func (in *UserV3Parameters) DeepCopyInto(out *UserV3Parameters) {
 		in, out := &in.DomainID, &out.DomainID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainIDRef != nil {
+		in, out := &in.DomainIDRef, &out.DomainIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainIDSelector != nil {
+		in, out := &in.DomainIDSelector, &out.DomainIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
