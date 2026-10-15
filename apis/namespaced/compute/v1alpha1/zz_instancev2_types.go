@@ -48,6 +48,21 @@ type BlockDeviceInitParameters struct {
 	// creates a new server.
 	GuestFormat *string `json:"guestFormat,omitempty" tf:"guest_format,omitempty"`
 
+	// The name of the
+	// desired image for the server. Changing this rebuilds the existing server.
+	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/images/v1alpha1.ImageV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
+	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
+
+	// Reference to a ImageV2 in images to populate imageName.
+	// +kubebuilder:validation:Optional
+	ImageNameRef *v1.NamespacedReference `json:"imageNameRef,omitempty" tf:"-"`
+
+	// Selector for a ImageV2 in images to populate imageName.
+	// +kubebuilder:validation:Optional
+	ImageNameSelector *v1.NamespacedSelector `json:"imageNameSelector,omitempty" tf:"-"`
+
 	// Enable the attachment of multiattach-capable
 	// volumes.
 	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
@@ -115,6 +130,11 @@ type BlockDeviceObservation struct {
 	// creates a new server.
 	GuestFormat *string `json:"guestFormat,omitempty" tf:"guest_format,omitempty"`
 
+	// The name of the
+	// desired image for the server. Changing this rebuilds the existing server.
+	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
+
 	// Enable the attachment of multiattach-capable
 	// volumes.
 	Multiattach *bool `json:"multiattach,omitempty" tf:"multiattach,omitempty"`
@@ -177,6 +197,22 @@ type BlockDeviceParameters struct {
 	// creates a new server.
 	// +kubebuilder:validation:Optional
 	GuestFormat *string `json:"guestFormat,omitempty" tf:"guest_format,omitempty"`
+
+	// The name of the
+	// desired image for the server. Changing this rebuilds the existing server.
+	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/namespaced/images/v1alpha1.ImageV2
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
+	// +kubebuilder:validation:Optional
+	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
+
+	// Reference to a ImageV2 in images to populate imageName.
+	// +kubebuilder:validation:Optional
+	ImageNameRef *v1.NamespacedReference `json:"imageNameRef,omitempty" tf:"-"`
+
+	// Selector for a ImageV2 in images to populate imageName.
+	// +kubebuilder:validation:Optional
+	ImageNameSelector *v1.NamespacedSelector `json:"imageNameSelector,omitempty" tf:"-"`
 
 	// Enable the attachment of multiattach-capable
 	// volumes.
