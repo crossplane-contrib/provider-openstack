@@ -133,6 +133,94 @@ spec:
                             must be less than or equal to the swap size of the flavor. Changing this
                             creates a new server.
                           type: string
+                        imageName:
+                          description: |-
+                            The name of the
+                            desired image for the server. Changing this rebuilds the existing server.
+                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+                          type: string
+                        imageNameRef:
+                          description: Reference to a ImageV2 in images to populate
+                            imageName.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        imageNameSelector:
+                          description: Selector for a ImageV2 in images to populate
+                            imageName.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         multiattach:
                           description: |-
                             Enable the attachment of multiattach-capable
@@ -902,6 +990,94 @@ spec:
                             must be less than or equal to the swap size of the flavor. Changing this
                             creates a new server.
                           type: string
+                        imageName:
+                          description: |-
+                            The name of the
+                            desired image for the server. Changing this rebuilds the existing server.
+                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+                          type: string
+                        imageNameRef:
+                          description: Reference to a ImageV2 in images to populate
+                            imageName.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        imageNameSelector:
+                          description: Selector for a ImageV2 in images to populate
+                            imageName.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         multiattach:
                           description: |-
                             Enable the attachment of multiattach-capable
@@ -1730,6 +1906,12 @@ spec:
                             must be local and only one swap disk per server and the size of the swap disk
                             must be less than or equal to the swap size of the flavor. Changing this
                             creates a new server.
+                          type: string
+                        imageName:
+                          description: |-
+                            The name of the
+                            desired image for the server. Changing this rebuilds the existing server.
+                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
                           type: string
                         multiattach:
                           description: |-

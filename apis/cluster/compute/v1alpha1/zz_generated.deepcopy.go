@@ -319,6 +319,21 @@ func (in *BlockDeviceInitParameters) DeepCopyInto(out *BlockDeviceInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageName != nil {
+		in, out := &in.ImageName, &out.ImageName
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageNameRef != nil {
+		in, out := &in.ImageNameRef, &out.ImageNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ImageNameSelector != nil {
+		in, out := &in.ImageNameSelector, &out.ImageNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Multiattach != nil {
 		in, out := &in.Multiattach, &out.Multiattach
 		*out = new(bool)
@@ -399,6 +414,11 @@ func (in *BlockDeviceObservation) DeepCopyInto(out *BlockDeviceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ImageName != nil {
+		in, out := &in.ImageName, &out.ImageName
+		*out = new(string)
+		**out = **in
+	}
 	if in.Multiattach != nil {
 		in, out := &in.Multiattach, &out.Multiattach
 		*out = new(bool)
@@ -468,6 +488,21 @@ func (in *BlockDeviceParameters) DeepCopyInto(out *BlockDeviceParameters) {
 		in, out := &in.GuestFormat, &out.GuestFormat
 		*out = new(string)
 		**out = **in
+	}
+	if in.ImageName != nil {
+		in, out := &in.ImageName, &out.ImageName
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageNameRef != nil {
+		in, out := &in.ImageNameRef, &out.ImageNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ImageNameSelector != nil {
+		in, out := &in.ImageNameSelector, &out.ImageNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Multiattach != nil {
 		in, out := &in.Multiattach, &out.Multiattach
