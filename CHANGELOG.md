@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-10-23
+
+### Fixed
+- Reuse authenticated OpenStack clients across reconciliations with identical provider credentials, reducing Keystone authentication requests. Failed authentication is retried on the next reconciliation, cached clients expire before their tokens and are invalidated on HTTP 401, and shared reauthentication is limited to 30 seconds. Swift authentication remains uncached.
+
 ## [0.11.0] - 2026-10-07
 
 ### Added
