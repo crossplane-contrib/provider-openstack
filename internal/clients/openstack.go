@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"strconv"
 
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/upjet/v2/pkg/terraform"
 	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	tfsdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-
-	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
-	"github.com/crossplane/upjet/v2/pkg/terraform"
 	"github.com/pkg/errors"
+	osprovider "github.com/terraform-provider-openstack/terraform-provider-openstack/v3/openstack"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
@@ -28,13 +28,21 @@ const (
 	errUnmarshalCredentials = "cannot unmarshal openstack credentials as JSON"
 )
 
-// TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
-// returns Terraform provider setup configuration
-
 // TerraformSetupBuilder returns Terraform setup with provider specific
 // configuration like provider credentials used to connect to cloud APIs in the
 // expected form of a Terraform provider.
+//
+// The returned SetupFn caches configured provider clients per provider
+// configuration (see noForkClientCache), so that managed resources sharing a
+// ProviderConfig reuse one authenticated OpenStack client across
+// reconciliations instead of re-authenticating against the identity service
+// on every reconciliation.
 func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //nolint:gocyclo
+	// The cache is scoped to this SetupFn, which is instantiated once per
+	// provider flavor (cluster-scoped and namespaced), so entries of
+	// different flavors never mix.
+	cache := newNoForkClientCache(defaultNoForkClientCacheSize)
+
 	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
 		ps := terraform.Setup{}
 
@@ -73,11 +81,68 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 				ps.Configuration[credField] = v
 			}
 		}
-		return ps, errors.Wrap(configureNoForkOpenstackClient(ctx, &ps, *tfProvider), "failed to configure the no-fork OpenStack client")
+
+		err = cache.configure(ctx, &ps, tfProvider)
+		return ps, errors.Wrap(err, "failed to configure the no-fork OpenStack client")
 	}
 }
 
-func configureNoForkOpenstackClient(ctx context.Context, ps *terraform.Setup, p schema.Provider) error {
+func (c *noForkClientCache) configure(ctx context.Context, ps *terraform.Setup, tfProvider *schema.Provider) error {
+	configuration := ps.Configuration
+	// Swift's non-delayed path writes directly to the ProviderClient token.
+	// Do not share it even through singleflight while configuration is in
+	// progress. Read its schema default too, to respect OS_SWAUTH.
+	swauth, err := swiftAuthenticationEnabled(configuration, tfProvider)
+	if err != nil {
+		return errors.Wrap(err, "failed to parse 'swauth' configuration")
+	}
+	if swauth {
+		return configureNoForkOpenstackClient(ctx, ps, tfProvider)
+	}
+
+	meta, err := c.getOrCreate(ctx, configuration, func() (any, error) {
+		// Keep this setup local to the creator. A caller canceled while waiting
+		// must not race with a later write from the initialization goroutine.
+		fresh := terraform.Setup{Configuration: configuration}
+		if err := configureNoForkOpenstackClient(ctx, &fresh, tfProvider); err != nil {
+			return nil, err
+		}
+		return fresh.Meta, nil
+	})
+	if err != nil {
+		return err
+	}
+	ps.Meta = meta
+	return nil
+}
+
+func swiftAuthenticationEnabled(configuration map[string]any, tfProvider *schema.Provider) (bool, error) {
+	value, ok := configuration["swauth"]
+	if !ok && tfProvider.Schema["swauth"] != nil {
+		var err error
+		value, err = tfProvider.Schema["swauth"].DefaultValue()
+		if err != nil {
+			return false, err
+		}
+	}
+	switch v := value.(type) {
+	case string:
+		return strconv.ParseBool(v)
+	case bool:
+		return v, nil
+	default:
+		return false, nil
+	}
+}
+
+func configureNoForkOpenstackClient(ctx context.Context, ps *terraform.Setup, tfProvider *schema.Provider) error {
+	// Configure a copy of the Terraform provider so that its Meta value
+	// (holding the authenticated OpenStack client) can be cached and reused
+	// across reconciliations, without mutating the shared provider singleton
+	// whose Meta must stay unset for future configurations with different
+	// credentials.
+	p := *tfProvider
+
 	// Populate the config, as well as the raw config for compatibility.
 	config := tfsdk.NewResourceConfigRaw(ps.Configuration)
 
@@ -93,11 +158,22 @@ func configureNoForkOpenstackClient(ctx context.Context, ps *terraform.Setup, p 
 		"insecure": cty.BoolVal(insecure),
 	})
 
-	diag := p.Configure(context.WithoutCancel(ctx), config)
+	diag := p.Configure(ctx, config)
 	if diag != nil && diag.HasError() {
 		return errors.Errorf("failed to configure the provider: %v", diag)
 	}
-	ps.Meta = p.Meta()
+	meta := p.Meta()
+	if cfg, ok := meta.(*osprovider.Config); ok && cfg != nil && !cfg.Swauth {
+		// Delayed authentication normally happens during the first resource
+		// operation. Finish it before publishing a shared client: upstream
+		// retains initial authentication errors on Config permanently, and
+		// token expiry is unavailable until authentication succeeds.
+		if err := cfg.Authenticate(ctx); err != nil {
+			return errors.Wrap(err, "failed to authenticate the OpenStack client")
+		}
+	}
+	// openstack.NewClient already initializes Gophercloud's token/reauth locks.
+	ps.Meta = meta
 	return nil
 }
 
