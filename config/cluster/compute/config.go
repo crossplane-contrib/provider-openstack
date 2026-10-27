@@ -1,6 +1,10 @@
 package compute
 
-import "github.com/crossplane/upjet/v2/pkg/config"
+import (
+	"github.com/crossplane/upjet/v2/pkg/config"
+
+	"github.com/crossplane-contrib/provider-openstack/config/common/blockdevice"
+)
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
@@ -22,6 +26,14 @@ func Configure(p *config.Provider) {
 		}
 		r.References["security_groups"] = config.Reference{
 			TerraformName: "openstack_networking_secgroup_v2",
+		}
+		// Allow block devices to use an image name instead of an image ID.
+		// The name is resolved to an ID by the provider at create time, so no
+		// ImageV2 object is required on the cluster (the reference is optional).
+		blockdevice.ConfigureImageName(r)
+		r.References["block_device.image_name"] = config.Reference{
+			TerraformName: "openstack_images_image_v2",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)`,
 		}
 	})
 	p.AddResourceConfigurator("openstack_compute_quotaset_v2", func(r *config.Resource) {
