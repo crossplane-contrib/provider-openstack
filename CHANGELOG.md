@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-10-27
+
+### Added
+- Add `blockDevice[].imageName`, `imageNameRef`, and `imageNameSelector` support to cluster-scoped and namespaced `InstanceV2` resources for boot-from-volume (#177). Image names are resolved through Glance at creation time, so direct-name manifests do not require image UUIDs or an `ImageV2` managed resource. Local-disk boot (`destinationType: local`) still requires a top-level `imageId` or `imageName`.
+
+### Changed
+- Include provider configuration packages in standard unit-test and coverage runs.
+
 ## [0.11.1] - 2026-10-23
 
 ### Fixed
