@@ -137,7 +137,7 @@ spec:
                           description: |-
                             The name of the
                             desired image for the server. Changing this rebuilds the existing server.
-                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Supports boot-from-volume with destination_type "volume". For destination_type "local", a top-level image_id or image_name is also required; this block-device field alone is not sufficient for local-disk boot. Changing this creates a new server.
                           type: string
                         imageNameRef:
                           description: Reference to a ImageV2 in images to populate
@@ -994,7 +994,7 @@ spec:
                           description: |-
                             The name of the
                             desired image for the server. Changing this rebuilds the existing server.
-                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Supports boot-from-volume with destination_type "volume". For destination_type "local", a top-level image_id or image_name is also required; this block-device field alone is not sufficient for local-disk boot. Changing this creates a new server.
                           type: string
                         imageNameRef:
                           description: Reference to a ImageV2 in images to populate
@@ -1911,7 +1911,7 @@ spec:
                           description: |-
                             The name of the
                             desired image for the server. Changing this rebuilds the existing server.
-                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+                            In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Supports boot-from-volume with destination_type "volume". For destination_type "local", a top-level image_id or image_name is also required; this block-device field alone is not sufficient for local-disk boot. Changing this creates a new server.
                           type: string
                         multiattach:
                           description: |-

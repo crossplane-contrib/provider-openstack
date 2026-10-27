@@ -85,6 +85,9 @@ func extendResource(res *schema.Resource, resolve imageResolver, name imageNamer
 		Description: "In a block device the name is resolved to the image ID before the server " +
 			"is created, so the image does not need to exist as a managed resource. " +
 			"Can only be used with source_type \"image\" and conflicts with uuid. " +
+			"Supports boot-from-volume with destination_type \"volume\". " +
+			"For destination_type \"local\", a top-level image_id or image_name is also required; " +
+			"this block-device field alone is not sufficient for local-disk boot. " +
 			"Changing this creates a new server.",
 		DiffSuppressFunc: suppressImageName,
 	}

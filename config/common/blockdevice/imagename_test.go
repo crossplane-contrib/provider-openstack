@@ -141,9 +141,9 @@ func TestCreateValidation(t *testing.T) {
 // TestCreateImageNameWinsOverLateInitUUID covers the recreation scenario where
 // imageName is set in initProvider and uuid was late-initialized into forProvider
 // from the observed TF state. On recreation the merged params contain both fields.
-// image_name must take precedence: uuid is cleared, imageName is resolved, and
-// the resolved UUID is written back to ResourceData so late-init can pick it up
-// on the next reconciliation.
+// image_name must take precedence: its resolved UUID replaces the stale UUID in
+// Terraform ResourceData. Late initialization does not overwrite the existing
+// forProvider UUID; suppressUUID ignores its diff while image_name is configured.
 func TestCreateImageNameWinsOverLateInitUUID(t *testing.T) {
 	var gotUUID string
 	create := func(_ context.Context, d *schema.ResourceData, _ any) diag.Diagnostics {
@@ -170,19 +170,19 @@ func TestCreateImageNameWinsOverLateInitUUID(t *testing.T) {
 	if gotUUID != "1111" {
 		t.Errorf("uuid inside create = %q, want 1111 (resolved from image_name)", gotUUID)
 	}
-	// The resolved UUID must also be written back into ResourceData so that
-	// upjet's late-initialization can copy it into spec.forProvider on the next
-	// reconciliation. Without this, the next diff would see a UUID mismatch and
-	// require instance replacement.
+	// ResourceData must retain the resolved UUID as the created Terraform state.
+	// This does not update the existing UUID in spec.forProvider. The subsequent
+	// UUID diff is suppressed while image_name is configured (see TestDiff).
 	if got := d.Get("block_device.0.uuid"); got != "1111" {
-		t.Errorf("uuid in ResourceData after create = %v, want 1111 (for late-init)", got)
+		t.Errorf("uuid in ResourceData after create = %v, want 1111 (resolved image ID)", got)
 	}
 }
 
 // TestCreateImageNameWinsWhenImageReplaced covers the scenario where an image
 // is replaced (same name, new UUID). forProvider.uuid holds the old UUID from a
-// previous late-initialization. wrapCreate must use the freshly resolved UUID,
-// and ResourceData must be updated so the next reconciliation sees no drift.
+// previous late-initialization. wrapCreate must use the freshly resolved UUID
+// and retain it in Terraform ResourceData. The stored forProvider UUID remains
+// unchanged; suppressUUID prevents drift while image_name is configured.
 func TestCreateImageNameWinsWhenImageReplaced(t *testing.T) {
 	const oldUUID = "old-uuid-1111"
 	const newUUID = "new-uuid-2222"
@@ -211,10 +211,11 @@ func TestCreateImageNameWinsWhenImageReplaced(t *testing.T) {
 	if gotUUID != newUUID {
 		t.Errorf("uuid inside create = %q, want %q (freshly resolved)", gotUUID, newUUID)
 	}
-	// ResourceData must hold the new UUID so late-init writes it to forProvider,
-	// preventing a UUID mismatch diff on the next reconciliation.
+	// The created Terraform state must hold the new UUID. Late initialization
+	// does not overwrite the old UUID in spec.forProvider; TestDiff covers the
+	// suppression of that stale UUID while image_name remains configured.
 	if got := d.Get("block_device.0.uuid"); got != newUUID {
-		t.Errorf("uuid in ResourceData after create = %v, want %q (for late-init)", got, newUUID)
+		t.Errorf("uuid in ResourceData after create = %v, want %q (resolved image ID)", got, newUUID)
 	}
 }
 

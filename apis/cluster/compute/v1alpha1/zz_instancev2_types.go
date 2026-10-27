@@ -49,7 +49,7 @@ type BlockDeviceInitParameters struct {
 
 	// The name of the
 	// desired image for the server. Changing this rebuilds the existing server.
-	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Supports boot-from-volume with destination_type "volume". For destination_type "local", a top-level image_id or image_name is also required; this block-device field alone is not sufficient for local-disk boot. Changing this creates a new server.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/images/v1alpha1.ImageV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
@@ -131,7 +131,7 @@ type BlockDeviceObservation struct {
 
 	// The name of the
 	// desired image for the server. Changing this rebuilds the existing server.
-	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Supports boot-from-volume with destination_type "volume". For destination_type "local", a top-level image_id or image_name is also required; this block-device field alone is not sufficient for local-disk boot. Changing this creates a new server.
 	ImageName *string `json:"imageName,omitempty" tf:"image_name,omitempty"`
 
 	// Enable the attachment of multiattach-capable
@@ -199,7 +199,7 @@ type BlockDeviceParameters struct {
 
 	// The name of the
 	// desired image for the server. Changing this rebuilds the existing server.
-	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Changing this creates a new server.
+	// In a block device the name is resolved to the image ID before the server is created, so the image does not need to exist as a managed resource. Can only be used with source_type "image" and conflicts with uuid. Supports boot-from-volume with destination_type "volume". For destination_type "local", a top-level image_id or image_name is also required; this block-device field alone is not sufficient for local-disk boot. Changing this creates a new server.
 	// +crossplane:generate:reference:type=github.com/crossplane-contrib/provider-openstack/apis/cluster/images/v1alpha1.ImageV2
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
