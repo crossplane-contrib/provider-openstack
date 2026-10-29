@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Accept map-valued `endpoint_overrides` as a JSON object in the provider credentials. Credentials were decoded as `map[string]string`, so a nested object failed with `cannot unmarshal object into Go value of type string` (#178).
+
 ## [0.12.0] - 2026-10-27
 
 ### Added

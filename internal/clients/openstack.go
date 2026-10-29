@@ -56,7 +56,7 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
 
-		creds := map[string]string{}
+		creds := map[string]any{}
 		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
@@ -78,12 +78,59 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 		// ensures only the provided fields are set in the config
 		for _, credField := range credFields {
 			if v, ok := creds[credField]; ok {
-				ps.Configuration[credField] = v
+				value, err := credentialValue(tfProvider, credField, v)
+				if err != nil {
+					return ps, errors.Wrap(err, errUnmarshalCredentials)
+				}
+				ps.Configuration[credField] = value
 			}
 		}
 
 		err = cache.configure(ctx, &ps, tfProvider)
 		return ps, errors.Wrap(err, "failed to configure the no-fork OpenStack client")
+	}
+}
+
+// credentialValue converts a decoded credential JSON value into the form the
+// Terraform provider configuration expects. Map-valued fields of the upstream
+// provider schema, such as endpoint_overrides, are given as JSON objects and
+// passed on as maps of strings. All other values are passed on as strings, as
+// before.
+func credentialValue(tfProvider *schema.Provider, field string, v any) (any, error) {
+	if s, ok := tfProvider.Schema[field]; ok && s.Type == schema.TypeMap {
+		if obj, ok := v.(map[string]any); ok {
+			return credentialMap(field, obj)
+		}
+	}
+	str, err := credentialScalar(v)
+	if err != nil {
+		return nil, errors.Wrapf(err, "credential field %q", field)
+	}
+	return str, nil
+}
+
+func credentialMap(field string, obj map[string]any) (map[string]any, error) {
+	m := make(map[string]any, len(obj))
+	for k, e := range obj {
+		str, err := credentialScalar(e)
+		if err != nil {
+			return nil, errors.Wrapf(err, "credential field %q, key %q", field, k)
+		}
+		m[k] = str
+	}
+	return m, nil
+}
+
+func credentialScalar(v any) (string, error) {
+	switch t := v.(type) {
+	case string:
+		return t, nil
+	case bool:
+		return strconv.FormatBool(t), nil
+	case float64:
+		return strconv.FormatFloat(t, 'f', -1, 64), nil
+	default:
+		return "", errors.Errorf("unsupported value of type %T, want a string", v)
 	}
 }
 

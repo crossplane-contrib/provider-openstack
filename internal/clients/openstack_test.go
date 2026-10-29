@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"reflect"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -722,4 +723,59 @@ func openstackTestKubernetesObjects(t *testing.T, flavor string, configuration m
 			return c.Get(ctx, key, obj, opts...)
 		},
 	}).Build(), managed
+}
+
+func TestTerraformSetupBuilderEndpointOverridesMap(t *testing.T) {
+	clearOpenstackTestEnvironment(t)
+	keystone := newKeystoneTestServer(t, time.Hour, nil)
+	configuration := keystoneTestConfiguration(keystone)
+	// endpoint_overrides is a map in the upstream provider schema, so it is
+	// given as a JSON object in the credentials.
+	configuration["endpoint_overrides"] = map[string]any{"object-store": "https://swift.example.com/v1/"}
+	crClient, managed := openstackTestKubernetesObjects(t, "Cluster", configuration)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	ps, err := TerraformSetupBuilder(osprovider.Provider())(ctx, crClient, managed[0])
+	if err != nil {
+		t.Fatalf("Terraform setup with map-valued endpoint_overrides: %v", err)
+	}
+	cfg := authenticatedOpenstackTestConfig(t, ps)
+	if got := cfg.EndpointOverrides["object-store"]; got != "https://swift.example.com/v1/" {
+		t.Errorf("EndpointOverrides[object-store] = %v, want https://swift.example.com/v1/", got)
+	}
+}
+
+func TestCredentialValue(t *testing.T) {
+	provider := osprovider.Provider()
+	cases := []struct {
+		name    string
+		field   string
+		value   any
+		want    any
+		wantErr bool
+	}{
+		{name: "String", field: "endpoint_type", value: "internal", want: "internal"},
+		{name: "Bool", field: "insecure", value: true, want: "true"},
+		{name: "Number", field: "max_retries", value: float64(3), want: "3"},
+		{name: "Map", field: "endpoint_overrides", value: map[string]any{"object-store": "https://swift.example.com/v1/"}, want: map[string]any{"object-store": "https://swift.example.com/v1/"}},
+		{name: "MapValueNotScalar", field: "endpoint_overrides", value: map[string]any{"object-store": map[string]any{}}, wantErr: true},
+		{name: "ObjectForScalarField", field: "endpoint_type", value: map[string]any{"a": "b"}, wantErr: true},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got, err := credentialValue(provider, tc.field, tc.value)
+			if tc.wantErr {
+				if err == nil {
+					t.Fatalf("credentialValue(%q, %v) = %v, want an error", tc.field, tc.value, got)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("credentialValue(%q, %v): %v", tc.field, tc.value, err)
+			}
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("credentialValue(%q, %v) = %#v, want %#v", tc.field, tc.value, got, tc.want)
+			}
+		})
+	}
 }
