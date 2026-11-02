@@ -121,9 +121,11 @@ func (tr *InstanceV2) LateInitialize(attrs []byte) (bool, error) {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
 	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+	opts = append(opts, resource.WithNameFilter("AvailabilityZone"))
 	opts = append(opts, resource.WithNameFilter("BlockDevice.ImageName"))
 	opts = append(opts, resource.WithNameFilter("FlavorID"))
 	opts = append(opts, resource.WithNameFilter("FlavorName"))
+	opts = append(opts, resource.WithNameFilter("HypervisorHostname"))
 
 	li := resource.NewGenericLateInitializer(opts...)
 	return li.LateInitialize(&tr.Spec.ForProvider, params)
